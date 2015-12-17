@@ -29,6 +29,7 @@ class AppointmentController extends BaseController
     {
         $client = $this->getClientManager()->findOneBy(['msisdn' => $bag->get('msisdn')]);
         if ($client) {
+            $client->setName($bag->get('clientName'));
             return $client;
         }
         $data = [

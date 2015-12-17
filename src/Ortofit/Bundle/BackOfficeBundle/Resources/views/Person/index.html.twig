@@ -21,7 +21,7 @@
                         <img class="profile-user-img img-responsive img-circle" alt="User profile picture"
                         {% if client.getGender() == 'male' %}
                              src="{{ '../bundles/ortofitbackoffice/dist/img/avatar5.png' }}"
-                        {% elseif client.getGender() == 'famale'  %}
+                        {% elseif client.getGender() == 'female'  %}
                             src="{{ '../bundles/ortofitbackoffice/dist/img/avatar3.png' }}"
                         {% else %}
                             src="{{ '../bundles/ortofitbackoffice/dist/img/unknown.png' }}"
@@ -70,9 +70,9 @@
                                         {% if person.familyStatus.alias == 'self' %}
                                             {% if client.getGender() == 'male' %}
                                                 src="{{ '../bundles/ortofitbackoffice/dist/img/avatar5.png' }}"
-                                        {% else %}
-                                                src="{{ '../bundles/ortofitbackoffice/dist/img/avatar3.png' }}"
-                                        {% endif %}
+                                            {% else %}
+                                                    src="{{ '../bundles/ortofitbackoffice/dist/img/avatar3.png' }}"
+                                            {% endif %}
                                         {% else %}
                                                 src="{{ '../bundles/ortofitbackoffice/dist/img/avatar-' ~ person.familyStatus.alias ~ '.png' }}"
                                         {% endif %}
