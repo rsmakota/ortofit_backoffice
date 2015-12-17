@@ -37,7 +37,7 @@ class ClientManager extends AbstractManager
         $client = new Client();
         $client->setMsisdn($bag->get(self::PARAM_MSISDN));
         $client->setCountry($bag->get(self::PARAM_COUNTRY));
-
+        $client->setClientDirection($bag->get(self::PARAM_DIRECTION));
         $this->enManager->persist($client);
         $this->enManager->flush();
 

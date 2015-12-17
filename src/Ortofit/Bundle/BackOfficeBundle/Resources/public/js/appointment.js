@@ -99,6 +99,7 @@ $(document).ready(function() {
         update: function() {
             jQuery.base.send(jQuery.client.updateUrl, this.getData(), function() {
                 jQuery.base.getModal().modal('hide');
+                location.reload();
             });
         },
         create: function() {

@@ -26,6 +26,20 @@ class ClientDirection implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $name;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $alias;
+
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    }
 
     /**
      * @return integer
@@ -73,9 +87,9 @@ class ClientDirection implements EntityInterface
     public function getData()
     {
         return [
-            'id'   => $this->id,
-            'name' => $this->name,
-
+            'id'    => $this->id,
+            'name'  => $this->name,
+            'alias' => $this->alias
         ];
     }
 }

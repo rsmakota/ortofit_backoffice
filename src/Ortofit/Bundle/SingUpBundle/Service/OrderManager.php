@@ -60,8 +60,9 @@ class OrderManager extends AbstractManager
         $app = $bag->get(self::PARAM_APP);
 
         return $this->clientManager->create(new ParameterBag([
-            self::PARAM_MSISDN  => $msisdn,
-            self::PARAM_COUNTRY => $app->getCountry()]));
+            self::PARAM_MSISDN    => $msisdn,
+            self::PARAM_DIRECTION => $app->getClientDirection(),
+            self::PARAM_COUNTRY   => $app->getCountry()]));
     }
 
     /**

@@ -33,6 +33,7 @@ class LoadClientDirectionData extends AbstractFixture implements OrderedFixtureI
         foreach($this->sources as $key => $name) {
             $source = new ClientDirection();
             $source->setName($name);
+            $source->setAlias($key);
             $manager->persist($source);
             $this->addReference('clientDirection:'.$key, $source);
         }

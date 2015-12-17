@@ -78,6 +78,7 @@ class ClientManager extends AbstractManager
         /** @var Client $entity */
         $entity = $this->rGet($params->get('id'));
         $entity->setCountry($params->get('country'));
+        $entity->setName($params->get('name'));
         $entity->setClientDirection($params->get('clientDirection'));
         $entity->setMsisdn($params->get('msisdn'));
         $entity->setGender($params->get('gender'));

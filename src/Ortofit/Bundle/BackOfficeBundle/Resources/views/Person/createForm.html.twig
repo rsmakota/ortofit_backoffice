@@ -18,7 +18,7 @@
                                 <i class="fa fa-user"></i>
                             </div>
                             <input type="text" class="form-control" id="name"
-                                   placeholder="Имя Клиента" value="{{ person.name|default('') }}"/>
+                                   placeholder="Имя" value="{{ person.name|default('') }}"/>
                         </div>
                     </div>
                 </div>
@@ -75,6 +75,6 @@
     $(document).ready(function() {
         jQuery.person.createUrl = '{{ url('backendoffice_person_create') }}';
         jQuery.person.updateUrl = '{{ url('backendoffice_person_update') }}';
-        jQuery.person.init({{ id|default('false') }});
+        jQuery.person.init({{ person.id|default('false') }});
     });
 </script>

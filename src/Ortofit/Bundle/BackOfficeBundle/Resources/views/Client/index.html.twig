@@ -35,6 +35,7 @@
                                 <th>#</th>
                                 <th>Пол</th>
                                 <th>Имя</th>
+                                <th>Телефон</th>
                                 <th>Источник</th>
                                 <th>Стал клиентом</th>
                                 <th>Человек</th>
@@ -48,12 +49,15 @@
                                     <td>
                                         {% if client.gender == 'male' %}
                                             <i class="fa fa-mars"></i>
-                                        {% else %}
+                                        {% elseif client.gender == 'famale' %}
                                             <i class="fa fa-venus"></i>
+                                        {% else %}
+                                            -
                                         {% endif %}
                                     </td>
-                                    <td><a href="{{ url('backendoffice_person', {'clientId':client.id}) }}"> {{ client.name  }} </a></td>
-                                    <td>{{ client.getClientDirection().getName()  }}</td>
+                                    <td><a href="{{ url('backendoffice_person', {'clientId':client.id}) }}"> {{ client.name|default('------')  }} </a></td>
+                                    <td>{{ client.msisdn  }}</td>
+                                    <td>{{ client.getClientDirection().getName()|default('------')  }}</td>
                                     <td>{{ client.getCreated()|date('d/m/Y')  }}</td>
                                     <td>{{ client.getPersons().count()  }}</td>
                                     <td><i class="fa fa-pencil edit" style="cursor: pointer;" client-id="{{ client.id }}"></i></td>
@@ -81,7 +85,7 @@
                                     {% endfor %}
 
                                     <li id="next" class="paginate_button next {% if paginator.next == null %}disabled{% endif %}">
-                                        <a href="{{ url('backendoffice_appointment_clients',{'page':paginator.previous}) }}" >Next</a>
+                                        <a href="{{ url('backendoffice_appointment_clients',{'page':paginator.next}) }}" >Next</a>
                                     </li>
                                 </ul>
                             </div>

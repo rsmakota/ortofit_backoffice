@@ -52,7 +52,7 @@ class ClientController extends BaseController
         $manager   = $this->getClientManager();
         $paginator = $this->getPaginator($request->get('page', 1));
         $limit     = $this->getLimit();
-        $clients   = $manager->findBy([], [], $limit, ($limit * ($paginator->current() - 1)));
+        $clients   = $manager->findBy([], ['id'=>'ASC'], $limit, ($limit * ($paginator->current() - 1)));
         $data = [
             'paginator' => $paginator,
             'clients' => $clients,
@@ -75,10 +75,7 @@ class ClientController extends BaseController
         if ($request->get('id')) {
             /** @var Client $client */
             $client = $this->getClientManager()->get($request->get('id'));
-            $data['msisdn'] = $client->getMsisdn();
-            $data['name'] = $client->getName();
-            $data['gender'] = $client->getGender();
-            $data['clientDirectionId'] = $client->getClientDirection()->getId();
+            $data['client'] = $client;
         }
 
         return $this->render('@OrtofitBackOffice/Client/createForm.html.twig', $data);
@@ -116,12 +113,12 @@ class ClientController extends BaseController
     {
         try {
             $data = [
-                'country' => $this->getCountry(),
+                'country'         => $this->getCountry(),
                 'clientDirection' => $this->getClientDirectionManager()->get($request->get('clientDirectionId')),
-                'msisdn' => $request->get('msisdn'),
-                'name' => $request->get('name'),
-                'gender' => $request->get('gender'),
-                'id' => $request->get('id')
+                'msisdn'          => $request->get('msisdn'),
+                'name'            => $request->get('name'),
+                'gender'          => $request->get('gender'),
+                'id'              => $request->get('id')
             ];
             $this->getClientManager()->update(new ParameterBag($data));
 

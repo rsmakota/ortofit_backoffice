@@ -7,7 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    monolog.handler.rotating_file.class: Ortofit\Bundle\QuizBundle\Monolog\Handler\ContextBasedStreamHandler
+    monolog.handler.rotating_file.class: Ortofit\Bundle\SingUpBundle\Monolog\Handler\ContextBasedStreamHandler
 
 framework:
     #esi:             ~
@@ -41,7 +41,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [OrtofitQuizBundle, OrtofitSingUpBundle, OrtofitBackOfficeBundle]
+    bundles:        [OrtofitSingUpBundle, OrtofitBackOfficeBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

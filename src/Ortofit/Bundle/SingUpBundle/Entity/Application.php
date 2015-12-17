@@ -59,6 +59,12 @@ class Application implements EntityInterface
     private $config;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ClientDirection")
+     * @ORM\JoinColumn(name="client_direction_id", referencedColumnName="id")
+     */
+    private $clientDirection;
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -160,6 +166,22 @@ class Application implements EntityInterface
     public function getFlowServiceName()
     {
         return $this->flowServiceName;
+    }
+
+    /**
+     * @return ClientDirection
+     */
+    public function getClientDirection()
+    {
+        return $this->clientDirection;
+    }
+
+    /**
+     * @param ClientDirection $clientDirection
+     */
+    public function setClientDirection($clientDirection)
+    {
+        $this->clientDirection = $clientDirection;
     }
 
     /**
