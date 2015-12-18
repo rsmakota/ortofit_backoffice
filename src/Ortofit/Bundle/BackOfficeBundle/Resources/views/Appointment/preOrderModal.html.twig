@@ -37,12 +37,12 @@
                 <tr>
                     <td><i class="fa fa-calendar"></i></td>
                     <td>Дата:</td>
-                    <td>{{ appointment.created|date('d/m/Y') }}</td>
+                    <td>{{ appointment.dateTime|date('d/m/Y') }}</td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-clock-o"></i></td>
                     <td>Время:</td>
-                    <td>{{ appointment.created|date('H:i') }}</td>
+                    <td>{{ appointment.dateTime|date('H:i') }}</td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-hourglass-1"></i></td>

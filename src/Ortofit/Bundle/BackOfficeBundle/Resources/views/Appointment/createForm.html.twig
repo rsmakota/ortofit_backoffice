@@ -162,9 +162,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 {% for i in 1..4 %}
-                                    {% if (duration is defined) and duration==(i*30) %}
-                                        <label class="checkbox-inline"><input name="duration" id="duration" type="radio" checked="checked" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>
-                                    {% elseif i==2 %}
+                                    {% if (duration is defined) and (duration == (i*30) or i==1) %}
                                         <label class="checkbox-inline"><input name="duration" id="duration" type="radio" checked="checked" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>
                                     {% else %}
                                         <label class="checkbox-inline"><input name="duration" id="duration" type="radio" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>

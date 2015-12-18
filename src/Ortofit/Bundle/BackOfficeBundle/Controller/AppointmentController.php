@@ -19,7 +19,29 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AppointmentController extends BaseController
 {
+    /**
+     * @param Client $client
+     * @param string $name
+     *
+     * @return bool
+     */
+    private function updateClientName(Client $client, $name)
+    {
+        if ($client->getName() == $name) {
+            return $client;
+        }
+        $data = [
+            'id'              => $client->getId(),
+            'msisdn'          => $client->getMsisdn(),
+            'name'            => $name,
+            'gender'          => $client->getGender(),
+            'country'         => $client->getCountry(),
+            'clientDirection' => $client->getClientDirection()
+        ];
 
+        return $this->getClientManager()->update(new ParameterBag($data));
+
+    }
     /**
      * @param ParameterBag $bag
      *
@@ -27,10 +49,10 @@ class AppointmentController extends BaseController
      */
     private function getClient($bag)
     {
+        /** @var Client $client */
         $client = $this->getClientManager()->findOneBy(['msisdn' => $bag->get('msisdn')]);
         if ($client) {
-            $client->setName($bag->get('clientName'));
-            return $client;
+            return $this->updateClientName($client, $bag->get('clientName'));
         }
         $data = [
             'msisdn'          => $bag->get('msisdn'),

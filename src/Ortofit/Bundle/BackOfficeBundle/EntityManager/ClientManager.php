@@ -83,5 +83,7 @@ class ClientManager extends AbstractManager
         $entity->setMsisdn($params->get('msisdn'));
         $entity->setGender($params->get('gender'));
         $this->merge($entity);
+
+        return $entity;
     }
 }
