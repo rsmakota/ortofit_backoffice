@@ -176,7 +176,9 @@ class AppointmentController extends BaseController
             'offices'    => $this->getOfficeManager()->all(),
             'services'   => $this->getServiceManager()->all()
         ];
-
+        $data['officeId'] = $request->get('officeId');
+        $data['date'] = $request->get('date');
+        $data['time'] = $request->get('time');
         if ($request->get('appId')) {
             /** @var Appointment $app */
             $app = $this->getAppointmentManager()->get($request->get('appId'));

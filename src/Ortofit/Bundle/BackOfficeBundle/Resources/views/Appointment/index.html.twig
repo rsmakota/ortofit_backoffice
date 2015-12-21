@@ -62,9 +62,15 @@
                     end:   '20:00',
                     dow:   [0, 1, 2, 3, 4, 5, 6]
                 },
+                monthNames:['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+                monthNamesShort:['Янв.','Фев.','Мрт.','Апр.','Май','Июн','Июл','Авг.','Сен.','Окт.','Нбр.','Дек.'],
+                dayNames: ['Воскресенье','Понедельник','Вторник','Среда','Чеверг','Пятница','Суббота'],
+                dayNamesShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
                 timeFormat: 'H:mm',
                 axisFormat: 'H:mm',
                 firstHour: 8,
+                allDaySlot: false,
+                slotDuration: '00:30:01',
                 defaultView: 'agendaWeek',
                 firstDay: 1,
                 minTime: "07:00:00",
@@ -81,6 +87,20 @@
                         modal.append(response);
                         modal.modal();
                     });
+                },
+                dayClick: function(date, jsEvent, view) {
+                    console.log(date);
+                    var data = {
+                        officeId:{{ office.id}},
+                        date: date.format("DD/MM/YYYY"),
+                        time: date.format("HH:mm")
+                    };
+                    jQuery.base.send('{{ url('backendoffice_appointment_get_form') }}', data, function(response){
+                        var modal = jQuery.base.getModal();
+                        modal.empty();
+                        modal.append(response);
+                        modal.modal();
+                    })
                 }
 
             });
