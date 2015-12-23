@@ -27,7 +27,7 @@ $(document).ready(function() {
     jQuery.appointment = {
         getData: function() {
             return {
-                msisdn:            $('#msisdn').val().replace(/[^0-9]/gim,''),
+                msisdn:            $('#code').val()+$('#msisdn').val().replace(/[^0-9]/gim,''),
                 clientName:        $('#clientName').val(),
                 clientDirectionId: $('#directionId').val(),
                 gender:            $('#gender').val(),
@@ -88,7 +88,7 @@ $(document).ready(function() {
         },
         getData: function() {
             return {
-                msisdn:            $('#msisdn').val().replace(/[^0-9]/gim,''),
+                msisdn:            $('#code').val()+$('#msisdn').val().replace(/[^0-9]/gim,''),
                 name:              $('#name').val(),
                 gender:            $('#gender').val(),
                 clientDirectionId: $('#clientDirectionId').val(),

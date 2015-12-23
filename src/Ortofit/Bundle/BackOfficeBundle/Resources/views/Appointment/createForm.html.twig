@@ -14,11 +14,10 @@
 
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-phone"></i>
-                                </div>
+                                <div class="input-group-addon"><strong class="icon20">+{{ code|default('38') }}</strong></div>
+
                                 <input type="text" class="form-control" id="msisdn" data-mask=""
-                                       data-inputmask="'mask': '(99) 999-999-99-99'" placeholder="(38) 067-359-42-88"
+                                       data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
                                        value="{{ msisdn|default('') }}"/>
                             </div>
 
@@ -30,7 +29,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-user icon20"> </i>
                                 </div>
                                 <input type="text" class="form-control" id="clientName"
                                        placeholder="Имя Клиента" value="{{ clientName|default('') }}"/>
@@ -44,7 +43,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-venus-mars"></i>
+                                    <i class="fa fa-venus-mars icon20"></i>
                                 </div>
                                 <select class="form-control" id="gender">
                                         {% if "female" == gender|default(0) %}
@@ -66,14 +65,14 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-plus-circle"></i>
+                                    <i class="fa fa-plus-circle icon20"></i>
                                 </div>
                                 <select class="form-control" id="serviceId">
                                     {% for service in services %}
                                         {% if service.id == serviceId|default(0) %}
-                                            <option value="{{ service.id }}">{{ service.name }}</option>
-                                        {% else %}
                                             <option selected value="{{ service.id }}">{{ service.name }}</option>
+                                        {% else %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
                                         {% endif %}
                                     {% endfor %}
                                 </select>
@@ -87,7 +86,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-arrow-right"></i>
+                                    <i class="fa fa-arrow-right icon20"></i>
                                 </div>
                                 <select class="form-control" id="directionId">
                                     {% for direction in directions %}
@@ -109,7 +108,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-building"></i>
+                                    <i class="fa fa-building icon20"></i>
                                 </div>
                                 <select class="form-control" id="officeId">
                                     {% for office in offices %}
@@ -131,7 +130,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
+                                    <i class="fa fa-calendar icon20"></i>
                                 </div>
                                 <input id="date" class="form-control pull-right active" type="text"
                                        data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
@@ -146,7 +145,7 @@
                         <div class="col-sm-10">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-clock-o"></i>
+                                    <i class="fa fa-clock-o icon20"></i>
                                 </div>
                                 <input id="time" class="form-control pull-right active" type="text" data-inputmask="'alias': 'hh/mm'"
                                        data-mask placeholder="{{ "now"|date("H:i") }}"
@@ -197,6 +196,8 @@
                     </div>
 
                     <input type="hidden" id="appId" value="{{ appId|default('') }}">
+                    <input type="hidden" id="code" value="{{ code|default('38') }}">
+
                 </form>
             </div>
             <div class="modal-footer">

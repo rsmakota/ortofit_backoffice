@@ -8,6 +8,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\Controller;
 
 use Ortofit\Bundle\SingUpBundle\Entity\Appointment;
 use Ortofit\Bundle\SingUpBundle\Entity\Client;
+use Ortofit\Bundle\SingUpBundle\Entity\Country;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,15 @@ class AppointmentController extends BaseController
         return $this->getClientManager()->update(new ParameterBag($data));
 
     }
+
+    /**
+     * @return null|Country
+     */
+    private function getCountry()
+    {
+        return $this->getCountryManager()->getDefault();
+    }
+
     /**
      * @param ParameterBag $bag
      *
@@ -174,7 +184,8 @@ class AppointmentController extends BaseController
         $data = [
             'directions' => $this->getClientDirectionManager()->all(),
             'offices'    => $this->getOfficeManager()->all(),
-            'services'   => $this->getServiceManager()->all()
+            'services'   => $this->getServiceManager()->all(),
+            'code'       => $this->getCountry()->getPrefix()
         ];
         $data['officeId'] = $request->get('officeId');
         $data['date'] = $request->get('date');
@@ -183,7 +194,7 @@ class AppointmentController extends BaseController
             /** @var Appointment $app */
             $app = $this->getAppointmentManager()->get($request->get('appId'));
             $data['serviceId']   = $app->getService()->getId();
-            $data['msisdn']      = $app->getClient()->getMsisdn();
+            $data['msisdn']      = $app->getClient()->getLocalMsisdn();
             $data['clientName']  = $app->getClient()->getName();
             $data['directionId'] = $app->getClient()->getClientDirection()->getId();
             $data['officeId']    = $app->getOffice()->getId();

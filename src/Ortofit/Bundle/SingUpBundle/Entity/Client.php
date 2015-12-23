@@ -197,6 +197,14 @@ class Client implements EntityInterface
     /**
      * @return string
      */
+    public function getLocalMsisdn()
+    {
+        return substr($this->msisdn, -10);
+    }
+
+    /**
+     * @return string
+     */
     static public function clazz()
     {
         return get_class();
