@@ -43,6 +43,9 @@
     <script>
         $(function () {
             var officeIds = [];
+            jQuery.base.send(jQuery.base.appWorkHours, null, function(workHours){
+                jQuery.appointment.workHours = workHours;
+            });
             {% for office in offices %}
             officeIds.push({{ office.id }});
             $('#calendar{{ office.id }}').fullCalendar({
@@ -58,31 +61,24 @@
                     day:   'день'
                 },
 
-                businessHours:
-                {
-                    start: '10:00',
-                    end:   '19:00',
-                    dow:   [0,1,2,3,4,5,6]
-
-                },
-
-                monthNames:['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+                monthNames:     ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
                 monthNamesShort:['Янв.','Фев.','Мрт.','Апр.','Май','Июн','Июл','Авг.','Сен.','Окт.','Нбр.','Дек.'],
-                dayNames: ['Воскресенье','Понедельник','Вторник','Среда','Чеверг','Пятница','Суббота'],
-                dayNamesShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                timeFormat: 'H:mm',
-                axisFormat: 'H:mm',
-                firstHour: 9,
-                allDaySlot: false,
-                slotDuration: '00:30:01',
-                defaultView: 'agendaWeek',
-                firstDay: 1,
-                minTime: "09:00:00",
-                maxTime: "19:30:00",
-                events: '{{ url('backendoffice_appointment_get_app') }}?office_id={{ office.id }}',
-                editable: false,
-                droppable: false, // this allows things to be dropped onto the calendar !!!
-                eventClick: function(calEvent, jsEvent, view) {
+                dayNames:       ['Воскресенье','Понедельник','Вторник','Среда','Чеверг','Пятница','Суббота'],
+                dayNamesShort:  ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                timeFormat:     'H:mm',
+                axisFormat:     'H:mm',
+                firstHour:      9,
+                allDaySlot:     false,
+                slotDuration:   '00:30:01',
+                defaultView:    'agendaWeek',
+                firstDay:       1,
+                minTime:        "09:00:00",
+                maxTime:        "19:30:00",
+                events:         '{{ url('backendoffice_appointment_get_app') }}?office_id={{ office.id }}',
+                editable:       false,
+                droppable:      false,
+                selectable:     true,
+                eventClick:     function (calEvent, jsEvent, view) {
                     jQuery.base.send('{{ url('backendoffice_appointment_pre_app') }}?appId='+calEvent.id, {}, function(response){
                         var modal = jQuery.base.getModal();
                         modal.empty();
@@ -90,8 +86,14 @@
                         modal.modal();
                     });
                 },
-                dayClick: function(date, jsEvent, view) {
-                    console.log(date);
+                dayClick:       function (date, jsEvent, view) {
+                    var h = parseInt(date.format('H'));
+                    var d = parseInt(date.format('d'));
+                    console.log(d);
+                    console.log(h);
+                    if(!jQuery.appointment.isWorkTime(d, h)) {
+                        return false;
+                    }
                     var data = {
                         officeId:{{ office.id}},
                         date: date.format("DD/MM/YYYY"),

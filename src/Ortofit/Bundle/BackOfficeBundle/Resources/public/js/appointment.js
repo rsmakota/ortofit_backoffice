@@ -6,6 +6,8 @@ $(document).ready(function() {
         appFormUrl:   null,
         appCreateUrl: null,
         appUpdateUrl: null,
+        appWorkHours: null,
+
         send: function(url, data, callback) {
             $.ajax({
                 type: "POST",
@@ -25,6 +27,7 @@ $(document).ready(function() {
     };
 
     jQuery.appointment = {
+        workHours: null,
         getData: function() {
             return {
                 msisdn:            $('#code').val()+$('#msisdn').val().replace(/[^0-9]/gim,''),
@@ -59,6 +62,7 @@ $(document).ready(function() {
         },
 
         init: function(appId) {
+
             $("#date").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
             $("#time").inputmask("hh:mm", {"placeholder": "hh:mm"});
             $("[data-mask]").inputmask();
@@ -70,6 +74,15 @@ $(document).ready(function() {
                     jQuery.appointment.create();
                 }
             });
+        },
+        isWorkTime: function (day, hour) {
+            var current = this.workHours[day];
+            console.log(current);
+            if((current.start > hour) || (current.end <= hour)) {
+                return false;
+            }
+
+            return true;
         }
     };
 
