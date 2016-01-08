@@ -262,27 +262,6 @@ class AppointmentController extends BaseController
             'rendering'=> 'background',
         ];
 
-//        $responseData[] = [
-//            'id'        => 'work',
-//            'start'     => '09:00:00',
-//            'end'       => '15:00:00',
-//            'constraint' => 'available_hours'
-//        ];
-
-        /*
-         * {
-id: 'available_hours',
-start: '2015-1-13T8:00:00',
-end: '2015-1-13T19:00:00',
-rendering: 'background'
-},
-{
-id: 'work',
-start: '2015-1-13T10:00:00',
-end: '2015-1-13T16:00:00',
-constraint: 'available_hours'
-}
-         */
         return new JsonResponse($responseData);
     }
 
@@ -294,8 +273,8 @@ constraint: 'available_hours'
     public function preOrderAction(Request $request)
     {
         /** @var Appointment $app */
-        $app = $this->getAppointmentManager()->get($request->get('appId'));
-        $data =[
+        $app  = $this->getAppointmentManager()->get($request->get('appId'));
+        $data = [
             'appointment' => $app
         ];
 

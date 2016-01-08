@@ -53,19 +53,22 @@
     '@OrtofitBackOfficeBundle/Resources/public/plugins/fastclick/fastclick.min.js'
     '@OrtofitBackOfficeBundle/Resources/public/plugins/fullcalendar/fullcalendar.min.js'
     '@OrtofitBackOfficeBundle/Resources/public/plugins/fullcalendar/fullcalendar.js'
-    '@OrtofitBackOfficeBundle/Resources/public/js/appointment.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Core.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Transport.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Modal.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/AppForm.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Calendar.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Diagnosis.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Person.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
     <script>
         $(function () {
-
-            jQuery.base.appFormUrl   = "{{ url('backendoffice_appointment_get_form') }}";
-            jQuery.base.appCreateUrl = "{{ url('backendoffice_appointment_create')   }}";
-            jQuery.base.appUpdateUrl = "{{ url('backendoffice_appointment_update')   }}";
-            jQuery.base.appWorkHours = "{{ url('backendoffice_appointment_work_hours')   }}";
-
+            $('#appButton').click(function (e) {
+                BackOffice.Modal.load('{{ url('backendoffice_appointment_get_form') }}', {});
+            });
         });
 
     </script>

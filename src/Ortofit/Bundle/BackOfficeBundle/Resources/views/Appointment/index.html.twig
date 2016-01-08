@@ -43,71 +43,13 @@
     <script>
         $(function () {
             var officeIds = [];
-            jQuery.base.send(jQuery.base.appWorkHours, null, function(workHours){
-                jQuery.appointment.workHours = workHours;
-            });
+            BackOffice.Calendar.initWorkHours('{{ url('backendoffice_appointment_work_hours')   }}');
+            BackOffice.Calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
+            BackOffice.Calendar.eventsUrl    = '{{ url('backendoffice_appointment_get_app') }}';
+            BackOffice.Calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
             {% for office in offices %}
             officeIds.push({{ office.id }});
-            $('#calendar{{ office.id }}').fullCalendar({
-                header: {
-                    left:   'prev,next today',
-                    center: 'title',
-                    right:  'month,agendaWeek,agendaDay'
-                },
-                buttonText: {
-                    today: 'сегодня',
-                    month: 'месяц',
-                    week:  'неделя',
-                    day:   'день'
-                },
-
-                monthNames:     ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
-                monthNamesShort:['Янв.','Фев.','Мрт.','Апр.','Май','Июн','Июл','Авг.','Сен.','Окт.','Нбр.','Дек.'],
-                dayNames:       ['Воскресенье','Понедельник','Вторник','Среда','Чеверг','Пятница','Суббота'],
-                dayNamesShort:  ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                timeFormat:     'H:mm',
-                axisFormat:     'H:mm',
-                firstHour:      9,
-                allDaySlot:     false,
-                slotDuration:   '00:30:01',
-                defaultView:    'agendaWeek',
-                firstDay:       1,
-                minTime:        "09:00:00",
-                maxTime:        "19:30:00",
-                events:         '{{ url('backendoffice_appointment_get_app') }}?office_id={{ office.id }}',
-                editable:       false,
-                droppable:      false,
-                selectable:     true,
-                eventClick:     function (calEvent, jsEvent, view) {
-                    jQuery.base.send('{{ url('backendoffice_appointment_pre_app') }}?appId='+calEvent.id, {}, function(response){
-                        var modal = jQuery.base.getModal();
-                        modal.empty();
-                        modal.append(response);
-                        modal.modal();
-                    });
-                },
-                dayClick:       function (date, jsEvent, view) {
-                    var h = parseInt(date.format('H'));
-                    var d = parseInt(date.format('d'));
-                    console.log(d);
-                    console.log(h);
-                    if(!jQuery.appointment.isWorkTime(d, h)) {
-                        return false;
-                    }
-                    var data = {
-                        officeId:{{ office.id}},
-                        date: date.format("DD/MM/YYYY"),
-                        time: date.format("HH:mm")
-                    };
-                    jQuery.base.send('{{ url('backendoffice_appointment_get_form') }}', data, function(response){
-                        var modal = jQuery.base.getModal();
-                        modal.empty();
-                        modal.append(response);
-                        modal.modal();
-                    })
-                }
-
-            });
+            BackOffice.Calendar.init({{ office.id }});
             {% endfor %}
 
             $('.office_link').click(function(){

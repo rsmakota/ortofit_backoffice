@@ -73,8 +73,9 @@
 </div>
 <script>
     $(document).ready(function() {
-        jQuery.person.createUrl = '{{ url('backendoffice_person_create') }}';
-        jQuery.person.updateUrl = '{{ url('backendoffice_person_update') }}';
-        jQuery.person.init({{ person.id|default('false') }});
+        var person = BackOffice.Person;
+        person.createUrl = '{{ url('backendoffice_person_create') }}';
+        person.updateUrl = '{{ url('backendoffice_person_update') }}';
+        person.init({{ person.id|default('false') }});
     });
 </script>

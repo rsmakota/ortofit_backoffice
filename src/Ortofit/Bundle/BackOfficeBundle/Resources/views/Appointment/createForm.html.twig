@@ -208,6 +208,8 @@
     </div>
 <script>
     $(document).ready(function() {
-        jQuery.appointment.init({{ appId|default('false') }});
+        BackOffice.AppForm.createUrl = "{{ url('backendoffice_appointment_create')   }}";
+        BackOffice.AppForm.updateUrl = "{{ url('backendoffice_appointment_update')   }}";
+        BackOffice.AppForm.init({{ appId|default('false') }});
     });
 </script>

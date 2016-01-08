@@ -70,13 +70,7 @@
 <script>
     $(function () {
        $('#editButton').click(function(){
-           var modal = jQuery.base.getModal();
-           jQuery.base.send('{{ url('backendoffice_appointment_get_form', {'appId':appointment.id}) }}', {}, function(response){
-               modal.empty();
-               modal.append(response);
-               modal.modal();
-
-           });
+           BackOffice.Modal.load('{{ url('backendoffice_appointment_get_form', {'appId':appointment.id}) }}', {});
        });
 
 
