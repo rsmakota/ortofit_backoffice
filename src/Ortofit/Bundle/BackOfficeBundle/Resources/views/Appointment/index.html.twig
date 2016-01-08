@@ -43,13 +43,14 @@
     <script>
         $(function () {
             var officeIds = [];
-            BackOffice.Calendar.initWorkHours('{{ url('backendoffice_appointment_work_hours')   }}');
-            BackOffice.Calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
-            BackOffice.Calendar.eventsUrl    = '{{ url('backendoffice_appointment_get_app') }}';
-            BackOffice.Calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
+            var calendar = BackOffice.Calendar;
+            calendar.initWorkHours('{{ url('backendoffice_appointment_work_hours')   }}');
+            calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
+            calendar.eventsUrl    = '{{ url('backendoffice_appointment_get_app') }}';
+            calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
             {% for office in offices %}
             officeIds.push({{ office.id }});
-            BackOffice.Calendar.init({{ office.id }});
+            calendar.init({{ office.id }});
             {% endfor %}
 
             $('.office_link').click(function(){
