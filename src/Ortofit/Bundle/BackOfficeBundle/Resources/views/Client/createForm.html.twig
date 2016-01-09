@@ -92,8 +92,9 @@
 </div>
 <script>
     $(document).ready(function() {
-        jQuery.client.createUrl = '{{ url('backendoffice_clients_create') }}';
-        jQuery.client.updateUrl = '{{ url('backendoffice_clients_update') }}';
-        jQuery.client.init({{ client.id|default('false') }});
+        var client = BackOffice.Client;
+        client.createUrl = '{{ url('backendoffice_clients_create') }}';
+        client.updateUrl = '{{ url('backendoffice_clients_update') }}';
+        client.init({{ client.id|default('false') }});
     });
 </script>

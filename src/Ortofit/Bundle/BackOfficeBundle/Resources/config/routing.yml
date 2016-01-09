@@ -85,3 +85,6 @@ backendoffice_appointment_get_app:
 backendoffice_appointment_pre_app:
     path:     /admin/app/pre
     defaults: { _controller: OrtofitBackOfficeBundle:Appointment:preOrder }
+backendoffice_appointment_work_hours:
+    path:     /admin/app/work_hours
+    defaults: { _controller: OrtofitBackOfficeBundle:Appointment:workHours }

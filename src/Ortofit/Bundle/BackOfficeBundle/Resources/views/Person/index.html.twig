@@ -102,42 +102,23 @@
     </section>
     <script>
         $(document).ready(function () {
+            var modal = BackOffice.Modal;
             $('#newPerson').click(function (e) {
-                jQuery.base.send('{{ url('backendoffice_person_form') }}', {clientId:{{ client.id }} }, function (response) {
-                    var modal = jQuery.base.getModal();
-                    modal.empty();
-                    modal.append(response);
-                    modal.modal();
-                })
+                modal.load('{{ url('backendoffice_person_form') }}', {clientId:{{ client.id }} });
             });
             $('.person-edit').click(function () {
                 var personId = $(this).attr('person-id');
-                jQuery.base.send('{{ url('backendoffice_person_form') }}', {id: personId, clientId:{{ client.id }} }, function (response) {
-                    var modal = jQuery.base.getModal();
-                    modal.empty();
-                    modal.append(response);
-                    modal.modal();
-                })
+                modal.load('{{ url('backendoffice_person_form') }}', {id: personId, clientId:{{ client.id }} });
             });
             $('.person-diagnosis').click(function () {
                 var personId = $(this).attr('person-id');
-                jQuery.base.send('{{ url('backendoffice_diagnosis_form') }}', {personId: personId }, function (response) {
-                    var modal = jQuery.base.getModal();
-                    modal.empty();
-                    modal.append(response);
-                    modal.modal();
-                })
+                modal.load('{{ url('backendoffice_diagnosis_form') }}', {personId: personId });
             });
 
             $('.diagnosis').click(function() {
                 var diagnosisId = $(this).attr('id');
                 var personId = $(this).attr('person-id');
-                jQuery.base.send('{{ url('backendoffice_diagnosis_form') }}', {id: diagnosisId, personId: personId }, function (response) {
-                    var modal = jQuery.base.getModal();
-                    modal.empty();
-                    modal.append(response);
-                    modal.modal();
-                })
+                modal.load('{{ url('backendoffice_diagnosis_form') }}', {id: diagnosisId, personId: personId });
             });
 
         });

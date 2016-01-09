@@ -42,8 +42,9 @@
 </div>
 <script>
     $(document).ready(function() {
-        jQuery.diagnosis.createUrl = '{{ url('backendoffice_diagnosis_create') }}';
-        jQuery.diagnosis.updateUrl = '{{ url('backendoffice_diagnosis_update') }}';
-        jQuery.diagnosis.init({{ diagnosis.id|default('false') }});
+        var diagnosis = BackOffice.Diagnosis;
+        diagnosis.createUrl = '{{ url('backendoffice_diagnosis_create') }}';
+        diagnosis.updateUrl = '{{ url('backendoffice_diagnosis_update') }}';
+        diagnosis.init({{ diagnosis.id|default('false') }});
     });
 </script>

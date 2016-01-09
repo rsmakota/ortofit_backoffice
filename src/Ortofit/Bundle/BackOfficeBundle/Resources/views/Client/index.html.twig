@@ -98,21 +98,11 @@
     <script>
         $(document).ready(function() {
             $('#newClient').click(function (e) {
-                jQuery.base.send('{{ url('backendoffice_clients_form') }}', {}, function(response){
-                    var modal = jQuery.base.getModal();
-                    modal.empty();
-                    modal.append(response);
-                    modal.modal();
-                })
+                BackOffice.Modal.load('{{ url('backendoffice_clients_form') }}', {});
             });
             $('.edit').click(function (){
                 var clientId = $(this).attr('client-id');
-                jQuery.base.send('{{ url('backendoffice_clients_form') }}', {id:clientId}, function(response){
-                    var modal = jQuery.base.getModal();
-                    modal.empty();
-                    modal.append(response);
-                    modal.modal();
-                })
+                BackOffice.Modal.load('{{ url('backendoffice_clients_form') }}', {id:clientId});
             });
         });
     </script>
