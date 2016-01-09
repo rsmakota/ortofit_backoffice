@@ -35,8 +35,31 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $admin->setEnabled(true);
         $admin->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
         $admin->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
-
+        $admin->addGroup($this->getReference('group:admin'));
         $manager->persist($admin);
+
+        $doctor = new User();
+        $doctor->setUsername('doctor');
+        $doctor->setUsernameCanonical('doctor');
+        $doctor->setEmail('doctor@ortofit.com.ua');
+        $doctor->setUsernameCanonical('doctor@ortofit.com.ua');
+        $doctor->setEnabled(true);
+        $doctor->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
+        $doctor->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
+        $doctor->addGroup($this->getReference('group:doctor'));
+        $manager->persist($doctor);
+
+        $operator = new User();
+        $operator->setUsername('operator');
+        $operator->setUsernameCanonical('operator');
+        $operator->setEmail('operator@ortofit.com.ua');
+        $operator->setUsernameCanonical('operator@ortofit.com.ua');
+        $operator->setEnabled(true);
+        $operator->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
+        $operator->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
+        $operator->addGroup($this->getReference('group:operator'));
+        $manager->persist($operator);
+
         $manager->flush();
     }
 

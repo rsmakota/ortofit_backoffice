@@ -4,7 +4,7 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\SingUpBundle\ORM;
+namespace Ortofit\Bundle\BackOfficeBundle\ORM;
 
 use Doctrine\ORM\EntityRepository;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;

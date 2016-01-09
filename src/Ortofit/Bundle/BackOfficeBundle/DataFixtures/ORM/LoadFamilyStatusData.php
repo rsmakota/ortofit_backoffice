@@ -4,7 +4,7 @@
  * @author    Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\SingUpBundle\DataFixtures\ORM;
+namespace Ortofit\Bundle\BackOfficeBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

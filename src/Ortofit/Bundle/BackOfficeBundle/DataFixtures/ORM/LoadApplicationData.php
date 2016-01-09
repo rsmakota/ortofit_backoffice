@@ -4,7 +4,7 @@
  * @copyright 2015 Nebupay LLC
  */
 
-namespace Ortofit\Bundle\SingUpBundle\DataFixtures\ORM;
+namespace Ortofit\Bundle\BackOfficeBundle\DataFixtures\ORM;
 
 
 use Doctrine\Common\DataFixtures\AbstractFixture;

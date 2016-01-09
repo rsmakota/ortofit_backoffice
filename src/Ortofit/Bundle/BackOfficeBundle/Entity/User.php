@@ -31,4 +31,9 @@ class User extends BaseUser
         $this->salt = $salt;
     }
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+     * @ORM\JoinTable(name="users_groups")
+     */
+    protected $groups;
 }
