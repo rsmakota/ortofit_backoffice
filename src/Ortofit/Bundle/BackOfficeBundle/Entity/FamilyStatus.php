@@ -4,17 +4,19 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\SingUpBundle\Entity;
+namespace Ortofit\Bundle\BackOfficeBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Office
- * @package Ortofit\Bundle\SingUpBundle\Entity
+ * Class FamilyStatus
+ *
+ * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="offices")
+ * @ORM\Table(name="family_statuses")
  */
-class Office
+class FamilyStatus implements EntityInterface
 {
     /**
      * @ORM\Id
@@ -29,10 +31,14 @@ class Office
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @ORM\Column(type="boolean")
      */
-    private $city;
+    private $general;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $alias;
 
     /**
      * @return integer
@@ -67,21 +73,36 @@ class Office
     }
 
     /**
-     * @return City
+     * @return boolean
      */
-    public function getCity()
+    public function getGeneral()
     {
-        return $this->city;
+        return $this->general;
     }
 
     /**
-     * @param City $city
+     * @param boolean $general
      */
-    public function setCity($city)
+    public function setGeneral($general)
     {
-        $this->city = $city;
+        $this->general = $general;
     }
 
+    /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @param string $alias
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    }
     /**
      * @return string
      */
@@ -89,6 +110,7 @@ class Office
     {
         return get_class();
     }
+
     /**
      * @return array
      */
@@ -97,7 +119,8 @@ class Office
         return [
             'id'      => $this->id,
             'name'    => $this->name,
-            'city_id' => $this->getCity(),
+            'general' => $this->general,
+            'alias'   => $this->alias
         ];
     }
 }

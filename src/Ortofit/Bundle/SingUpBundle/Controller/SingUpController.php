@@ -7,7 +7,7 @@
 namespace Ortofit\Bundle\SingUpBundle\Controller;
 
 use Ortofit\Bundle\SingUpBundle\Application\ApplicationFlowInterface;
-use Ortofit\Bundle\SingUpBundle\Entity\Application;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Application;
 use Ortofit\Bundle\SingUpBundle\Security\SecurityInterface;
 use Ortofit\Bundle\SingUpBundle\Service\ApplicationManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

@@ -7,8 +7,8 @@
 namespace Ortofit\Bundle\SingUpBundle\Service;
 
 use Doctrine\ORM\EntityManager;
-use Ortofit\Bundle\SingUpBundle\Entity\Application;
-use Ortofit\Bundle\SingUpBundle\Entity\Order;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Application;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Order;
 use Ortofit\Bundle\SingUpBundle\Event\OrderCreateEvent;
 use Ortofit\Bundle\SingUpBundle\Event\SingUpEvents;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;

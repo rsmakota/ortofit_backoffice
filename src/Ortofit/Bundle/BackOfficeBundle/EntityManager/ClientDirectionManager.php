@@ -7,7 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
 
-use Ortofit\Bundle\SingUpBundle\Entity\ClientDirection;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**

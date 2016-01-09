@@ -6,7 +6,7 @@
 
 namespace Ortofit\Bundle\SingUpBundle\Application;
 
-use Ortofit\Bundle\SingUpBundle\Entity\Application;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Application;
 use Ortofit\Bundle\SingUpBundle\Notify\NotifyManagerInterface;
 use Ortofit\Bundle\SingUpBundle\Service\AbstractManager;
 use Ortofit\Bundle\SingUpBundle\Service\OrderManager;

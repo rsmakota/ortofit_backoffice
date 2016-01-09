@@ -6,7 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\SingUpBundle\Entity\FamilyStatus;
+use Ortofit\Bundle\BackOfficeBundle\Entity\FamilyStatus;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**

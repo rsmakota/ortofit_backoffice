@@ -4,12 +4,12 @@
  * @copyright 2015 Ortofit LLC
  */
 
-namespace Ortofit\Bundle\SingUpBundle\Entity;
+namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Application
  *
- * @package Ortofit\Bundle\SingUpBundle\Entity
+ * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
  * @ORM\Entity
  * @ORM\Table(name="applications")

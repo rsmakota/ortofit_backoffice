@@ -1,20 +1,20 @@
 <?php
 /**
- * @copyright 2015 ortofit_quiz
- * @author Rodion Smakota <rsmakota@gmail.com>
+ * @author    Rodion Smakota <rsmakota@gmail.com>
+ * @copyright 2015 Ortofit LLC
  */
-
-namespace Ortofit\Bundle\SingUpBundle\Entity;
+namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class City
- * @package Ortofit\Bundle\SingUpBundle\Entity
+ * Class Service
+ *
+ * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="cities")
+ * @ORM\Table(name="services")
  */
-class City
+class Service
 {
     /**
      * @ORM\Id
@@ -29,10 +29,9 @@ class City
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * @ORM\Column(type="string")
      */
-    private $country;
+    private $color;
 
     /**
      * @return integer
@@ -67,19 +66,19 @@ class City
     }
 
     /**
-     * @return Country
+     * @return string
      */
-    public function getCountry()
+    public function getColor()
     {
-        return $this->country;
+        return $this->color;
     }
 
     /**
-     * @param Country $country
+     * @param string $color
      */
-    public function setCountry($country)
+    public function setColor($color)
     {
-        $this->country = $country;
+        $this->color = $color;
     }
 
     /**
@@ -89,16 +88,4 @@ class City
     {
         return get_class();
     }
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return [
-            'id'         => $this->id,
-            'name'       => $this->name,
-            'country_id' => $this->getCountry()->getId(),
-        ];
-    }
-
 }

@@ -10,7 +10,7 @@ namespace Ortofit\Bundle\SingUpBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Ortofit\Bundle\SingUpBundle\Entity\Application;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Application;
 
 /**
  * Class LoadApplicationData

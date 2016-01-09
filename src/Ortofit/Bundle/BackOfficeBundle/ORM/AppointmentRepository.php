@@ -7,13 +7,13 @@
 namespace Ortofit\Bundle\SingUpBundle\ORM;
 
 use Doctrine\ORM\EntityRepository;
-use Ortofit\Bundle\SingUpBundle\Entity\Appointment;
-use Ortofit\Bundle\SingUpBundle\Entity\Office;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 
 /**
  * Class AppointmentRepository
  *
- * @package Ortofit\Bundle\SingUpBundle\ORM
+ * @package Ortofit\Bundle\BackOfficeBundle\ORM
  */
 class AppointmentRepository extends EntityRepository
 {

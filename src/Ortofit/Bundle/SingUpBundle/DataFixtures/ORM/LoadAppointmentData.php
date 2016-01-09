@@ -10,10 +10,10 @@ namespace Ortofit\Bundle\SingUpBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Ortofit\Bundle\SingUpBundle\Entity\Appointment;
-use Ortofit\Bundle\SingUpBundle\Entity\Client;
-use Ortofit\Bundle\SingUpBundle\Entity\Office;
-use Ortofit\Bundle\SingUpBundle\Entity\Service;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
 
 
 /**

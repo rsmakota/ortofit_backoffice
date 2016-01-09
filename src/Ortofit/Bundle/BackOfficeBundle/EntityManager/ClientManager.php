@@ -6,9 +6,9 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\SingUpBundle\Entity\Appointment;
-use Ortofit\Bundle\SingUpBundle\Entity\Client;
-use Ortofit\Bundle\SingUpBundle\Entity\Country;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**

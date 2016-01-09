@@ -7,7 +7,7 @@
 namespace Ortofit\Bundle\SingUpBundle\Service;
 
 
-use Ortofit\Bundle\SingUpBundle\Entity\Application;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Application;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**

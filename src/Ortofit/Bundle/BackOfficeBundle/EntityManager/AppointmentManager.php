@@ -6,9 +6,9 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\SingUpBundle\Entity\Appointment;
-use Ortofit\Bundle\SingUpBundle\Entity\Client;
-use Ortofit\Bundle\SingUpBundle\Entity\Office;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -59,6 +59,8 @@ class AppointmentManager extends AbstractManager
         $entity->setOffice($params->get('office'));
         $entity->setDescription($params->get('description'));
         $entity->setService($params->get('service'));
+        $entity->setState($params->get('state', Appointment::STATE_NEW));
+        $entity->setUser($params->get('user'));
         $this->persist($entity);
 
         return $entity;
@@ -77,12 +79,11 @@ class AppointmentManager extends AbstractManager
         $entity = $this->rGet($params->get('id'));
         $entity->setDateTime($params->get('dateTime'));
         $entity->setClient($params->get('client'));
-        if ($params->has('state')) {
-            $entity->setState($params->get('state'));
-        }
         $entity->setDuration($params->get('duration'));
         $entity->setDescription($params->get('description'));
         $entity->setService($params->get('service'));
+        $entity->setState($params->get('service'));
+        $entity->setUser($params->get('user'));
         $this->merge($entity);
 
         return true;

@@ -4,12 +4,12 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\SingUpBundle\Entity;
+namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 
 /**
  * Interface EntityInterface
  *
- * @package Ortofit\Bundle\SingUpBundle\Entity
+ * @package Ortofit\Bundle\BackOfficeBundle\Entity
  */
 interface EntityInterface
 {

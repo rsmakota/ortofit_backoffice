@@ -4,19 +4,17 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\SingUpBundle\Entity;
-
+namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class FamilyStatus
- *
- * @package Ortofit\Bundle\SingUpBundle\Entity
+ * Class Office
+ * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="family_statuses")
+ * @ORM\Table(name="offices")
  */
-class FamilyStatus implements EntityInterface
+class Office
 {
     /**
      * @ORM\Id
@@ -31,14 +29,10 @@ class FamilyStatus implements EntityInterface
     private $name;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    private $general;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $alias;
+    private $city;
 
     /**
      * @return integer
@@ -73,36 +67,21 @@ class FamilyStatus implements EntityInterface
     }
 
     /**
-     * @return boolean
+     * @return City
      */
-    public function getGeneral()
+    public function getCity()
     {
-        return $this->general;
+        return $this->city;
     }
 
     /**
-     * @param boolean $general
+     * @param City $city
      */
-    public function setGeneral($general)
+    public function setCity($city)
     {
-        $this->general = $general;
+        $this->city = $city;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
-
-    /**
-     * @param string $alias
-     */
-    public function setAlias($alias)
-    {
-        $this->alias = $alias;
-    }
     /**
      * @return string
      */
@@ -110,7 +89,6 @@ class FamilyStatus implements EntityInterface
     {
         return get_class();
     }
-
     /**
      * @return array
      */
@@ -119,8 +97,7 @@ class FamilyStatus implements EntityInterface
         return [
             'id'      => $this->id,
             'name'    => $this->name,
-            'general' => $this->general,
-            'alias'   => $this->alias
+            'city_id' => $this->getCity(),
         ];
     }
 }

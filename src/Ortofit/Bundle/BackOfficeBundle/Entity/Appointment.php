@@ -4,21 +4,22 @@
  * @copyright 2015 Ortofit LLC
  */
 
-namespace Ortofit\Bundle\SingUpBundle\Entity;
+namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Appointment
  *
- * @package Ortofit\Bundle\SingUpBundle\Entity
+ * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
- * @ORM\Entity(repositoryClass="Ortofit\Bundle\SingUpBundle\ORM\AppointmentRepository")
+ * @ORM\Entity(repositoryClass="Ortofit\Bundle\BackOfficeBundle\ORM\AppointmentRepository")
  * @ORM\Table(name="appointments")
  */
 class Appointment implements EntityInterface
 {
     const STATE_NEW      = 1;
-    const STATE_NOT_CAME = 2;
-    const STATE_SUCCESS  = 3;
+    const STATE_RECORD   = 2;
+    const STATE_NOT_CAME = 3;
+    const STATE_SUCCESS  = 4;
 
     /**
      * @ORM\Id
@@ -72,12 +73,18 @@ class Appointment implements EntityInterface
     private $service;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
      * constructor.
      */
     public function __construct()
     {
         $this->created = new \DateTime();
-        $this->state = self::STATE_NEW;
+        $this->state   = self::STATE_NEW;
     }
 
     /**
@@ -235,6 +242,22 @@ class Appointment implements EntityInterface
     }
 
     /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
      * @return array
      */
     public function getData()
@@ -248,7 +271,8 @@ class Appointment implements EntityInterface
             'office_id'   => $this->getOffice()->getId(),
             'description' => $this->description,
             'duration'    => $this->duration,
-            'service_id'  => $this->getService()->getId()
+            'service_id'  => $this->getService()->getId(),
+            'user_id'     => $this->getUser()->getId()
         ];
     }
 

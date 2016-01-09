@@ -86,4 +86,12 @@ class BaseController extends Controller
     {
         return $this->get('ortofit_back_office.service_manage');
     }
+
+    /**
+     * @return \FOS\UserBundle\Doctrine\UserManager
+     */
+    protected function getDoctorManager()
+    {
+        return $this->get('fos_user.user_manager');
+    }
 }

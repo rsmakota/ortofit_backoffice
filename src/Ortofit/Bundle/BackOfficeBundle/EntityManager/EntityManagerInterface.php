@@ -6,7 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\SingUpBundle\Entity\EntityInterface;
+use Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**

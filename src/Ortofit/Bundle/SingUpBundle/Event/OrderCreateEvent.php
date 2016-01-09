@@ -6,7 +6,7 @@
 
 namespace Ortofit\Bundle\SingUpBundle\Event;
 
-use Ortofit\Bundle\SingUpBundle\Entity\Order;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Order;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

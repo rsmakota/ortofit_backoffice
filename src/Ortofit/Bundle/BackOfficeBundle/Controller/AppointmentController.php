@@ -6,9 +6,10 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\Controller;
 
-use Ortofit\Bundle\SingUpBundle\Entity\Appointment;
-use Ortofit\Bundle\SingUpBundle\Entity\Client;
-use Ortofit\Bundle\SingUpBundle\Entity\Country;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
+use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,21 @@ class AppointmentController extends BaseController
         ];
 
         return $this->getClientManager()->update(new ParameterBag($data));
+
+    }
+
+    /**
+     * @param integer $doctorId
+     *
+     * @return User
+     */
+    private function findDoctor($doctorId)
+    {
+        return $this->getDoctorManager()->findUserBy(['id' => $doctorId]);
+    }
+
+    private function getDoctors()
+    {
 
     }
 
@@ -90,6 +106,8 @@ class AppointmentController extends BaseController
             'description' => $bag->get('description'),
             'office'      => $this->getOfficeManager()->get($bag->get('officeId')),
             'service'     => $this->getServiceManager()->get($bag->get('serviceId')),
+            'state'       => Appointment::STATE_RECORD,
+            'user'        => $this->findDoctor($bag->get('doctorId')),
         ];
     }
 

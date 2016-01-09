@@ -3,8 +3,8 @@
 namespace Ortofit\Bundle\BackOfficeBundle\Controller;
 
 use Ortofit\Bundle\BackOfficeBundle\Paginator\Paginator;
-use Ortofit\Bundle\SingUpBundle\Entity\Client;
-use Ortofit\Bundle\SingUpBundle\Entity\Country;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 

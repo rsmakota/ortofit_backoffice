@@ -7,7 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
 use Doctrine\ORM\EntityManager;
-use Ortofit\Bundle\SingUpBundle\Entity\EntityInterface;
+use Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface;
 
 /**
  * Class AbstractManager

@@ -4,14 +4,14 @@
  * @copyright 2015 Ortofit LLC
  */
 
-namespace Ortofit\Bundle\SingUpBundle\Entity;
+namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Person
  *
- * @package Ortofit\Bundle\SingUpBundle\Entity
+ * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
  * @ORM\Entity
  * @ORM\Table(name="persons")
