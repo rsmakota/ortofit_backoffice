@@ -36,4 +36,26 @@ class User extends BaseUser
      * @ORM\JoinTable(name="users_groups")
      */
     protected $groups;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
 }

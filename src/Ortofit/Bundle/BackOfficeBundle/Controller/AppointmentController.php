@@ -6,6 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
@@ -55,9 +56,14 @@ class AppointmentController extends BaseController
         return $this->getDoctorManager()->findUserBy(['id' => $doctorId]);
     }
 
+    /**
+     * @return ArrayCollection
+     */
     private function getDoctors()
     {
+        $group = $this->get('fos_user.group_manager')->findGroupBy(['name' => 'Doctor']);
 
+        return $group->getUsers();
     }
 
     /**
@@ -203,7 +209,8 @@ class AppointmentController extends BaseController
             'directions' => $this->getClientDirectionManager()->all(),
             'offices'    => $this->getOfficeManager()->all(),
             'services'   => $this->getServiceManager()->all(),
-            'code'       => $this->getCountry()->getPrefix()
+            'code'       => $this->getCountry()->getPrefix(),
+            'doctors'    => $this->getDoctors()
         ];
         $data['officeId'] = $request->get('officeId');
         $data['date'] = $request->get('date');
@@ -212,6 +219,7 @@ class AppointmentController extends BaseController
             /** @var Appointment $app */
             $app = $this->getAppointmentManager()->get($request->get('appId'));
             $data['serviceId']   = $app->getService()->getId();
+            $data['doctorId']    = $app->getUser()->getId();
             $data['msisdn']      = $app->getClient()->getLocalMsisdn();
             $data['clientName']  = $app->getClient()->getName();
             $data['directionId'] = $app->getClient()->getClientDirection()->getId();
