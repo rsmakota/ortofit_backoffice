@@ -18,7 +18,8 @@ BackOffice.AppForm = {
             duration:          $('#duration:checked').val(),
             description:       $('#description').val(),
             appId:             $('#appId').val(),
-            serviceId:         $('#serviceId').val()
+            serviceId:         $('#serviceId').val(),
+            doctorId:          $('#doctorId').val()
 
         };
     },

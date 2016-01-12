@@ -32,6 +32,10 @@ class Service
      * @ORM\Column(type="string")
      */
     private $color;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $short;
 
     /**
      * @return integer
@@ -79,6 +83,22 @@ class Service
     public function setColor($color)
     {
         $this->color = $color;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShort()
+    {
+        return $this->short;
+    }
+
+    /**
+     * @param string $short
+     */
+    public function setShort($short)
+    {
+        $this->short = $short;
     }
 
     /**

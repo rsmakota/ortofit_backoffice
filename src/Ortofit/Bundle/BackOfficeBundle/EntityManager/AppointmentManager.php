@@ -82,7 +82,7 @@ class AppointmentManager extends AbstractManager
         $entity->setDuration($params->get('duration'));
         $entity->setDescription($params->get('description'));
         $entity->setService($params->get('service'));
-        $entity->setState($params->get('service'));
+        $entity->setState($params->get('state'));
         $entity->setUser($params->get('user'));
         $this->merge($entity);
 
