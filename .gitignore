@@ -1,12 +1,7 @@
 /web/bundles/
 /web/css/
 /web/js/
-/app/bootstrap.php.cache
-/app/cache/*
 /app/config/parameters.yml
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
 /app/phpunit.xml
 /build/
 /vendor/
@@ -25,3 +20,4 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
+/phpunit.xml
