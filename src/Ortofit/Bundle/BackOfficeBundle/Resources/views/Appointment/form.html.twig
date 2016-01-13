@@ -14,7 +14,7 @@
 
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <div class="input-group-addon"><strong class="icon20">+{{ code|default('38') }}</strong></div>
+                                <div class="input-group-addon"><strong class="icon20">+{{ prefix }}</strong></div>
 
                                 <input type="text" class="form-control" id="msisdn" data-mask=""
                                        data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
@@ -210,8 +210,9 @@
                         </div>
                     </div>
 
-                    <input type="hidden" id="appId" value="{{ appId|default('') }}">
-                    <input type="hidden" id="code" value="{{ code|default('38') }}">
+                    <input type="hidden" id="appId"    value="{{ appId|default('') }}">
+                    <input type="hidden" id="prefix"   value="{{ prefix }}">
+                    <input type="hidden" id="clientId" value="">
 
                 </form>
             </div>
@@ -226,6 +227,8 @@
         var form = BackOffice.AppForm;
         form.createUrl = "{{ url('backendoffice_appointment_create')   }}";
         form.updateUrl = "{{ url('backendoffice_appointment_update')   }}";
-        form.init({{ appId|default('false') }});
+        form.clientUrl = "{{ url('backendoffice_client_find')   }}";
+
+        form.init('{{ pattern }}', {{ appId|default('false') }});
     });
 </script>

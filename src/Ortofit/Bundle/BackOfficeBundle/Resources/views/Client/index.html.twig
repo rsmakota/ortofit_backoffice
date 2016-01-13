@@ -6,7 +6,7 @@
             Клиенты
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ url('backendoffice_appointment_clients') }}"><i class="fa fa-users"></i>Список клиентов</a></li>
+            <li><a href="{{ url('backendoffice_client') }}"><i class="fa fa-users"></i>Список клиентов</a></li>
         </ol>
     </section>
     <!-- content -->
@@ -75,17 +75,17 @@
                             <div class="col-sm-7">
                                 <ul class="pagination" style="margin: auto">
                                     <li id="previous" class="paginate_button previous {% if paginator.previous == null %}disabled{% endif %}">
-                                        <a href="{{ url('backendoffice_appointment_clients',{'page':paginator.previous}) }}" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+                                        <a href="{{ url('backendoffice_client',{'page':paginator.previous}) }}" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
                                     </li>
 
                                     {% for i in 1..paginator.count %}
                                         <li class="paginate_button {% if i == paginator.current %} active {% endif %}">
-                                            <a href="{{ url('backendoffice_appointment_clients',{'page':i}) }}" >{{ i }}</a>
+                                            <a href="{{ url('backendoffice_client',{'page':i}) }}" >{{ i }}</a>
                                         </li>
                                     {% endfor %}
 
                                     <li id="next" class="paginate_button next {% if paginator.next == null %}disabled{% endif %}">
-                                        <a href="{{ url('backendoffice_appointment_clients',{'page':paginator.next}) }}" >Next</a>
+                                        <a href="{{ url('backendoffice_client',{'page':paginator.next}) }}" >Next</a>
                                     </li>
                                 </ul>
                             </div>
@@ -98,11 +98,11 @@
     <script>
         $(document).ready(function() {
             $('#newClient').click(function (e) {
-                BackOffice.Modal.load('{{ url('backendoffice_clients_form') }}', {});
+                BackOffice.Modal.load('{{ url('backendoffice_client_form') }}', {});
             });
             $('.edit').click(function (){
                 var clientId = $(this).attr('client-id');
-                BackOffice.Modal.load('{{ url('backendoffice_clients_form') }}', {id:clientId});
+                BackOffice.Modal.load('{{ url('backendoffice_client_form') }}', {id:clientId});
             });
         });
     </script>

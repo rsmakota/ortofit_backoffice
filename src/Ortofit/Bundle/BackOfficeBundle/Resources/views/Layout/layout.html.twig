@@ -60,6 +60,8 @@
     '@OrtofitBackOfficeBundle/Resources/public/js/Calendar.js'
     '@OrtofitBackOfficeBundle/Resources/public/js/Diagnosis.js'
     '@OrtofitBackOfficeBundle/Resources/public/js/Person.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Helper/FormDecorator.js'
+    '@OrtofitBackOfficeBundle/Resources/public/js/Helper/FormElement.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -315,7 +317,7 @@
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="{{ url('backendoffice_appointment_clients') }}">
+                    <a href="{{ url('backendoffice_client') }}">
                         <i class="fa fa-users"></i> <span>Клиенты</span>
                     </a>
                 </li>

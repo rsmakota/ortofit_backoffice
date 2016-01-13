@@ -205,11 +205,13 @@ class AppointmentController extends BaseController
      */
     public function formAction(Request $request)
     {
+        $country = $this->getCountry();
         $data = [
             'directions' => $this->getClientDirectionManager()->all(),
             'offices'    => $this->getOfficeManager()->all(),
             'services'   => $this->getServiceManager()->all(),
-            'code'       => $this->getCountry()->getPrefix(),
+            'prefix'     => $country->getPrefix(),
+            'pattern'    => $country->getPattern(),
             'doctors'    => $this->getDoctors()
         ];
         $data['officeId'] = $request->get('officeId');
@@ -232,7 +234,7 @@ class AppointmentController extends BaseController
             $data['gender']      = $app->getClient()->getGender();
         }
 
-        return $this->render('@OrtofitBackOffice/Appointment/createForm.html.twig', $data);
+        return $this->render('@OrtofitBackOffice/Appointment/form.html.twig', $data);
     }
 
 
