@@ -29,7 +29,10 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         'correction',
         'insoles',
         'massage',
+        'diagnostic',
+        'free_consult',
     ];
+    private $doctors = ['doctor:svat',  'doctor:lesya' ,  'doctor:ser',  'doctor:eva', 'doctor:elena'];
     private $offices = ['office:kirova', 'office:center'];
 
     /**
@@ -49,7 +52,7 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         $client       = $this->getReference('client:00');
         /** @var Office $office */
         $office       = $this->getReference($officeAlias);
-        $serviceAlias = $this->services[rand(0, 3)];
+        $serviceAlias = $this->services[rand(0, 5)];
         $description  = 'Description: '.$serviceAlias;
         /** @var Service $service */
         $service      = $this->getReference('service:'.$serviceAlias);
@@ -63,6 +66,7 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         $appointment->setDuration(60);
         $appointment->setDescription($description);
         $appointment->setService($service);
+        $appointment->setUser($this->getReference($this->doctors[rand(0, 4)]));
 
         return $appointment;
     }
