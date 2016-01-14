@@ -14,7 +14,7 @@
 
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <div class="input-group-addon"><strong class="icon20">+{{ prefix }}</strong></div>
+                                <div class="input-group-addon"><strong class="icon20">+{{ country.prefix }}</strong></div>
 
                                 <input type="text" class="form-control" id="msisdn" data-mask=""
                                        data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
@@ -60,27 +60,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="selectServiceId" class="col-sm-2 control-label">Услуга:</label>
-
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-star icon20"></i>
-                                </div>
-                                <select class="form-control" id="serviceId">
-                                    {% for service in services %}
-                                        {% if service.id == serviceId|default(0) %}
-                                            <option selected value="{{ service.id }}">{{ service.name }}</option>
-                                        {% else %}
-                                            <option value="{{ service.id }}">{{ service.name }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="selectDirectionId" class="col-sm-2 control-label">Источник:</label>
 
                         <div class="col-sm-10">
@@ -103,10 +82,38 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="selectOfficeId" class="col-sm-2 control-label">Офис:</label>
+                        <label for="selectServiceId" class="col-sm-2 control-label">Услуга:</label>
 
                         <div class="col-sm-10">
                             <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-star icon20"></i>
+                                </div>
+                                <select class="form-control" id="serviceId">
+                                    {% for service in services %}
+                                        {% if service.id == serviceId|default(0) %}
+                                            <option selected value="{{ service.id }}">{{ service.name }}</option>
+                                        {% else %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="selectOfficeId" class="col-sm-2 control-label">Офис:</label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group
+                            {% if officeId is not empty %}
+                                  has-success
+                            {% endif %}
+                            ">
                                 <div class="input-group-addon">
                                     <i class="fa fa-building icon20"></i>
                                 </div>
@@ -211,8 +218,7 @@
                     </div>
 
                     <input type="hidden" id="appId"    value="{{ appId|default('') }}">
-                    <input type="hidden" id="prefix"   value="{{ prefix }}">
-                    <input type="hidden" id="clientId" value="">
+                    <input type="hidden" id="clientId" value="{{ client.id|default('') }}">
 
                 </form>
             </div>
@@ -228,7 +234,9 @@
         form.createUrl = "{{ url('backendoffice_appointment_create')   }}";
         form.updateUrl = "{{ url('backendoffice_appointment_update')   }}";
         form.clientUrl = "{{ url('backendoffice_client_find')   }}";
-
-        form.init('{{ pattern }}', {{ appId|default('false') }});
+        form.pattern   = "{{ country.pattern }}";
+        form.length    = {{ country.length }};
+        form.prefix    = "{{ country.prefix }}";
+        form.init({{ appId|default('false') }});
     });
 </script>

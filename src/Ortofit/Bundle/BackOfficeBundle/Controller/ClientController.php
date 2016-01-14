@@ -141,7 +141,7 @@ class ClientController extends BaseController
                 throw new \Exception('Can\'t find client without msisdn');
             }
             /** @var Client $client */
-            $client = $this->getClientManager()->findBy(['msisdn' => $msisdn]);
+            $client = $this->getClientManager()->findOneBy(['msisdn' => $msisdn]);
             if (null == $client) {
                 throw new \Exception('A client is not found');
             }

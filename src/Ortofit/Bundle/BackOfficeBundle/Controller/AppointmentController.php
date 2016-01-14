@@ -30,7 +30,7 @@ class AppointmentController extends BaseController
      */
     private function updateClientName(Client $client, $name)
     {
-        if ($client->getName() == $name) {
+        if (($client->getName() == $name) || empty($name)) {
             return $client;
         }
         $data = [
@@ -81,6 +81,12 @@ class AppointmentController extends BaseController
      */
     private function getClient($bag)
     {
+        if ($bag->has('clientId')) {
+            $client = $this->getClientManager()->get($bag->get('clientId'));
+            if ($client) {
+                return $this->updateClientName($client, $bag->get('clientName'));
+            }
+        }
         /** @var Client $client */
         $client = $this->getClientManager()->findOneBy(['msisdn' => $bag->get('msisdn')]);
         if ($client) {
@@ -205,18 +211,17 @@ class AppointmentController extends BaseController
      */
     public function formAction(Request $request)
     {
-        $country = $this->getCountry();
         $data = [
             'directions' => $this->getClientDirectionManager()->all(),
             'offices'    => $this->getOfficeManager()->all(),
             'services'   => $this->getServiceManager()->all(),
-            'prefix'     => $country->getPrefix(),
-            'pattern'    => $country->getPattern(),
-            'doctors'    => $this->getDoctors()
+            'country'    => $this->getCountry(),
+            'doctors'    => $this->getDoctors(),
+            'officeId'   => $request->get('officeId'),
+            'date'       => $request->get('date'),
+            'time'       => $request->get('time'),
         ];
-        $data['officeId'] = $request->get('officeId');
-        $data['date'] = $request->get('date');
-        $data['time'] = $request->get('time');
+
         if ($request->get('appId')) {
             /** @var Appointment $app */
             $app = $this->getAppointmentManager()->get($request->get('appId'));
@@ -232,6 +237,7 @@ class AppointmentController extends BaseController
             $data['description'] = $app->getDescription();
             $data['appId']       = $app->getId();
             $data['gender']      = $app->getClient()->getGender();
+            $data['client']      = $app->getClient();
         }
 
         return $this->render('@OrtofitBackOffice/Appointment/form.html.twig', $data);

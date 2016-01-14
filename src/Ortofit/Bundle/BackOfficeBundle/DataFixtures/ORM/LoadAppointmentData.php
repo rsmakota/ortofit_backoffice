@@ -59,11 +59,14 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
 
         $date         = new \DateTime($day.' day');
         $date         = new \DateTime($date->format('Y-m-d').' '.$hour.":00:00");
+        if (($date->format('w') == 0) && ($hour >= 13)) {
+            return;
+        }
         $appointment  = new Appointment();
         $appointment->setClient($client);
         $appointment->setDateTime($date);
         $appointment->setOffice($office);
-        $appointment->setDuration(60);
+        $appointment->setDuration(30);
         $appointment->setDescription($description);
         $appointment->setService($service);
         $appointment->setUser($this->getReference($this->doctors[rand(0, 4)]));
@@ -78,12 +81,15 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
      */
     public function load(ObjectManager $manager)
     {
-        $client = $this->getReference('client:00');
         foreach ($this->offices as $officeAlias) {
             for ($d = -15; $d < 15; $d++) {
-                for ($h = 8; $h < 19; $h++) {
-                    $appointment = $this->create($officeAlias, $d, $h);
-                    $manager->persist($appointment);
+                for ($h = 10; $h < 19; $h++) {
+                    if (rand(0, 3) > 0) {
+                        $appointment = $this->create($officeAlias, $d, $h);
+                        if ($appointment) {
+                            $manager->persist($appointment);
+                        }
+                    }
                 }
             }
         }

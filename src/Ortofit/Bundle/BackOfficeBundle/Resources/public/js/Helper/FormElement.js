@@ -3,10 +3,9 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 BackOffice.FormElement = {
-    getPrefix: function () {
-        return $('#prefix');
-    },
-
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
     getMsisdn: function() {
         return $('#msisdn');
     },
@@ -25,6 +24,9 @@ BackOffice.FormElement = {
     getDate: function() {
         return $('#date');
     },
+    getTime: function() {
+        return $('#time');
+    },
     getDuration: function() {
         return $('#duration:checked');
     },
@@ -42,6 +44,20 @@ BackOffice.FormElement = {
     },
     getClientId: function() {
         return $('#clientId');
-    }
+    },
 
+    getById: function(id) {
+        return $('#'+id);
+    },
+    /**
+     * @param {Array} idArr
+     * @returns {Array}
+     */
+    getByIds: function(idArr) {
+        var els = [];
+        for(var i=0; i<idArr.length; i++) {
+            els.push(this.getById(idArr[i]));
+        }
+        return els;
+    }
 };

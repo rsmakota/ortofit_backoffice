@@ -41,6 +41,11 @@ class Country implements EntityInterface
     private $iso2;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $length;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -62,6 +67,22 @@ class Country implements EntityInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+    /**
+     * @param integer $length
+     */
+    public function setLength($length)
+    {
+        $this->length = $length;
     }
 
     /**
@@ -152,7 +173,8 @@ class Country implements EntityInterface
             'name'    => $this->name,
             'prefix'  => $this->prefix,
             'pattern' => $this->pattern,
-            'iso2'    => $this->iso2
+            'iso2'    => $this->iso2,
+            'length' => $this->length
         ];
     }
 
