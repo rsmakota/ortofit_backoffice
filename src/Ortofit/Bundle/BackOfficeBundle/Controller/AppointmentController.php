@@ -81,13 +81,15 @@ class AppointmentController extends BaseController
      */
     private function getClient($bag)
     {
-        if ($bag->has('clientId')) {
-            $client = $this->getClientManager()->get($bag->get('clientId'));
-            if ($client) {
+        /** @var Client $client */
+        $clientId = $bag->get('clientId');
+        if (!empty($clientId)) {
+            $client = $this->getClientManager()->get($clientId);
+            if (null != $client) {
                 return $this->updateClientName($client, $bag->get('clientName'));
             }
         }
-        /** @var Client $client */
+
         $client = $this->getClientManager()->findOneBy(['msisdn' => $bag->get('msisdn')]);
         if ($client) {
             return $this->updateClientName($client, $bag->get('clientName'));
