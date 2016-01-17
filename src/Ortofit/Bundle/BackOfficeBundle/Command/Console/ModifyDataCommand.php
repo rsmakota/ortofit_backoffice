@@ -93,19 +93,19 @@ EOT
         /** @var Service $services */
         $services = $manager->getRepository(Service::clazz())->find(1);
         $services->setName('Консультации');
-        $services->setColor('#f5f5dc');
+        $services->setColor('#cdaa40');
         $services->setShort('(Конс.)');
         $manager->merge($services);
 
         $services = $manager->getRepository(Service::clazz())->find(2);
         $services->setName("Коррекция стелек");
-        $services->setColor('#32CD32');
+        $services->setColor('#2e8b57');
         $services->setShort('(КС)');
         $manager->merge($services);
 
         $services = $manager->getRepository(Service::clazz())->find(3);
         $services->setName("Изготовление стелек ");
-        $services->setColor('#fffacd');
+        $services->setColor('#818100');
         $services->setShort('(ИОС)');
         $manager->merge($services);
 
