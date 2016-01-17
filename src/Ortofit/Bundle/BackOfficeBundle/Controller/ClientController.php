@@ -128,5 +128,29 @@ class ClientController extends BaseController
         }
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function findAction(Request $request)
+    {
+        try {
+            $msisdn = $request->get('msisdn');
+            if (null == $msisdn) {
+                throw new \Exception('Can\'t find client without msisdn');
+            }
+            /** @var Client $client */
+            $client = $this->getClientManager()->findOneBy(['msisdn' => $msisdn]);
+            if (null == $client) {
+                throw new \Exception('A client is not found');
+            }
+
+            return $this->createSuccessJsonResponse($client->getData());
+        } catch (\Exception $e) {
+            return $this->createFailJsonResponse($e, $request->request->all());
+        }
+    }
+
 
 }

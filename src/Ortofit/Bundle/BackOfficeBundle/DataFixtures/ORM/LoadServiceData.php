@@ -21,10 +21,12 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     private $data = [
-        'Консультация'        => ['alias' => 'consult',    'color' => '#0073b7'],
-        'Коррекция'           => ['alias' => 'correction', 'color' => '#f39c12'],
-        'Изготовление стелек' => ['alias' => 'insoles',    'color' => '#00c0ef'],
-        'Массаж'              => ['alias' => 'massage',    'color' => '#00a65a'],
+        'Консультации'             => ['alias' => 'consult',      'color' => '#3c8dbc', 'short'=>'(Конс.)'],
+        'Коррекция стелек '        => ['alias' => 'correction',   'color' => '#ff7000', 'short'=>'(КС)'],
+        'Изготовление стелек'      => ['alias' => 'insoles',      'color' => '#cd853f', 'short'=>'(ИОС)'],
+        'Массаж'                   => ['alias' => 'massage',      'color' => '#ff69b4', 'short'=>'(Массаж)'],
+        'Компьютерная диагностика' => ['alias' => 'diagnostic',   'color' => '#008d4c', 'short'=>'(КД)'],
+        'Бесплатная консультация'  => ['alias' => 'free_consult', 'color' => '#4876ff', 'short'=>'(б/п конс)'],
     ];
 
     /**
@@ -38,6 +40,7 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
             $entity = new Service();
             $entity->setName($name);
             $entity->setColor($data['color']);
+            $entity->setShort($data['short']);
             $manager->persist($entity);
             $this->setReference('service:'.$data['alias'], $entity);
         }

@@ -31,6 +31,15 @@ class BaseController extends Controller
         return new JsonResponse(['success' => 'ok', 'data' => $data]);
     }
 
+    protected function isProdEnv()
+    {
+        $env = $this->get('kernel')->getEnvironment();
+        if ('prod' == $env) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * @param \Exception $exception
      * @param array      $data
@@ -39,7 +48,11 @@ class BaseController extends Controller
      */
     protected function createFailJsonResponse(\Exception $exception, $data)
     {
-        return new JsonResponse(['success' => 'nok', 'error' => $exception->getMessage(), 'trace'=>$exception->getTrace(), 'data' => $data]);
+        if (!$this->isProdEnv()) {
+            return new JsonResponse(['success' => 'nok', 'error' => $exception->getMessage(), 'trace'=>$exception->getTrace(), 'data' => $data]);
+        }
+
+        return new JsonResponse(['success' => 'nok', 'error' => $exception->getMessage()]);
     }
 
     /**

@@ -281,13 +281,14 @@ class Appointment implements EntityInterface
      */
     public function getCalendarData()
     {
+        $service = $this->getService();
         return [
             'id'              => $this->id,
-            'title'           => $this->description,
+            'title'           => $service->getShort(),
             'start'           => $this->dateTime->format('c'),
             'end'             => $this->getEndDate()->format('c'),
-            'backgroundColor' => $this->getService()->getColor(),
-            'borderColor'     => $this->getService()->getColor(),
+            'backgroundColor' => $service->getColor(),
+            'borderColor'     => $service->getColor(),
         ];
     }
 }

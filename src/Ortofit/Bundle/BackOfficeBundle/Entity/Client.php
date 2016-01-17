@@ -217,6 +217,7 @@ class Client implements EntityInterface
     {
         return [
             'id'                => $this->id,
+            'name'              => $this->name,
             'msisdn'            => $this->msisdn,
             'created'           => $this->created->format('Y-m-d H:i:s'),
             'clientDirectionId' => $this->getClientDirection()->getId(),
