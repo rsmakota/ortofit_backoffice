@@ -57,5 +57,11 @@ class User extends BaseUser
     {
         $this->name = $name;
     }
-
+    /**
+     * @return string
+     */
+    static public function clazz()
+    {
+        return get_class();
+    }
 }

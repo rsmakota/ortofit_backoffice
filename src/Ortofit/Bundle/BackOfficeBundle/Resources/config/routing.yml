@@ -92,3 +92,9 @@ backendoffice_appointment_pre_app:
 backendoffice_appointment_work_hours:
     path:     /admin/app/work_hours
     defaults: { _controller: OrtofitBackOfficeBundle:Appointment:workHours }
+
+acme_demo_user_all:
+    path:  /admin/users
+    defaults: { _controller: OrtofitBackOfficeBundle:DoctorRest:users, _format: ~ }
+    requirements:
+        _method: GET

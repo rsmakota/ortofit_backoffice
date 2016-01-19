@@ -273,30 +273,7 @@ class AppointmentController extends BaseController
         foreach ($app as $appointment) {
             $responseData[] = $appointment->getCalendarData();
         }
-        $responseData[] = [
-            'start'    => '09:00',
-            'end'      => '10:00',
-            'dow'      => [1,2,3,4,5,6],
-            'color'    => '#222D32',
-            'overlap'  => true,
-            'rendering'=> 'background',
-        ];
-        $responseData[] = [
-            'start'    => '19:00',
-            'end'      => '20:00',
-            'dow'      => [1,2,3,4,5,6],
-            'color'    => '#222D32',
-            'overlap'  => true,
-            'rendering'=> 'background',
-        ];
-        $responseData[] = [
-            'start'    => '15:00',
-            'end'      => '20:00',
-            'dow'      => [0],
-            'color'    => '#222D32',
-            'overlap'  => true,
-            'rendering'=> 'background',
-        ];
+        $responseData = array_merge($responseData, $this->getParameter('not_active_hours'));
 
         return new JsonResponse($responseData);
     }
@@ -322,16 +299,6 @@ class AppointmentController extends BaseController
      */
     public function workHoursAction()
     {
-        $workHours = [
-            ['start' => 9,  'end' => 15],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-        ];
-
-        return new JsonResponse($workHours);
+        return new JsonResponse($this->getParameter('work_hours'));
     }
 }

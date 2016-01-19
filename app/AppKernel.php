@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Ortofit\Bundle\SingUpBundle\OrtofitSingUpBundle(),
             new Ortofit\Bundle\BackOfficeBundle\OrtofitBackOfficeBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
         ];
 
 

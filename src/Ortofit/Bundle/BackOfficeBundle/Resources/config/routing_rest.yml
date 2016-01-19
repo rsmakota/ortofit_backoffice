@@ -1,0 +1,4 @@
+users : 
+  type: rest
+  resource:     "@OrtofitBackOfficeBundle/Controller/DoctorRestController.php"
+  name_prefix:  api_

@@ -8,3 +8,8 @@ ortofit_sing_up:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+rest :
+  type : rest
+  resource : "@OrtofitBackOfficeBundle/Resources/config/routing_rest.yml"
+  prefix : /api

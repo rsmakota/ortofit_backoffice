@@ -23,7 +23,9 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "dev-master",
-        "phpunit/phpunit": "dev-master"
+        "phpunit/phpunit": "dev-master",
+        "friendsofsymfony/rest-bundle": "^1.7",
+        "jms/serializer-bundle": "^1.1"
 
     },
     "require-dev": {
