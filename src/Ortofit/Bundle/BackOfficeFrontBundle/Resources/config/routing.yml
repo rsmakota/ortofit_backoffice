@@ -1,0 +1,61 @@
+admin_panel:
+    path:     /admin
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:index }
+login_route:
+    path:     /login
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Login:login }
+logout:
+    path:     /admin/logout
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Login::logout }
+login_check:
+    path:     /admin/login_check
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Login:securityCheck }
+#backend_manage_get:
+#    path:     /admin/get/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:get }
+#backend_manage_create:
+#    path:     /admin/create/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:create }
+#backend_manage_update:
+#    path:     /admin/update/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:update }
+#backend_manage_remove:
+#    path:     /admin/remove/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:remove }
+#backend_manage_find:
+#    path:     /admin/find/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:find }
+#backend_manage_entity_index:
+#    path:     /admin/entity
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Entity:index }
+
+backendoffice_client:
+    path:     /admin/client
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:index }
+backendoffice_client_form:
+    path:     /admin/client/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:form }
+
+
+
+backendoffice_person:
+    path:     /admin/person
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Person:index }
+
+backendoffice_person_form:
+    path:     /admin/person/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Person:form }
+
+
+backendoffice_diagnosis_form:
+    path:     /admin/diagnosis/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Diagnosis:form }
+
+
+backendoffice_appointment_get_form:
+    path:     /admin/app/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:form }
+backendoffice_appointment_pre_app:
+    path:     /admin/app/pre
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:preOrder }
+

@@ -1,0 +1,39 @@
+api_app_create:
+    path:     /app/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:create }
+api_app_update:
+    path:     /app/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:update }
+api_app_delete:
+    path:     /app/delete
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:delete }
+api_app_get:
+    path:     /app/get
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:getApp }
+api_work_hours_get:
+    path:     /app/work_hours
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:workHours }
+
+api_client_update:
+    path:     /client/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:update }
+api_client_create:
+    path:     /client/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:create }
+api_client_find:
+    path:     /client/find
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:find }
+
+api_diagnosis_create:
+    path:     /diagnosis/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Diagnosis:create }
+api_diagnosis_update:
+    path:     /diagnosis/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Diagnosis:update }
+
+api_person_create:
+    path:     /admin/person/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Person:create }
+api_person_update:
+    path:     /admin/person/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Person:update }

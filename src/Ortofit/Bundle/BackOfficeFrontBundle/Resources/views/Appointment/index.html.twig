@@ -1,0 +1,74 @@
+{% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Главная
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-calendar"></i>Расписание</a></li>
+        </ol>
+    </section>
+
+
+    <!-- content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="office_tabs" class="nav nav-tabs" data-tabs="tabs">
+                    {% for office in offices %}
+                        {% if office.id == activeOfficeId %}
+                            <li class="active"><a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">{{ office.name }}</a></li>
+                        {% else %}
+                            <li><a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">{{ office.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <div class="box box-primary">
+                    <div class="box-body no-padding">
+                        <!-- THE CALENDAR -->
+                        {% for office in offices %}
+                            {% if office.id == activeOfficeId %}
+                                <div id="calendar{{ office.id }}"></div>
+                            {% else %}
+                                <div id="calendar{{ office.id }}" class="hidden"></div>
+                            {% endif  %}
+                        {% endfor %}
+                    </div><!-- /.box-body -->
+                </div><!-- /. box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+
+    <script>
+        $(function () {
+            var officeIds = [];
+            var calendar = BackOffice.Calendar;
+            calendar.initWorkHours('{{ url('api_work_hours_get')   }}');
+            calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
+            calendar.eventsUrl    = '{{ url('api_app_get') }}';
+            calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
+            {% for office in offices %}
+            officeIds.push({{ office.id }});
+            calendar.init({{ office.id }});
+            {% endfor %}
+
+            $('.office_link').click(function(){
+                var officeId = $(this).attr('office-id');
+                var calendarId = null;
+                for (var i=0; i<officeIds.length; i++ ) {
+                    calendarId = '#calendar' + officeIds[i];
+                    if (officeIds[i] == officeId) {
+                        $(calendarId).show();
+                        $(calendarId).removeClass('hidden');
+                        $(calendarId).fullCalendar('render');
+                    } else {
+                        $(calendarId).hide();
+                    }
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

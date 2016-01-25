@@ -1,0 +1,81 @@
+<!-- Modal -->
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Новый член семьи</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-3 control-label">Имя:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <input type="text" class="form-control" id="name"
+                                   placeholder="Имя" value="{{ person.name|default('') }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputBorn" class="col-sm-3 control-label">Дата рождения:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-birthday-cake"></i>
+                            </div>
+                            <input id="born" class="form-control pull-right active" type="text"
+                                   data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
+                                   value="{% if person is defined %}{{ person.born|date("d/m/Y")}}{% endif %}"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectFamilyStatus" class="col-sm-3 control-label">Статус:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <select class="form-control" id="familyStatusId">
+                                {% for status in familyStatuses %}
+                                    {% if status.id == person.familyStatus.id|default(0) %}
+                                        <option selected value="{{ status.id }}">{{ status.name }}</option>
+                                    {% else %}
+                                        <option value="{{ status.id }}">{{ status.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <input type="hidden" id="id" value="{{ person.id|default('') }}">
+                <input type="hidden" id="clientId" value="{{ client.id }}">
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" id="saveButton">Сохранить</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var person = BackOffice.Person;
+        person.createUrl = '{{ url('api_person_create') }}';
+        person.updateUrl = '{{ url('api_person_update') }}';
+        person.init({{ person.id|default('false') }});
+    });
+</script>

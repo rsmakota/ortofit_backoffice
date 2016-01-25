@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Ortofit\Bundle\SingUpBundle\OrtofitSingUpBundle(),
             new Ortofit\Bundle\BackOfficeBundle\OrtofitBackOfficeBundle(),
+            new Ortofit\Bundle\BackOfficeAPIBundle\OrtofitBackOfficeAPIBundle(),
+            new Ortofit\Bundle\BackOfficeFrontBundle\OrtofitBackOfficeFrontBundle(),
             new FOS\UserBundle\FOSUserBundle(),
         ];
 
