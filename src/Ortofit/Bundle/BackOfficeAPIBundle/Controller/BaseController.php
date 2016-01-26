@@ -23,12 +23,15 @@ class BaseController extends Controller
 {
     /**
      * @param array $data
-     * 
+     * @param array $extra
+     *
      * @return JsonResponse
      */
-    protected function createSuccessJsonResponse($data = [])
+    protected function createSuccessJsonResponse($data = [], $extra = [])
     {
-        return new JsonResponse(['success' => 'ok', 'data' => $data]);
+        $response = ['success' => 'ok', 'data' => $data];
+
+        return new JsonResponse(array_merge($response, $extra));
     }
 
     protected function isProdEnv()

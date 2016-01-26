@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
     <link href="{{ '../bundles/ortofitbackofficefront/css/custom.css' }}" rel="stylesheet" type="text/css" />
-
+    {% block style %} {% endblock %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -66,6 +66,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormElement.js'
     %}
     <script src="{{ asset_url }}"></script>
+    {% block js %} {% endblock %}
     {% endjavascripts %}
 
     <script>
@@ -295,6 +296,15 @@
                     <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
+
+                    <li>
+                         &nbsp;&nbsp;&nbsp;
+                    </li>
+
+                    <li>
+                        <a href="{{ url('logout') }}"><i class="fa fa-sign-out"></i></a>
+                    </li>
+
                 </ul>
             </div>
         </nav>

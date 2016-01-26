@@ -89,7 +89,6 @@ class AppointmentController extends BaseController
         return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', $data);
     }
 
-
     /**
      * @param Request $request
      *

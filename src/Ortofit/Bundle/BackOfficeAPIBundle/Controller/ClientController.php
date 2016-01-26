@@ -94,6 +94,29 @@ class ClientController extends BaseController
             return $this->createFailJsonResponse($e, $request->request->all());
         }
     }
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getAction(Request $request)
+    {
+        try {
+            $clients = $this->getClientManager()->all();
+            $data = [];
+            foreach ($clients as $client) {
+                $data[] = $client->getData();
+            }
+            $extra = [
+                "draw" => 1,
+                "recordsTotal" => 57,
+                "recordsFiltered" => 57,
+            ];
+            return $this->createSuccessJsonResponse($data, $extra);
+        } catch (\Exception $e) {
+            return $this->createFailJsonResponse($e, $request->request->all());
+        }
+    }
 
 
 }

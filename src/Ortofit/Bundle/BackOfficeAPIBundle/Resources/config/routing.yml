@@ -24,6 +24,12 @@ api_client_find:
     path:     /client/find
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:find }
 
+api_client_get:
+    path:     /client/get
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:get }
+
+
+
 api_diagnosis_create:
     path:     /diagnosis/create
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Diagnosis:create }
