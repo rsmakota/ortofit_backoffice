@@ -88,6 +88,9 @@ abstract class AbstractManager implements EntityManagerInterface
             ->getSingleScalarResult();
     }
 
+
+
+
     /**
      * @param integer $id
      *

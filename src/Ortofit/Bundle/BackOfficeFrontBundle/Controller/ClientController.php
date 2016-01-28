@@ -21,14 +21,19 @@ class ClientController extends BaseController
 
     /**
      * @param integer $current
+     * @param string  $msisdn
      *
      * @return Paginator
      */
-    private function getPaginator($current)
+    private function getPaginator($current, $msisdn = null)
     {
         $limit = $this->getLimit();
-        $count = $this->getClientManager()->count();
-
+        if (null == $msisdn) {
+            $count = $this->getClientManager()->count();
+        } else {
+            $count = $this->getClientManager()->countLike(['msisdn' => '%'.$msisdn.'%']);
+        }
+        dump($msisdn);
         return new Paginator($limit, $current, $count);
     }
 
@@ -39,13 +44,22 @@ class ClientController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        $msisdn    = $request->get('msisdn');
         $manager   = $this->getClientManager();
-        $paginator = $this->getPaginator($request->get('page', 1));
         $limit     = $this->getLimit();
-        $clients   = $manager->findBy([], ['id'=>'ASC'], $limit, ($limit * ($paginator->current() - 1)));
+        $orderBy   = ['id'=>'ASC'];
+        $paginator = $this->getPaginator($request->get('page', 1), $msisdn);
+        $offset    = $limit * ($paginator->current() - 1);
+
+        if (null != $msisdn) {
+            $clients = $manager->findLike(['msisdn' => '%'.$msisdn.'%'], $orderBy, $limit, $offset);
+        } else {
+            $clients = $manager->findBy([], $orderBy, $limit, $offset);
+        }
         $data = [
+            'clients'   => $clients,
             'paginator' => $paginator,
-            'clients' => $clients,
+            'msisdn'    => $msisdn
         ];
 
         return $this->render('@OrtofitBackOfficeFront/Client/index.html.twig', $data);

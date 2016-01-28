@@ -53,6 +53,9 @@ BackOffice.AppForm = {
     },
 
     create: function() {
+        if (!this.isValidMsisdn()) {
+            return;
+        }
         BackOffice.Transport.send(this.createUrl, this.getData(), function(){
             BackOffice.Modal.getWindow().modal('hide');
             var calendar = $('#calendar'+$('#officeId').val());

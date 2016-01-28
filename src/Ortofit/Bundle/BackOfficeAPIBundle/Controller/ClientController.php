@@ -2,7 +2,6 @@
 
 namespace Ortofit\Bundle\BackOfficeAPIBundle\Controller;
 
-use Ortofit\Bundle\BackOfficeFrontBundle\Paginator\Paginator;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Symfony\Component\HttpFoundation\ParameterBag;

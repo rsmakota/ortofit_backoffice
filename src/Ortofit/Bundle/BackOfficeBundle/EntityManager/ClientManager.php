@@ -86,4 +86,27 @@ class ClientManager extends AbstractManager
 
         return $entity;
     }
+
+    /**
+     * @param array        $params
+     * @param array|null   $orderBy
+     * @param integer|null $limit
+     * @param integer|null $offset
+     *
+     * @return EntityInterface[]
+     */
+    public function findLike($params, array $orderBy = null, $limit = null, $offset = null)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->findLike($params, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * @param array $criteria
+     *
+     * @return integer
+     */
+    public function countLike(array $criteria)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->countLike($criteria);
+    }
 }
