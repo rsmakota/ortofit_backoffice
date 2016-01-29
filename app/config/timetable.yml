@@ -1,0 +1,9 @@
+parameters:
+    timetable:
+        1:
+            0:
+                startHour: 9
+                startMinute: 0
+                endHour: 15
+                endMinute: 0
+            1: 

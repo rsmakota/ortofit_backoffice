@@ -37,8 +37,6 @@ class AppointmentController extends BaseController
         return $this->getCountryManager()->getDefault();
     }
 
-
-
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
