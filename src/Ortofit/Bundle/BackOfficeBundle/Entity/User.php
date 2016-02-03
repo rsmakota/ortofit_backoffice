@@ -26,6 +26,11 @@ class User extends BaseUser
      */
     protected $id;
 
+    public static function clazz()
+    {
+        return get_class();
+    }
+
     public function setSalt($salt)
     {
         $this->salt = $salt;

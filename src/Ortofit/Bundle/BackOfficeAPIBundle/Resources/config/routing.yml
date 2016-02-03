@@ -8,8 +8,12 @@ api_app_delete:
     path:     /app/delete
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:delete }
 api_app_get:
-    path:     /app/get
+    path:     /app/get/{userId}
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:getApp }
+api_app_get_all:
+    path:     /app/get_all
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:getApp }
+
 api_work_hours_get:
     path:     /app/work_hours
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:workHours }

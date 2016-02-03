@@ -175,10 +175,11 @@ class AppController extends BaseController
 
     /**
      * @param Request $request
+     * @param integer $userId
      *
      * @return JsonResponse
      */
-    public function getAppAction(Request $request)
+    public function getAppAction(Request $request, $userId=null)
     {
         $fromDay = new \DateTime('first day of this month');
         $toDay   = new \DateTime('last day of this month');
@@ -192,8 +193,11 @@ class AppController extends BaseController
         $data = [
             'from'      => $fromDay,
             'to'        => $toDay,
-            'office_id' => $request->get('office_id')
+            'office_id' => $request->get('office_id'),
         ];
+        if ($userId) {
+            $data['userId'] = $userId;
+        }
         $app = $this->getAppointmentManager()->findByRange(new ParameterBag($data));
         $responseData = [];
         foreach ($app as $appointment) {

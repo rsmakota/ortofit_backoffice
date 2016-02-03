@@ -9,6 +9,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\ORM;
 use Doctrine\ORM\EntityRepository;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
+use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 
 /**
  * Class AppointmentRepository
@@ -18,21 +19,44 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 class AppointmentRepository extends EntityRepository
 {
     /**
+     * @param array  $params
+     * @param string $alias
+     *
+     * @return string
+     */
+    private function getWhereAndCondition(array $params, $alias)
+    {
+        $keys = array_keys($params);
+        $data = [];
+        foreach ($keys as $key) {
+            $data[] = $alias.'.'.$key.' = :'.$key;
+        }
+
+        return implode(' AND ', $data);
+    }
+    /**
      * @param \DateTime $dayFrom
      * @param \DateTime $dayTo
      * @param Office    $office
+     * @param User      $user
      *
      * @return array
      */
-    public function findByRange(\DateTime $dayFrom, \DateTime $dayTo, Office $office)
+    public function findByRange(\DateTime $dayFrom, \DateTime $dayTo, Office $office, User $user = null)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
-        $params = ['dayFrom' => $dayFrom, 'dayTo' => $dayTo, 'office' => $office];
-        $qb = $builder->select('a')
-            ->from(Appointment::clazz(), 'a')
-            ->where('a.dateTime > :dayFrom AND a.dateTime < :dayTo')
-            ->andWhere('a.office = :office')
-            ->setParameters($params);
+        $alias   = 'a';
+        $params  = ['dayFrom' => $dayFrom, 'dayTo' => $dayTo];
+        $extra   = ['office' => $office];
+        if ($user) {
+            $extra['user'] = $user;
+        }
+
+        $qb = $builder->select($alias)
+            ->from(Appointment::clazz(), $alias)
+            ->where("$alias.dateTime > :dayFrom AND $alias.dateTime < :dayTo")
+            ->andWhere($this->getWhereAndCondition($extra, $alias))
+            ->setParameters(array_merge($params, $extra));
 
         return $qb->getQuery()->getResult();
     }

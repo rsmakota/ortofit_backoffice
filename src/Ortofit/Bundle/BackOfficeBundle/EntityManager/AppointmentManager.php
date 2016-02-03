@@ -9,6 +9,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
+use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -97,11 +98,16 @@ class AppointmentManager extends AbstractManager
     public function findByRange(ParameterBag $bag)
     {
         $office = $this->enManager->getRepository(Office::clazz())->find($bag->get('office_id'));
+        $user = null;
+        if ($bag->has('userId')) {
+            $user = $this->enManager->getRepository(User::clazz())->find($bag->get('userId'));
+        }
 
         return $this->enManager->getRepository($this->getEntityClassName())->findByRange(
             $bag->get('from'),
             $bag->get('to'),
-            $office
+            $office,
+            $user
         );
     }
 }

@@ -18,7 +18,16 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
  */
 class LoadOfficeData extends AbstractFixture implements OrderedFixtureInterface
 {
-
+    /**
+     * @return array
+     */
+    static public function getOfficeRefNames()
+    {
+        return [
+            'office:kirova',
+            'office:center'
+        ];
+    }
     /**
      * Load data fixtures with the passed EntityManager
      *

@@ -20,7 +20,18 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
 
-    private $doctorNames = ['svat' =>'Св.Л',  'lesya' => 'Леся',  'ser' => 'Сер.Н',  'eva'=>'Ев.А',  'elena'=>'Елена'];
+    static public $doctorNames = ['svat' =>'Св.Л',  'lesya' => 'Леся',  'ser' => 'Сер.Н',  'eva'=>'Ев.А',  'elena'=>'Елена'];
+
+    static public function getDoctorRefNames()
+    {
+        $doctors = [];
+        $doctorKeys = array_keys(self::$doctorNames);
+        foreach ($doctorKeys as $key) {
+            $doctors[] = 'doctor:'.$key;
+        }
+
+        return $doctors;
+    }
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -40,7 +51,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $admin->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
         $admin->addGroup($this->getReference('group:admin'));
         $manager->persist($admin);
-        foreach ($this->doctorNames as $key => $name) {
+        foreach (self::$doctorNames as $key => $name) {
             $doctor = new User();
             $doctor->setName($name);
             $doctor->setUsername('doctor' . $name);
@@ -70,6 +81,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->flush();
     }
+
+
 
     /**
      * Get the order of this fixture

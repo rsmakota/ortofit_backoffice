@@ -65,6 +65,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Person.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormDecorator.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormElement.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/MenuElement.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% block js %} {% endblock %}
@@ -76,6 +77,7 @@
                 BackOffice.Modal.load('{{ url('backendoffice_appointment_get_form') }}', {});
             });
             BackOffice.Doctor.loadUrl = "{{ url("api_doctor_all") }}";
+            BackOffice.Doctor.calendarUrl = "{{ url("admin_panel") }}";
             BackOffice.Doctor.loadData();
         });
 
@@ -326,7 +328,7 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">Главное Мею</li>
-                <li class="treeview">
+                <li class="treeview" id="schedule">
                     <a href="#">
                         <i class="fa fa-calendar"></i> <span>Расписание</span>
                         <i class="fa fa-angle-left pull-right"></i>
