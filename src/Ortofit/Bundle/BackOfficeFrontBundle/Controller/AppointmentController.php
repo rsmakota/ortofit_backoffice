@@ -42,10 +42,13 @@ class AppointmentController extends BaseController
      */
     public function indexAction()
     {
-        $offices = $this->getOfficeManager()->all();
+        $offices        = $this->getOfficeManager()->all();
         $activeOfficeId = $offices[0]->getId();
+        $doctors        = $this->getDoctors();
 
-        return $this->render('@OrtofitBackOfficeFront/Appointment/index.html.twig', ['offices' => $offices, 'activeOfficeId'=>$activeOfficeId]);
+        return $this->render(
+            '@OrtofitBackOfficeFront/Appointment/index.html.twig',
+            ['offices' => $offices, 'activeOfficeId' => $activeOfficeId, 'doctors' => $doctors]);
     }
 
     /**

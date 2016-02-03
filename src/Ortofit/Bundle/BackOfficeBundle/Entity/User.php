@@ -58,4 +58,12 @@ class User extends BaseUser
         $this->name = $name;
     }
 
+    public function getDoctorData()
+    {
+        return [
+            'id'   => $this->id,
+            'name' => $this->getName()
+        ];
+    }
+
 }

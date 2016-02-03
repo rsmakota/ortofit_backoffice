@@ -17,6 +17,20 @@ BackOffice.Transport = {
             }
         });
     },
+    get: function (url, data, callback) {
+        $.ajax({
+            type: "GET",
+            url : url,
+            data: data,
+            success: function(msg) {
+                callback(msg);
+            },
+            error: function() {
+                callback();
+            }
+        });
+    },
+
     alert: function () {
         alert('Alert');
     }

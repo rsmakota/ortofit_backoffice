@@ -61,6 +61,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Calendar.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Diagnosis.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Client.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Doctor.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Person.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormDecorator.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormElement.js'
@@ -74,6 +75,8 @@
             $('#appButton').click(function (e) {
                 BackOffice.Modal.load('{{ url('backendoffice_appointment_get_form') }}', {});
             });
+            BackOffice.Doctor.loadUrl = "{{ url("api_doctor_all") }}";
+            BackOffice.Doctor.loadData();
         });
 
     </script>
@@ -324,9 +327,20 @@
             <ul class="sidebar-menu">
                 <li class="header">Главное Мею</li>
                 <li class="treeview">
-                    <a href="{{ url('admin_panel') }}">
+                    <a href="#">
                         <i class="fa fa-calendar"></i> <span>Расписание</span>
+                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
+                    <ul class="treeview-menu" id="doctorList">
+                        {#{% for doctor in doctors %}#}
+                        {#<li>#}
+                            {#<a href="{{ url('admin_panel', {'doctor':doctor.id}) }}">#}
+                                {#<i class="fa fa-circle-o"></i>#}
+                                {#{{ doctor.name }}#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#{% endfor %}#}
+                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="{{ url('backendoffice_client') }}">
