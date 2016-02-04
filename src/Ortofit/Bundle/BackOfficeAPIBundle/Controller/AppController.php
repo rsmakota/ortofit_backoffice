@@ -6,6 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeAPIBundle\Controller;
 
+use Ortofit\Bundle\BackOfficeAPIBundle\Date\DateRange;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
@@ -189,26 +190,17 @@ class AppController extends BaseController
      */
     public function getAppAction(Request $request, $userId=null)
     {
-        $fromDay = new \DateTime('first day of this month');
-        $toDay   = new \DateTime('last day of this month');
+        $range = new DateRange(
+            $request->get('start', 'first day of this month'),
+            $request->get('end', 'last day of this month')
+        );
         $responseData = [];
-        if (null != $request->get('start')) {
-            $fromDay = new \DateTime($request->get('start'));
-        }
-        if (null != $request->get('end')) {
-            $toDay = new \DateTime($request->get('end'));
-        }
-        $data = [
-            'from'      => $fromDay,
-            'to'        => $toDay,
-            'officeId'  => $request->get('office_id'),
-        ];
+
         if ($userId) {
-            $data['userId'] = $userId;
-            $available      = $this->getAvailableHours(new ParameterBag($data));
-            $responseData   = array_merge($responseData, $available);
+//            $available      = $this->getAvailableHours(new ParameterBag($data));
+//            $responseData   = array_merge($responseData, $available);
         }
-        $app = $this->getAppointmentManager()->findByRange(new ParameterBag($data));
+        $app = $this->getAppointmentManager()->findByRange($range, $request->get('office_id'), $userId);
 
         foreach ($app as $appointment) {
             $responseData[] = $appointment->getCalendarData();

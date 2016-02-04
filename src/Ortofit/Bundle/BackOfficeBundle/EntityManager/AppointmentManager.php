@@ -6,6 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
+use Ortofit\Bundle\BackOfficeAPIBundle\Date\DateRangeInterface;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
@@ -91,21 +92,22 @@ class AppointmentManager extends AbstractManager
     }
 
     /**
-     * @param ParameterBag $bag
+     * @param DateRangeInterface $range
+     * @param integer            $officeId
+     * @param null|integer       $userId
      *
      * @return Appointment[]
      */
-    public function findByRange(ParameterBag $bag)
+    public function findByRange($range, $officeId, $userId=null)
     {
-        $office = $this->enManager->getRepository(Office::clazz())->find($bag->get('officeId'));
+        $office = $this->enManager->getRepository(Office::clazz())->find($officeId);
         $user = null;
-        if ($bag->has('userId')) {
-            $user = $this->enManager->getRepository(User::clazz())->find($bag->get('userId'));
+        if ($userId) {
+            $user = $this->enManager->getRepository(User::clazz())->find($userId);
         }
 
         return $this->enManager->getRepository($this->getEntityClassName())->findByRange(
-            $bag->get('from'),
-            $bag->get('to'),
+            $range,
             $office,
             $user
         );

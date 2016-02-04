@@ -7,6 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeBundle\ORM;
 
 use Doctrine\ORM\EntityRepository;
+use Ortofit\Bundle\BackOfficeAPIBundle\Date\DateRangeInterface;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
@@ -35,18 +36,17 @@ class AppointmentRepository extends EntityRepository
         return implode(' AND ', $data);
     }
     /**
-     * @param \DateTime $dayFrom
-     * @param \DateTime $dayTo
-     * @param Office    $office
-     * @param User      $user
+     * @param DateRangeInterface $range
+     * @param Office             $office
+     * @param User               $user
      *
      * @return array
      */
-    public function findByRange(\DateTime $dayFrom, \DateTime $dayTo, Office $office, User $user = null)
+    public function findByRange(DateRangeInterface $range, Office $office, User $user = null)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 'a';
-        $params  = ['dayFrom' => $dayFrom, 'dayTo' => $dayTo];
+        $params  = ['dayFrom' => $range->getFrom(), 'dayTo' => $range->getTo()];
         $extra   = ['office' => $office];
         if ($user) {
             $extra['user'] = $user;
