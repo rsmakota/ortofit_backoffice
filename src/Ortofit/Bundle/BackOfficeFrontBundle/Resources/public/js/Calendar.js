@@ -64,6 +64,7 @@ BackOffice.Calendar = {
             dayClick:       function (date, jsEvent, view) {
                 var h = parseInt(date.format('H'));
                 var d = parseInt(date.format('d'));
+                console.log(this);
                 if(!me.isWorkTime(d, h)) {
                     return false;
                 }

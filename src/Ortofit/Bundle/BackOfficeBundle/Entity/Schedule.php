@@ -7,13 +7,14 @@
 namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Class Schedule
  *
  * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ortofit\Bundle\BackOfficeBundle\ORM\ScheduleRepository")
  * @ORM\Table(name="schedule")
  */
 class Schedule
@@ -26,29 +27,14 @@ class Schedule
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(name="start_date", type="datetime")
      */
-    private $date;
+    private $start;
 
     /**
-     * @ORM\Column(name="start_hour", type="integer")
+     * @ORM\Column(name="end_date", type="datetime")
      */
-    private $startHour;
-
-    /**
-     * @ORM\Column(name="start_minute", type="integer")
-     */
-    private $startMinute;
-
-    /**
-     * @ORM\Column(name="end_hour", type="integer")
-     */
-    private $endHour;
-
-    /**
-     * @ORM\Column(name="end_minute", type="integer")
-     */
-    private $endMinute;
+    private $end;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -81,81 +67,30 @@ class Schedule
     /**
      * @return \DateTime
      */
-    public function getDate()
+    public function getStart()
     {
-        return $this->date;
+        return $this->start;
     }
 
     /**
-     * @param \DateTime $date
+     * @param \DateTime $start
      */
-    public function setDate($date)
+    public function setStart($start)
     {
-        $this->date = $date;
+        $this->start = $start;
     }
 
     /**
-     * @return integer
+     * @return \DateTime
      */
-    public function getStartHour()
+    public function getEnd()
     {
-        return $this->startHour;
+        return $this->end;
     }
 
-    /**
-     * @param integer $startHour
-     */
-    public function setStartHour($startHour)
+    public function setEnd($end)
     {
-        $this->startHour = $startHour;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getStartMinute()
-    {
-        return $this->startMinute;
-    }
-
-    /**
-     * @param $startMinute
-     */
-    public function setStartMinute($startMinute)
-    {
-        $this->startMinute = $startMinute;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getEndHour()
-    {
-        return $this->endHour;
-    }
-
-    /**
-     * @param integer $endHour
-     */
-    public function setEndHour($endHour)
-    {
-        $this->endHour = $endHour;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getEndMinute()
-    {
-        return $this->endMinute;
-    }
-
-    /**
-     * @param integer $endMinute
-     */
-    public function setEndMinute($endMinute)
-    {
-        $this->endMinute = $endMinute;
+        $this->end = $end;
     }
 
     /**
@@ -197,5 +132,19 @@ class Schedule
     {
         return get_class();
     }
+    /**
+     * @return array
+     */
+    public function getCalendarData()
+    {
 
+        return [
+            'id'        => 'available_hours',
+            'start'     => $this->getStart()->format('c'),
+            'end'       => $this->getEnd()->format('c'),
+//            'color'     => '#222D32',
+//            'overlap'   => true,
+            'rendering' => 'background',
+        ];
+    }
 }

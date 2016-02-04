@@ -97,7 +97,7 @@ class AppointmentManager extends AbstractManager
      */
     public function findByRange(ParameterBag $bag)
     {
-        $office = $this->enManager->getRepository(Office::clazz())->find($bag->get('office_id'));
+        $office = $this->enManager->getRepository(Office::clazz())->find($bag->get('officeId'));
         $user = null;
         if ($bag->has('userId')) {
             $user = $this->enManager->getRepository(User::clazz())->find($bag->get('userId'));

@@ -105,14 +105,18 @@ class LoadScheduleData extends AbstractFixture implements OrderedFixtureInterfac
      */
     private function createSchedule($doctor, $offices, $day)
     {
+        $today     = new \DateTime(date('Y-m-d 00:00:00'));
+        $start     = clone $today;
+        $startHour = $this->random($this->startRange);
+        $during    = $this->random($this->duringRange);
+        $start->modify($day.' day')->modify('+'.$startHour.' hour');
+        $end = clone $start;
+        $end->modify('+'.$during.' hour');
         $schedule = new Schedule();
         $schedule->setUser($doctor);
-        $schedule->setDate(new \DateTime($day.' day'));
         $schedule->setOffice($offices);
-        $schedule->setStartHour($this->random($this->startRange));
-        $schedule->setEndHour(($schedule->getStartHour() + $this->random($this->duringRange)));
-        $schedule->setStartMinute(0);
-        $schedule->setEndMinute(0);
+        $schedule->setStart($start);
+        $schedule->setEnd($end);
 
         return $schedule;
     }

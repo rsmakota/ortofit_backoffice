@@ -21,6 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
 class AppController extends BaseController
 {
     /**
+     * @return \Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager
+     */
+    private function getScheduleManager()
+    {
+        return $this->get('ortofit_back_office.schedule_manage');
+    }
+
+    /**
      * @param Client $client
      * @param string $name
      *
@@ -183,7 +191,7 @@ class AppController extends BaseController
     {
         $fromDay = new \DateTime('first day of this month');
         $toDay   = new \DateTime('last day of this month');
-
+        $responseData = [];
         if (null != $request->get('start')) {
             $fromDay = new \DateTime($request->get('start'));
         }
@@ -193,16 +201,20 @@ class AppController extends BaseController
         $data = [
             'from'      => $fromDay,
             'to'        => $toDay,
-            'office_id' => $request->get('office_id'),
+            'officeId'  => $request->get('office_id'),
         ];
         if ($userId) {
             $data['userId'] = $userId;
+            $available      = $this->getAvailableHours(new ParameterBag($data));
+            $responseData   = array_merge($responseData, $available);
         }
         $app = $this->getAppointmentManager()->findByRange(new ParameterBag($data));
-        $responseData = [];
+
         foreach ($app as $appointment) {
             $responseData[] = $appointment->getCalendarData();
         }
+
+
         $responseData[] = [
             'start'    => '09:00',
             'end'      => '10:00',
@@ -238,15 +250,26 @@ class AppController extends BaseController
     public function workHoursAction()
     {
         $workHours = [
-            ['start' => 9,  'end' => 15],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
-            ['start' => 10, 'end' => 19],
+            ['start' => 1, 'end' => 1],
+            ['start' => 1, 'end' => 1],
+            ['start' => 1, 'end' => 1],
+            ['start' => 1, 'end' => 1],
+            ['start' => 1, 'end' => 1],
+            ['start' => 1, 'end' => 1],
+            ['start' => 1, 'end' => 1],
         ];
 
         return new JsonResponse($workHours);
+    }
+
+    private function getAvailableHours(ParameterBag $bag)
+    {
+        $schedules = $this->getScheduleManager()->findByRange($bag);
+        $data = [];
+        foreach ($schedules as $schedule) {
+            $data[] = $schedule->getCalendarData();
+        }
+
+        return $data;
     }
 }
