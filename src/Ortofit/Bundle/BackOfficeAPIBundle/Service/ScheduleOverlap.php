@@ -14,7 +14,7 @@ namespace Ortofit\Bundle\BackOfficeAPIBundle\Service;
 class ScheduleOverlap
 {
 
-    public function createNotAvailableHour($schedule)
+    public function createNotAvailableHour($schedules)
     {
 
     }

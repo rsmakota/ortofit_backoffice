@@ -6,7 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\BackOfficeAPIBundle\Date\DateRangeInterface;
+use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
@@ -93,19 +93,13 @@ class AppointmentManager extends AbstractManager
 
     /**
      * @param DateRangeInterface $range
-     * @param integer            $officeId
-     * @param null|integer       $userId
+     * @param Office             $office
+     * @param null|User          $user
      *
      * @return Appointment[]
      */
-    public function findByRange($range, $officeId, $userId=null)
+    public function findByRange($range, $office, $user)
     {
-        $office = $this->enManager->getRepository(Office::clazz())->find($officeId);
-        $user = null;
-        if ($userId) {
-            $user = $this->enManager->getRepository(User::clazz())->find($userId);
-        }
-
         return $this->enManager->getRepository($this->getEntityClassName())->findByRange(
             $range,
             $office,

@@ -6,10 +6,12 @@
 
 namespace Ortofit\Bundle\BackOfficeAPIBundle\Controller;
 
-use Ortofit\Bundle\BackOfficeAPIBundle\Date\DateRange;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
+use Rsmakota\UtilityBundle\Date\DateRange;
+use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,8 @@ class AppController extends BaseController
     {
         return $this->get('ortofit_back_office.schedule_manage');
     }
+
+
 
     /**
      * @param Client $client
@@ -184,28 +188,30 @@ class AppController extends BaseController
 
     /**
      * @param Request $request
-     * @param integer $userId
+     * @param integer $doctorId
      *
      * @return JsonResponse
      */
-    public function getAppAction(Request $request, $userId=null)
+    public function getAppAction(Request $request, $doctorId=null)
     {
         $range = new DateRange(
             $request->get('start', 'first day of this month'),
             $request->get('end', 'last day of this month')
         );
+        $office = $this->getOfficeManager()->get($request->get('office_id'));
+        $doctor = $this->getDoctorManager()->findUserBy(['id' => $doctorId]);
+
         $responseData = [];
 
-        if ($userId) {
-//            $available      = $this->getAvailableHours(new ParameterBag($data));
+        if ($doctor) {
+            $available      = $this->getAvailableHours(new ParameterBag($data));
 //            $responseData   = array_merge($responseData, $available);
         }
-        $app = $this->getAppointmentManager()->findByRange($range, $request->get('office_id'), $userId);
+        $app = $this->getAppointmentManager()->findByRange($range, $office, $doctor);
 
         foreach ($app as $appointment) {
             $responseData[] = $appointment->getCalendarData();
         }
-
 
         $responseData[] = [
             'start'    => '09:00',
@@ -254,9 +260,16 @@ class AppController extends BaseController
         return new JsonResponse($workHours);
     }
 
-    private function getAvailableHours(ParameterBag $bag)
+    /**
+     * @param DateRangeInterface $range
+     * @param Office             $office
+     * @param User|null          $user
+     *
+     * @return array
+     */
+    private function getAvailableHours(DateRangeInterface $range, Office $office, User $user=null)
     {
-        $schedules = $this->getScheduleManager()->findByRange($bag);
+        $schedules = $this->getScheduleManager()->findByRange($range, $office, $user);
         $data = [];
         foreach ($schedules as $schedule) {
             $data[] = $schedule->getCalendarData();

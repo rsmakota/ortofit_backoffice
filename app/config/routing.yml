@@ -1,3 +1,7 @@
+rsmakota_utility:
+    resource: "@RsmakotaUtilityBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ortofit_back_office_front:
     resource: "@OrtofitBackOfficeFrontBundle/Resources/config/routing.yml"
     prefix:   /

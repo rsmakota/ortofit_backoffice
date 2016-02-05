@@ -9,6 +9,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Schedule;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
+use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -71,18 +72,17 @@ class ScheduleManager extends AbstractManager
     }
 
     /**
-     * @param ParameterBag $bag
+     * @param DateRangeInterface $range
+     * @param Office             $office
+     * @param User               $user
      *
      * @return Schedule[]
      */
-    public function findByRange(ParameterBag $bag)
+    public function findByRange(DateRangeInterface $range, Office $office, User $user)
     {
-        $office = $this->enManager->getRepository(Office::clazz())->find($bag->get('officeId'));
-        $user   = $this->enManager->getRepository(User::clazz())->find($bag->get('userId'));
 
         return $this->enManager->getRepository($this->getEntityClassName())->findByRange(
-            $bag->get('from'),
-            $bag->get('to'),
+            $range,
             $office,
             $user
         );

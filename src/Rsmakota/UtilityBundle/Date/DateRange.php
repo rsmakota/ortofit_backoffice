@@ -4,10 +4,7 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\BackOfficeAPIBundle\Date;
-
-
-use Symfony\Component\Validator\Constraints\DateTime;
+namespace Rsmakota\UtilityBundle\Date;
 
 /**
  * Class DateRange
@@ -24,6 +21,10 @@ class DateRange implements DateRangeInterface
      * @var \DateTime
      */
     protected $to;
+    /**
+     * @var DateIteratorInterface
+     */
+    protected $dayIterator;
 
     /**
      * DateRange constructor.
@@ -39,7 +40,7 @@ class DateRange implements DateRangeInterface
     /**
      * @param \DateTime|string $date
      *
-     * @return DateTime
+     * @return \DateTime
      */
     private function toDateTime($date)
     {
@@ -64,5 +65,17 @@ class DateRange implements DateRangeInterface
     public function getTo()
     {
         return $this->to;
+    }
+
+    /**
+     * @return DateIteratorInterface
+     */
+    public function getDayIterator()
+    {
+        if (!$this->dayIterator) {
+            $this->dayIterator = new DayIterator($this->from, $this->to);
+        }
+
+        return $this->dayIterator;
     }
 }

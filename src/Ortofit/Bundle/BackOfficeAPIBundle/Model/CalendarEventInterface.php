@@ -6,12 +6,36 @@
 
 namespace Ortofit\Bundle\BackOfficeAPIBundle\Model;
 
-
+/**
+ * Interface CalendarEventInterface
+ *
+ * @package Ortofit\Bundle\BackOfficeAPIBundle\Model
+ */
 interface CalendarEventInterface
 {
     /**
-     * @return array
+     * @return \DateTime
      */
-    public function getData();
+    public function getStart();
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnd();
+
+    /**
+     * @return string
+     */
+    public function getColor();
+
+    /**
+     * @return boolean
+     */
+    public function getOverlap();
+
+    /**
+     * @return string
+     */
+    public function getRendering();
 
 }

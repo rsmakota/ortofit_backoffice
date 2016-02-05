@@ -1,0 +1,3 @@
+rsmakota_utility_homepage:
+    path:     /
+    defaults: { _controller: RsmakotaUtilityBundle:Default:index }

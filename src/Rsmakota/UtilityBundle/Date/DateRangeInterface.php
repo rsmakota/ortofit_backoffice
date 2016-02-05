@@ -4,9 +4,13 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\BackOfficeAPIBundle\Date;
+namespace Rsmakota\UtilityBundle\Date;
 
-
+/**
+ * Interface DateRangeInterface
+ *
+ * @package Rsmakota\UtilityBundle\Date
+ */
 interface DateRangeInterface
 {
     /**
@@ -18,4 +22,9 @@ interface DateRangeInterface
      * @return \DateTime
      */
     public function getTo();
+
+    /**
+     * @return DateIteratorInterface
+     */
+    public function getDayIterator();
 }
