@@ -1,0 +1,4 @@
+services:
+    backoffice_api.background_event_builder:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\EventBuilder\BackgroundEventBuilder
+        arguments: ["%calendar_off_hours%"]

@@ -7,6 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ortofit\Bundle\BackOfficeBundle\Model\ScheduleInterface;
 
 /**
  * Class Schedule
@@ -16,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Ortofit\Bundle\BackOfficeBundle\ORM\ScheduleRepository")
  * @ORM\Table(name="schedule")
  */
-class Schedule
+class Schedule implements ScheduleInterface
 {
     /**
      * @ORM\Id
