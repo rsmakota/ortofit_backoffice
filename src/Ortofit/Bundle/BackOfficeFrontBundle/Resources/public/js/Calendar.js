@@ -25,7 +25,7 @@ BackOffice.Calendar = {
         });
     },
 
-    init: function (officeId) {
+    init: function (officeId, userId) {
         var me = this;
         var modal = BackOffice.Modal;
         $('#calendar'+officeId).fullCalendar({
@@ -61,15 +61,14 @@ BackOffice.Calendar = {
             eventClick:     function (calEvent, jsEvent, view) {
                 modal.load(me.eventDataUrl+'?appId='+calEvent.id, {});
             },
-            dayClick:       function (date, jsEvent, view) {
-                var h = parseInt(date.format('H'));
-                var d = parseInt(date.format('d'));
-                console.log(this);
-                if(!me.isWorkTime(d, h)) {
+            dayClick: function (date, jsEvent, view) {
+                if (null == userId) {
                     return false;
                 }
+
                 var data = {
                     officeId: officeId,
+                    userId:   userId,
                     date:     date.format("DD/MM/YYYY"),
                     time:     date.format("HH:mm")
                 };

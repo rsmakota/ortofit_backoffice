@@ -7,7 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeAPIBundle\EventBuilder;
 
 use Ortofit\Bundle\BackOfficeAPIBundle\Grid\GridInterface;
-use Ortofit\Bundle\BackOfficeAPIBundle\Model\CalendarEventInterface;
+use Ortofit\Bundle\BackOfficeAPIBundle\EventModel\CalendarEventInterface;
 
 /**
  * Interface EventBuilderInterface
@@ -21,6 +21,6 @@ interface EventBuilderInterface
      *
      * @return CalendarEventInterface[]
      */
-    public function create(GridInterface $grid);
+    public function create($grid);
 
 }

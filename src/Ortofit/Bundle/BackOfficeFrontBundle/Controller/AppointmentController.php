@@ -18,6 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AppointmentController extends BaseController
 {
+    /**
+     * @return \Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager
+     */
+    private function getScheduleManager()
+    {
+        return $this->get('ortofit_back_office.schedule_manage');
+    }
 
     /**
      * @return ArrayCollection
@@ -35,6 +42,25 @@ class AppointmentController extends BaseController
     private function getCountry()
     {
         return $this->getCountryManager()->getDefault();
+    }
+
+    /**
+     * @param \DateTime $date
+     * @param integer   $userId
+     * @param integer   $officeId
+     *
+     * @return bool
+     */
+    private function isWorkDate($date, $userId, $officeId)
+    {
+        $office   = $this->getOfficeManager()->get($officeId);
+        $user     = $this->getDoctorManager()->findUserBy(['id' => $userId]);
+        $schedule = $this->getScheduleManager()->findByDate($date, $office, $user);
+        if ($schedule) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -58,6 +84,11 @@ class AppointmentController extends BaseController
      */
     public function formAction(Request $request)
     {
+        $date = \DateTime::createFromFormat('d/m/Y H:i',$request->get('date')." ". $request->get('time'));
+        if (!$this->isWorkDate($date, $request->get('userId'), $request->get('officeId'))) {
+            return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
+        }
+        if ($request->get('userId'))
         $data = [
             'directions' => $this->getClientDirectionManager()->all(),
             'offices'    => $this->getOfficeManager()->all(),

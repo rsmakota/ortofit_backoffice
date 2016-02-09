@@ -44,7 +44,7 @@
         $(function () {
             var officeIds = [];
             var calendar = BackOffice.Calendar;
-            calendar.initWorkHours('{{ url('api_work_hours_get')   }}');
+            {#calendar.initWorkHours('{{ url('api_work_hours_get')   }}');#}
             calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
             {% if app.request.query.has('doctorId') %}
             calendar.eventsUrl    = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
@@ -55,7 +55,7 @@
             calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
             {% for office in offices %}
             officeIds.push({{ office.id }});
-            calendar.init({{ office.id }});
+            calendar.init({{ office.id}}, {{ app.request.query.get("doctorId", "null") }});
             {% endfor %}
 
             $('.office_link').click(function(){

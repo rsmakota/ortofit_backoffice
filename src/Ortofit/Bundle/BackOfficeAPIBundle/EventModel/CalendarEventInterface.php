@@ -4,7 +4,7 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\BackOfficeAPIBundle\Model;
+namespace Ortofit\Bundle\BackOfficeAPIBundle\EventModel;
 
 /**
  * Interface CalendarEventInterface
@@ -37,5 +37,10 @@ interface CalendarEventInterface
      * @return string
      */
     public function getRendering();
+
+    /**
+     * @return array
+     */
+    public function getData();
 
 }

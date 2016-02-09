@@ -16,7 +16,7 @@ class DayIterator implements DateIteratorInterface
     private $start;
     private $end;
     private $current;
-    private $step = '1 day';
+    private $step = 86400;
     /**
      * DayIterator constructor.
      *
@@ -38,11 +38,11 @@ class DayIterator implements DateIteratorInterface
             return $this->current = clone $this->start;
         }
 
-        if (($this->current->format('U') + strtotime($this->step)) > $this->end->format('U')) {
+        if (($this->current->format('U') + $this->step) > $this->end->format('U')) {
             return false;
         }
 
-        return $this->current->modify('+'.$this->step);
+        return $this->current->modify('+1 day');
     }
 
     /**
@@ -50,11 +50,11 @@ class DayIterator implements DateIteratorInterface
      */
     public function previous()
     {
-        if (($this->current->format('U') - strtotime($this->step)) > $this->start->format('U')) {
+        if (($this->current->format('U') - $this->step) > $this->start->format('U')) {
             return false;
         }
 
-        return $this->current->modify('-'.$this->step);
+        return $this->current->modify('-1 day');
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2015 ortofit_quiz
+ * @copyright 2015 ortofit_back_office
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
@@ -24,14 +24,20 @@ use Symfony\Component\HttpFoundation\Request;
 class AppController extends BaseController
 {
     /**
+     * @return \Ortofit\Bundle\BackOfficeAPIBundle\EventService\EventService
+     */
+    private function getEventService()
+    {
+        return $this->get('backoffice_api.event_service');
+    }
+
+    /**
      * @return \Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager
      */
     private function getScheduleManager()
     {
         return $this->get('ortofit_back_office.schedule_manage');
     }
-
-
 
     /**
      * @param Client $client
@@ -188,65 +194,45 @@ class AppController extends BaseController
 
     /**
      * @param Request $request
-     * @param integer $doctorId
+     * @param integer $userId
      *
      * @return JsonResponse
      */
-    public function getAppAction(Request $request, $doctorId=null)
+    public function getAppAction(Request $request, $userId = null)
     {
         $range = new DateRange(
             $request->get('start', 'first day of this month'),
             $request->get('end', 'last day of this month')
         );
-        $office = $this->getOfficeManager()->get($request->get('office_id'));
-        $doctor = $this->getDoctorManager()->findUserBy(['id' => $doctorId]);
+        $response = [];
+        $doctor   = null;
+        $office   = $this->getOfficeManager()->get($request->get('office_id'));
 
-        $responseData = [];
-
-        if ($doctor) {
-            $available      = $this->getAvailableHours(new ParameterBag($data));
-//            $responseData   = array_merge($responseData, $available);
+        if ($userId) {
+            $doctor = $this->getDoctorManager()->findUserBy(['id' => $userId]);
         }
-        $app = $this->getAppointmentManager()->findByRange($range, $office, $doctor);
+        $app  = $this->getAppointmentManager()->findByRange($range, $office, $doctor);
+        $offH = $this->getOffHoursEvents($range, $office, $doctor);
 
         foreach ($app as $appointment) {
-            $responseData[] = $appointment->getCalendarData();
+            $response[] = $appointment->getCalendarData();
         }
+        $response   = array_merge($response, $offH);
 
-        $responseData[] = [
-            'start'    => '09:00',
-            'end'      => '10:00',
-            'dow'      => [1,2,3,4,5,6],
-            'color'    => '#222D32',
-            'overlap'  => true,
-            'rendering'=> 'background',
-        ];
-        $responseData[] = [
-            'start'    => '19:00',
-            'end'      => '20:00',
-            'dow'      => [1,2,3,4,5,6],
-            'color'    => '#222D32',
-            'overlap'  => true,
-            'rendering'=> 'background',
-        ];
-        $responseData[] = [
-            'start'    => '15:00',
-            'end'      => '20:00',
-            'dow'      => [0],
-            'color'    => '#222D32',
-            'overlap'  => true,
-            'rendering'=> 'background',
-        ];
-
-        return new JsonResponse($responseData);
+        return new JsonResponse($response);
     }
 
 
     /**
+     * @param Request $request
+     *
      * @return JsonResponse
      */
-    public function workHoursAction()
+    public function workHoursAction(Request $request)
     {
+//        $user      = $this->getDoctorManager()->findUserBy(['id' => $request->get('userId', 0)]);
+//        $office    = $this->getOfficeManager()->get($request->get('officeId'));
+//        $schedule
         $workHours = [
             ['start' => 1, 'end' => 1],
             ['start' => 1, 'end' => 1],
@@ -267,12 +253,13 @@ class AppController extends BaseController
      *
      * @return array
      */
-    private function getAvailableHours(DateRangeInterface $range, Office $office, User $user=null)
+    private function getOffHoursEvents($range, $office, $user)
     {
-        $schedules = $this->getScheduleManager()->findByRange($range, $office, $user);
-        $data = [];
-        foreach ($schedules as $schedule) {
-            $data[] = $schedule->getCalendarData();
+        $data   = [];
+        $events = $this->getEventService()->createOffHoursEvents($range, $office, $user);
+
+        foreach ($events as $event) {
+            $data[] = $event->getData();
         }
 
         return $data;

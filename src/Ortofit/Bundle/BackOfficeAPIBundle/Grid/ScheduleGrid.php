@@ -8,6 +8,7 @@ namespace Ortofit\Bundle\BackOfficeAPIBundle\Grid;
 
 use Ortofit\Bundle\BackOfficeBundle\Model\ScheduleInterface;
 use Rsmakota\UtilityBundle\Date\DateRange;
+use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 
 /**
  * Class DateGrid
@@ -22,15 +23,16 @@ class ScheduleGrid implements GridInterface
     /**
      * DateGrid constructor.
      *
-     * @param DateRange $range
-     * @param array     $schedules
+     * @param DateRangeInterface $range
+     * @param array              $schedules
      */
-    public function __construct(DateRange $range, $schedules = [])
+    public function __construct(DateRangeInterface $range, $schedules = [])
     {
         $iterator = $range->getDayIterator();
         while ($date = $iterator->next()) {
             $this->grid[$date->format($this->format)] = [];
         }
+
         foreach ($schedules as $schedule) {
             $this->addItem($schedule);
         }

@@ -4,32 +4,29 @@
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
-namespace Ortofit\Bundle\BackOfficeAPIBundle\Model;
+namespace Ortofit\Bundle\BackOfficeAPIBundle\EventModel;
 
 /**
  * Class BackgroundEvent
  *
  * @package Ortofit\Bundle\BackOfficeFrontBundle\Model
  */
-class CalendarBackgroundEvent implements CalendarEventInterface
+class DateBackgroundEvent implements CalendarEventInterface
 {
-    private $id;
-    private $start;
-    private $end;
-    private $color;
-    private $rendering = 'background';
-    private $overlap   = true;
+    protected $start;
+    protected $end;
+    protected $color;
+    protected $rendering = 'background';
+    protected $overlap   = true;
 
     /**
      * BackgroundEvent constructor.
-     * @param string $id
      * @param string $start
      * @param string $end
      * @param string $color
      */
-    public function __construct($id, $start, $end, $color)
+    public function __construct($start, $end, $color)
     {
-        $this->id    = $id;
         $this->start = $start;
         $this->end   = $end;
         $this->color = $color;
@@ -42,7 +39,7 @@ class CalendarBackgroundEvent implements CalendarEventInterface
     public function getData()
     {
         return [
-            'id'        => $this->id,
+            'id'        => 'available_hours',
             'start'     => $this->start,
             'end'       => $this->end,
             'color'     => $this->color,
