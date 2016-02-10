@@ -28,7 +28,7 @@ BackOffice.FormElement = {
         return $('#time');
     },
     getDuration: function() {
-        return $('#duration:checked');
+        return $('#duration');
     },
     getDescription: function() {
         return $('#description');

@@ -25,7 +25,7 @@ BackOffice.Calendar = {
         });
     },
 
-    init: function (officeId, userId) {
+    init: function (officeId, doctorId) {
         var me = this;
         var modal = BackOffice.Modal;
         $('#calendar'+officeId).fullCalendar({
@@ -62,13 +62,13 @@ BackOffice.Calendar = {
                 modal.load(me.eventDataUrl+'?appId='+calEvent.id, {});
             },
             dayClick: function (date, jsEvent, view) {
-                if (null == userId) {
+                if (null == doctorId) {
                     return false;
                 }
 
                 var data = {
                     officeId: officeId,
-                    userId:   userId,
+                    doctorId:   doctorId,
                     date:     date.format("DD/MM/YYYY"),
                     time:     date.format("HH:mm")
                 };
