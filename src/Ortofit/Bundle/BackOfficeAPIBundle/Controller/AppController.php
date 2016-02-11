@@ -242,32 +242,32 @@ class AppController extends BaseController
     }
 
     /**
-     * @param integer $userId
-     * @param integer $officeId
+     * @param Request $request
      *
      * @return JsonResponse
      */
-    public function allowDatesAction($userId, $officeId)
+    public function allowDatesAction(Request $request)
     {
-        $doctor = $this->getDoctorManager()->findUserBy(['id' => $userId]);
-        $office = $this->getOfficeManager()->get($officeId);
+        /** @var Appointment $app */
+        $app    = $this->getAppointmentManager()->get($request->get('appId'));
+        $doctor = $app->getUser();
+        $office = $this->getOfficeManager()->get($request->get('officeId'));
         $dates  = $this->getScheduleManager()->getAllowDatesInFormat($doctor, $office);
 
         return $this->createSuccessJsonResponse($dates);
     }
 
     /**
-     * @param integer $userId
-     * @param integer $officeId
-     * @param string  $date
+     * @param Request $request
      *
      * @return JsonResponse
+     *
      */
-    public function allowTimesAction($userId, $officeId, $date)
+    public function allowTimesAction(Request $request)
     {
-        $doctor     = $this->getDoctorManager()->findUserBy(['id' => $userId]);
-        $office     = $this->getOfficeManager()->get($officeId);
-        $date       =  \DateTime::createFromFormat('Y-m-d', $date);
+        $doctor     = $this->getDoctorManager()->findUserBy(['id' => $request->get('userId')]);
+        $office     = $this->getOfficeManager()->get($request->get('officeId'));
+        $date       =  \DateTime::createFromFormat('Y-m-d', $request->get('date'));
         $schedules  = $this->getScheduleManager()->findByDate($date, $office, $doctor);
         $times      = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
 

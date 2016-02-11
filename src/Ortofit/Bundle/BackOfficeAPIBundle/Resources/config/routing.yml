@@ -14,10 +14,10 @@ api_app_get_all:
     path:     /app/get_all
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:getApp }
 api_app_get_allow_dates:
-    path:     /app/allow_dates/{userId}/{officeId}
+    path:     /app/allow_dates
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:allowDates }
 api_app_get_allow_times:
-    path:     /app/allow_times/{userId}/{officeId}/{date}
+    path:     /app/allow_times
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:allowTimes }
 api_app_move:
     path:     /app/move

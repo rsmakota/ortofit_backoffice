@@ -72,6 +72,32 @@ BackOffice.FormAppMoveHelper = {
             officeId: this.getOfficeId(),
             dateTime: this.getDateTime()
         }
+    },
+
+    setDateEl: function (dates) {
+        var me = this;
+        var el = me.getDateEl();
+        el.empty();
+        console.log(dates);
+        $.each(dates, function(key, value) {
+            el.append($("<option/>", {
+                value: key,
+                text: value
+            }));
+
+        });
+    },
+
+    setTimeEl: function (times) {
+        var me = this;
+        var el = me.getTimeEl();
+        $.each(times, function(key, value) {
+            el.append($("<option/>", {
+                value: key,
+                text: value
+            }));
+        });
     }
+
 
 };

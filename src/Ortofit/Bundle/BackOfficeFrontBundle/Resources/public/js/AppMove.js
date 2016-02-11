@@ -16,10 +16,13 @@ BackOffice.AppMove = {
                 return false;
             }
             transport.send(me.saveUrl, me.getData(), function() {
-                //TODO: Need realisation
+
             })
         });
-        helper.getOfficeEl().change(function() {
+        helper.getOfficeEl().change(function(data) {
+            transport.send(me.dateUrl, me.getData(), function(data) {
+                BackOffice.FormAppMoveHelper.setDateEl(data.data);
+            });
 
         });
     },
