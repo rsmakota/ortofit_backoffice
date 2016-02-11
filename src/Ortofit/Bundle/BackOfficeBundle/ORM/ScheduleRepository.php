@@ -44,7 +44,7 @@ class ScheduleRepository extends EntityRepository
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findByDate($date, $office, $user)
+    public function findOneByDate($date, $office, $user)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
         $params  = ['date' => $date, 'office' => $office, 'user'=>$user];
@@ -56,6 +56,31 @@ class ScheduleRepository extends EntityRepository
             ->setParameters($params);
 
         $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result;
+    }
+
+    /**
+     * @param \DateTime $date
+     * @param Office    $office
+     * @param User      $user
+     *
+     * @return Schedule[]
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByDate($date, $office, $user)
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+        $params  = ['date' => $date, 'office' => $office, 'user'=>$user];
+
+        $qb = $builder->select('s')
+            ->from(Schedule::clazz(), 's')
+            ->where("s.start <= :date AND s.end > :date AND s.user = :user AND s.office = :office")
+            ->setMaxResults(1)
+            ->setParameters($params);
+
+        $result = $qb->getQuery()->getResult();
 
         return $result;
     }

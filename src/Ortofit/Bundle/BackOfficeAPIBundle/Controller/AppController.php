@@ -147,6 +147,25 @@ class AppController extends BaseController
     }
 
     /**
+     * @param DateRangeInterface $range
+     * @param Office             $office
+     * @param User|null          $user
+     *
+     * @return array
+     */
+    private function getOffHoursEvents($range, $office, $user)
+    {
+        $data   = [];
+        $events = $this->getEventService()->createOffHoursEvents($range, $office, $user);
+
+        foreach ($events as $event) {
+            $data[] = $event->getData();
+        }
+
+        return $data;
+    }
+
+    /**
      * @param Request $request
      *
      * @return JsonResponse
@@ -222,46 +241,57 @@ class AppController extends BaseController
         return new JsonResponse($response);
     }
 
+    /**
+     * @param integer $userId
+     * @param integer $officeId
+     *
+     * @return JsonResponse
+     */
+    public function allowDatesAction($userId, $officeId)
+    {
+        $doctor = $this->getDoctorManager()->findUserBy(['id' => $userId]);
+        $office = $this->getOfficeManager()->get($officeId);
+        $dates  = $this->getScheduleManager()->getAllowDatesInFormat($doctor, $office);
+
+        return $this->createSuccessJsonResponse($dates);
+    }
+
+    /**
+     * @param integer $userId
+     * @param integer $officeId
+     * @param string  $date
+     *
+     * @return JsonResponse
+     */
+    public function allowTimesAction($userId, $officeId, $date)
+    {
+        $doctor     = $this->getDoctorManager()->findUserBy(['id' => $userId]);
+        $office     = $this->getOfficeManager()->get($officeId);
+        $date       =  \DateTime::createFromFormat('Y-m-d', $date);
+        $schedules  = $this->getScheduleManager()->findByDate($date, $office, $doctor);
+        $times      = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
+
+        return $this->createSuccessJsonResponse($times);
+    }
 
     /**
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function workHoursAction(Request $request)
+    public function moveAction(Request $request)
     {
-//        $user      = $this->getDoctorManager()->findUserBy(['id' => $request->get('userId', 0)]);
-//        $office    = $this->getOfficeManager()->get($request->get('officeId'));
-//        $schedule
-        $workHours = [
-            ['start' => 1, 'end' => 1],
-            ['start' => 1, 'end' => 1],
-            ['start' => 1, 'end' => 1],
-            ['start' => 1, 'end' => 1],
-            ['start' => 1, 'end' => 1],
-            ['start' => 1, 'end' => 1],
-            ['start' => 1, 'end' => 1],
-        ];
-
-        return new JsonResponse($workHours);
-    }
-
-    /**
-     * @param DateRangeInterface $range
-     * @param Office             $office
-     * @param User|null          $user
-     *
-     * @return array
-     */
-    private function getOffHoursEvents($range, $office, $user)
-    {
-        $data   = [];
-        $events = $this->getEventService()->createOffHoursEvents($range, $office, $user);
-
-        foreach ($events as $event) {
-            $data[] = $event->getData();
+        try {
+            $office = $this->getOfficeManager()->get($request->get('officeId'));
+            $app    = $this->getAppointmentManager()->get($request->get('appId'));
+            $date   = new \DateTime($request->get('dateTime'));
+            $this->getAppointmentManager()->move($app, $office, $date);
+        } catch (\Exception $e) {
+            return $this->createFailJsonResponse($e, $request->request->all());
         }
 
-        return $data;
+
+        return $this->createSuccessJsonResponse();
     }
+
 }

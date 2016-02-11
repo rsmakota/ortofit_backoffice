@@ -106,4 +106,17 @@ class AppointmentManager extends AbstractManager
             $user
         );
     }
+
+    /**
+     * @param Appointment $app
+     * @param Office      $office
+     * @param \DateTime   $date
+     */
+    public function move($app, $office, $date)
+    {
+        $app->setOffice($office);
+        $app->setDateTime($date);
+        $this->merge($app);
+
+    }
 }

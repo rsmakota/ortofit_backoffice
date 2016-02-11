@@ -77,8 +77,8 @@ BackOffice.AppForm = {
         var me = this;
 
         //$("#date").inputmask("dd/mm/yyyy hh:mm", {"placeholder": "dd/mm/yyyy hh:mm"});
-        $("#time").inputmask("hh:mm", {"placeholder": "hh:mm"});
-        $("[data-mask]").inputmask();
+        //$("#time").inputmask("hh:mm", {"placeholder": "hh:mm"});
+        //$("[data-mask]").inputmask();
 
         $('#saveButton').click(function(){
             if (appId) {

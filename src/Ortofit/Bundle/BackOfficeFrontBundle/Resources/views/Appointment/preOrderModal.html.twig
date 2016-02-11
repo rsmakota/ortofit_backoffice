@@ -67,7 +67,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="editButton">Редактировать</button>
+            <button type="button" class="btn btn-primary" id="editButton">Перенести</button>
             <a href="{{ url('backendoffice_person', {"clientId":appointment.client.id}) }}" class="btn btn-success" id="orderButton">Оформить</a>
         </div>
     </div>
@@ -75,7 +75,7 @@
 <script>
     $(function () {
        $('#editButton').click(function(){
-           BackOffice.Modal.load('{{ url('backendoffice_appointment_get_form', {'appId':appointment.id}) }}', {});
+           BackOffice.Modal.load('{{ url('backendoffice_appointment_app_move', {'appId':appointment.id}) }}', {});
        });
 
 

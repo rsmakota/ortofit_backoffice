@@ -9,6 +9,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Schedule;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
+use Rsmakota\UtilityBundle\Date\DateRange;
 use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -95,6 +96,22 @@ class ScheduleManager extends AbstractManager
      *
      * @return Schedule|null
      */
+    public function findOneByDate($date, $office, $user)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->findOneByDate(
+            $date,
+            $office,
+            $user
+        );
+    }
+
+    /**
+     * @param \DateTime $date
+     * @param Office    $office
+     * @param User      $user
+     *
+     * @return Schedule[]|null
+     */
     public function findByDate($date, $office, $user)
     {
         return $this->enManager->getRepository($this->getEntityClassName())->findByDate(
@@ -102,5 +119,49 @@ class ScheduleManager extends AbstractManager
             $office,
             $user
         );
+    }
+
+
+
+    /**
+     * @param Schedule[] $schedules
+     * @param string     $duration
+     * @param string     $format
+     *
+     * @return array
+     */
+    public function getAllowTimesInFormat($schedules, $duration='+30 min', $format='H:i')
+    {
+        $hours = [];
+        foreach ($schedules as $schedule) {
+            $start = clone $schedule->getStart();
+//            $hours[] = $start->format('H:i');
+            while ($start < $schedule->getEnd()) {
+                $hours[] = $start->format('H:i');
+                $start->modify($duration);
+            }
+        }
+
+        return $hours;
+    }
+
+    /**
+     * @param User   $doctor
+     * @param Office $office
+     * @param string $duration
+     * @param string $format
+     *
+     * @return array
+     */
+    public function getAllowDatesInFormat($doctor, $office, $duration = '+1 month', $format = 'd/m/Y')
+    {
+        $dates     = [];
+        $range     = new DateRange(new \DateTime(), new \DateTime($duration));
+        $schedules = $this->findByRange($range, $office, $doctor);
+        foreach ($schedules as $schedule) {
+            $dates[$schedule->getStart()->format('Y-m-d')] = $schedule->getStart()->format($format);
+        }
+
+        return $dates;
     }
 }

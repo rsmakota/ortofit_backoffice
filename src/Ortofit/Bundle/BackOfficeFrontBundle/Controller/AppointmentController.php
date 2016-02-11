@@ -11,6 +11,7 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
+use Rsmakota\UtilityBundle\Date\DateRange;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -55,7 +56,7 @@ class AppointmentController extends BaseController
      */
     private function isWorkDate($date, $user, $office)
     {
-        $schedule = $this->getScheduleManager()->findByDate($date, $office, $user);
+        $schedule = $this->getScheduleManager()->findOneByDate($date, $office, $user);
         if ($schedule) {
             return true;
         }
@@ -155,6 +156,31 @@ class AppointmentController extends BaseController
         ];
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/preOrderModal.html.twig', $data);
+    }
+
+    /**
+     * @param integer $appId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function moveAction($appId)
+    {
+        /** @var Appointment $app */
+        $app        = $this->getAppointmentManager()->get($appId);
+        $schedules  = $this->getScheduleManager()->findByDate($app->getDateTime(), $app->getOffice(), $app->getUser());
+        $allowTimes = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
+        $allowDates = $this->getScheduleManager()->getAllowDatesInFormat($app->getUser(),  $app->getOffice());
+        $data = [
+            'offices'         => $this->getOfficeManager()->all(),
+            'dates'           => $allowDates,
+            'times'           => $allowTimes,
+            'appId'           => $appId,
+            'currentOfficeId' => $app->getOffice()->getId(),
+            'currentDate'     => $app->getDateTime()->format('d/m/Y'),
+            'currentTime'     => $app->getDateTime()->format('H:i'),
+        ];
+
+        return $this->render('@OrtofitBackOfficeFront/Appointment/appMoveForm.html.twig', $data);
     }
 
 }
