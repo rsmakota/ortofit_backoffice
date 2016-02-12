@@ -9,22 +9,6 @@ BackOffice.Calendar = {
     eventDataUrl: null,
     formUrl:      null,
 
-    isWorkTime: function (day, hour) {
-        var current = this.workHours[day];
-        if((current.start > hour) || (current.end <= hour)) {
-            return false;
-        }
-
-        return true;
-    },
-
-    initWorkHours: function(url) {
-        var me = this;
-        BackOffice.Transport.send(url, null, function(workHours){
-            me.workHours = workHours;
-        });
-    },
-
     init: function (officeId, doctorId) {
         var me = this;
         var modal = BackOffice.Modal;

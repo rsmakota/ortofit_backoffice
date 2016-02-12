@@ -41,7 +41,7 @@
                             <select class="form-control" id="date">
                                 {% for key, date in dates %}
                                     {% if date == currentDate|default(0) %}
-                                        <option selected value="{{ date }}">{{ date }}</option>
+                                        <option selected value="{{ key }}">{{ date }}</option>
                                     {% else %}
                                         <option value="{{ key }}">{{ date }}</option>
                                     {% endif %}

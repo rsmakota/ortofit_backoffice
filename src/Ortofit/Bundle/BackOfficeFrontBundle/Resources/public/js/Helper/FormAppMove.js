@@ -70,7 +70,8 @@ BackOffice.FormAppMoveHelper = {
         return {
             appId:    this.getAppId(),
             officeId: this.getOfficeId(),
-            dateTime: this.getDateTime()
+            dateTime: this.getDateTime(),
+            date:     this.getDate()
         }
     },
 
@@ -91,9 +92,10 @@ BackOffice.FormAppMoveHelper = {
     setTimeEl: function (times) {
         var me = this;
         var el = me.getTimeEl();
+        el.empty();
         $.each(times, function(key, value) {
             el.append($("<option/>", {
-                value: key,
+                value: value,
                 text: value
             }));
         });

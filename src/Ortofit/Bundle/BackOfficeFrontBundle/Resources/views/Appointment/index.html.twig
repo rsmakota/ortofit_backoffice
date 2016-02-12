@@ -44,18 +44,18 @@
         $(function () {
             var officeIds = [];
             var calendar = BackOffice.Calendar;
-            {#calendar.initWorkHours('{{ url('api_work_hours_get')   }}');#}
+
             calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
             {% if app.request.query.has('doctorId') %}
-            calendar.eventsUrl    = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
+                calendar.eventsUrl    = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
             {% else %}
-            calendar.eventsUrl    = '{{ url('api_app_get_all') }}';
+                calendar.eventsUrl    = '{{ url('api_app_get_all') }}';
             {% endif %}
 
             calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
             {% for office in offices %}
-            officeIds.push({{ office.id }});
-            calendar.init({{ office.id}}, {{ app.request.query.get("doctorId", "null") }});
+                officeIds.push({{ office.id }});
+                calendar.init({{ office.id}}, {{ app.request.query.get("doctorId", "null") }});
             {% endfor %}
 
             $('.office_link').click(function(){
@@ -67,6 +67,7 @@
                         $(calendarId).show();
                         $(calendarId).removeClass('hidden');
                         $(calendarId).fullCalendar('render');
+                        $(calendarId).fullCalendar('refetchEvents');
                     } else {
                         $(calendarId).hide();
                     }

@@ -265,11 +265,17 @@ class AppController extends BaseController
      */
     public function allowTimesAction(Request $request)
     {
-        $doctor     = $this->getDoctorManager()->findUserBy(['id' => $request->get('userId')]);
+        /** @var Appointment $app */
+        $app        = $this->getAppointmentManager()->get($request->get('appId'));
+        $doctor     = $app->getUser();
         $office     = $this->getOfficeManager()->get($request->get('officeId'));
-        $date       =  \DateTime::createFromFormat('Y-m-d', $request->get('date'));
-        $schedules  = $this->getScheduleManager()->findByDate($date, $office, $doctor);
-        $times      = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
+        $dateFrom   = new \DateTime($request->get('date') . ' 00:00:00');
+        $dateTo     = new \DateTime($request->get('date') . ' 23:59:59');
+        $range      = new DateRange($dateFrom, $dateTo);
+
+        $schedules  = $this->getScheduleManager()->findByRange($range, $office, $doctor);
+        $apps       = $this->getAppointmentManager()->findByRange($range, $office, $doctor);
+        $times      = $this->getScheduleManager()->getAllowTimesInFormat($schedules, $apps);
 
         return $this->createSuccessJsonResponse($times);
     }

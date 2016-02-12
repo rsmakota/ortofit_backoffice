@@ -6,6 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Schedule;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
@@ -79,7 +80,7 @@ class ScheduleManager extends AbstractManager
      *
      * @return Schedule[]
      */
-    public function findByRange(DateRangeInterface $range, Office $office, User $user)
+    public function findByRange (DateRangeInterface $range, Office $office, User $user)
     {
 
         return $this->enManager->getRepository($this->getEntityClassName())->findByRange(
@@ -121,23 +122,42 @@ class ScheduleManager extends AbstractManager
         );
     }
 
-
+    /**
+     * @param \DateTime     $dateTime
+     * @param Appointment[] $apps
+     *
+     * @return bool
+     */
+    private function hasApp($dateTime, $apps)
+    {
+        if ($apps == null) {
+            return false;
+        }
+        foreach ($apps as $app) {
+            if ($dateTime->format('Y-m-d H:i') == $app->getDateTime()->format('Y-m-d H:i')) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
-     * @param Schedule[] $schedules
-     * @param string     $duration
-     * @param string     $format
+     * @param Schedule[]    $schedules
+     * @param Appointment[] $apps
+     * @param string        $duration
+     * @param string        $format
      *
      * @return array
      */
-    public function getAllowTimesInFormat($schedules, $duration='+30 min', $format='H:i')
+    public function getAllowTimesInFormat($schedules, $apps, $duration='+30 min', $format='H:i')
     {
         $hours = [];
         foreach ($schedules as $schedule) {
             $start = clone $schedule->getStart();
-//            $hours[] = $start->format('H:i');
             while ($start < $schedule->getEnd()) {
-                $hours[] = $start->format('H:i');
+                if (!$this->hasApp($start, $apps)) {
+                    $hours[] = $start->format('H:i');
+                }
                 $start->modify($duration);
             }
         }

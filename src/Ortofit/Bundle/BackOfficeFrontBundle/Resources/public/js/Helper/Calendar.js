@@ -1,6 +1,6 @@
 BackOffice.Calendar.Helper = {
 
-    getCalendat: function(id) {
+    getCalendar: function(id) {
         return $('#calendar'+id);
     }
 

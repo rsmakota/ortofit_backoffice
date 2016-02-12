@@ -168,12 +168,12 @@ class AppointmentController extends BaseController
         /** @var Appointment $app */
         $app        = $this->getAppointmentManager()->get($appId);
         $schedules  = $this->getScheduleManager()->findByDate($app->getDateTime(), $app->getOffice(), $app->getUser());
-        $allowTimes = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
+        //$allowTimes = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
         $allowDates = $this->getScheduleManager()->getAllowDatesInFormat($app->getUser(),  $app->getOffice());
         $data = [
             'offices'         => $this->getOfficeManager()->all(),
             'dates'           => $allowDates,
-            'times'           => $allowTimes,
+            'times'           => [],
             'appId'           => $appId,
             'currentOfficeId' => $app->getOffice()->getId(),
             'currentDate'     => $app->getDateTime()->format('d/m/Y'),
