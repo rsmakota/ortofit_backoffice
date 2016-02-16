@@ -62,3 +62,7 @@ backendoffice_appointment_pre_app:
 backendoffice_appointment_app_move:
     path:     /admin/app/move/{appId}
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:move }
+
+backoffice_order_process:
+    path: /admin/order/process
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Order:process }

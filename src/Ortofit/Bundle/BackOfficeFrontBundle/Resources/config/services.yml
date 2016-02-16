@@ -1,0 +1,3 @@
+services:
+    backoffice_front.order_service:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\Service\OrderService

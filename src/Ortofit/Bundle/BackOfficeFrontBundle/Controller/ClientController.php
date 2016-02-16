@@ -33,7 +33,7 @@ class ClientController extends BaseController
         } else {
             $count = $this->getClientManager()->countLike(['msisdn' => '%'.$msisdn.'%']);
         }
-        dump($msisdn);
+
         return new Paginator($limit, $current, $count);
     }
 
