@@ -1,11 +1,12 @@
 <?php
 /**
- * @copyright 2016 ortofit_quiz
+ * @copyright 2016 ortofit_backoffice
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow;
 
 use Ortofit\Bundle\BackOfficeFrontBundle\Order\State\StateInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -25,11 +26,31 @@ class OrderFlow implements FlowInterface
      * @var string
      */
     private $currentStateId;
-
     /**
      * @var StateInterface[]
      */
     private $statuses = [];
+    /**
+     * @var boolean
+     */
+    private $completed = false;
+
+    /**
+     * @var EngineInterface
+     */
+    private $templateEngine;
+
+    /**
+     * OrderFlow constructor.
+     *
+     * @param SessionInterface $session
+     * @param EngineInterface  $templateEngine
+     */
+    public function __construct(SessionInterface $session, EngineInterface $templateEngine)
+    {
+        $this->templateEngine = $templateEngine;
+        $this->session = $session;
+    }
 
     /**
      * @return StateInterface
@@ -50,7 +71,7 @@ class OrderFlow implements FlowInterface
     }
 
     /**
-     * @return null|StateInterface
+     * @return false|StateInterface
      */
     private function next()
     {
@@ -67,10 +88,10 @@ class OrderFlow implements FlowInterface
             }
         }
 
-        return null;
+        return false;
     }
 
-    /**
+    /**;
      * @return void
      */
     public function process()
@@ -79,7 +100,12 @@ class OrderFlow implements FlowInterface
         $state = $this->getCurrentState();
         $state->process();
         if ($state->isCompleted()) {
-            $this->next();
+            if (!$this->next()) {
+                $this->completed = true;
+                $this->reset();
+                return;
+            }
+            $this->process();
         }
     }
 
@@ -88,7 +114,14 @@ class OrderFlow implements FlowInterface
      */
     public function getResponse()
     {
-        return $this->getCurrentState()->createResponse();
+        if (!$this->isCompleted()) {
+            $state    = $this->getCurrentState();
+            $response = $this->templateEngine->render($state->getTemplate(), $state->getResponseData());
+        } else {
+            $response = 'Complete';
+        }
+
+        return new Response($response);
     }
 
     /**
@@ -102,11 +135,18 @@ class OrderFlow implements FlowInterface
         }
     }
 
+    /**
+     * @return boolean
+     */
+    public function isCompleted()
+    {
+        return $this->completed;
+    }
 
     /**
      * @return void
      */
-    public function reset()
+    public function clear()
     {
         $this->session->remove('stateId');
         $state = reset($this->statuses);

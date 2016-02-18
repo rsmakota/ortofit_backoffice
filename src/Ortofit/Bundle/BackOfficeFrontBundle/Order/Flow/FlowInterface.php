@@ -28,5 +28,7 @@ interface FlowInterface
     /**
      * @return void
      */
-    public function reset();
+    public function clear();
+
+    public function isCompleted();
 }

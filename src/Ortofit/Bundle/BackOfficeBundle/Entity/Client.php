@@ -203,6 +203,21 @@ class Client implements EntityInterface
     }
 
     /**
+     * @return null|Person
+     */
+    public function getPerson()
+    {
+        /** @var Person $person */
+        foreach ($this->persons as $person) {
+            if ($person->isClient()) {
+                return $person;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @return string
      */
     static public function clazz()

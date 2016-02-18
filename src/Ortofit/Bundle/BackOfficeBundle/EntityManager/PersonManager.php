@@ -45,7 +45,10 @@ class PersonManager extends AbstractManager
         $entity->setClient($params->get('client'));
         $entity->setBorn($params->get('born'));
         $entity->setFamilyStatus($params->get('familyStatus'));
+        $entity->setIsClient($params->get('isClient'));
         $this->persist($entity);
+
+        return $entity;
     }
 
     /**

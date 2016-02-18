@@ -30,7 +30,12 @@ interface StateInterface
     public function getId();
 
     /**
-     * @return Response
+     * @return array
      */
-    public function createResponse();
+    public function getResponseData();
+
+    /**
+     * @return string
+     */
+    public function getTemplate();
 }

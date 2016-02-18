@@ -6,6 +6,7 @@
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -16,20 +17,24 @@ use Symfony\Component\HttpFoundation\Response;
 class OrderController extends Controller
 {
     /**
-     * @return \Ortofit\Bundle\BackOfficeFrontBundle\Order\Service\OrderService
+     * @return \Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow
      */
-    private function getOrderService()
+    private function getOrderFlow()
     {
-        return $this->get('backoffice_front.order_service');
+        return $this->get('bf.flow_order');
     }
 
     /**
+     * @param Request $request
+     *
      * @return Response
      */
-    public function processAction()
+    public function processAction(Request $request)
     {
-        $service = $this->getOrderService();
-        $flow    = $service->getFlow();
+        $flow = $this->getOrderFlow();
+        if ($request->get('isNew')) {
+            $flow->clear();
+        }
         $flow->process();
 
         return $flow->getResponse();

@@ -5,6 +5,8 @@
  */
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -15,10 +17,11 @@ use Symfony\Component\Templating\EngineInterface;
  */
 abstract class AbstractState implements StateInterface
 {
+
     /**
-     * @var EngineInterface
+     * @var Appointment
      */
-    protected $templateEngine;
+    protected $app;
     /**
      * @var boolean
      */
@@ -33,17 +36,20 @@ abstract class AbstractState implements StateInterface
     protected $requestStack;
 
     /**
+     * @var AppointmentManager
+     */
+    protected $appManager;
+    /**
      * GeneralState constructor.
      *
      * @param string           $template
      * @param RequestStack     $requestStack
-     * @param EngineInterface  $templateEngine
      */
-    public function __construct($template, RequestStack $requestStack, EngineInterface $templateEngine)
+    public function __construct($template, RequestStack $requestStack, AppointmentManager $appManager)
     {
-        $this->template       = $template;
-        $this->requestStack   = $requestStack;
-        $this->templateEngine = $templateEngine;
+        $this->template     = $template;
+        $this->requestStack = $requestStack;
+        $this->appManager   = $appManager;
     }
 
     /**
@@ -53,11 +59,27 @@ abstract class AbstractState implements StateInterface
     {
         return $this->requestStack->getCurrentRequest();
     }
+    /**
+     * @return Appointment
+     * @throws \Exception
+     */
+    protected function getApp()
+    {
+        $request = $this->getRequest();
+        $appId   = $request->get('appId');
+        if (null == $appId) {
+            throw new \Exception('Cant\' find parameter appId');
+        }
+        if (null == $this->appManager) {
+            throw new \Exception('You forgot set AppManager to '.$this->getId().' state');
+        }
 
+        return $this->appManager->get($appId);
+    }
     /**
      * @return array
      */
-    abstract protected function getResponseData();
+    abstract public function getResponseData();
 
     /**
      * @return void
@@ -75,9 +97,9 @@ abstract class AbstractState implements StateInterface
     /**
      * @return string
      */
-    public function createResponse()
+    public function getTemplate()
     {
-        return $this->templateEngine->render($this->template, $this->getResponseData());
+        return $this->template;
     }
 
     abstract public function getId();

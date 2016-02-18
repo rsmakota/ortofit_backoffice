@@ -11,6 +11,10 @@ BackOffice.Modal = {
     load: function (url, param) {
         var modal = this.getWindow();
         BackOffice.Transport.send(url, param, function(response) {
+            if (response == 'Complete') {
+                modal.modal('hide');
+                return;
+            }
             modal.empty();
             modal.append(response);
             modal.modal();
