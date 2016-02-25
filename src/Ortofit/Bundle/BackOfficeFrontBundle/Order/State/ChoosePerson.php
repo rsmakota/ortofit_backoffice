@@ -1,7 +1,7 @@
 <?php
 /**
- * @author    Rodion Smakota <rsmakota@commercegate.com>
- * @copyright 2016 Commercegate LTD
+ * @copyright 2016 ortofit_backoffice
+ * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
@@ -19,7 +19,7 @@ class ChoosePerson extends AbstractState
      */
     public function getResponseData()
     {
-        return ['app' => $this->app];
+        return [self::PARAM_NAME_APP => $this->app];
     }
 
     /**
@@ -27,9 +27,9 @@ class ChoosePerson extends AbstractState
      */
     public function process()
     {
-        $this->app = $this->getApp();
+        $this->init();
         $request = $this->getRequest()->request;
-        if ($request->has('action')) {
+        if ($request->has(self::PARAM_NAME_ACTION)) {
             $this->completed = true;
         }
     }

@@ -2,18 +2,19 @@
  * @copyright 2016 Ortofit
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
-BackOffice.FormOrderNewPerson = {
+BackOffice.FormOrderDiagnosisPerson = {
     getBtnNext: function() {
         return $('#nextButton');
     },
 
     getForm: function() {
-        return $('#newPersonForm');
+        return $('#diagnosisForm');
     },
 
     getFormData: function()
     {
-        var formData = $('#newPersonForm').serializeArray();
+        var formData = $('#diagnosisForm').serializeArray();
+
         var data = {};
         for (var i = 0; i<formData.length; i++) {
             var record = formData[i];
@@ -21,10 +22,6 @@ BackOffice.FormOrderNewPerson = {
         }
 
         return data;
-    },
-
-    getBornEl: function()
-    {
-        return  $("#born");
     }
+
 };

@@ -8,12 +8,20 @@ services:
         calls:
             - [setPersonManager, ["@ortofit_back_office.person_manage"]]
             - [setFamilyStatusManager, ["@ortofit_back_office.client_family_status_manage"]]
+
     bf.state_diagnosis:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\DiagnosisState
-        arguments: ["OrtofitBackOfficeFrontBundle:Order:DiagnosisPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        arguments: ["OrtofitBackOfficeFrontBundle:Order:diagnosisPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
         calls:
             - [setPersonManager, ["@ortofit_back_office.person_manage"]]
             - [setDiagnosisManager, ["@ortofit_back_office.client_diagnosis_manage"]]
+    bf.state_service:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ServiceState
+        arguments: ["OrtofitBackOfficeFrontBundle:Order:diagnosisPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setPersonServiceManager, ["@ortofit_back_office.person_service_manage"]]
+            - [setServiceManager, ["@ortofit_back_office.service_manage"]]
+            - [setPersonManager, ["@ortofit_back_office.person_manage"]]
 
     bf.flow_order:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow
@@ -22,6 +30,7 @@ services:
             - [addState, ["@bf.state_choose_persone"]]
             - [addState, ["@bf.state_persone"]]
             - [addState, ["@bf.state_diagnosis"]]
+            - [addState, ["@bf.state_service"]]
 
 
 

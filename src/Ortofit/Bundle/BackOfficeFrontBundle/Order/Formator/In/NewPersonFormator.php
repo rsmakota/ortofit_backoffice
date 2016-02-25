@@ -30,7 +30,7 @@ class NewPersonFormator implements FormatorInterface
      */
     private function dateFormat($key, $value, &$arr)
     {
-        $arr[$key] =  \DateTime::createFromFormat($value, 'd/m/Y');
+        $arr[$key] =  \DateTime::createFromFormat('d/m/Y', $value);
     }
 
     /**

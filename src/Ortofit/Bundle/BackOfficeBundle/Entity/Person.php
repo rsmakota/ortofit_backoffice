@@ -215,6 +215,18 @@ class Person implements EntityInterface
         return $this->isClient;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isMan()
+    {
+        if ($this->gender == 'male') {
+            return true;
+        }
+
+        return false;
+    }
+
 
     /**
      * @return string

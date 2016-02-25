@@ -1,0 +1,100 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Оказанные услуги</h4>
+        </div>
+        <div class="modal-body">
+            {% include "@OrtofitBackOfficeFront/Order/panel.html.twig" %}
+            <form class="form-horizontal" id="serviceForm">
+
+                {% for service in services %}
+                <div class="form-group">
+
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-star-o icon20"> </i>
+                            </div>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Имя Клиента" value=""/>
+                        </div>
+                    </div>
+                    <label for="inputService{{ service.id }}" class="col-sm-3 control-label">{{ service.name }}</label>
+                </div>
+            {% endfor %}
+                {#<div class="form-group">#}
+                    {#<label for="selectGender" class="col-sm-3 control-label">Пол:</label>#}
+
+                    {#<div class="col-sm-9">#}
+                        {#<div class="input-group">#}
+                            {#<div class="input-group-addon">#}
+                                {#<i class="fa fa-venus-mars icon20"></i>#}
+                            {#</div>#}
+                            {#<select class="form-control" id="gender" name="gender">#}
+                                {#<option value="male">Мужской</option>#}
+                                {#<option value="female">Женский</option>#}
+                            {#</select>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+
+                {#<div class="form-group">#}
+                    {#<label for="selectFamilyStatusId" class="col-sm-3 control-label">Статус:</label>#}
+
+                    {#<div class="col-sm-9">#}
+                        {#<div class="input-group">#}
+                            {#<div class="input-group-addon">#}
+                                {#<i class="fa fa-users icon20"></i>#}
+                            {#</div>#}
+                            {#<select class="form-control" id="familyStatusId" name="familyStatusId">#}
+                                {#{% for familyStatus in familyStatuses %}#}
+                                    {#<option value="{{ familyStatus.id }}">{{ familyStatus.name }}</option>#}
+                                {#{% endfor %}#}
+                            {#</select>#}
+                        {#</div>#}
+
+                    {#</div>#}
+                {#</div>#}
+
+                {#<div class="form-group">#}
+                    {#<label for="selectBorn" class="col-sm-3 control-label">Дата Рождения:</label>#}
+
+                    {#<div class="col-sm-9">#}
+                        {#<div class="input-group">#}
+                            {#<div class="input-group-addon">#}
+                                {#<i class="fa fa-birthday-cake icon20"></i>#}
+                            {#</div>#}
+                            {#<input id="born" name="born" class="form-control pull-right active" type="text"#}
+                                   {#data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"#}
+                                   {#value="" />#}
+                        {#</div>#}
+
+                    {#</div>#}
+                {#</div>#}
+
+                {#{% if isClient is defined  %}#}
+                    {#<input type="hidden" id="isClient" name="isClient" value="{{ isClient }}">#}
+                {#{% endif %}#}
+                {#<input type="hidden" id="action" name="action" value="{{ action }}">#}
+                <input type="hidden" id="appId" name="appId" value="{{ app.id }}">
+                <input type="hidden" id="personId" name="personId" value="{{ person.id }}">
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="nextButton">Далее</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        {#var control = BackOffice.OrderNewPerson;#}
+        {#control.postUrl = "{{ url('backoffice_order_process') }}";#}
+        {#control.appId   = {{ app.id }};#}
+        {#control.init();#}
+    });
+</script>

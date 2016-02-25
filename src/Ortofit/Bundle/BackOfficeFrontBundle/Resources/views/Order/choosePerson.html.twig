@@ -8,10 +8,11 @@
             <h4 class="modal-title" id="myModalLabel">Услуги оказываются:</h4>
         </div>
         <div class="modal-body" style="text-align: center">
+            {% include "@OrtofitBackOfficeFront/Order/panel.html.twig" %}
             <table class="table table-striped">
                 <tr>
                     <td>Самому клиенту</td>
-                    <td><i class="fa fa-user"></i></td>
+                    <td><i class="fa fa-credit-card"></i></td>
                     <td>{{ app.client.name }}</td>
                     <td><button type="button" class="btn btn-success" id="clientButton"> >> </button></td>
                 </tr>

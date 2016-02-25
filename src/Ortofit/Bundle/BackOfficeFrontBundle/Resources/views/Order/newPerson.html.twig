@@ -7,6 +7,7 @@
             <h4 class="modal-title" id="myModalLabel">Член семьи</h4>
         </div>
         <div class="modal-body">
+            {% include "@OrtofitBackOfficeFront/Order/panel.html.twig" %}
             <form class="form-horizontal" id="newPersonForm">
 
                 <div class="form-group">
@@ -66,7 +67,7 @@
                                 <i class="fa fa-birthday-cake icon20"></i>
                             </div>
                             <input id="born" name="born" class="form-control pull-right active" type="text"
-                            data-inputmask="'alias': 'dd/mm/yyyy hh/mm'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
+                            data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
                             value="" />
                         </div>
 
@@ -77,7 +78,7 @@
                     <input type="hidden" id="isClient" name="isClient" value="{{ isClient }}">
                 {% endif %}
                 <input type="hidden" id="action" name="action" value="{{ action }}">
-                <input type="hidden" id="appId" name="appId" value="{{ appId }}">
+                <input type="hidden" id="appId" name="appId" value="{{ app.id }}">
 
             </form>
         </div>
@@ -90,7 +91,7 @@
     $(document).ready(function() {
         var control = BackOffice.OrderNewPerson;
         control.postUrl = "{{ url('backoffice_order_process') }}";
-        control.appId   = {{ appId }};
+        control.appId   = {{ app.id }};
         control.init();
     });
 </script>

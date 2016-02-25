@@ -1,7 +1,7 @@
 <?php
 /**
- * @author    Rodion Smakota <rsmakota@commercegate.com>
- * @copyright 2016 Commercegate LTD
+ * @copyright 2016 ortofit_backoffice
+ * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
@@ -9,6 +9,8 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Person;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\DiagnosisManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\PersonManager;
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 
 /**
  * Class DiagnosisState
@@ -17,10 +19,8 @@ use Ortofit\Bundle\BackOfficeBundle\EntityManager\PersonManager;
  */
 class DiagnosisState extends AbstractState
 {
-    /**
-     * @var integer
-     */
-    private $appId;
+    const PARAM_NAME_DESCRIPTION = 'description';
+
     /**
      * @var Person
      */
@@ -53,24 +53,55 @@ class DiagnosisState extends AbstractState
     public function getResponseData()
     {
         return [
-            'appId'   => $this->appId,
-            'personId'=> $this->person->getId(),
-
+            self::PARAM_NAME_APP    => $this->app,
+            self::PARAM_NAME_PERSON => $this->person,
         ];
     }
+    protected function init()
+    {
+        parent::init();
+        $request      = $this->getRequest();
+        $this->person = $this->personManager->get($request->get(self::PARAM_NAME_PERSON_ID));
+    }
 
+    /**
+     * @return boolean
+     */
+    private function hasDescription()
+    {
+        $request  = $this->getRequest();
+        if (null != $request->get(self::PARAM_NAME_DESCRIPTION)) {
+            return true;
+        }
+
+        return false;
+    }
     /**
      * @return void
      */
     public function process()
     {
-        $request      = $this->getRequest();
-        $this->appId  = $request->get('appId');
-        $this->person = $this->personManager->get($request->get('personId'));
+        $this->init();
+        if ($this->hasDescription()) {
+            $this->saveDiagnosis();
+            $this->completed = true;
+        }
     }
 
     public function getId()
     {
         return 'diagnosis_state';
+    }
+
+    /**
+     * @return void
+     */
+    private function saveDiagnosis()
+    {
+        $data = [
+            'description' => $this->getRequest()->get(self::PARAM_NAME_DESCRIPTION),
+            'person'      => $this->person
+        ];
+        $this->diagnosisManager->create(new ParameterBag($data));
     }
 }

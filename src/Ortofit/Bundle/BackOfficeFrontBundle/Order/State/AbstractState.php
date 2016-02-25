@@ -8,7 +8,6 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentManager;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Class GeneralState
@@ -18,18 +17,27 @@ use Symfony\Component\Templating\EngineInterface;
 abstract class AbstractState implements StateInterface
 {
 
+    const PARAM_NAME_ACTION          = 'action';
+    const PARAM_NAME_APP             = 'app';
+    const PARAM_NAME_APP_ID          = 'appId';
+    const PARAM_NAME_PERSON          = 'person';
+    const PARAM_NAME_PERSON_ID       = 'personId';
+
     /**
      * @var Appointment
      */
     protected $app;
+
     /**
      * @var boolean
      */
     protected $completed = false;
+
     /**
      * @var string
      */
     protected $template;
+
     /**
      * @var RequestStack
      */
@@ -39,11 +47,14 @@ abstract class AbstractState implements StateInterface
      * @var AppointmentManager
      */
     protected $appManager;
+
+
     /**
      * GeneralState constructor.
      *
-     * @param string           $template
-     * @param RequestStack     $requestStack
+     * @param string             $template
+     * @param RequestStack       $requestStack
+     * @param AppointmentManager $appManager
      */
     public function __construct($template, RequestStack $requestStack, AppointmentManager $appManager)
     {
@@ -59,6 +70,20 @@ abstract class AbstractState implements StateInterface
     {
         return $this->requestStack->getCurrentRequest();
     }
+
+    /**
+     * @throws \Exception
+     */
+    protected function checkManagers()
+    {
+        $fields = get_class_vars(get_class($this));
+        foreach ($fields as $name => $val) {
+            if (( false !== strpos($name, 'Manager')) && null == $this->$name) {
+                throw new \Exception(printf('You forgot set up manager with name "%s" in state "%s"', $name, $this->getId()));
+            }
+        }
+    }
+
     /**
      * @return Appointment
      * @throws \Exception
@@ -92,6 +117,15 @@ abstract class AbstractState implements StateInterface
     public function isCompleted()
     {
         return $this->completed;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function init()
+    {
+        $this->checkManagers();
+        $this->app = $this->getApp();
     }
 
     /**

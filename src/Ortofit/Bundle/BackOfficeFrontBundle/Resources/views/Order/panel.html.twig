@@ -1,0 +1,25 @@
+<ul class="list-group" style="text-align: center">
+    <li class="list-group-item list-group-item-info">
+        <i class="fa fa-credit-card icon20"> </i> {{ app.client.name }} &nbsp;&nbsp;&nbsp;&nbsp;
+        <i class="fa fa-user-md icon20"> </i> {{ app.user.name }} &nbsp;&nbsp;&nbsp;&nbsp;
+        <i class="fa fa-building icon20"></i> {{ app.office.name }} &nbsp;&nbsp;&nbsp;&nbsp;
+        <i class="fa fa-calendar icon20"></i> {{ app.getDateTime.format('d/m/Y') }}  &nbsp;&nbsp;&nbsp;&nbsp;
+        <i class="fa fa-clock-o icon20"></i> {{ app.getDateTime.format('H:i') }}
+
+    </li>
+    {% if person is defined %}
+    <li class="list-group-item list-group-item-success">
+
+
+            <i class="fa fa-user icon20"> </i> <strong>{{ person.name }}</strong>
+            {% if person.isMan() %}
+            <i class="fa fa-mars icon20"></i>
+            {% else %}
+            <i class="fa fa-venus icon20"></i>
+            {% endif %}
+            ({{ person.familyStatus.name }} {{ person.getAge() }} лет)&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    </li>
+    {% endif %}
+</ul>

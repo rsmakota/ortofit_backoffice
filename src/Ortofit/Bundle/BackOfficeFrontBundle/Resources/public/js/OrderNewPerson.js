@@ -4,15 +4,17 @@ BackOffice.OrderNewPerson = {
 
     init: function()
     {
-        var helper = BackOffice.FormOrderNewPerson;
-        helper.getBtnNext().click(this._nextBtnHandler);
+        var hlp = BackOffice.FormOrderNewPerson;
+        hlp.getBtnNext().click(this._nextBtnHandler);
+        hlp.getBornEl().inputmask("dd/mm/yyyy", {"placeholder": "ДД/ММ/ГГГГ"});
+
     },
 
     _nextBtnHandler: function() {
         var hlp = BackOffice.FormOrderNewPerson;
 
         var data = hlp.getFormData();
-        console.log(data);
+
         if ((data.name.length < 3) || (data.born.length < 10)) {
             return false;
         }

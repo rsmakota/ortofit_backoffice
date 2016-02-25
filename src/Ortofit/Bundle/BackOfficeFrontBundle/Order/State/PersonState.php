@@ -1,7 +1,7 @@
 <?php
 /**
- * @author    Rodion Smakota <rsmakota@commercegate.com>
- * @copyright 2016 Commercegate LTD
+ * @copyright 2016 ortofit_backoffice
+ * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
@@ -20,9 +20,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class PersonState extends AbstractState
 {
-    const PARAM_NAME_ACTION          = 'action';
-    const PARAM_NAME_APP_ID          = 'appId';
-    const PARAM_NAME_PERSON_ID       = 'personId';
+
     const PARAM_NAME_IS_CLIENT       = 'isClient';
     const PARAM_NAME_FAMILY_STATUS   = 'familyStatus';
     const PARAM_NAME_FAMILY_STATUSES = 'familyStatuses';
@@ -35,10 +33,6 @@ class PersonState extends AbstractState
      * @var Person
      */
     private $person;
-    /**
-     * @var string
-     */
-    private $action;
 
     /**
      * @var PersonManager
@@ -49,6 +43,11 @@ class PersonState extends AbstractState
      * @var FamilyStatusManager
      */
     private $familyStatusManager;
+
+    /**
+     * @var string
+     */
+    protected $action;
 
     /**
      * @param ParameterBag $bag
@@ -79,7 +78,6 @@ class PersonState extends AbstractState
      */
     private function processData(ParameterBag $bag)
     {
-        $this->app    = $this->getApp();
         $this->validation($bag);
         $this->action = $bag->get(self::PARAM_NAME_ACTION);
         switch($this->action) {
@@ -108,9 +106,8 @@ class PersonState extends AbstractState
             return;
         }
         $bag->set('familyStatus', $this->familyStatusManager->get($bag->get('familyStatusId')));
-        $formator = new NewPersonFormator($bag);
-        $this->person = $this->personManager->create($formator->getData());
-
+        $formator        = new NewPersonFormator($bag);
+        $this->person    = $this->personManager->create($formator->getData());
         $this->completed = true;
     }
 
@@ -147,10 +144,11 @@ class PersonState extends AbstractState
     }
 
     /**
-     * @return void
+     * @throws \Exception
      */
     public function process()
     {
+        $this->init();
         $this->processData($this->getRequest()->request);
         if ($this->completed) {
             if (null == $this->person) {
@@ -179,7 +177,7 @@ class PersonState extends AbstractState
     public function getResponseData()
     {
         $data = [
-            self::PARAM_NAME_APP_ID          => $this->app->getId(),
+            self::PARAM_NAME_APP             => $this->app,
             self::PARAM_NAME_ACTION          => $this->action,
             self::PARAM_NAME_FAMILY_STATUSES => $this->familyStatusManager->all()
         ];
