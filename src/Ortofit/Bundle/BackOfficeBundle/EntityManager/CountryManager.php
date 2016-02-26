@@ -36,33 +36,5 @@ class CountryManager extends AbstractManager
     {
         return $this->enManager->getRepository($this->getEntityClassName())->findOneBy(['name'=>self::DEFAULT_COUNTRY_NAME]);
     }
-    /**
-     * @param ParameterBag $params
-     *
-     * @return object
-     */
-    public function create($params)
-    {
-        $entity = new Country();
-        $entity->setName($params->get('name'));
-        $entity->setIso2($params->get('iso2'));
-        $entity->setPattern($params->get('pattern'));
-        $entity->setPrefix($params->get('prefix'));
-        $this->persist($entity);
-    }
 
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        $entity = $this->rGet($params->get('id'));
-        $entity->setName($params->get('name'));
-        $entity->setIso2($params->get('iso2'));
-        $entity->setPattern($params->get('pattern'));
-        $entity->setPrefix($params->get('prefix'));
-        $this->merge($entity);
-    }
 }

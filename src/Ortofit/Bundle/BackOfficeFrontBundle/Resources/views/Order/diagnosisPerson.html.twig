@@ -14,13 +14,16 @@
                     <label for="textareaDescription" class="col-sm-3 control-label">Заметка:</label>
 
                     <div class="col-sm-9">
-                        <textarea class="form-control" rows="4" id="description"></textarea>
+                        <textarea class="form-control" rows="4" name="description" id="description"></textarea>
                     </div>
                 </div>
+                <div style="height: 300px; overflow-y: scroll;">
                 {% for diagnos in person.diagnoses %}
-                <div>{{ diagnos.description }}</div>
+                <div style="padding: 5px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-calendar icon20"></i>{{ diagnos.created.format('d/m/Y') }} &nbsp;&nbsp;<i class="fa fa-clock-o icon20"></i>{{ diagnos.created.format('H:i') }} </strong><br>{{ diagnos.description }}</div>
                 {% endfor %}
-
+                </div>
                 <input type="hidden" id="appId"    name="appId"    value="{{ app.id }}"   >
                 <input type="hidden" id="personId" name="personId" value="{{ person.id }}">
 
@@ -31,3 +34,11 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        var control = BackOffice.OrderDiagnosisPerson;
+        control.postUrl = "{{ url('backoffice_order_process') }}";
+        control.appId   = {{ app.id }};
+        control.init();
+    });
+</script>

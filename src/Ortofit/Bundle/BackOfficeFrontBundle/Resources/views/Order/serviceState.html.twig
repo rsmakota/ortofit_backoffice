@@ -8,93 +8,69 @@
         </div>
         <div class="modal-body">
             {% include "@OrtofitBackOfficeFront/Order/panel.html.twig" %}
+            <div class="row">
             <form class="form-horizontal" id="serviceForm">
-
+                <div class="col-sm-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Оказанные услуги:</th>
+                        </tr>
+                    </thead>
                 {% for service in services %}
-                <div class="form-group">
+                    <tr>
+                        <td>
+                            <i class="fa fa-star-o icon20"> </i></td>
+                        <td><input type="checkbox" id="service_{{ service.id }}" name="service_{{ service.id }}"
+                                   value="{{ service.id }}"/></td>
+                        <td>{{ service.name }}</td>
+                    </tr>
 
 
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-star-o icon20"> </i>
-                            </div>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Имя Клиента" value=""/>
-                        </div>
-                    </div>
-                    <label for="inputService{{ service.id }}" class="col-sm-3 control-label">{{ service.name }}</label>
-                </div>
+
             {% endfor %}
-                {#<div class="form-group">#}
-                    {#<label for="selectGender" class="col-sm-3 control-label">Пол:</label>#}
+                </table>
+                </div>
+                <div class="col-sm-6" style="padding-left: 0px;">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="3">Другое:</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td><i class="fa fa-bell-o icon20"></i></td>
+                        <td>Повтор</td>
+                        <td><input id="remind" name="remind" class="form-control pull-right active" type="text"
+                                   data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
+                                   value="" /></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-mail-forward icon20"></i></td>
+                        <td>Направил</td>
+                        <td>
+                            <input id="forwarded" name="forwarded" class="form-control pull-right active" type="text" value="" />
+                        </td>
+                    </tr>
+                </table>
+                </div>
 
-                    {#<div class="col-sm-9">#}
-                        {#<div class="input-group">#}
-                            {#<div class="input-group-addon">#}
-                                {#<i class="fa fa-venus-mars icon20"></i>#}
-                            {#</div>#}
-                            {#<select class="form-control" id="gender" name="gender">#}
-                                {#<option value="male">Мужской</option>#}
-                                {#<option value="female">Женский</option>#}
-                            {#</select>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-
-                {#<div class="form-group">#}
-                    {#<label for="selectFamilyStatusId" class="col-sm-3 control-label">Статус:</label>#}
-
-                    {#<div class="col-sm-9">#}
-                        {#<div class="input-group">#}
-                            {#<div class="input-group-addon">#}
-                                {#<i class="fa fa-users icon20"></i>#}
-                            {#</div>#}
-                            {#<select class="form-control" id="familyStatusId" name="familyStatusId">#}
-                                {#{% for familyStatus in familyStatuses %}#}
-                                    {#<option value="{{ familyStatus.id }}">{{ familyStatus.name }}</option>#}
-                                {#{% endfor %}#}
-                            {#</select>#}
-                        {#</div>#}
-
-                    {#</div>#}
-                {#</div>#}
-
-                {#<div class="form-group">#}
-                    {#<label for="selectBorn" class="col-sm-3 control-label">Дата Рождения:</label>#}
-
-                    {#<div class="col-sm-9">#}
-                        {#<div class="input-group">#}
-                            {#<div class="input-group-addon">#}
-                                {#<i class="fa fa-birthday-cake icon20"></i>#}
-                            {#</div>#}
-                            {#<input id="born" name="born" class="form-control pull-right active" type="text"#}
-                                   {#data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"#}
-                                   {#value="" />#}
-                        {#</div>#}
-
-                    {#</div>#}
-                {#</div>#}
-
-                {#{% if isClient is defined  %}#}
-                    {#<input type="hidden" id="isClient" name="isClient" value="{{ isClient }}">#}
-                {#{% endif %}#}
-                {#<input type="hidden" id="action" name="action" value="{{ action }}">#}
                 <input type="hidden" id="appId" name="appId" value="{{ app.id }}">
                 <input type="hidden" id="personId" name="personId" value="{{ person.id }}">
 
             </form>
+                </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-success" id="nextButton">Далее</button>
+            <button type="button" class="btn btn-success" id="nextButton">Оформить</button>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function() {
-        {#var control = BackOffice.OrderNewPerson;#}
-        {#control.postUrl = "{{ url('backoffice_order_process') }}";#}
-        {#control.appId   = {{ app.id }};#}
-        {#control.init();#}
+        var control = BackOffice.OrderServicePerson;
+        control.postUrl = "{{ url('backoffice_order_process') }}";
+        control.appId   = {{ app.id }};
+        control.init();
     });
 </script>

@@ -52,10 +52,42 @@ abstract class AbstractManager implements EntityManagerInterface
     /**
      * @param EntityInterface $entity
      */
-    protected function merge($entity)
+    public function merge($entity)
     {
         $this->enManager->merge($entity);
         $this->enManager->flush();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\ParameterBag $params
+     *
+     * @return mixed
+     */
+    public function create($params)
+    {
+        $class = $this->getEntityClassName();
+        $entity = new $class();
+        foreach ($params as $name => $value) {
+            $method = 'set'.ucfirst($name);
+            if (method_exists($entity, $method)) {
+                $entity->$method($value);
+            }
+        }
+        $this->persist($entity);
+
+        return $entity;
+    }
+
+    public function update($params)
+    {
+        $entity = $this->rGet($params->get('id'));
+        foreach ($params as $name => $value) {
+            $method = 'set'.ucfirst($name);
+            if (method_exists($entity, $method)) {
+                $entity->$method($value);
+            }
+        }
+        $this->merge($entity);
     }
 
     /**

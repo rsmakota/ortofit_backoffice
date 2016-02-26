@@ -50,7 +50,7 @@ class PersonServiceManager extends AbstractManager
          * @var Service     $service
          */
         $entity  = new PersonService();
-        $app     = $params->get('application');
+        $app     = $params->get('appointment');
         $person  = $params->get('person');
         $service = $params->get('service');
         $entity->setAppointment($app);

@@ -33,27 +33,4 @@ class ServiceManager extends AbstractManager
         return 'service_manager';
     }
 
-    /**
-     * @param ParameterBag $params
-     *
-     * @return object
-     */
-    public function create($params)
-    {
-        $entity = new Service();
-        $entity->setName($params->get('name'));
-        $this->persist($entity);
-    }
-
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        $entity = $this->rGet($params->get('id'));
-        $entity->setName($params->get('name'));
-        $this->merge($entity);
-    }
 }

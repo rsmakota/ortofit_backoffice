@@ -7,7 +7,11 @@ BackOffice.Modal = {
     getWindow: function () {
         return $('#appointmentModal');
     },
-
+    /**
+     *
+     * @param {string}  url
+     * @param {object} param
+     */
     load: function (url, param) {
         var modal = this.getWindow();
         BackOffice.Transport.send(url, param, function(response) {

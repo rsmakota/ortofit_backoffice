@@ -17,11 +17,12 @@ services:
             - [setDiagnosisManager, ["@ortofit_back_office.client_diagnosis_manage"]]
     bf.state_service:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ServiceState
-        arguments: ["OrtofitBackOfficeFrontBundle:Order:diagnosisPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        arguments: ["OrtofitBackOfficeFrontBundle:Order:serviceState.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
         calls:
             - [setPersonServiceManager, ["@ortofit_back_office.person_service_manage"]]
             - [setServiceManager, ["@ortofit_back_office.service_manage"]]
             - [setPersonManager, ["@ortofit_back_office.person_manage"]]
+            - [setAppReminderManager, ["@ortofit_back_office.app_reminder_manage"]]
 
     bf.flow_order:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow

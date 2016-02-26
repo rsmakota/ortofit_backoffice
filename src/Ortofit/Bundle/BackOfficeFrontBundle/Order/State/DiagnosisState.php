@@ -69,8 +69,8 @@ class DiagnosisState extends AbstractState
      */
     private function hasDescription()
     {
-        $request  = $this->getRequest();
-        if (null != $request->get(self::PARAM_NAME_DESCRIPTION)) {
+        $request  = $this->getRequest()->request;
+        if ($request->has(self::PARAM_NAME_DESCRIPTION)) {
             return true;
         }
 

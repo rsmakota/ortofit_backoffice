@@ -48,47 +48,12 @@ class AppointmentManager extends AbstractManager
     }
 
     /**
-     * @param ParameterBag $params
-     *
-     * @return Appointment
+     * @param Appointment $entity
      */
-    public function create($params)
+    public function success($entity)
     {
-        $entity = new Appointment();
-        $entity->setClient($params->get('client'));
-        $entity->setDateTime($params->get('dateTime'));
-        $entity->setDuration($params->get('duration'));
-        $entity->setOffice($params->get('office'));
-        $entity->setDescription($params->get('description'));
-        $entity->setService($params->get('service'));
-        $entity->setState($params->get('state', Appointment::STATE_NEW));
-        $entity->setUser($params->get('user'));
-        $this->persist($entity);
-
-        return $entity;
-    }
-
-
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     * @throws \Exception
-     */
-    public function update($params)
-    {
-        /** @var Appointment $entity */
-        $entity = $this->rGet($params->get('id'));
-        $entity->setDateTime($params->get('dateTime'));
-        $entity->setClient($params->get('client'));
-        $entity->setDuration($params->get('duration'));
-        $entity->setDescription($params->get('description'));
-        $entity->setService($params->get('service'));
-        $entity->setState($params->get('state'));
-        $entity->setUser($params->get('user'));
+        $entity->setState(Appointment::STATE_SUCCESS);
         $this->merge($entity);
-
-        return true;
     }
 
     /**

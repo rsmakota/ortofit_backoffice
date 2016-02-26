@@ -79,6 +79,11 @@ class Appointment implements EntityInterface
     private $user;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $forwarder;
+
+    /**
      * constructor.
      */
     public function __construct()
@@ -255,6 +260,16 @@ class Appointment implements EntityInterface
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    public function getForwarder()
+    {
+        return $this->forwarder;
+    }
+
+    public function setForwarder($forwarder)
+    {
+        $this->forwarder = $forwarder;
     }
 
     /**

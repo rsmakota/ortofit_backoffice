@@ -6,17 +6,15 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
-use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
-use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Ortofit\Bundle\BackOfficeBundle\Entity\AppReminder;
+
 
 /**
- * Class ClientManager
+ * Class PersonManager
  *
  * @package Ortofit\Bundle\BackOfficeBundle\ObjectManager
  */
-class OfficeManager extends AbstractManager
+class AppReminderManager extends AbstractManager
 {
 
     /**
@@ -24,7 +22,7 @@ class OfficeManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Office::clazz();
+        return AppReminder::clazz();
     }
 
     /**
@@ -32,7 +30,7 @@ class OfficeManager extends AbstractManager
      */
     public function getName()
     {
-        return 'office_manager';
+        return 'app_reminder_manager';
     }
 
 }

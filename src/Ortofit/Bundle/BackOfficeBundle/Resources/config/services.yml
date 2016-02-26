@@ -69,3 +69,8 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: ortofit_back_office.entity_manager_olm }
+    ortofit_back_office.app_reminder_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\AppReminderManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }

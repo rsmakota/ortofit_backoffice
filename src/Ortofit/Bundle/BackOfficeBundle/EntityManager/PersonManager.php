@@ -33,40 +33,4 @@ class PersonManager extends AbstractManager
         return 'person_manager';
     }
 
-    /**
-     * @param ParameterBag $params
-     *
-     * @return object
-     */
-    public function create($params)
-    {
-        $entity = new Person();
-        $entity->setName($params->get('name'));
-        $entity->setClient($params->get('client'));
-        $entity->setBorn($params->get('born'));
-        $entity->setFamilyStatus($params->get('familyStatus'));
-        $entity->setIsClient($params->get('isClient'));
-        $entity->setGender($params->get('gender'));
-        $this->persist($entity);
-
-        return $entity;
-    }
-
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        /** @var Person $entity */
-        $entity = $this->rGet($params->get('id'));
-        $entity->setName($params->get('name'));
-        $entity->setClient($params->get('client'));
-        $entity->setBorn($params->get('born'));
-        $entity->setFamilyStatus($params->get('familyStatus'));
-        $entity->setIsClient($params->get('isClient'));
-        $entity->setGender($params->get('gender'));
-        $this->merge($entity);
-    }
 }
