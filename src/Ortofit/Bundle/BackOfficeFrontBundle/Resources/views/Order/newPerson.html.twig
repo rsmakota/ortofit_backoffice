@@ -19,7 +19,7 @@
                                 <i class="fa fa-user icon20"> </i>
                             </div>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Имя Клиента" value=""/>
+                                   placeholder="Имя Клиента" value="{{ name }}"/>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                             </div>
                             <select class="form-control" id="gender" name="gender">
                                 <option value="male">Мужской</option>
-                                <option value="female">Женский</option>
+                                <option value="female" {% if gender == 'famele' %} selected {% endif %} >Женский</option>
                             </select>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                                 <i class="fa fa-users icon20"></i>
                             </div>
                             <select class="form-control" id="familyStatusId" name="familyStatusId">
-                                {% for familyStatus in familyStatuses %}
-                                    <option value="{{ familyStatus.id }}">{{ familyStatus.name }}</option>
+                                {% for fStatus in familyStatuses %}
+                                    <option value="{{ fStatus.id }}" {% if familyStatus == fStatus %} selected {% endifd %}>{{ fStatus.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>

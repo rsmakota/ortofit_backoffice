@@ -21,9 +21,14 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class PersonState extends AbstractState
 {
 
-    const PARAM_NAME_IS_CLIENT       = 'isClient';
-    const PARAM_NAME_FAMILY_STATUS   = 'familyStatus';
-    const PARAM_NAME_FAMILY_STATUSES = 'familyStatuses';
+    const PARAM_NAME_IS_CLIENT        = 'isClient';
+    const PARAM_NAME_CLIENT           = 'client';
+    const PARAM_NAME_FAMILY_STATUS    = 'familyStatus';
+    const PARAM_NAME_FAMILY_STATUS_ID = 'familyStatusId';
+    const PARAM_NAME_FAMILY_STATUSES  = 'familyStatuses';
+    const PARAM_NAME_BORN             = 'born';
+    const PARAM_NAME_NAME             = 'name';
+    const PARAM_NAME_GENDER           = 'gender';
 
     const ACTION_PERSON_CLIENT = 'personClient';
     const ACTION_PERSON_CHOOSE = 'personChoose';
@@ -100,12 +105,14 @@ class PersonState extends AbstractState
      */
     private function processPersonNew(ParameterBag $bag)
     {
-        $bag->set('client', $this->app->getClient());
+        $bag->set(self::ACTION_PERSON_CLIENT, $this->app->getClient());
         $validator = new NewPersonValidator($bag);
         if (!$validator->isValid()) {
             return;
         }
-        $bag->set('familyStatus', $this->familyStatusManager->get($bag->get('familyStatusId')));
+        $bag->set(
+            self::PARAM_NAME_FAMILY_STATUS,
+            $this->familyStatusManager->get($bag->get(self::PARAM_NAME_FAMILY_STATUS_ID)));
         $formator        = new NewPersonFormator($bag);
         $this->person    = $this->personManager->create($formator->getData());
         $this->completed = true;
@@ -128,11 +135,15 @@ class PersonState extends AbstractState
     {
         $client = $this->app->getClient();
         if ($client->getPerson()) {
-            $this->person = $client->getPerson();
+            $this->person    = $client->getPerson();
             $this->completed = true;
             return;
         }
         $this->processPersonNew($bag);
+        if (null != $this->person) {
+            $this->person->setIsClient(true);
+            $this->personManager->merge($this->person);
+        }
     }
 
     /**
@@ -176,13 +187,22 @@ class PersonState extends AbstractState
      */
     public function getResponseData()
     {
+        $client = $this->app->getClient();
         $data = [
             self::PARAM_NAME_APP             => $this->app,
             self::PARAM_NAME_ACTION          => $this->action,
-            self::PARAM_NAME_FAMILY_STATUSES => $this->familyStatusManager->all()
+            self::PARAM_NAME_FAMILY_STATUSES => $this->familyStatusManager->all(),
+            self::PARAM_NAME_IS_CLIENT       => false,
+
+            self::PARAM_NAME_FAMILY_STATUS   => 0,
+            self::PARAM_NAME_GENDER          => '',
+            self::PARAM_NAME_NAME            => ''
         ];
         if ($this->action == self::ACTION_PERSON_CLIENT) {
-            $data[self::PARAM_NAME_IS_CLIENT] = true;
+            $data[self::PARAM_NAME_IS_CLIENT]     = true;
+            $data[self::PARAM_NAME_FAMILY_STATUS] = 5;
+            $data[self::PARAM_NAME_NAME]          = $client->getName();
+
         }
 
         return $data;
