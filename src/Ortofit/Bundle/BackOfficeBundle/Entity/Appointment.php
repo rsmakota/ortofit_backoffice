@@ -21,6 +21,9 @@ class Appointment implements EntityInterface
     const STATE_NOT_CAME = 3;
     const STATE_SUCCESS  = 4;
 
+    const COLOR_SUCCESS  = '#006400';
+    const COLOR_NOT_CAME = '#cccccc';
+
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
@@ -291,19 +294,38 @@ class Appointment implements EntityInterface
         ];
     }
 
+    private function getColor()
+    {
+        $borderColor = '';
+        switch ($this->state) {
+            case self::STATE_NEW:
+                $borderColor = $this->getService()->getColor();
+            break;
+            case self::STATE_SUCCESS:
+                $borderColor = self::COLOR_SUCCESS;
+            break;
+            case self::STATE_NOT_CAME:
+                $borderColor = self::COLOR_NOT_CAME;
+            break;
+        }
+
+        return $borderColor;
+    }
+
     /**
      * @return array
      */
     public function getCalendarData()
     {
         $service = $this->getService();
+
         return [
             'id'              => $this->id,
             'title'           => $service->getShort(),
             'start'           => $this->dateTime->format('c'),
             'end'             => $this->getEndDate()->format('c'),
-            'backgroundColor' => $service->getColor(),
-            'borderColor'     => $service->getColor(),
+            'backgroundColor' => $this->getColor(),
+            'borderColor'     => $this->getColor(),
         ];
     }
 }

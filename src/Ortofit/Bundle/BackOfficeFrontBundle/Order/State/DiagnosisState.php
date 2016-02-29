@@ -98,6 +98,10 @@ class DiagnosisState extends AbstractState
      */
     private function saveDiagnosis()
     {
+        $description = $this->getRequest()->get(self::PARAM_NAME_DESCRIPTION);
+        if (empty($description)) {
+            return;
+        }
         $data = [
             'description' => $this->getRequest()->get(self::PARAM_NAME_DESCRIPTION),
             'person'      => $this->person

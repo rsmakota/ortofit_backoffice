@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FamilyStatus implements EntityInterface
 {
+    const STATUS_CLIENT_ID = 5;
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")

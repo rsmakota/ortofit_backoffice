@@ -11,6 +11,6 @@ BackOffice.OrderServicePerson = {
         var hlp  = BackOffice.FormOrderServicePerson;
         var data = hlp.getFormData();
         console.log(data);
-        //BackOffice.Modal.load(BackOffice.OrderDiagnosisPerson.postUrl, data);
+        BackOffice.Modal.load(BackOffice.OrderServicePerson.postUrl, data);
     }
 };

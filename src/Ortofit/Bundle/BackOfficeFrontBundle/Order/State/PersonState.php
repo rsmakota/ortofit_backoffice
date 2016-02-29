@@ -6,6 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 
+use Ortofit\Bundle\BackOfficeBundle\Entity\FamilyStatus;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Person;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\FamilyStatusManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\PersonManager;
@@ -33,6 +34,8 @@ class PersonState extends AbstractState
     const ACTION_PERSON_CLIENT = 'personClient';
     const ACTION_PERSON_CHOOSE = 'personChoose';
     const ACTION_PERSON_NEW    = 'personNew';
+
+
 
     /**
      * @var Person
@@ -105,9 +108,10 @@ class PersonState extends AbstractState
      */
     private function processPersonNew(ParameterBag $bag)
     {
-        $bag->set(self::ACTION_PERSON_CLIENT, $this->app->getClient());
+        $bag->set(self::PARAM_NAME_CLIENT, $this->app->getClient());
         $validator = new NewPersonValidator($bag);
         if (!$validator->isValid()) {
+
             return;
         }
         $bag->set(
@@ -200,7 +204,7 @@ class PersonState extends AbstractState
         ];
         if ($this->action == self::ACTION_PERSON_CLIENT) {
             $data[self::PARAM_NAME_IS_CLIENT]     = true;
-            $data[self::PARAM_NAME_FAMILY_STATUS] = 5;
+            $data[self::PARAM_NAME_FAMILY_STATUS] = FamilyStatus::STATUS_CLIENT_ID;
             $data[self::PARAM_NAME_NAME]          = $client->getName();
 
         }

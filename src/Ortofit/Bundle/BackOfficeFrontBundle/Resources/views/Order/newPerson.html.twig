@@ -50,7 +50,7 @@
                             </div>
                             <select class="form-control" id="familyStatusId" name="familyStatusId">
                                 {% for fStatus in familyStatuses %}
-                                    <option value="{{ fStatus.id }}" {% if familyStatus == fStatus %} selected {% endifd %}>{{ fStatus.name }}</option>
+                                    <option value="{{ fStatus.id }}" {% if familyStatus == fStatus.id %} selected {% endif %}>{{ fStatus.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>

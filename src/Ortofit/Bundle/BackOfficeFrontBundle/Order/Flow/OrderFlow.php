@@ -102,7 +102,7 @@ class OrderFlow implements FlowInterface
         if ($state->isCompleted()) {
             if (!$this->next()) {
                 $this->completed = true;
-                $this->reset();
+                $this->clear();
                 return;
             }
             $this->process();
@@ -149,7 +149,8 @@ class OrderFlow implements FlowInterface
     public function clear()
     {
         $this->session->remove('stateId');
-        $state = reset($this->statuses);
+        $keys  = array_keys($this->statuses);
+        $state = $this->statuses[$keys[0]];
         if ($state instanceof StateInterface) {
             $this->currentStateId = $state->getId();
         }
