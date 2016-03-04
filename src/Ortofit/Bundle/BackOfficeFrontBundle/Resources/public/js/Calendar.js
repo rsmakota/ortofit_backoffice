@@ -4,15 +4,41 @@
  */
 
 BackOffice.Calendar = {
-    workHours:    null,
-    eventsUrl:    null,
-    eventDataUrl: null,
-    formUrl:      null,
+    workHours:       null,
+    eventsUrl:       null,
+    eventDataUrl:    null,
+    formUrl:         null,
+    _officeId:       null,
+    defaultOfficeId: 1,
 
-    init: function (officeId, doctorId) {
-        var me = this;
-        var modal = BackOffice.Modal;
-        $('#calendar'+officeId).fullCalendar({
+    _setCookie: function (key, value) {
+        var expires = new Date();
+        expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
+        document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+    },
+
+    _getCookie: function (key) {
+        var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+        return keyValue ? keyValue[2] : null;
+    },
+
+    getCalendar: function()
+    {
+        return $('#calendar');
+    },
+
+    getEventsUrl: function()
+    {
+        return BackOffice.Calendar.eventsUrl+'?office_id='+BackOffice.Calendar._officeId;
+    },
+
+    init: function (doctorId) {
+        var me       = BackOffice.Calendar;
+        var modal    = BackOffice.Modal;
+        var officeId = me.getOfficeId();
+
+        me._officeId = officeId;
+        me.getCalendar().fullCalendar({
             header: {
                 left:   'prev,next today',
                 center: 'title',
@@ -38,21 +64,23 @@ BackOffice.Calendar = {
             firstDay:       1,
             minTime:        "09:00:00",
             maxTime:        "19:30:00",
-            events:         me.eventsUrl+'?office_id='+officeId,
+            events:         me.getEventsUrl(),
             editable:       false,
             droppable:      false,
             selectable:     true,
-            eventClick:     function (calEvent, jsEvent, view) {
+
+            eventClick:     function (calEvent) {
                 modal.load(me.eventDataUrl+'?appId='+calEvent.id, {});
             },
-            dayClick: function (date, jsEvent, view) {
+
+            dayClick: function (date) {
                 if (null == doctorId) {
                     return false;
                 }
 
                 var data = {
                     officeId: officeId,
-                    doctorId:   doctorId,
+                    doctorId: doctorId,
                     date:     date.format("DD/MM/YYYY"),
                     time:     date.format("HH:mm")
                 };
@@ -60,5 +88,43 @@ BackOffice.Calendar = {
             }
 
         });
+    },
+
+    reInit: function(officeId) {
+        var me = BackOffice.Calendar;
+        var calendar = me.getCalendar();
+        calendar.fullCalendar('removeEventSource', me.getEventsUrl());
+        me.setOfficeId(officeId);
+        calendar.fullCalendar('addEventSource', me.getEventsUrl());
+    },
+    /**
+     * @returns {integer}
+     */
+    getOfficeId: function()
+    {
+        var me = BackOffice.Calendar;
+        if (me._officeId != null) {
+            return me._officeId;
+        }
+        var officeId = me._getCookie('officeId');
+        if (officeId != null) {
+            me._officeId = officeId;
+            return me._officeId;
+        }
+        me.setOfficeId(me.defaultOfficeId);
+
+        return me._officeId;
+    },
+
+    setOfficeId: function(officeId) {
+        var me = BackOffice.Calendar;
+        me._officeId = officeId;
+        me._setCookie('officeId', officeId);
+    },
+
+    update: function(){
+        var me = BackOffice.Calendar;
+        me.getCalendar().fullCalendar('refetchEvents');
     }
+
 };
