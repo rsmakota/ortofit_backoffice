@@ -16,14 +16,7 @@ BackOffice.AppMove = {
                 return false;
             }
             transport.send(me.saveUrl, me.getData(), function() {
-                var officeId  = BackOffice.AppMove.officeId;
-                var officeIdN = BackOffice.FormAppMoveHelper.getOfficeId();
-                var calendar  = BackOffice.Calendar.Helper.getCalendar(officeId);
-                calendar.fullCalendar('refetchEvents');
-                if (officeId != officeIdN) {
-                    var calendarN = BackOffice.Calendar.Helper.getCalendar(officeIdN);
-                    calendarN.fullCalendar('render');
-                }
+                BackOffice.Calendar.update();
                 BackOffice.Modal.getWindow().modal('hide');
             })
         });

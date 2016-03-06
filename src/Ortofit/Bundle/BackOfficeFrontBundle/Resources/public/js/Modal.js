@@ -16,6 +16,7 @@ BackOffice.Modal = {
         var modal = this.getWindow();
         BackOffice.Transport.send(url, param, function(response) {
             if (response == 'Complete') {
+                BackOffice.Calendar.update();
                 modal.modal('hide');
                 return;
             }

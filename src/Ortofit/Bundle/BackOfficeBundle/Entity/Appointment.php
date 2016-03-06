@@ -21,8 +21,8 @@ class Appointment implements EntityInterface
     const STATE_NOT_CAME = 3;
     const STATE_SUCCESS  = 4;
 
-    const COLOR_SUCCESS  = '#006400';
-    const COLOR_NOT_CAME = '#cccccc';
+    const COLOR_SUCCESS  = '#7CB280';
+    const COLOR_NOT_CAME = '#B79191';
 
     /**
      * @ORM\Id

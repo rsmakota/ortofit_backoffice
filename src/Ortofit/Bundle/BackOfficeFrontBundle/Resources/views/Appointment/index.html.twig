@@ -17,23 +17,13 @@
             <div class="col-md-12">
                 <ul id="office_tabs" class="nav nav-tabs" data-tabs="tabs">
                     {% for office in offices %}
-                        {% if office.id == activeOfficeId %}
-                            <li class="active"><a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">{{ office.name }}</a></li>
-                        {% else %}
-                            <li><a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">{{ office.name }}</a></li>
-                        {% endif %}
+                        <li id="officeTab{{ office.id }}"><a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">{{ office.name }}</a></li>
                     {% endfor %}
                 </ul>
                 <div class="box box-primary">
                     <div class="box-body no-padding">
                         <!-- THE CALENDAR -->
-                        {% for office in offices %}
-                            {% if office.id == activeOfficeId %}
-                                <div id="calendar{{ office.id }}"></div>
-                            {% else %}
-                                <div id="calendar{{ office.id }}" class="hidden"></div>
-                            {% endif  %}
-                        {% endfor %}
+                        <div id="calendar"></div>
                     </div><!-- /.box-body -->
                 </div><!-- /. box -->
             </div><!-- /.col -->
@@ -42,36 +32,24 @@
 
     <script>
         $(function () {
-            var officeIds = [];
             var calendar = BackOffice.Calendar;
-
+            var doctorId = {{ app.request.query.get("doctorId", "null") }};
             calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
             {% if app.request.query.has('doctorId') %}
-                calendar.eventsUrl    = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
+                calendar.eventsUrl = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
             {% else %}
-                calendar.eventsUrl    = '{{ url('api_app_get_all') }}';
+                calendar.eventsUrl = '{{ url('api_app_get_all') }}';
             {% endif %}
-
             calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
-            {% for office in offices %}
-                officeIds.push({{ office.id }});
-                calendar.init({{ office.id}}, {{ app.request.query.get("doctorId", "null") }});
-            {% endfor %}
-
+            calendar.init(doctorId);
+            var officeId = calendar.getOfficeId();
+            $('#officeTab'+officeId).addClass('active');
             $('.office_link').click(function(){
                 var officeId = $(this).attr('office-id');
-                var calendarId = null;
-                for (var i=0; i<officeIds.length; i++ ) {
-                    calendarId = '#calendar' + officeIds[i];
-                    if (officeIds[i] == officeId) {
-                        $(calendarId).show();
-                        $(calendarId).removeClass('hidden');
-                        $(calendarId).fullCalendar('render');
-                        $(calendarId).fullCalendar('refetchEvents');
-                    } else {
-                        $(calendarId).hide();
-                    }
+                if (calendar.getOfficeId() == officeId ) {
+                    return false;
                 }
+                calendar.reInit(officeId);
             });
         });
 
