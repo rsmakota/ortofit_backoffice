@@ -10,7 +10,9 @@ BackOffice.FormOrderServicePerson = {
     getForm: function() {
         return $('#serviceForm');
     },
-
+    getRemindEl: function() {
+        return $('#remind');
+    },
     getFormData: function()
     {
         var formData = $('#serviceForm').serializeArray();
