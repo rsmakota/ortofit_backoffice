@@ -29,20 +29,20 @@ BackOffice.AppForm = {
     },
 
     getData: function() {
-        var eHelper = this.elements;
+        var hlp = this.elements;
         return {
             msisdn:            this.getMsisdn(),
-            clientName:        eHelper.getClientName().val(),
-            clientDirectionId: eHelper.getDirectionId().val(),
-            gender:            eHelper.getGender().val(),
-            officeId:          eHelper.getOfficeId().val(),
+            clientName:        hlp.getClientName().val(),
+            clientDirectionId: hlp.getDirectionId().val(),
+            gender:            hlp.getGender().val(),
+            officeId:          hlp.getOfficeId().val(),
             dateTime:          this.getDateTime(),
-            duration:          eHelper.getDuration().val(),
-            description:       eHelper.getDescription().val(),
-            appId:             eHelper.getAppId().val(),
-            serviceId:         eHelper.getServiceId().val(),
-            doctorId:          eHelper.getDoctorId().val(),
-            clientId:          eHelper.getClientId().val()
+            duration:          hlp.getDuration().val(),
+            description:       hlp.getDescription().val(),
+            appId:             hlp.getAppId().val(),
+            serviceId:         hlp.getServiceId().val(),
+            doctorId:          hlp.getDoctorId().val(),
+            clientId:          hlp.getClientId().val()
 
         };
 
@@ -58,16 +58,14 @@ BackOffice.AppForm = {
         }
         BackOffice.Transport.send(this.createUrl, this.getData(), function(){
             BackOffice.Modal.getWindow().modal('hide');
-            var calendar = $('#calendar'+$('#officeId').val());
-            calendar.fullCalendar('refetchEvents');
+            BackOffice.Calendar.update();
         });
     },
 
     update: function() {
         BackOffice.Transport.send(this.updateUrl, this.getData(), function(){
             BackOffice.Modal.getWindow().modal('hide');
-            var calendar = $('#calendar'+$('#officeId').val());
-            calendar.fullCalendar('refetchEvents');
+            BackOffice.Calendar.update();
         });
     },
 
@@ -75,10 +73,6 @@ BackOffice.AppForm = {
         this.elements = BackOffice.FormElement;
         this.decorator = BackOffice.FormDecorator;
         var me = this;
-
-        //$("#date").inputmask("dd/mm/yyyy hh:mm", {"placeholder": "dd/mm/yyyy hh:mm"});
-        //$("#time").inputmask("hh:mm", {"placeholder": "hh:mm"});
-        //$("[data-mask]").inputmask();
 
         $('#saveButton').click(function(){
             if (appId) {
