@@ -1,0 +1,241 @@
+<!-- Modal -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Запись на прием</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputMsisdn" class="col-sm-3 control-label">Телефон:</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><strong class="icon20">+{{ country.prefix }}</strong></div>
+
+                                <input type="text" class="form-control" id="msisdn" data-mask=""
+                                       data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
+                                       value="{{ msisdn|default('') }}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-3 control-label">Имя:</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-credit-card icon20"> </i>
+                                </div>
+                                <input type="text" class="form-control" id="clientName"
+                                       placeholder="Имя Клиента" value="{{ clientName|default('') }}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectGender" class="col-sm-3 control-label">Пол:</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-venus-mars icon20"></i>
+                                </div>
+                                <select class="form-control" id="gender">
+                                        {% if "female" == gender|default(0) %}
+                                            <option selected value="female">Женский</option>
+                                            <option value="male">Мужской</option>
+                                        {% else %}
+                                            <option value="female">Женский</option>
+                                            <option selected value="male">Мужской</option>
+                                        {% endif %}
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectDirectionId" class="col-sm-3 control-label">Источник:</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-arrow-right icon20"></i>
+                                </div>
+                                <select class="form-control" id="directionId">
+                                    {% for direction in directions %}
+                                        {% if direction.id == directionId|default(0) %}
+                                            <option selected value="{{ direction.id }}">{{ direction.name }}</option>
+                                        {% else %}
+                                            <option value="{{ direction.id }}">{{ direction.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="selectServiceId" class="col-sm-3 control-label">Услуга:</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-star icon20"></i>
+                                </div>
+                                <select class="form-control" id="serviceId">
+                                    {% for service in services %}
+                                        {% if service.id == serviceId|default(0) %}
+                                            <option selected value="{{ service.id }}">{{ service.name }}</option>
+                                        {% else %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    {#<div class="form-group">#}
+                        {#<label for="selectOfficeId" class="col-sm-3 control-label">Офис:</label>#}
+
+                        {#<div class="col-sm-9">#}
+                            {#<div class="input-group">#}
+                                {#<div class="input-group-addon">#}
+                                    {#<i class="fa fa-building icon20"></i>#}
+                                {#</div>#}
+                                {#<select class="form-control" id="officeId">#}
+                                    {#{% for office in offices %}#}
+                                        {#{% if office.id == officeId|default(0) %}#}
+                                            {#<option selected value="{{ office.id }}">{{ office.name }}</option>#}
+                                        {#{% else %}#}
+                                            {#<option value="{{ office.id }}">{{ office.name }}</option>#}
+                                        {#{% endif %}#}
+                                    {#{% endfor %}#}
+                                {#</select>#}
+                            {#</div>#}
+
+                        {#</div>#}
+                    {#</div>#}
+
+                    <div class="form-group">
+                        <label for="inputDate" class="col-sm-3 control-label">Прием:</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                {#<div class="input-group-addon">#}
+                                    {#<i class="fa fa-calendar icon20"></i>#}
+                                {#</div>#}
+                                {#<input id="date" class="form-control pull-right active" type="text"#}
+                                       {#data-inputmask="'alias': 'dd/mm/yyyy hh/mm'" data-mask placeholder="{{ "now"|date("d/m/Y H:i") }}"#}
+                                       {#value="{{ date|default('') }}"#}
+
+                                {#/>#}
+
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o icon20"></i>
+                                </div>
+                                <select class="form-control" id="duration">
+                                    {% for i in 1..4 %}
+                                        {% if (i*30) == duration|default(0) %}
+                                            <option selected value="{{ (i*30) }}">{{ (i*30) }} мин.</option>
+                                        {% else %}
+                                            <option value="{{ (i*30) }}">{{ (i*30) }} мин.</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+
+                                {#<input id="time" class="form-control pull-right active" type="text" data-inputmask="'alias': 'hh/mm'"#}
+                                       {#data-mask placeholder="{{ "now"|date("H:i") }}"#}
+                                       {#value="{{ time|default('') }}"#}
+                                {#/>#}
+
+                                {#<div class="input-group-addon" style="padding-top: 0px ">#}
+                                    {#{% for i in 1..4 %}#}
+                                        {#{% if (duration is defined) %}#}
+                                            {#{% if duration == (i*30) %}#}
+                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" checked="checked" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
+                                            {#{% else %}#}
+                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
+                                            {#{% endif %}#}
+                                        {#{% else %}#}
+                                            {#{% if i==1 %}#}
+                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" checked="checked" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
+                                            {#{% else %}#}
+                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
+                                            {#{% endif %}#}
+                                        {#{% endif %}#}
+
+                                    {#{% endfor %}#}
+                                    {#</div>#}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {#<div class="form-group">#}
+                        {#<label for="selectDoctorId" class="col-sm-3 control-label">Сотрудник:</label>#}
+
+                        {#<div class="col-sm-9">#}
+                            {#<div class="input-group">#}
+                                {#<div class="input-group-addon">#}
+                                    {#<i class="fa fa-user-md icon20"></i>#}
+                                {#</div>#}
+                                {#<select class="form-control" id="doctorId">#}
+                                    {#{% for doctor in doctors %}#}
+                                        {#{% if doctor.id == doctorId|default(0) %}#}
+                                            {#<option selected value="{{ doctor.id }}">{{ doctor.name }}</option>#}
+                                        {#{% else %}#}
+                                            {#<option value="{{ doctor.id }}">{{ doctor.name }}</option>#}
+                                        {#{% endif %}#}
+                                    {#{% endfor %}#}
+                                {#</select>#}
+                            {#</div>#}
+
+                        {#</div>#}
+                    {#</div>#}
+
+
+
+                    <div class="form-group">
+                        <label for="textareaDescription" class="col-sm-3 control-label">Заметка:</label>
+
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="3" id="description">{{ description|default('') }}</textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" id="date"     value="{{ date|default('') }}">
+                    <input type="hidden" id="appId"    value="{{ appId|default('') }}">
+                    <input type="hidden" id="clientId" value="{{ client.id|default('') }}">
+                    <input type="hidden" id="officeId" value="{{ office.id }}">
+                    <input type="hidden" id="doctorId" value="{{ doctor.id }}">
+                    <input type="hidden" id="time"     value="{{ time }}">
+                    <input type="hidden" id="date"     value="{{ date }}">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" id="saveButton">Сохранить</button>
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(function() {
+        var form = BackOffice.AppForm;
+        form.createUrl = "{{ url('api_app_create')   }}";
+        form.updateUrl = "{{ url('api_app_update')   }}";
+        form.clientUrl = "{{ url('api_client_find')   }}";
+        form.pattern   = "{{ country.pattern }}";
+        form.length    = {{ country.length }};
+        form.prefix    = "{{ country.prefix }}";
+        form.init({{ appId|default('false') }});
+    });
+</script>

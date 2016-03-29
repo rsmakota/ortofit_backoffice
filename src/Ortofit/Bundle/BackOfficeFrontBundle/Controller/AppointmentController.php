@@ -11,7 +11,6 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
-use Rsmakota\UtilityBundle\Date\DateRange;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
