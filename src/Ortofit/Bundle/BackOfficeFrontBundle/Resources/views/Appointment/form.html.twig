@@ -7,21 +7,16 @@
                 <h4 class="modal-title" id="myModalLabel">Запись на прием</h4>
             </div>
             <div class="modal-body">
+                {% if model.isDefinite() %}
                 <ul class="list-group" style="text-align: center">
                     <li class="list-group-item list-group-item-info">
-                        {% if not model.isEmpty('doctorId') %}
                         <i class="fa fa-user-md icon20"> </i> {{ model.getDoctorName() }} &nbsp;&nbsp;&nbsp;&nbsp;
-                        {% endif %}
-                        {% if not model.isEmpty('officeId') %}
                         <i class="fa fa-building icon20"></i> {{ model.getOfficeName() }} &nbsp;&nbsp;&nbsp;&nbsp;
-                        {% endif %}
-                        {% if not model.isEmpty('date') %}
                         <i class="fa fa-calendar icon20"></i> {{ model.date }}  &nbsp;&nbsp;&nbsp;&nbsp;
-                        {% endif %}
-                        {% if not model.isEmpty('time') %}
-                        <i class="fa fa-clock-o icon20"></i> {{ model.time }}</li>
-                        {% endif %}
+                        <i class="fa fa-clock-o icon20"> </i> {{ model.time }}
+                    </li>
                 </ul>
+                {% endif%}
                 <form class="form-horizontal">
                     <div class="form-group">
                         <label for="inputMsisdn" class="col-sm-3 control-label">Телефон:</label>
@@ -195,8 +190,7 @@
                                 </div>
                                 <input id="time" class="form-control pull-right active" type="text" data-inputmask="'alias': 'hh/mm'"
                                        data-mask placeholder="{{ "now"|date("H:i") }}"
-                                       value="{{ time|default('') }}"
-                                />
+                                       value="{{ time|default('') }}" />
 
                             </div>
                         </div>

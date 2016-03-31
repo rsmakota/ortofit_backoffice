@@ -21,11 +21,13 @@ BackOffice.AppForm = {
     },
 
     isValidMsisdn: function() {
-        if(null != this.getMsisdn().match(this.pattern)) {
+        if (null != this.getMsisdn().match(this.pattern)) {
             return true;
-        }
+        } else {
 
+        }
         return false;
+
     },
 
     getData: function() {
@@ -70,9 +72,12 @@ BackOffice.AppForm = {
     },
 
     init: function(appId) {
-        this.elements = BackOffice.FormElement;
+        this.elements  = BackOffice.FormElement;
         this.decorator = BackOffice.FormDecorator;
         var me = this;
+        $("#date").inputmask("dd/mm/yyyy", {"placeholder": "ДД/ММ/ГГГГ"});
+        $("#time").inputmask("hh:mm", {"placeholder": "ЧЧ:ММ"});
+        $("[data-mask]").inputmask();
 
         $('#saveButton').click(function(){
             if (appId) {

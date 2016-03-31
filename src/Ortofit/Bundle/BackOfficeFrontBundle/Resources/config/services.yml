@@ -48,3 +48,6 @@ services:
             - [setOfficeManager, ["@ortofit_back_office.office_manage"]]
             - [setCountryManager, ["@ortofit_back_office.client_country_manage"]]
 
+    bf.app_schedule_verifier:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Verifier\ScheduleVerifier
+        arguments: ["@ortofit_back_office.schedule_manage"]

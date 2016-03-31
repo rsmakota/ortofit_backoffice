@@ -9,8 +9,6 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
-use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
-use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,6 +24,14 @@ class AppointmentController extends BaseController
     private function getScheduleManager()
     {
         return $this->get('ortofit_back_office.schedule_manage');
+    }
+
+    /**
+     * @return \Ortofit\Bundle\BackOfficeFrontBundle\Verifier\ScheduleVerifier
+     */
+    private function getScheduleVerifier()
+    {
+        return $this->get("bf.app_schedule_verifier");
     }
 
     /**
@@ -54,71 +60,6 @@ class AppointmentController extends BaseController
         return $this->getCountryManager()->getDefault();
     }
 
-    /**
-     * @param \DateTime $date
-     * @param User      $user
-     * @param Office    $office
-     *
-     * @return bool
-     */
-    private function isWorkDate($date, $user, $office)
-    {
-        $schedule = $this->getScheduleManager()->findOneByDate($date, $office, $user);
-        if ($schedule) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function getFormDataByAppId($appId)
-    {
-        /** @var Appointment $app */
-        $app = $this->getAppointmentManager()->get($appId);
-        return [
-            'serviceId'   => $app->getService()->getId(),
-            'msisdn'      => $app->getClient()->getLocalMsisdn(),
-            'clientName'  => $app->getClient()->getName(),
-            'directionId' => $app->getClient()->getClientDirection()->getId(),
-            'office'      => $app->getOffice(),
-            'date'        => $app->getDateTime()->format('d/m/Y'),
-            'time'        => $app->getDateTime()->format('H:i'),
-            'duration'    => $app->getDuration(),
-            'description' => $app->getDescription(),
-            'appId'       => $app->getId(),
-            'gender'      => $app->getClient()->getGender(),
-            'client'      => $app->getClient(),
-            'doctor'      => $app->getUser(),
-            'services'    => $this->getServiceManager()->all(),
-            'country'     => $this->getCountry(),
-            'directions'  => $this->getClientDirectionManager()->all(),
-        ];
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array|bool
-     */
-    private function getFormData(Request $request)
-    {
-        $date   = \DateTime::createFromFormat('d/m/Y H:i',$request->get('date')." ". $request->get('time'));
-        $doctor = $this->getDoctorManager()->findUserBy(['id' => $request->get('doctorId')]);
-        $office = $this->getOfficeManager()->get($request->get('officeId'));
-        if (!$this->isWorkDate($date, $doctor, $office)) {
-            return false;
-        }
-
-        return [
-            'directions' => $this->getClientDirectionManager()->all(),
-            'office'     => $office,
-            'services'   => $this->getServiceManager()->all(),
-            'country'    => $this->getCountry(),
-            'doctor'     => $doctor,
-            'date'       => $request->get('date'),
-            'time'       => $request->get('time'),
-        ];
-    }
 
     /**
      * Index page with calendar/schedule
@@ -137,25 +78,15 @@ class AppointmentController extends BaseController
 
     /**
      * Return a new book form or old for changing data
-     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function formAction(Request $request)
+    public function formAction()
     {
-//        if ($request->get('appId')) {
-//            $data = $this->getFormDataByAppId($request->get('appId'));
-//        } else {
-//            $data = $this->getFormData($request);
-//        }
-//
-//        if ($data) {
-//            return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', $data);
-//        }
-//
-//        return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
-
         $model = $this->getModelProvider()->getModel();
+        if ($model->isDefinite() && !$this->getScheduleVerifier()->isValid($model)) {
+            return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
+        }
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', ['model'=>$model, 'country'=>$this->getCountry()]);
 
@@ -188,8 +119,6 @@ class AppointmentController extends BaseController
     {
         /** @var Appointment $app */
         $app        = $this->getAppointmentManager()->get($appId);
-        //$schedules  = $this->getScheduleManager()->findByDate($app->getDateTime(), $app->getOffice(), $app->getUser());
-        //$allowTimes = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
         $allowDates = $this->getScheduleManager()->getAllowDatesInFormat($app->getUser(),  $app->getOffice());
         $data = [
             'offices'         => $this->getOfficeManager()->all(),
