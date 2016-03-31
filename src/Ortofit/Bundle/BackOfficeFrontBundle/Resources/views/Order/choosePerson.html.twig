@@ -50,7 +50,7 @@
 <script>
     $(document).ready(function() {
         var contrl = BackOffice.OrderChoosePerson;
-        contrl.postUrl = "{{ url('backoffice_order_process') }}";
+        contrl.postUrl = "{{ url('bf_order_process') }}";
         contrl.appId   = {{ app.id }};
         contrl.init();
 

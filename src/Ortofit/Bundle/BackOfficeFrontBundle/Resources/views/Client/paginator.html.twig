@@ -5,7 +5,7 @@
         </li>
     {% else %}
         <li id="previous" class="paginate_button previous">
-            <a href="{{ url('backendoffice_client',{'page':paginator.previous, 'msisdn':msisdn}) }}"
+            <a href="{{ url('bf_client',{'page':paginator.previous, 'msisdn':msisdn}) }}"
                aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
         </li>
     {% endif %}
@@ -13,7 +13,7 @@
 
     {% for i in 1..paginator.count %}
         <li class="paginate_button {% if i == paginator.current %} active {% endif %}">
-            <a href="{{ url('backendoffice_client',{'page':i, 'msisdn':msisdn}) }}">{{ i }}</a>
+            <a href="{{ url('bf_client',{'page':i, 'msisdn':msisdn}) }}">{{ i }}</a>
         </li>
     {% endfor %}
 
@@ -23,7 +23,7 @@
         </li>
     {% else %}
         <li id="next" class="paginate_button next">
-            <a href="{{ url('backendoffice_client',{'page':paginator.next, 'msisdn':msisdn}) }}">Next</a>
+            <a href="{{ url('bf_client',{'page':paginator.next, 'msisdn':msisdn}) }}">Next</a>
         </li>
     {% endif %}
 </ul>

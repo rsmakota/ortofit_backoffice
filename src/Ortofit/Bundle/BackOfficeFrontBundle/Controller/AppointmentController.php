@@ -39,6 +39,14 @@ class AppointmentController extends BaseController
     }
 
     /**
+     * @return \Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentViewModelProvider
+     */
+    private function getModelProvider()
+    {
+        return $this->get('bf.app_view_model_provider');
+    }
+
+    /**
      * @return null|Country
      */
     private function getCountry()
@@ -87,6 +95,11 @@ class AppointmentController extends BaseController
         ];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array|bool
+     */
     private function getFormData(Request $request)
     {
         $date   = \DateTime::createFromFormat('d/m/Y H:i',$request->get('date')." ". $request->get('time'));
@@ -108,6 +121,7 @@ class AppointmentController extends BaseController
     }
 
     /**
+     * Index page with calendar/schedule
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
@@ -122,31 +136,38 @@ class AppointmentController extends BaseController
     }
 
     /**
+     * Return a new book form or old for changing data
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function formAction(Request $request)
     {
-        if ($request->get('appId')) {
-            $data = $this->getFormDataByAppId($request->get('appId'));
-        } else {
-            $data = $this->getFormData($request);
-        }
+//        if ($request->get('appId')) {
+//            $data = $this->getFormDataByAppId($request->get('appId'));
+//        } else {
+//            $data = $this->getFormData($request);
+//        }
+//
+//        if ($data) {
+//            return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', $data);
+//        }
+//
+//        return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
 
-        if ($data) {
-            return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', $data);
-        }
+        $model = $this->getModelProvider()->getModel();
 
-        return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
+        return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', ['model'=>$model, 'country'=>$this->getCountry()]);
+
     }
 
     /**
+     * View book data
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function preOrderAction(Request $request)
+    public function viewAppAction(Request $request)
     {
         /** @var Appointment $app */
         $app  = $this->getAppointmentManager()->get($request->get('appId'));
@@ -154,19 +175,20 @@ class AppointmentController extends BaseController
             'appointment' => $app
         ];
 
-        return $this->render('@OrtofitBackOfficeFront/Appointment/preOrderModal.html.twig', $data);
+        return $this->render('@OrtofitBackOfficeFront/Appointment/viewApp.html.twig', $data);
     }
 
     /**
+     * Return form for change book time or office
      * @param integer $appId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function moveAction($appId)
+    public function rescheduleAction($appId)
     {
         /** @var Appointment $app */
         $app        = $this->getAppointmentManager()->get($appId);
-        $schedules  = $this->getScheduleManager()->findByDate($app->getDateTime(), $app->getOffice(), $app->getUser());
+        //$schedules  = $this->getScheduleManager()->findByDate($app->getDateTime(), $app->getOffice(), $app->getUser());
         //$allowTimes = $this->getScheduleManager()->getAllowTimesInFormat($schedules);
         $allowDates = $this->getScheduleManager()->getAllowDatesInFormat($app->getUser(),  $app->getOffice());
         $data = [
@@ -179,7 +201,7 @@ class AppointmentController extends BaseController
             'currentTime'     => $app->getDateTime()->format('H:i'),
         ];
 
-        return $this->render('@OrtofitBackOfficeFront/Appointment/appMoveForm.html.twig', $data);
+        return $this->render('@OrtofitBackOfficeFront/Appointment/reschedule.html.twig', $data);
     }
 
 }

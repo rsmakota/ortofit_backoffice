@@ -34,13 +34,13 @@
         $(function () {
             var calendar = BackOffice.Calendar;
             var doctorId = {{ app.request.query.get("doctorId", "null") }};
-            calendar.formUrl      = '{{ url('backendoffice_appointment_get_form') }}';
+            calendar.formUrl      = '{{ url('bf_app_get_form') }}';
             {% if app.request.query.has('doctorId') %}
                 calendar.eventsUrl = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
             {% else %}
                 calendar.eventsUrl = '{{ url('api_app_get_all') }}';
             {% endif %}
-            calendar.eventDataUrl = '{{ url('backendoffice_appointment_pre_app') }}';
+            calendar.eventDataUrl = '{{ url('bf_app_view_app') }}';
             calendar.init(doctorId);
             var officeId = calendar.getOfficeId();
             $('#officeTab'+officeId).addClass('active');

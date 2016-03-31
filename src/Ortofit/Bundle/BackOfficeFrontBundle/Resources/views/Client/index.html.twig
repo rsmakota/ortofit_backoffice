@@ -7,7 +7,7 @@
             Клиенты
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ url('backendoffice_client') }}"><i class="fa fa-credit-card"></i>Список клиентов</a></li>
+            <li><a href="{{ url('bf_client') }}"><i class="fa fa-credit-card"></i>Список клиентов</a></li>
         </ol>
     </section>
     <!-- content -->
@@ -64,7 +64,7 @@
                                                     {% endif %}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ url('backendoffice_person', {'clientId':client.id}) }}"> {{ client.name|default('------') }} </a>
+                                                    <a href="{{ url('bf_person', {'clientId':client.id}) }}"> {{ client.name|default('------') }} </a>
                                                 </td>
                                                 <td>{{ client.msisdn }}</td>
                                                 <td>{{ client.getClientDirection().getName()|default('------') }}</td>
@@ -98,11 +98,11 @@
     <script>
         $(document).ready(function () {
             $('#newClient').click(function (e) {
-                BackOffice.Modal.load('{{ url('backendoffice_client_form') }}', {});
+                BackOffice.Modal.load('{{ url('bf_client_form') }}', {});
             });
             $('.edit').click(function () {
                 var clientId = $(this).attr('client-id');
-                BackOffice.Modal.load('{{ url('backendoffice_client_form') }}', {id: clientId});
+                BackOffice.Modal.load('{{ url('bf_client_form') }}', {id: clientId});
             });
 
         });

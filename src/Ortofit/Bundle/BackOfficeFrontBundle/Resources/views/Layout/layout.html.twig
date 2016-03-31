@@ -85,7 +85,7 @@
     <script>
         $(function () {
             $('#appButton').click(function (e) {
-                BackOffice.Modal.load('{{ url('backendoffice_appointment_get_form') }}', {});
+                BackOffice.Modal.load('{{ url('bf_app_get_form') }}', {});
             });
             BackOffice.Doctor.loadUrl = "{{ url("api_doctor_all") }}";
             BackOffice.Doctor.calendarUrl = "{{ url("admin_panel") }}";
@@ -356,7 +356,7 @@
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="{{ url('backendoffice_client') }}">
+                    <a href="{{ url('bf_client') }}">
                         <i class="fa fa-users"></i> <span>Клиенты</span>
                     </a>
                 </li>

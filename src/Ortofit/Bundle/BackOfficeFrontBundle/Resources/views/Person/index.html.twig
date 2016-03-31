@@ -6,7 +6,7 @@
             Клиент
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ url('backendoffice_client') }}"><i class="fa fa-users"></i>Список клиентов</a>
+            <li><a href="{{ url('bf_client') }}"><i class="fa fa-users"></i>Список клиентов</a>
             </li>
             <li class="active">Клиент</li>
         </ol>
@@ -104,21 +104,21 @@
         $(document).ready(function () {
             var modal = BackOffice.Modal;
             $('#newPerson').click(function (e) {
-                modal.load('{{ url('backendoffice_person_form') }}', {clientId:{{ client.id }} });
+                modal.load('{{ url('bf_person_form') }}', {clientId:{{ client.id }} });
             });
             $('.person-edit').click(function () {
                 var personId = $(this).attr('person-id');
-                modal.load('{{ url('backendoffice_person_form') }}', {id: personId, clientId:{{ client.id }} });
+                modal.load('{{ url('bf_person_form') }}', {id: personId, clientId:{{ client.id }} });
             });
             $('.person-diagnosis').click(function () {
                 var personId = $(this).attr('person-id');
-                modal.load('{{ url('backendoffice_diagnosis_form') }}', {personId: personId });
+                modal.load('{{ url('bf_diagnosis_form') }}', {personId: personId });
             });
 
             $('.diagnosis').click(function() {
                 var diagnosisId = $(this).attr('id');
                 var personId = $(this).attr('person-id');
-                modal.load('{{ url('backendoffice_diagnosis_form') }}', {id: diagnosisId, personId: personId });
+                modal.load('{{ url('bf_diagnosis_form') }}', {id: diagnosisId, personId: personId });
             });
 
         });

@@ -179,6 +179,7 @@ class AppController extends BaseController
             return $this->createFailJsonResponse($e, $request->request->all());
         }
     }
+
     /**
      * @param Request $request
      *
@@ -194,6 +195,7 @@ class AppController extends BaseController
             return $this->createFailJsonResponse($e, $request->request->all());
         }
     }
+
     /**
      * @param Request $request
      *
@@ -294,7 +296,6 @@ class AppController extends BaseController
         } catch (\Exception $e) {
             return $this->createFailJsonResponse($e, $request->request->all());
         }
-
 
         return $this->createSuccessJsonResponse();
     }

@@ -90,7 +90,7 @@
 <script>
     $(document).ready(function() {
         var control = BackOffice.OrderNewPerson;
-        control.postUrl = "{{ url('backoffice_order_process') }}";
+        control.postUrl = "{{ url('bf_order_process') }}";
         control.appId   = {{ app.id }};
         control.init();
     });

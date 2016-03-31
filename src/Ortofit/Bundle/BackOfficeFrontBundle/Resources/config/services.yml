@@ -33,5 +33,18 @@ services:
             - [addState, ["@bf.state_diagnosis"]]
             - [addState, ["@bf.state_service"]]
 
+    bf.app_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentModelProvider
+        arguments: ["@request_stack"]
 
+    bf.app_view_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentViewModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setGroupManager, ["@fos_user.group_manager"]]
+            - [setAppManager, ["@ortofit_back_office.appointment_manage"]]
+            - [setServiceManager, ["@ortofit_back_office.service_manage"]]
+            - [setDirectionManager, ["@ortofit_back_office.client_direction_manage"]]
+            - [setOfficeManager, ["@ortofit_back_office.office_manage"]]
+            - [setCountryManager, ["@ortofit_back_office.client_country_manage"]]
 

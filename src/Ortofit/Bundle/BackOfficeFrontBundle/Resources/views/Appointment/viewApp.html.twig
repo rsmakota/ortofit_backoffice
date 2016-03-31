@@ -77,10 +77,10 @@
 <script>
     $(function () {
        $('#editButton').click(function(){
-           BackOffice.Modal.load('{{ url('backendoffice_appointment_app_move', {'appId':appointment.id}) }}', {});
+           BackOffice.Modal.load('{{ url('bf_app_reschedule', {'appId':appointment.id}) }}', {});
        });
         $('#orderButton').click(function(){
-            BackOffice.Modal.load('{{ url('backoffice_order_process') }}', {appId:{{ appointment.id }}, isNew:true});
+            BackOffice.Modal.load('{{ url('bf_order_process') }}', {appId:{{ appointment.id }}, isNew:true});
         })
 
     });

@@ -102,7 +102,6 @@ class EventService
         $this->defaultOffHoursBuilder = $defaultOffHoursBuilder;
     }
 
-
     /**
      * @param DateRangeInterface $range
      * @param Office             $office
@@ -126,8 +125,5 @@ class EventService
     {
         $this->defaultOffHoursData = $defaultOffHoursData;
     }
-
-
-
 
 }

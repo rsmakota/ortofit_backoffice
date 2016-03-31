@@ -29,40 +29,39 @@ login_check:
 #    path:     /admin/entity
 #    defaults: { _controller: OrtofitBackOfficeFrontBundle:Entity:index }
 
-backendoffice_client:
+bf_client:
     path:     /admin/client
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:index }
-backendoffice_client_form:
+bf_client_form:
     path:     /admin/client/form
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:form }
 
 
-
-backendoffice_person:
+bf_person:
     path:     /admin/person
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Person:index }
 
-backendoffice_person_form:
+bf_person_form:
     path:     /admin/person/form
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Person:form }
 
 
-backendoffice_diagnosis_form:
+bf_diagnosis_form:
     path:     /admin/diagnosis/form
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Diagnosis:form }
 
 
-backendoffice_appointment_get_form:
+bf_app_get_form:
     path:     /admin/app/form
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:form }
-backendoffice_appointment_pre_app:
-    path:     /admin/app/pre
-    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:preOrder }
+bf_app_view_app:
+    path:     /admin/app/view
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:viewApp }
 
-backendoffice_appointment_app_move:
-    path:     /admin/app/move/{appId}
-    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:move }
+bf_app_reschedule:
+    path:     /admin/app/reschedule/{appId}
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:reschedule }
 
-backoffice_order_process:
+bf_order_process:
     path: /admin/order/process
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Order:process }

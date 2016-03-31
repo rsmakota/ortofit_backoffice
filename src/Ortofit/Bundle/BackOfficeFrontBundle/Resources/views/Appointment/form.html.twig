@@ -8,7 +8,19 @@
             </div>
             <div class="modal-body">
                 <ul class="list-group" style="text-align: center">
-                    <li class="list-group-item list-group-item-info"><i class="fa fa-user-md icon20"> </i> {{ doctor.name }} &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-building icon20"></i> {{ office.name }} &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-calendar icon20"></i> {{ date }}  &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o icon20"></i> {{ time }}</li>
+                    <li class="list-group-item list-group-item-info">
+                        {% if not model.isEmpty('doctorId') %}
+                        <i class="fa fa-user-md icon20"> </i> {{ model.getDoctorName() }} &nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% if not model.isEmpty('officeId') %}
+                        <i class="fa fa-building icon20"></i> {{ model.getOfficeName() }} &nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% if not model.isEmpty('date') %}
+                        <i class="fa fa-calendar icon20"></i> {{ model.date }}  &nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% if not model.isEmpty('time') %}
+                        <i class="fa fa-clock-o icon20"></i> {{ model.time }}</li>
+                        {% endif %}
                 </ul>
                 <form class="form-horizontal">
                     <div class="form-group">
@@ -16,11 +28,11 @@
 
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <div class="input-group-addon"><strong class="icon20">+{{ country.prefix }}</strong></div>
+                                <div class="input-group-addon"><strong class="icon20">+{{ model.prefix }}</strong></div>
 
                                 <input type="text" class="form-control" id="msisdn" data-mask=""
                                        data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
-                                       value="{{ msisdn|default('') }}"/>
+                                       value="{{ model.msisdn }}"/>
                             </div>
 
                         </div>
@@ -34,7 +46,7 @@
                                     <i class="fa fa-credit-card icon20"> </i>
                                 </div>
                                 <input type="text" class="form-control" id="clientName"
-                                       placeholder="Имя Клиента" value="{{ clientName|default('') }}"/>
+                                       placeholder="Имя Клиента" value="{{ model.clientName }}"/>
                             </div>
                         </div>
                     </div>
@@ -48,7 +60,7 @@
                                     <i class="fa fa-venus-mars icon20"></i>
                                 </div>
                                 <select class="form-control" id="gender">
-                                        {% if "female" == gender|default(0) %}
+                                        {% if "female" == model.gender %}
                                             <option selected value="female">Женский</option>
                                             <option value="male">Мужской</option>
                                         {% else %}
@@ -70,8 +82,8 @@
                                     <i class="fa fa-arrow-right icon20"></i>
                                 </div>
                                 <select class="form-control" id="directionId">
-                                    {% for direction in directions %}
-                                        {% if direction.id == directionId|default(0) %}
+                                    {% for direction in model.directions %}
+                                        {% if direction.id == model.directionId %}
                                             <option selected value="{{ direction.id }}">{{ direction.name }}</option>
                                         {% else %}
                                             <option value="{{ direction.id }}">{{ direction.name }}</option>
@@ -92,8 +104,8 @@
                                     <i class="fa fa-star icon20"></i>
                                 </div>
                                 <select class="form-control" id="serviceId">
-                                    {% for service in services %}
-                                        {% if service.id == serviceId|default(0) %}
+                                    {% for service in model.services %}
+                                        {% if service.id == model.serviceId %}
                                             <option selected value="{{ service.id }}">{{ service.name }}</option>
                                         {% else %}
                                             <option value="{{ service.id }}">{{ service.name }}</option>
@@ -106,122 +118,132 @@
                     </div>
 
 
+                    {% if model.officeId is empty %}
+                    <div class="form-group">
+                        <label for="selectOfficeId" class="col-sm-3 control-label">Офис:</label>
 
-                    {#<div class="form-group">#}
-                        {#<label for="selectOfficeId" class="col-sm-3 control-label">Офис:</label>#}
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-building icon20"></i>
+                                </div>
+                                <select class="form-control" id="officeId">
+                                    {% for office in model.offices %}
+                                        {% if office.id == officeId|default(0) %}
+                                            <option selected value="{{ office.id }}">{{ office.name }}</option>
+                                        {% else %}
+                                            <option value="{{ office.id }}">{{ office.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
 
-                        {#<div class="col-sm-9">#}
-                            {#<div class="input-group">#}
-                                {#<div class="input-group-addon">#}
-                                    {#<i class="fa fa-building icon20"></i>#}
-                                {#</div>#}
-                                {#<select class="form-control" id="officeId">#}
-                                    {#{% for office in offices %}#}
-                                        {#{% if office.id == officeId|default(0) %}#}
-                                            {#<option selected value="{{ office.id }}">{{ office.name }}</option>#}
-                                        {#{% else %}#}
-                                            {#<option value="{{ office.id }}">{{ office.name }}</option>#}
-                                        {#{% endif %}#}
-                                    {#{% endfor %}#}
-                                {#</select>#}
-                            {#</div>#}
-
-                        {#</div>#}
-                    {#</div>#}
+                        </div>
+                    </div>
+                    {% else %}
+                    <input type="hidden" id="officeId" value="{{ model.officeId }}">
+                    {% endif %}
 
                     <div class="form-group">
                         <label for="inputDate" class="col-sm-3 control-label">Прием:</label>
 
                         <div class="col-sm-9">
                             <div class="input-group">
-                                {#<div class="input-group-addon">#}
-                                    {#<i class="fa fa-calendar icon20"></i>#}
-                                {#</div>#}
-                                {#<input id="date" class="form-control pull-right active" type="text"#}
-                                       {#data-inputmask="'alias': 'dd/mm/yyyy hh/mm'" data-mask placeholder="{{ "now"|date("d/m/Y H:i") }}"#}
-                                       {#value="{{ date|default('') }}"#}
-
-                                {#/>#}
-
                                 <div class="input-group-addon">
                                     <i class="fa fa-clock-o icon20"></i>
                                 </div>
                                 <select class="form-control" id="duration">
                                     {% for i in 1..4 %}
-                                        {% if (i*30) == duration|default(0) %}
+                                        {% if (i*30) == model.duration %}
                                             <option selected value="{{ (i*30) }}">{{ (i*30) }} мин.</option>
                                         {% else %}
                                             <option value="{{ (i*30) }}">{{ (i*30) }} мин.</option>
                                         {% endif %}
                                     {% endfor %}
                                 </select>
-
-                                {#<input id="time" class="form-control pull-right active" type="text" data-inputmask="'alias': 'hh/mm'"#}
-                                       {#data-mask placeholder="{{ "now"|date("H:i") }}"#}
-                                       {#value="{{ time|default('') }}"#}
-                                {#/>#}
-
-                                {#<div class="input-group-addon" style="padding-top: 0px ">#}
-                                    {#{% for i in 1..4 %}#}
-                                        {#{% if (duration is defined) %}#}
-                                            {#{% if duration == (i*30) %}#}
-                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" checked="checked" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
-                                            {#{% else %}#}
-                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
-                                            {#{% endif %}#}
-                                        {#{% else %}#}
-                                            {#{% if i==1 %}#}
-                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" checked="checked" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
-                                            {#{% else %}#}
-                                                {#<label class="radio-inline"><input name="duration" id="duration" type="radio" value="{{ (i*30) }}" />{{ (i*30) }} мин</label>#}
-                                            {#{% endif %}#}
-                                        {#{% endif %}#}
-
-                                    {#{% endfor %}#}
-                                    {#</div>#}
                             </div>
                         </div>
                     </div>
+                    {% if model.date is null %}
+                    <div class="form-group">
+                        <label for="inputDate" class="col-sm-3 control-label">Дата:</label>
 
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar icon20"></i>
+                                </div>
+                                <input id="date" class="form-control pull-right active" type="text"
+                                       data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
+                                       value="{{ date|default('') }}"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                        <input type="hidden" id="date" name="date" value="{{ model.date }}">
+                    {% endif %}
 
-                    {#<div class="form-group">#}
-                        {#<label for="selectDoctorId" class="col-sm-3 control-label">Сотрудник:</label>#}
+                    {% if model.time is null %}
+                    <div class="form-group">
+                        <label for="inputTime" class="col-sm-3 control-label">Время:</label>
 
-                        {#<div class="col-sm-9">#}
-                            {#<div class="input-group">#}
-                                {#<div class="input-group-addon">#}
-                                    {#<i class="fa fa-user-md icon20"></i>#}
-                                {#</div>#}
-                                {#<select class="form-control" id="doctorId">#}
-                                    {#{% for doctor in doctors %}#}
-                                        {#{% if doctor.id == doctorId|default(0) %}#}
-                                            {#<option selected value="{{ doctor.id }}">{{ doctor.name }}</option>#}
-                                        {#{% else %}#}
-                                            {#<option value="{{ doctor.id }}">{{ doctor.name }}</option>#}
-                                        {#{% endif %}#}
-                                    {#{% endfor %}#}
-                                {#</select>#}
-                            {#</div>#}
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o icon20"></i>
+                                </div>
+                                <input id="time" class="form-control pull-right active" type="text" data-inputmask="'alias': 'hh/mm'"
+                                       data-mask placeholder="{{ "now"|date("H:i") }}"
+                                       value="{{ time|default('') }}"
+                                />
 
-                        {#</div>#}
-                    {#</div>#}
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                        <input type="hidden" id="time" name="time" value="{{ model.time }}">
+                    {% endif %}
 
+                    {% if model.doctorId is null %}
+                    <div class="form-group">
+                        <label for="selectDoctorId" class="col-sm-3 control-label">Сотрудник:</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-user-md icon20"></i>
+                                </div>
+                                <select class="form-control" id="doctorId">
+                                    {% for doctor in model.doctors %}
+                                        {% if doctor.id == model.doctorId %}
+                                            <option selected value="{{ doctor.id }}">{{ doctor.name }}</option>
+                                        {% else %}
+                                            <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% else %}
+                        <input type="hidden" id="doctorId" value="{{ model.doctorId }}">
+                    {% endif %}
 
 
                     <div class="form-group">
                         <label for="textareaDescription" class="col-sm-3 control-label">Заметка:</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="3" id="description">{{ description|default('') }}</textarea>
+                            <textarea class="form-control" rows="3" id="description">{{ model.description }}</textarea>
                         </div>
                     </div>
-                    <input type="hidden" id="date"     value="{{ date|default('') }}">
-                    <input type="hidden" id="appId"    value="{{ appId|default('') }}">
-                    <input type="hidden" id="clientId" value="{{ client.id|default('') }}">
-                    <input type="hidden" id="officeId" value="{{ office.id }}">
-                    <input type="hidden" id="doctorId" value="{{ doctor.id }}">
-                    <input type="hidden" id="time"     value="{{ time }}">
-                    <input type="hidden" id="date"     value="{{ date }}">
+                    <input type="hidden" id="appId"    value="{{ model.appId }}">
+                    <input type="hidden" id="clientId" value="{{ model.clientId }}">
+
+
+
 
                 </form>
             </div>
@@ -240,6 +262,6 @@
         form.pattern   = "{{ country.pattern }}";
         form.length    = {{ country.length }};
         form.prefix    = "{{ country.prefix }}";
-        form.init({{ appId|default('false') }});
+        form.init({{ model.appId }});
     });
 </script>
