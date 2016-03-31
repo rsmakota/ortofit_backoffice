@@ -29,7 +29,6 @@
                                        data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
                                        value="{{ model.msisdn }}"/>
                             </div>
-
                         </div>
                     </div>
                     <div class="form-group">
@@ -54,7 +53,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-venus-mars icon20"></i>
                                 </div>
-                                <select class="form-control" id="gender">
+                                <select class="form-control" id="gender" name="gender" title="gender">
                                         {% if "female" == model.gender %}
                                             <option selected value="female">Женский</option>
                                             <option value="male">Мужской</option>
@@ -76,7 +75,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-arrow-right icon20"></i>
                                 </div>
-                                <select class="form-control" id="directionId">
+                                <select class="form-control" id="directionId" name="directionId" title="direction">
                                     {% for direction in model.directions %}
                                         {% if direction.id == model.directionId %}
                                             <option selected value="{{ direction.id }}">{{ direction.name }}</option>
@@ -98,7 +97,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-star icon20"></i>
                                 </div>
-                                <select class="form-control" id="serviceId">
+                                <select class="form-control" id="serviceId" name="serviceId" title="service">
                                     {% for service in model.services %}
                                         {% if service.id == model.serviceId %}
                                             <option selected value="{{ service.id }}">{{ service.name }}</option>
@@ -122,7 +121,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-building icon20"></i>
                                 </div>
-                                <select class="form-control" id="officeId">
+                                <select class="form-control" id="officeId" name="officeId" title="office">
                                     {% for office in model.offices %}
                                         {% if office.id == officeId|default(0) %}
                                             <option selected value="{{ office.id }}">{{ office.name }}</option>
@@ -147,7 +146,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-clock-o icon20"></i>
                                 </div>
-                                <select class="form-control" id="duration">
+                                <select class="form-control" id="duration" name="duration" title="duration">
                                     {% for i in 1..4 %}
                                         {% if (i*30) == model.duration %}
                                             <option selected value="{{ (i*30) }}">{{ (i*30) }} мин.</option>
@@ -170,7 +169,7 @@
                                 </div>
                                 <input id="date" class="form-control pull-right active" type="text"
                                        data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
-                                       value="{{ date|default('') }}"
+                                       value="{{ date|default( "now"|date("d/m/Y") ) }}"
                                 />
                             </div>
                         </div>
@@ -190,8 +189,7 @@
                                 </div>
                                 <input id="time" class="form-control pull-right active" type="text" data-inputmask="'alias': 'hh/mm'"
                                        data-mask placeholder="{{ "now"|date("H:i") }}"
-                                       value="{{ time|default('') }}" />
-
+                                       value="{{ time|default("now"|date("H:i")) }}" />
                             </div>
                         </div>
                     </div>
@@ -208,7 +206,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-user-md icon20"></i>
                                 </div>
-                                <select class="form-control" id="doctorId">
+                                <select class="form-control" id="doctorId" id="doctorId" title="doctor" >
                                     {% for doctor in model.doctors %}
                                         {% if doctor.id == model.doctorId %}
                                             <option selected value="{{ doctor.id }}">{{ doctor.name }}</option>
@@ -224,13 +222,12 @@
                     {% else %}
                         <input type="hidden" id="doctorId" value="{{ model.doctorId }}">
                     {% endif %}
-
-
                     <div class="form-group">
                         <label for="textareaDescription" class="col-sm-3 control-label">Заметка:</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="3" id="description">{{ model.description }}</textarea>
+                            <textarea class="form-control" rows="3"
+                                      id="description" name="description" title="description">{{ model.description }}</textarea>
                         </div>
                     </div>
                     <input type="hidden" id="appId"    value="{{ model.appId }}">

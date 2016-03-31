@@ -312,6 +312,15 @@ class Appointment implements EntityInterface
         return $borderColor;
     }
 
+    private function getTitle()
+    {
+        $title = $this->getService()->getShort();
+        if (self::STATE_SUCCESS == $this->state) {
+            $title .= " ||||||||||||||||||||||||||||||||||||||||||||||||||| ";
+        }
+        return $title;
+    }
+
     /**
      * @return array
      */
@@ -321,7 +330,7 @@ class Appointment implements EntityInterface
 
         return [
             'id'              => $this->id,
-            'title'           => $service->getShort(),
+            'title'           => $this->getTitle(),
             'start'           => $this->dateTime->format('c'),
             'end'             => $this->getEndDate()->format('c'),
             'backgroundColor' => $this->getColor(),

@@ -42,7 +42,7 @@ class AppointmentViewModel extends AppointmentModel
      */
     public function getDoctorName()
     {
-        $this->getDoctor()->getName();
+        return $this->getDoctor()->getName();
     }
 
     /**
@@ -50,7 +50,7 @@ class AppointmentViewModel extends AppointmentModel
      */
     public function getOfficeName()
     {
-        $this->getOffice()->getName();
+        return $this->getOffice()->getName();
     }
 
     /**
