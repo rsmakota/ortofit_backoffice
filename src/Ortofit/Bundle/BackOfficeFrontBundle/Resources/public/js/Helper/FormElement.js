@@ -59,5 +59,14 @@ BackOffice.FormElement = {
             els.push(this.getById(idArr[i]));
         }
         return els;
+    },
+
+    getDateMasked: function () {
+        return $("[data-mask]");
+    },
+
+    getSaveButton: function() {
+        return $('#saveButton');
     }
+
 };

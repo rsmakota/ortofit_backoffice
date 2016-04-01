@@ -74,12 +74,12 @@ BackOffice.AppForm = {
     init: function(appId) {
         this.elements  = BackOffice.FormElement;
         this.decorator = BackOffice.FormDecorator;
-        var me = this;
-        $("#date").inputmask("dd/mm/yyyy", {"placeholder": "ДД/ММ/ГГГГ"});
-        $("#time").inputmask("hh:mm", {"placeholder": "ЧЧ:ММ"});
-        $("[data-mask]").inputmask();
+        var me = this; var hlp = BackOffice.FormElement;
+        hlp.getDate().inputmask("dd/mm/yyyy", {"placeholder": "ДД/ММ/ГГГГ"});
+        hlp.getDate().inputmask("hh:mm", {"placeholder": "ЧЧ:ММ"});
+        hlp.getDateMasked().inputmask();
 
-        $('#saveButton').click(function(){
+        hlp.getSaveButton().click(function(){
             if (appId) {
                 me.update();
             } else {
@@ -106,13 +106,13 @@ BackOffice.AppForm = {
      * @param {Array|null} elementIds
      */
     freezeClientFields: function(elementIds) {
-        var elManager = BackOffice.FormElement;
+        var hlp = BackOffice.FormElement;
         var decorator = BackOffice.FormDecorator;
         var elements = [];
         if (null == elementIds) {
             elements = this.getAllClientEl();
         } else {
-            elements = elManager.getByIds(elementIds);
+            elements = hlp.getByIds(elementIds);
         }
         decorator.freezeEl(elements);
     },
@@ -144,7 +144,6 @@ BackOffice.AppForm = {
     uSelectH: function() {
         var me = this;
         $("select").click(function(){
-            console.log('change');
             me.decorator.success($(this));
         });
     },
@@ -154,24 +153,24 @@ BackOffice.AppForm = {
     },
 
     cbClientH: function (data) {
-        var elManager = BackOffice.FormElement;
+        var hlp = BackOffice.FormElement;
         var decorator = BackOffice.FormDecorator;
         var elements = [];
         if (data.success == 'ok') {
             var client = data.data;
-            elManager.getClientId().val(client.id);
+            hlp.getClientId().val(client.id);
             if (client.clientDirectionId) {
-                var direction =  elManager.getDirectionId();
+                var direction =  hlp.getDirectionId();
                 direction.val(client.clientDirectionId);
                 elements.push(direction);
             }
             if (client.name) {
-                var name = elManager.getClientName();
+                var name = hlp.getClientName();
                 name.val(client.name);
                 elements.push(name);
             }
             if (client.gender) {
-                var gender = elManager.getGender();
+                var gender = hlp.getGender();
                 gender.val(client.gender);
                 elements.push(gender);
             }
