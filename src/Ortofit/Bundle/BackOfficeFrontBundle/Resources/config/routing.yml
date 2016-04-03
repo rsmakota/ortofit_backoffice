@@ -65,3 +65,7 @@ bf_app_reschedule:
 bf_order_process:
     path: /admin/order/process
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Order:process }
+
+bf_notice_index:
+    path: /admin/notice/index
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Notice:index }
