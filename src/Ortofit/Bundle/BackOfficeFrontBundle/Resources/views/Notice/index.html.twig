@@ -51,29 +51,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for client in clients %}
-                                            <tr>
-                                                <td>{{ client.id }}</td>
-                                                <td>
-                                                    {% if client.gender == 'male' %}
-                                                        <i class="fa fa-mars"></i>
-                                                    {% elseif client.gender == 'female' %}
-                                                        <i class="fa fa-venus"></i>
-                                                    {% else %}
-                                                        -
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    <a href="{{ url('bf_person', {'clientId':client.id}) }}"> {{ client.name|default('------') }} </a>
-                                                </td>
-                                                <td>{{ client.msisdn }}</td>
-                                                <td>{{ client.getClientDirection().getName()|default('------') }}</td>
-                                                <td>{{ client.getCreated()|date('d/m/Y') }}</td>
-                                                <td>{{ client.getPersons().count() }}</td>
-                                                <td><i class="fa fa-pencil edit" style="cursor: pointer;"
-                                                       client-id="{{ client.id }}"></i></td>
-                                            </tr>
-                                        {% endfor %}
+
 
                                         </tbody>
                                     </table>
@@ -85,10 +63,10 @@
                     <div class="box-footer">
                         <div class="row">
                             <div class="col-sm-5">
-                                <button type="button" class="btn btn-primary" id="newClient">Новый клиент</button>
+                                <button type="button" class="btn btn-primary" id="newNotice">Добавить уведомление</button>
                             </div>
                             <div class="col-sm-7">
-                                {% include "@OrtofitBackOfficeFront/Client/paginator.html.twig" %}
+                                {#{% include "@OrtofitBackOfficeFront/Client/paginator.html.twig" %}#}
                             </div>
                         </div>
                     </div>

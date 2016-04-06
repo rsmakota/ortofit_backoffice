@@ -79,7 +79,6 @@ BackOffice.FormAppMoveHelper = {
         var me = this;
         var el = me.getDateEl();
         el.empty();
-        console.log(dates);
         $.each(dates, function(key, value) {
             el.append($("<option/>", {
                 value: key,

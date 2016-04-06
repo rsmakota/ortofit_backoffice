@@ -18,20 +18,20 @@
                         </tr>
                     </thead>
                 {% for service in services %}
-                    <tr>
+                    <tr class="tr-service">
                         <td>
                             <i class="fa fa-star-o icon20"> </i></td>
-                        <td><input type="checkbox" id="service_{{ service.id }}" name="service_{{ service.id }}"
-                                   value="{{ service.id }}"/></td>
+                        <td>
+                            <input type="checkbox" id="service_{{ service.id }}" name="service_{{ service.id }}"
+                                   value="{{ service.id }}" title="{{ service.name }}" class="chb-service"/>
+                        </td>
                         <td>{{ service.name }}</td>
                     </tr>
-
-
 
             {% endfor %}
                 </table>
                 </div>
-                <div class="col-sm-6" style="padding-left: 0px;">
+                <div class="col-sm-6" style="padding-left: 0;">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -42,7 +42,7 @@
                         <td><i class="fa fa-mail-forward icon20"></i></td>
                         <td>Направил</td>
                         <td>
-                            <input id="forwarded" name="forwarded" class="form-control pull-right active" type="text" value="" />
+                            <input id="forwarded" name="forwarded" class="form-control pull-right active" type="text" value="" title="Направил" />
                         </td>
                     </tr>
                     <tr>
@@ -61,7 +61,7 @@
                 </table>
                 </div>
 
-                <input type="hidden" id="appId" name="appId" value="{{ app.id }}">
+                <input type="hidden" id="appId"    name="appId"    value="{{ app.id }}">
                 <input type="hidden" id="personId" name="personId" value="{{ person.id }}">
 
             </form>

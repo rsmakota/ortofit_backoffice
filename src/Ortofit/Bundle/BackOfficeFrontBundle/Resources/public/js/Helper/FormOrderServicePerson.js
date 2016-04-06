@@ -28,6 +28,34 @@ BackOffice.FormOrderServicePerson = {
         });
         data.services = services;
         return data;
-    }
+    },
+    
+    getServicedEls: function () {
+        return $('.chb-service');
+    },
+    getServiceTr: function () {
+        return $('.tr-service');
+    },
+    removeErrStFromServices: function () {
+        var hlp = BackOffice.FormOrderServicePerson;
+        hlp.getServiceTr().removeClass('danger');
+    },
 
+    addErrStToServices: function () {
+        var hlp = BackOffice.FormOrderServicePerson;
+        hlp.getServiceTr().addClass('danger');
+    },
+
+    isCheckedServiceEl: function () {
+        var hlp = BackOffice.FormOrderServicePerson;
+        var elements = hlp.getServicedEls();
+        var isChecked = false;
+        elements.each(function() {
+            if (this.checked) {
+                isChecked = true;
+            }
+        });
+
+        return isChecked;
+    }
 };
