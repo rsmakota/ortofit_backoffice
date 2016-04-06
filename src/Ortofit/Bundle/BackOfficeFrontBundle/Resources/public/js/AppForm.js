@@ -76,7 +76,7 @@ BackOffice.AppForm = {
         this.decorator = BackOffice.FormDecorator;
         var me = this; var hlp = BackOffice.FormElement;
         hlp.getDate().inputmask("dd/mm/yyyy", {"placeholder": "ДД/ММ/ГГГГ"});
-        hlp.getDate().inputmask("hh:mm", {"placeholder": "ЧЧ:ММ"});
+        hlp.getTime().inputmask("hh:mm", {"placeholder": "ЧЧ:ММ"});
         hlp.getDateMasked().inputmask();
 
         hlp.getSaveButton().click(function(){
