@@ -55,3 +55,11 @@ api_person_create:
 api_person_update:
     path:     /admin/person/update
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Person:update }
+
+api_app_reminder_get:
+    path: /remind/get
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:get }
+
+api_app_reminder_proc:
+    path: /remind/process
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:process }

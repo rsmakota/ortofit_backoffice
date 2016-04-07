@@ -45,6 +45,10 @@ class AppReminder implements EntityInterface
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $processed = false;
 
     public function getDateTime()
     {
@@ -56,6 +60,9 @@ class AppReminder implements EntityInterface
         $this->dateTime = $dateTime;
     }
 
+    /**
+     * @return Appointment
+     */
     public function getAppointment()
     {
         return $this->appointment;
@@ -86,6 +93,9 @@ class AppReminder implements EntityInterface
         $this->id = $id;
     }
 
+    /**
+     * @return Person
+     */
     public function getPerson()
     {
         return $this->person;
@@ -96,6 +106,15 @@ class AppReminder implements EntityInterface
         $this->person = $person;
     }
 
+    public function getProcessed()
+    {
+        return $this->processed;
+    }
+
+    public function setProcessed($processed)
+    {
+        $this->processed = $processed;
+    }
 
     /**
      * @return array

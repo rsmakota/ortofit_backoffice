@@ -77,7 +77,7 @@ class ServiceState extends AbstractState
      */
     private function saveRemind($remindDate, $description)
     {
-        if (empty($data)) {
+        if (empty($remindDate)) {
             return;
         }
         $data = [

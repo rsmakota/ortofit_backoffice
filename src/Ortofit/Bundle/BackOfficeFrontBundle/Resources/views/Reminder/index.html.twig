@@ -22,7 +22,7 @@
                             <div class="box-tools">
                                 <div class="input-group" style="width: 200px;">
                                     <input class="form-control input-sm pull-right" type="text" placeholder="телефон"
-                                           name="msisdn" value="{{ msisdn }}">
+                                           name="msisdn" value="">
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-default">
                                             <i class="fa fa-search"></i>
@@ -76,14 +76,9 @@
     </section>
     <script>
         $(document).ready(function () {
-            $('#newClient').click(function (e) {
-                BackOffice.Modal.load('{{ url('bf_client_form') }}', {});
-            });
-            $('.edit').click(function () {
-                var clientId = $(this).attr('client-id');
-                BackOffice.Modal.load('{{ url('bf_client_form') }}', {id: clientId});
-            });
-
+            var ctrl = BackOffice.Remind;
+            ctrl.dataPath    = '{{ url('api_app_reminder_get') }}';
+            ctrl.processPath = '{{ url('api_app_reminder_proc') }}';
         });
     </script>
 {% endblock %}

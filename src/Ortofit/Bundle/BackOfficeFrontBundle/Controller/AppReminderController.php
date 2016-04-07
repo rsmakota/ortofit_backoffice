@@ -7,14 +7,15 @@
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 
 /**
- * Class NoticeController
+ * Class AppReminderController
  * @package Ortofit\Bundle\BackOfficeFrontBundle\Controller
  */
-class NoticeController extends BaseController
+class AppReminderController extends BaseController
 {
 
     public function indexAction()
     {
 
+        return $this->render('@OrtofitBackOfficeFront/Reminder/index.html.twig', []);
     }
 }
