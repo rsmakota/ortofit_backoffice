@@ -33,4 +33,20 @@ class AppReminderManager extends AbstractManager
         return 'app_reminder_manager';
     }
 
+    /**
+     * @param \DateTime $date
+     * @param boolean   $process
+     * @param integer   $limit
+     *
+     * @return AppReminder[]
+     */
+    public function findByDate($date, $process, $limit)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->findByDate(
+            $date,
+            $process,
+            $limit
+        );
+    }
+
 }

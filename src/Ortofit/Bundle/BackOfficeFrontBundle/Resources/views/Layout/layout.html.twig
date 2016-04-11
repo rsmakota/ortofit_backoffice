@@ -81,6 +81,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderNewPerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderDiagnosisPerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderServicePerson.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/RemindElements.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% block js %} {% endblock %}
@@ -361,6 +362,13 @@
                         <i class="fa fa-users"></i> <span>Клиенты</span>
                     </a>
                 </li>
+
+                <li class="treeview">
+                    <a href="{{ url('bf_remind_index') }}">
+                        <i class="fa fa-bell"></i> <span>Напоминания</span>
+                    </a>
+                </li>
+
 
             </ul>
         </section>

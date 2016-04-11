@@ -7,78 +7,20 @@
             Уведомления
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ url('bf_notice_index') }}"><i class="fa fa-bell-o"></i>Уведомления</a></li>
+            <li><a href="{{ url('bf_remind_index') }}"><i class="fa fa-bell-o"></i>Уведомления</a></li>
         </ol>
     </section>
     <!-- content -->
     <section class="content">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <form action="">
-                            {#<h3 class="box-title">Список клиентов</h3>#}
-                            <div class="box-tools">
-                                <div class="input-group" style="width: 200px;">
-                                    <input class="form-control input-sm pull-right" type="text" placeholder="телефон"
-                                           name="msisdn" value="">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-default">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="box-body no-padding">
-                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                            <div class="row">
-                                <div class="col-sm-11">
-                                    <table class="table table-bordered table-striped dataTable" role="grid"
-                                           aria-describedby="example1_info" id="clientTable">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Пол</th>
-                                            <th>Имя</th>
-                                            <th>Телефон</th>
-                                            <th>Источник</th>
-                                            <th>Стал клиентом</th>
-                                            <th>Человек</th>
-                                            <th> -</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="box-footer">
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <button type="button" class="btn btn-primary" id="newNotice">Добавить уведомление</button>
-                            </div>
-                            <div class="col-sm-7">
-                                {#{% include "@OrtofitBackOfficeFront/Client/paginator.html.twig" %}#}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
     <script>
         $(document).ready(function () {
             var ctrl = BackOffice.Remind;
             ctrl.dataPath    = '{{ url('api_app_reminder_get') }}';
-            ctrl.processPath = '{{ url('api_app_reminder_proc') }}';
+            ctrl.processPath = '{{ url('api_app_reminder_process') }}';
+            ctrl.init();
         });
     </script>
 {% endblock %}
+

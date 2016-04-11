@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
- * @ORM\Entity(repositoryClass="Ortofit\Bundle\BackOfficeBundle\ORM\ScheduleRepository")
+ * @ORM\Entity(repositoryClass="Ortofit\Bundle\BackOfficeBundle\ORM\AppReminderRepository")
  * @ORM\Table(name="app_reminders")
  */
 class AppReminder implements EntityInterface

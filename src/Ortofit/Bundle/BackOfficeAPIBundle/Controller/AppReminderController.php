@@ -6,7 +6,11 @@
 
 namespace Ortofit\Bundle\BackOfficeAPIBundle\Controller;
 
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\AppReminder;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppReminderManager;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ReminderController
@@ -15,6 +19,9 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\AppReminder;
  */
 class AppReminderController extends BaseController
 {
+    /**
+     * @return AppReminderManager
+     */
     private function getManager()
     {
         return $this->get('ortofit_back_office.app_reminder_manage');
@@ -27,10 +34,15 @@ class AppReminderController extends BaseController
      */
     private function formatData($remind)
     {
+        /** @var Appointment $app */
+        /** @var Client $client */
+        $app    = $remind->getAppointment();
+        $client = $app->getClient();
         return [
             'id'          => $remind->getId(),
-            'msisdn'      => $remind->getAppointment()->getClient()->getMsisdn(),
-            'date'        => $remind->getAppointment()->getDateTime()->format('d/m/Y'),
+            'msisdn'      => $client->getMsisdn(),
+            'name'        => $client->getName(),
+            'date'        => $app->getDateTime()->format('d/m/Y'),
             'description' => $remind->getDescription()
         ];
     }
@@ -41,7 +53,9 @@ class AppReminderController extends BaseController
     public function getAction()
     {
         $limit   = $this->getParameter('app_reminds_limit');
-        $reminds = $this->getManager()->findBy(['processed'=>false], [], $limit );
+        $manager = $this->getManager();
+        /** @var AppReminder[] $reminds */
+        $reminds = $manager->findByDate(new \DateTime(), false, $limit);
         $data    = [];
         foreach ($reminds as $remind) {
             $data[] = $this->formatData($remind);
@@ -49,9 +63,26 @@ class AppReminderController extends BaseController
         
         return $this->createSuccessJsonResponse($data);
     }
-    
-    public function processAction()
+
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function processAction(Request $request)
     {
-        return $this->createSuccessJsonResponse([]);
+        $remindId = $request->get('id');
+        try {
+            /** @var AppReminder $remind */
+            $remind   = $this->getManager()->rGet($remindId);
+            $remind->setProcessed(true);
+            $this->getManager()->merge($remind);
+
+            return $this->createSuccessJsonResponse(['id' => $remindId]);
+        } catch (\Exception $e) {
+            return $this->createFailJsonResponse($e, []);
+        }
     }
+
+    
 }

@@ -66,6 +66,6 @@ bf_order_process:
     path: /admin/order/process
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Order:process }
 
-bf_notice_index:
+bf_remind_index:
     path: /admin/remind
     defaults: { _controller: OrtofitBackOfficeFrontBundle:AppReminder:index }

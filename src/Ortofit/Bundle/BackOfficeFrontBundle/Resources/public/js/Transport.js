@@ -29,9 +29,5 @@ BackOffice.Transport = {
                 callback();
             }
         });
-    },
-
-    alert: function () {
-        alert('Alert');
     }
 };

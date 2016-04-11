@@ -15,7 +15,7 @@ BackOffice.MenuElement = {
      */
     getDoctorListUl: function() {
         return $('#doctorList');
-    },
+    }
 
 
 };
