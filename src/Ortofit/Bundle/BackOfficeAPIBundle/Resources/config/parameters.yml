@@ -1,2 +1,3 @@
 parameters:
     app_reminds_limit: 5
+    app_orders_limit: 5

@@ -62,4 +62,13 @@ class OrderManager extends AbstractManager
         $entity->setClient($client);
         $this->merge($entity);
     }
+
+    /**
+     * @param integer $limit
+     * @return Order[]
+     */
+    public function findNonProcessed($limit)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->findBy(['processed'=>false], null, $limit);
+    }
 }

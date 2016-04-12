@@ -47,7 +47,10 @@ class Order implements EntityInterface
      */
     private $service;
 
-
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $processed = false;
     /**
      * Order constructor.
      */
@@ -137,6 +140,22 @@ class Order implements EntityInterface
     }
 
     /**
+     * @return boolean
+     */
+    public function getProcessed()
+    {
+        return $this->processed;
+    }
+
+    /**
+     * @param boolean $processed
+     */
+    public function setProcessed($processed)
+    {
+        $this->processed = $processed;
+    }
+
+    /**
      * @return array
      */
     public function getData()
@@ -146,7 +165,8 @@ class Order implements EntityInterface
             'created'       => $this->created->format('Y-m-d H:i:s'),
             'clientId'      => $this->getClient()->getId(),
             'applicationId' => $this->getApplication()->getId(),
-            'service_id'    => $this->getService()->getId()
+            'service_id'    => $this->getService()->getId(),
+            'processed'     => $this->processed
         ];
     }
 
