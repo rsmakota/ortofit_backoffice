@@ -84,5 +84,10 @@ class AppReminderController extends BaseController
         }
     }
 
-    
+    public function getNumAction()
+    {
+        $manager = $this->getManager();
+        $num     =  $manager->countByDate(new \DateTime(), false);
+        return $this->createSuccessJsonResponse(['num' => $num]);
+    }
 }

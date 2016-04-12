@@ -63,3 +63,6 @@ api_app_reminder_get:
 api_app_reminder_process:
     path: /remind/process
     defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:process }
+api_app_reminder_num:
+    path: /remind/num
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:getNum }

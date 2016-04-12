@@ -39,6 +39,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/jQuery/jQuery-2.1.4.min.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/jQuery/jquery-ui.min.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/jQuery/moment.min.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/jQuery/jQuery.timers.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/bootstrap/js/bootstrap.min.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/bootstrap/js/bootstrap.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/fastclick/fastclick.min.js'
@@ -58,6 +59,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/fullcalendar/fullcalendar.min.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/fullcalendar/fullcalendar.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Core.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Layout.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Transport.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Modal.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/AppForm.js'
@@ -72,6 +74,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderNewPerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderDiagnosisPerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderServicePerson.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/LayoutElement.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormDecorator.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormElement.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/MenuElement.js'
@@ -95,6 +98,9 @@
             BackOffice.Doctor.loadUrl = "{{ url("api_doctor_all") }}";
             BackOffice.Doctor.calendarUrl = "{{ url("admin_panel") }}";
             BackOffice.Doctor.loadData();
+            var controller = BackOffice.Layout;
+            controller.remindUrl = "{{ url('api_app_reminder_num') }}";
+            controller.init();
         });
 
     </script>
@@ -200,9 +206,9 @@
                     </li>
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="{{ url('bf_remind_index') }}">
                             <i class="fa fa-bell-o"></i>
-                            {#<span class="label label-warning">10</span>#}
+                            <span id="remind-table" class="label label-warning hidden">0</span>
                         </a>
                         {#<ul class="dropdown-menu">#}
                             {#<li class="header">You have 10 notifications</li>#}

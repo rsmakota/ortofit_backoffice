@@ -21,6 +21,10 @@ use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 class AppReminderRepository extends EntityRepository
 {
     
+    private function getBuilder()
+    {
+        return $this->getEntityManager()->createQueryBuilder();
+    }
 
     /**
      * @param \DateTime $date
@@ -32,7 +36,7 @@ class AppReminderRepository extends EntityRepository
      */
     public function findByDate($date, $processed, $limit)
     {
-        $builder = $this->getEntityManager()->createQueryBuilder();
+        $builder = $this->getBuilder();
         $params  = ['date' => $date, 'processed' => $processed];
 
         $qb = $builder->select('a')
@@ -44,5 +48,23 @@ class AppReminderRepository extends EntityRepository
         $result = $qb->getQuery()->getResult();
 
         return $result;
+    }
+
+    /**
+     * @param \DateTime $date
+     * @param boolean   $processed
+     *
+     * @return integer
+     */
+    public function countByDate($date, $processed)
+    {
+        $builder = $this->getBuilder();
+        $params  = ['date' => $date, 'processed' => $processed];
+        $qb = $builder->select('COUNT(a)')
+            ->from(AppReminder::clazz(), 'a')
+            ->where("a.dateTime <= :date AND a.processed = :processed")
+            ->setParameters($params);
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 }

@@ -49,4 +49,18 @@ class AppReminderManager extends AbstractManager
         );
     }
 
+    /**
+     * @param \DateTime $date
+     * @param boolean   $process
+     *
+     * @return integer
+     */
+    public function countByDate($date, $process)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->countByDate(
+            $date,
+            $process
+        );
+    }
+
 }
