@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package Ortofit\Bundle\BackOfficeFrontBundle\Controller
  */
-class OrderController extends Controller
+class AppOrderController extends Controller
 {
     /**
      * @return \Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow

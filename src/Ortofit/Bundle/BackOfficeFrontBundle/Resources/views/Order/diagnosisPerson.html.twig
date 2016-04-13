@@ -37,7 +37,7 @@
 <script>
     $(document).ready(function() {
         var control = BackOffice.OrderDiagnosisPerson;
-        control.postUrl = "{{ url('bf_order_process') }}";
+        control.postUrl = "{{ url('bf_app_order_process') }}";
         control.appId   = {{ app.id }};
         control.init();
     });

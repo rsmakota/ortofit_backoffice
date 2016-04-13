@@ -19,7 +19,6 @@
             var ctrl = BackOffice.Remind;
             ctrl.dataPath    = '{{ url('api_app_reminder_get') }}';
             ctrl.processPath = '{{ url('api_app_reminder_process') }}';
-            ctrl.tipTemplate = '{% filter replace({"\n":"", "    ":" "})| raw  %} {% include('@OrtofitBackOfficeFront/Reminder/template/remindTip.html.twig')  %}{% endfilter %}';
             ctrl.init();
         });
     </script>

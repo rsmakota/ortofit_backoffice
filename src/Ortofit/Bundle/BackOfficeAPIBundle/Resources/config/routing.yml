@@ -66,3 +66,11 @@ api_app_reminder_process:
 api_app_reminder_num:
     path: /remind/num
     defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:getNum }
+
+api_app_order_unprocessed:
+    path: /order/unprocessed_data
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:getUnprocessed }
+api_app_order_num_unprocessed:
+    path: /order/unprocessed_count
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:getUnprocessedCount }
+

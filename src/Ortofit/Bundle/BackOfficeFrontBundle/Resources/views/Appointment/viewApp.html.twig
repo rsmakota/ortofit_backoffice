@@ -80,7 +80,7 @@
            BackOffice.Modal.load('{{ url('bf_app_reschedule', {'appId':appointment.id}) }}', {});
        });
         $('#orderButton').click(function(){
-            BackOffice.Modal.load('{{ url('bf_order_process') }}', {appId:{{ appointment.id }}, isNew:true});
+            BackOffice.Modal.load('{{ url('bf_app_order_process') }}', {appId:{{ appointment.id }}, isNew:true});
         })
 
     });
