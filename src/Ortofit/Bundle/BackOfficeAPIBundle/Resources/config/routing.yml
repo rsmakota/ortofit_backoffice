@@ -73,4 +73,6 @@ api_app_order_unprocessed:
 api_app_order_num_unprocessed:
     path: /order/unprocessed_count
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:getUnprocessedCount }
-
+api_app_order_process:
+    path: /order/process
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:process }

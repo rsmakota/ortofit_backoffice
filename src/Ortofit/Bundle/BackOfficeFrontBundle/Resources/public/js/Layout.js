@@ -6,7 +6,7 @@
 BackOffice.Layout = {
     remindUrl: null,
     orderUrl: null,
-    interval: 20000,
+    interval: 10000,
 
     init: function () {
         var hlp = BackOffice.LayoutElement;

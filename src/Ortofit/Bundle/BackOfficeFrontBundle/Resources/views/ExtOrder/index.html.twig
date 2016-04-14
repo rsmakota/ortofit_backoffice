@@ -1,0 +1,27 @@
+{% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
+
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Интернет заказ
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url('bf_remind_index') }}"><i class="fa fa-bell-o"></i>Интернет заказ</a></li>
+        </ol>
+    </section>
+    <!-- content -->
+    <section class="content">
+
+    </section>
+    <script>
+        $(document).ready(function () {
+            var ctrl = BackOffice.ExtOrder;
+            ctrl.dataPath    = '{{ url('api_app_order_unprocessed') }}';
+            ctrl.processPath = '{{ url('api_app_order_process') }}';
+            ctrl.tipTemplate = '{% filter replace({"\n":"", "    ":" "})| raw  %} {% include('@OrtofitBackOfficeFront/ExtOrder/template/orderTip.html.twig')  %}{% endfilter %}';
+            ctrl.init();
+        });
+    </script>
+{% endblock %}
+

@@ -10,6 +10,7 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Order;
 use \Ortofit\Bundle\BackOfficeBundle\EntityManager\OrderManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class OrderController
@@ -72,6 +73,26 @@ class OrderController extends BaseController
             $num = $manager->countUnprocessed();
             
             return $this->createSuccessJsonResponse(['num' => $num]);
+        } catch (\Exception $e) {
+            return $this->createFailJsonResponse($e, []);
+        }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function processAction(Request $request)
+    {
+        $remindId = $request->get('id');
+        try {
+            /** @var Order $order */
+            $order   = $this->getManager()->rGet($remindId);
+            $order->setProcessed(true);
+            $this->getManager()->merge($order);
+
+            return $this->createSuccessJsonResponse(['id' => $remindId]);
         } catch (\Exception $e) {
             return $this->createFailJsonResponse($e, []);
         }

@@ -19,8 +19,4 @@ class AppReminderController extends BaseController
         return $this->render('@OrtofitBackOfficeFront/Reminder/index.html.twig', []);
     }
     
-    public function orderAction()
-    {
-        return $this->render('@OrtofitBackOfficeFront/Reminder/order.html.twig', []);
-    }
 }

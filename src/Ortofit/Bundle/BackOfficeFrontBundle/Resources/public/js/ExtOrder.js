@@ -2,24 +2,23 @@
  * @copyright 2016 rsmakota@gmail.com
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
-BackOffice.Remind = {
+BackOffice.ExtOrder = {
     dataPath:    null,
     processPath: null,
     tipTemplate: '',
     init: function () {
-        var hlp = BackOffice.RemindElement;
         BackOffice.Transport.get(this.dataPath, [], this.addTips);
     },
-    
+
     processResponseHandler: function (mes) {
         var data = mes.data;
-        var me   = BackOffice.Remind;
+        var me   = BackOffice.ExtOrder;
         $('#tip-'+data.id).hide('show');
         me.init();
     },
-    
+
     processTip: function (id) {
-        var me        = BackOffice.Remind;
+        var me        = BackOffice.ExtOrder;
         var transport = BackOffice.Transport;
         transport.send(me.processPath, {'id': id}, me.processResponseHandler)
     },
@@ -33,8 +32,8 @@ BackOffice.Remind = {
     },
 
     addTips: function (message) {
-        var me      = BackOffice.Remind;
-        var hlp     = BackOffice.RemindElement;
+        var me      = BackOffice.ExtOrder;
+        var hlp     = BackOffice.ExtOrderElement;
         var data    = message.data;
         var content = hlp.getContentSection();
         var params  = null;
@@ -59,11 +58,10 @@ BackOffice.Remind = {
         return template;
 
     },
-    
+
     buttonProcess: function () {
-        var me    = BackOffice.Remind;
+        var me    = BackOffice.ExtOrder;
         var id    = $(this).attr('id');
         me.processTip(id);
     }
-
 };
