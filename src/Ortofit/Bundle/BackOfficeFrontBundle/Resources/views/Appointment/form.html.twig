@@ -67,27 +67,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="selectDirectionId" class="col-sm-3 control-label">Источник:</label>
 
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-arrow-right icon20"></i>
-                                </div>
-                                <select class="form-control" id="directionId" name="directionId" title="direction">
-                                    {% for direction in model.directions %}
-                                        {% if direction.id == model.directionId %}
-                                            <option selected value="{{ direction.id }}">{{ direction.name }}</option>
-                                        {% else %}
-                                            <option value="{{ direction.id }}">{{ direction.name }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label for="selectServiceId" class="col-sm-3 control-label">Услуга:</label>
@@ -230,8 +210,9 @@
                                       id="description" name="description" title="description">{{ model.description }}</textarea>
                         </div>
                     </div>
-                    <input type="hidden" id="appId"    value="{{ model.appId }}">
-                    <input type="hidden" id="clientId" value="{{ model.clientId }}">
+                    <input type="hidden" id="appId"       value="{{ model.appId }}">
+                    <input type="hidden" id="clientId"    value="{{ model.clientId }}">
+                    <input type="hidden" id="directionId" value="{{ model.directionId }}">
 
 
 

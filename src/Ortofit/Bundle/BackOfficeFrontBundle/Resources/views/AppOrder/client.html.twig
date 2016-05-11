@@ -1,0 +1,99 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Клиент</h4>
+        </div>
+        <div class="modal-body">
+
+            <form class="form-horizontal" id="clientForm" name="clientForm">
+
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-3 control-label">Имя:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user icon20"> </i>
+                            </div>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Имя Клиента" value="{{ name }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectGender" class="col-sm-3 control-label">Пол:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-venus-mars icon20"></i>
+                            </div>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="male">Мужской</option>
+                                <option value="female" {% if gender == 'famele' %} selected {% endif %} >Женский
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectBorn" class="col-sm-3 control-label">Дата Рождения:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-birthday-cake icon20"></i>
+                            </div>
+                            <input id="born" name="born" class="form-control pull-right active" type="text"
+                                   data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
+                                   placeholder="{{ "now"|date("d/m/Y") }}"
+                                   value="{{ born }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectDirectionId" class="col-sm-3 control-label">Источник:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-arrow-right icon20"></i>
+                            </div>
+                            <select class="form-control" id="directionId" name="directionId" title="direction">
+                                {% for direction in directions %}
+                                    {% if direction.id == directionId %}
+                                        <option selected value="{{ direction.id }}">{{ direction.name }}</option>
+                                    {% else %}
+                                        <option value="{{ direction.id }}">{{ direction.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <input type="hidden" id="countryId" name="countryId" value="{{ country.id }}">
+                <input type="hidden" id="action"    name="action"    value="{{ action }}">
+                <input type="hidden" id="appId"     name="appId"     value="{{ app.id }}">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-block" id="nextButton">Далее</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var control = BackOffice.OrderClient;
+        control.postUrl = "{{ url('bf_app_order_process') }}";
+        control.appId = {{ app.id }};
+        control.naDirectionId = parseInt({{ naDirectionId }});
+        control.init();
+    });
+</script>

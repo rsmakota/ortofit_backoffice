@@ -30,6 +30,10 @@ class ClientDirection implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $alias;
+    /**
+     * @ORM\Column(type="integer", name="order_num")
+     */
+    private $orderNum;
 
     public function getAlias()
     {
@@ -39,6 +43,16 @@ class ClientDirection implements EntityInterface
     public function setAlias($alias)
     {
         $this->alias = $alias;
+    }
+
+    public function getOrderNum()
+    {
+        return $this->orderNum;
+    }
+
+    public function setOrderNum($orderNum)
+    {
+        $this->orderNum = $orderNum;
     }
 
     /**
