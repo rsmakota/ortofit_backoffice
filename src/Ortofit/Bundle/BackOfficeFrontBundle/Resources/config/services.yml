@@ -2,6 +2,7 @@ services:
     bf.state_choose_persone:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ChoosePerson
         arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:choosePerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+
     bf.state_persone:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\PersonState
         arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:newPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]

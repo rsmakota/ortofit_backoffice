@@ -18,8 +18,8 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-user icon20"> </i>
                             </div>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Имя Клиента" value="{{ name }}"/>
+                            <input type="text" class="form-control" id="clientName" name="clientName"
+                                   placeholder="Имя Клиента" value="{{ clientName }}"/>
                         </div>
                     </div>
                 </div>
@@ -32,9 +32,9 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-venus-mars icon20"></i>
                             </div>
-                            <select class="form-control" id="gender" name="gender">
+                            <select class="form-control" id="clientGender" name="clientGender">
                                 <option value="male">Мужской</option>
-                                <option value="female" {% if gender == 'famele' %} selected {% endif %} >Женский
+                                <option value="female" {% if clientGender == 'famele' %} selected {% endif %} >Женский
                                 </option>
                             </select>
                         </div>
@@ -49,10 +49,10 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-birthday-cake icon20"></i>
                             </div>
-                            <input id="born" name="born" class="form-control pull-right active" type="text"
+                            <input id="clientBorn" name="clientBorn" class="form-control pull-right active" type="text"
                                    data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
                                    placeholder="{{ "now"|date("d/m/Y") }}"
-                                   value="{{ born }}"/>
+                                   value="{{ clientBorn }}"/>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,8 @@
 
                     </div>
                 </div>
-                <input type="hidden" id="countryId" name="countryId" value="{{ country.id }}">
+                <input type="hidden" id="clientId"  name="clientId"  value="{{ clientId }}">
+                <input type="hidden" id="countryId" name="countryId" value="{{ countryId }}">
                 <input type="hidden" id="action"    name="action"    value="{{ action }}">
                 <input type="hidden" id="appId"     name="appId"     value="{{ app.id }}">
             </form>
