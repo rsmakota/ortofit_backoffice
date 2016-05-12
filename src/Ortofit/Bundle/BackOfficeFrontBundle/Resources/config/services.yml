@@ -37,6 +37,9 @@ services:
     bf.app_model_provider:
         class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentModelProvider
         arguments: ["@request_stack"]
+    bf.client_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientModelProvider
+        arguments: ["@request_stack"]
 
     bf.app_view_model_provider:
         class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentViewModelProvider
@@ -47,6 +50,12 @@ services:
             - [setServiceManager, ["@ortofit_back_office.service_manage"]]
             - [setDirectionManager, ["@ortofit_back_office.client_direction_manage"]]
             - [setOfficeManager, ["@ortofit_back_office.office_manage"]]
+            - [setCountryManager, ["@ortofit_back_office.client_country_manage"]]
+    bf.client_view_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientViewModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setDirectionManager, ["@ortofit_back_office.client_direction_manage"]]
             - [setCountryManager, ["@ortofit_back_office.client_country_manage"]]
 
     bf.app_schedule_verifier:

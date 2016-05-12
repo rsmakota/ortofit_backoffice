@@ -7,6 +7,12 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientDirectionManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientManager;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientModel;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientViewModel;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\ModelInterface;
+use Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientModelProvider;
+use Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientViewModelProvider;
+use Ortofit\Bundle\BackOfficeFrontBundle\Verifier\ClientVerifier;
 
 /**
  * Class ChoosePerson
@@ -15,23 +21,18 @@ use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientManager;
  */
 class ClientState extends AbstractState
 {
-    const PARAM_NAME_CLIENT_ID              = 'clientId';
-    const PARAM_NAME_CLIENT_NAME            = 'clientName';
-    const PARAM_NAME_CLIENT_BORN            = 'clientBorn';
-    const PARAM_NAME_CLIENT_GENDER          = 'clientGender';
-    const PARAM_NAME_CLIENT_DIRECTIONS      = 'directions';
-    const PARAM_NAME_CLIENT_COUNTRY_ID      = 'countryId';
-    const PARAM_NAME_CLIENT_DIRECTION_ID    = 'directionId';
-    const PARAM_NAME_CLIENT_NA_DIRECTION_ID = 'naDirectionId';
-
     /**
      * @var ClientManager
      */
     private $clientManager;
     /**
-     * @var ClientDirectionManager
+     * @var ClientModelProvider
      */
-    private $clientDirectionManager;
+    private $clientModelProvider;
+    /**
+     * @var ClientViewModelProvider
+     */
+    private $clientViewModelProvider;
 
     protected function checkManagers()
     {
@@ -39,19 +40,85 @@ class ClientState extends AbstractState
         if (null == $this->clientManager) {
             throw new \Exception(printf('You forgot set up manager with name "%s" in state "%s"', "ClientManager", $this->getId()));
         }
-        if (null == $this->clientDirectionManager) {
-            throw new \Exception(printf('You forgot set up manager with name "%s" in state "%s"', "ClientDirectionManager", $this->getId()));
+        if (null == $this->clientModelProvider) {
+            throw new \Exception(printf('You forgot set up manager with name "%s" in state "%s"', "ClientModelProvider", $this->getId()));
+        }
+        if (null == $this->clientViewModelProvider) {
+            throw new \Exception(printf('You forgot set up manager with name "%s" in state "%s"', "ClientViewModelProvider", $this->getId()));
         }
     }
 
     /**
      * @return boolean
      */
-    private function hasClient()
+    private function isCompleteClient()
     {
-        $request = $this->getRequest()->request;
+        $client = $this->getApp()->getClient();
+        if ((null == $client) || !$client->isComplete()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return ClientViewModel
+     * @throws \Exception
+     */
+    private function getModelView()
+    {
+        $client = $this->getApp()->getClient();
+        /** @var ClientViewModel $model */
+        $model = $this->clientViewModelProvider->getModel();
+        if (null != $client) {
+            $model->client = $client;
+            $model->id = $client->getId();
+        }
+        
+        return $model;
+    }
+    /**
+     * @param ModelInterface $model
+     *
+     * @throws \Exception
+     */
+    private function createClient($model)
+    {
 
     }
+    /**
+     * @param ModelInterface $model
+     *
+     * @throws \Exception
+     */
+    private function updateClient($model)
+    {
+
+    }
+
+    /**
+     * @param ModelInterface $model
+     *
+     * @throws \Exception
+     */
+    private function saveClient($model) {
+        $client = $this->getApp()->getClient();
+        if (null == $client) {
+            $this->createClient($model);
+        } else {
+            $this->updateClient($model);
+        }
+    }
+
+    protected function init()
+    {
+        parent::init();
+        $model = $this->clientModelProvider->getModel();
+        if ($model->isComplete()) {
+            $this->saveClient($model);
+        }
+    }
+
     /**
      * @param ClientManager $clientManager
      */
@@ -61,21 +128,13 @@ class ClientState extends AbstractState
     }
 
     /**
-     * @param ClientDirectionManager $clientDirectionManager
-     */
-    public function setClientDirectionManager($clientDirectionManager)
-    {
-        $this->clientDirectionManager = $clientDirectionManager;
-    }
-
-    /**
      * @return array
      */
     public function getResponseData()
     {
         return [
-            self::PARAM_NAME_APP => $this->app,
-
+            self::PARAM_NAME_APP   => $this->app,
+            self::PARAM_NAME_MODEL => $this->getModelView()
         ];
     }
 
@@ -85,9 +144,11 @@ class ClientState extends AbstractState
     public function process()
     {
         $this->init();
-        if ($this->hasClient()) {
+        if ($this->isCompleteClient()) {
             $this->completed = true;
+            return;
         }
+        
     }
 
     /**

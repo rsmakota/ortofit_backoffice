@@ -42,17 +42,23 @@ abstract class AbstractRequestModelProvider implements ModelProviderInterface
 
     abstract protected function createModel();
 
-    /**
-     * @return ModelInterface
-     */
-    public function getModel()
-    {
-        $model      = $this->createModel();
+    protected function fillModelFromRequest($model) {
         $request    = $this->getRequest();
         $properties = array_keys(get_class_vars(get_class($model)));
         foreach ($properties as $key) {
             $model->$key = $request->get($key);
         }
+
+        return $model;
+    }
+
+    /**
+     * @return ModelInterface
+     */
+    public function getModel()
+    {
+        $model = $this->createModel();
+        $model = $this->fillModelFromRequest($model);
 
         return $model;
     }

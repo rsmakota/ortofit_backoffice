@@ -216,7 +216,21 @@ class Client implements EntityInterface
 
         return null;
     }
-
+    
+    public function isComplete() {
+        $fields = ['id', 'name', 'msisdn', 'gender', 'clientDirection'];
+        foreach ($fields as $field) {
+            if (null == $this->$field) {
+                return false;
+            }
+        }
+        
+        if ($this->getClientDirection()->isUnknown()) {
+            return false;
+        }
+        
+        return true;
+    }
     /**
      * @return string
      */

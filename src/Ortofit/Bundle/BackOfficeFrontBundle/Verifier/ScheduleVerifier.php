@@ -8,7 +8,6 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Verifier;
 
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Appointment\AppointmentViewModel;
-use Ortofit\Bundle\BackOfficeFrontBundle\Model\ModelInterface;
 
 /**
  * Class ScheduleVerifier

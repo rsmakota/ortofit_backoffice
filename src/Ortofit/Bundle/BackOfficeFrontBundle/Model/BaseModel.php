@@ -15,18 +15,39 @@ class BaseModel implements ModelInterface
     /**
      * @return array
      */
+    protected function getCompletedProperties()
+    {
+        return key(get_class_vars(get_class($this)));
+    }
+    /**
+     * @return array
+     */
     public function getData()
     {
         return get_class_vars(get_class($this));
     }
 
     /**
-     * @param string $name
+     * @param string $propertyName
      *
      * @return boolean
      */
-    public function isEmpty($name)
+    public function isPropertyEmpty($propertyName)
     {
-        return empty($this->$name);
+        return empty($this->$propertyName);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isComplete()
+    {
+        $properties = $this->getCompletedProperties();
+        foreach ($properties as $property) {
+            if (null == $this->$property) {
+                return false;
+            }
+        }
+        return true;
     }
 }

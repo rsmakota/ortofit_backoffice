@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class ClientDirectionManager extends AbstractManager
 {
-
+    
     /**
      * @return string
      */
@@ -34,4 +34,11 @@ class ClientDirectionManager extends AbstractManager
         return 'clientDirection_manager';
     }
 
+    /**
+     * @return null|ClientDirection
+     */
+    public function getUnknown()
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->findOneBy(['alias'=>ClientDirection::DIRECTION_ALIAS_UNKNOWN]);
+    }
 }

@@ -12,4 +12,9 @@ interface ModelInterface
      * @return array
      */
     public function getData();
+
+    /**
+     * @return boolean
+     */
+    public function isComplete();
 }

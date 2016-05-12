@@ -17,11 +17,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 abstract class AbstractState implements StateInterface
 {
 
-    const PARAM_NAME_ACTION          = 'action';
-    const PARAM_NAME_APP             = 'app';
-    const PARAM_NAME_APP_ID          = 'appId';
-    const PARAM_NAME_PERSON          = 'person';
-    const PARAM_NAME_PERSON_ID       = 'personId';
+    const PARAM_NAME_ACTION    = 'action';
+    const PARAM_NAME_APP       = 'app';
+    const PARAM_NAME_APP_ID    = 'appId';
+    const PARAM_NAME_PERSON    = 'person';
+    const PARAM_NAME_PERSON_ID = 'personId';
+    const PARAM_NAME_MODEL     = 'model';
 
     /**
      * @var Appointment

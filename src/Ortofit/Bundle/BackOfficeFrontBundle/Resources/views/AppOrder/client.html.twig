@@ -11,6 +11,21 @@
             <form class="form-horizontal" id="clientForm" name="clientForm">
 
                 <div class="form-group">
+                    <label for="inputMsisdn" class="col-sm-2 control-label">Телефон:</label>
+
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <strong class="icon20">+{{ model.country.getPrefix() }}</strong>
+                            </div>
+                            <input type="text" class="form-control" id="msisdn" data-mask=""
+                                   data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
+                                   value="{{ model.getLocalMsisdn() }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="inputName" class="col-sm-3 control-label">Имя:</label>
 
                     <div class="col-sm-9">
@@ -18,8 +33,8 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-user icon20"> </i>
                             </div>
-                            <input type="text" class="form-control" id="clientName" name="clientName"
-                                   placeholder="Имя Клиента" value="{{ clientName }}"/>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Имя Клиента" value="{{ model.name }}"/>
                         </div>
                     </div>
                 </div>
@@ -32,27 +47,11 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-venus-mars icon20"></i>
                             </div>
-                            <select class="form-control" id="clientGender" name="clientGender">
+                            <select class="form-control" id="gender" name="gender">
                                 <option value="male">Мужской</option>
-                                <option value="female" {% if clientGender == 'famele' %} selected {% endif %} >Женский
+                                <option value="female" {% if model.gender == 'famele' %} selected {% endif %} >Женский
                                 </option>
                             </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="selectBorn" class="col-sm-3 control-label">Дата Рождения:</label>
-
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-birthday-cake icon20"></i>
-                            </div>
-                            <input id="clientBorn" name="clientBorn" class="form-control pull-right active" type="text"
-                                   data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
-                                   placeholder="{{ "now"|date("d/m/Y") }}"
-                                   value="{{ clientBorn }}"/>
                         </div>
                     </div>
                 </div>
@@ -65,9 +64,9 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-arrow-right icon20"></i>
                             </div>
-                            <select class="form-control" id="directionId" name="directionId" title="direction">
-                                {% for direction in directions %}
-                                    {% if direction.id == directionId %}
+                            <select class="form-control" id="clientDirectionId" name="clientDirectionId" title="direction">
+                                {% for direction in model.clientDirections %}
+                                    {% if direction.id == model.clientDirectionId %}
                                         <option selected value="{{ direction.id }}">{{ direction.name }}</option>
                                     {% else %}
                                         <option value="{{ direction.id }}">{{ direction.name }}</option>
@@ -78,9 +77,8 @@
 
                     </div>
                 </div>
-                <input type="hidden" id="clientId"  name="clientId"  value="{{ clientId }}">
-                <input type="hidden" id="countryId" name="countryId" value="{{ countryId }}">
-                <input type="hidden" id="action"    name="action"    value="{{ action }}">
+                <input type="hidden" id="id"        name="id"        value="{{ model.id }}">
+                <input type="hidden" id="countryId" name="countryId" value="{{ model.country.getId() }}">
                 <input type="hidden" id="appId"     name="appId"     value="{{ app.id }}">
             </form>
         </div>
@@ -94,7 +92,7 @@
         var control = BackOffice.OrderClient;
         control.postUrl = "{{ url('bf_app_order_process') }}";
         control.appId = {{ app.id }};
-        control.naDirectionId = parseInt({{ naDirectionId }});
+        control.undDirectId = parseInt({{ model.getUndefinedClientDirectionId() }});
         control.init();
     });
 </script>

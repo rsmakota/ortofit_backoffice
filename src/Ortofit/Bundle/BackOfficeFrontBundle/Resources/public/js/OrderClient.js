@@ -1,7 +1,7 @@
 BackOffice.OrderClient = {
     postUrl: null,
     appId:   null,
-    naDirectionId: null,
+    undDirectId: null,
     /**
      * @returns {void}
      */
@@ -24,7 +24,7 @@ BackOffice.OrderClient = {
 
     _validate: function (data) {
         var me   = BackOffice.OrderClient;
-        if (data.directionId == me.naDirectionId) {
+        if (data.directionId == me.undDirectId) {
             return false;
         }
 
