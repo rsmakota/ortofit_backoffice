@@ -2,7 +2,13 @@ services:
     bf.state_choose_persone:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ChoosePerson
         arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:choosePerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
-
+    bf.state_client:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ClientState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:client.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setClientManager, ["@ortofit_back_office.client_manage"]]
+            - [setClientModelProvider, ["@bf.client_model_provider"]]
+            - [setClientViewModelProvider, ["@bf.client_view_model_provider"]]
     bf.state_persone:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\PersonState
         arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:newPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
@@ -29,6 +35,7 @@ services:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow
         arguments: ["@session", "@templating.engine.twig"]
         calls:
+            - [addState, ["@bf.state_client"]]
             - [addState, ["@bf.state_choose_persone"]]
             - [addState, ["@bf.state_persone"]]
             - [addState, ["@bf.state_diagnosis"]]

@@ -218,7 +218,7 @@ class Client implements EntityInterface
     }
     
     public function isComplete() {
-        $fields = ['id', 'name', 'msisdn', 'gender', 'clientDirection'];
+        $fields = ['name', 'msisdn', 'gender', 'clientDirection'];
         foreach ($fields as $field) {
             if (null == $this->$field) {
                 return false;

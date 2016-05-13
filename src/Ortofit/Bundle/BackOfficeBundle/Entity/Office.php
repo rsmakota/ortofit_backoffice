@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="offices")
  */
-class Office
+class Office implements EntityInterface
 {
     /**
      * @ORM\Id

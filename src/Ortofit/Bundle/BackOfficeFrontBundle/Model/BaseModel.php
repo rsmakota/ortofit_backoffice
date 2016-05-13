@@ -17,7 +17,7 @@ class BaseModel implements ModelInterface
      */
     protected function getCompletedProperties()
     {
-        return key(get_class_vars(get_class($this)));
+        return array_keys(get_class_vars(get_class($this)));
     }
     /**
      * @return array

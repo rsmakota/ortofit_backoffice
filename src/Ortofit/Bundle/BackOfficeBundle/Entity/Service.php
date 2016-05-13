@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="services")
  */
-class Service
+class Service implements EntityInterface
 {
     /**
      * @ORM\Id
@@ -107,5 +107,13 @@ class Service
     static public function clazz()
     {
         return get_class();
+    }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return get_class_vars(get_class($this));
     }
 }

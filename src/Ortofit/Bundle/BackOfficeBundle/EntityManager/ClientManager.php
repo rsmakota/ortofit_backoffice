@@ -8,8 +8,11 @@ namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientModel;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\ModelInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -36,7 +39,6 @@ class ClientManager extends AbstractManager
         return 'client_manager';
     }
 
-
     /**
      * @param array        $params
      * @param array|null   $orderBy
@@ -58,5 +60,44 @@ class ClientManager extends AbstractManager
     public function countLike(array $criteria)
     {
         return $this->enManager->getRepository($this->getEntityClassName())->countLike($criteria);
+    }
+
+    /**
+     * @param ModelInterface $model
+     *
+     * @return Client
+     */
+    public function createByModel($model)
+    {
+        /** @var ClientModel $model */
+        $client = new Client();
+        $client->setMsisdn($model->msisdn);
+        $client->setName($model->name);
+        $client->setGender($model->gender);
+        $client->setClientDirection($this->enManager->getReference(ClientDirection::clazz(), $model->clientDirectionId));
+        $client->setCountry($this->enManager->getReference(Country::clazz(), $model->countryId));
+
+        $this->persist($client);
+
+        return $client;
+    }
+    /**
+     * @param Client         $client
+     * @param ModelInterface $model
+     *
+     * @return Client
+     */
+    public function updateByModel($client, $model)
+    {
+        /** @var ClientModel $model */
+        $client->setMsisdn($model->msisdn);
+        $client->setName($model->name);
+        $client->setGender($model->gender);
+        $client->setClientDirection($this->enManager->getReference(ClientDirection::clazz(), $model->clientDirectionId));
+        $client->setCountry($this->enManager->getReference(Country::clazz(), $model->countryId));
+
+        $this->merge($client);
+
+        return $client;
     }
 }

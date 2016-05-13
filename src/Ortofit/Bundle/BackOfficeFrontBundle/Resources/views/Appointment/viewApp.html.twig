@@ -12,12 +12,12 @@
                 <tr>
                     <td><i class="fa fa-phone"></i></td>
                     <td>Телефон:</td>
-                    <td>{{ appointment.client.msisdn }}</td>
+                    <td>{{ appointment.client.msisdn|default('') }}</td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-credit-card"></i></td>
                     <td>Имя:</td>
-                    <td>{{ appointment.client.name }}</td>
+                    <td>{{ appointment.client.name|default('') }}</td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-star"></i></td>
@@ -27,7 +27,7 @@
                 <tr>
                     <td><i class="fa fa-arrow-right"></i></td>
                     <td>Источник:</td>
-                    <td>{{ appointment.client.clientDirection.name }}</td>
+                    <td>{{ appointment.client.clientDirection.name|default('') }}</td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-building"></i></td>

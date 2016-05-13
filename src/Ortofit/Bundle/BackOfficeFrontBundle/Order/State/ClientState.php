@@ -5,14 +5,11 @@
  */
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 
-use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientDirectionManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientManager;
-use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientModel;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientViewModel;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\ModelInterface;
 use Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientModelProvider;
 use Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientViewModelProvider;
-use Ortofit\Bundle\BackOfficeFrontBundle\Verifier\ClientVerifier;
 
 /**
  * Class ChoosePerson
@@ -34,6 +31,22 @@ class ClientState extends AbstractState
      */
     private $clientViewModelProvider;
 
+    /**
+     * @param ClientModelProvider $clientModelProvider
+     */
+    public function setClientModelProvider($clientModelProvider)
+    {
+        $this->clientModelProvider = $clientModelProvider;
+    }
+
+    /**
+     * @param ClientViewModelProvider $clientViewModelProvider
+     */
+    public function setClientViewModelProvider($clientViewModelProvider)
+    {
+        $this->clientViewModelProvider = $clientViewModelProvider;
+    }
+    
     protected function checkManagers()
     {
         parent::checkManagers();
@@ -77,24 +90,6 @@ class ClientState extends AbstractState
         
         return $model;
     }
-    /**
-     * @param ModelInterface $model
-     *
-     * @throws \Exception
-     */
-    private function createClient($model)
-    {
-
-    }
-    /**
-     * @param ModelInterface $model
-     *
-     * @throws \Exception
-     */
-    private function updateClient($model)
-    {
-
-    }
 
     /**
      * @param ModelInterface $model
@@ -102,12 +97,16 @@ class ClientState extends AbstractState
      * @throws \Exception
      */
     private function saveClient($model) {
-        $client = $this->getApp()->getClient();
+        $app    = $this->getApp();
+        $client = $app->getClient();
         if (null == $client) {
-            $this->createClient($model);
+            $client = $this->clientManager->createByModel($model);
         } else {
-            $this->updateClient($model);
+            $client = $this->clientManager->updateByModel($client, $model);
         }
+        $app->setClient($client);
+
+        $this->appManager->merge($app);
     }
 
     protected function init()
@@ -146,9 +145,7 @@ class ClientState extends AbstractState
         $this->init();
         if ($this->isCompleteClient()) {
             $this->completed = true;
-            return;
         }
-        
     }
 
     /**
