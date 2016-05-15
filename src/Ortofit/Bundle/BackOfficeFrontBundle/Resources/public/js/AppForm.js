@@ -77,7 +77,7 @@ BackOffice.AppForm = {
         var me = this; var hlp = BackOffice.FormElement;
         hlp.getDate().inputmask("dd/mm/yyyy", {"placeholder": "ДД/ММ/ГГГГ"});
         hlp.getTime().inputmask("hh:mm", {"placeholder": "ЧЧ:ММ"});
-        hlp.getDateMasked().inputmask();
+        hlp.getDataMasked().inputmask();
 
         hlp.getSaveButton().click(function(){
             if (appId) {
@@ -94,12 +94,12 @@ BackOffice.AppForm = {
     },
 
     getAllClientEl: function() {
-        var elManager = BackOffice.FormElement;
+        var hlp = BackOffice.FormElement;
         return [
-            elManager.getDirectionId(),
-            elManager.getMsisdn(),
-            elManager.getGender(),
-            elManager.getClientName()
+            hlp.getDirectionId(),
+            hlp.getMsisdn(),
+            hlp.getGender(),
+            hlp.getClientName()
         ]
     },
     /**

@@ -4,16 +4,16 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Клиент</h4>
+            <h4 class="modal-title" id="myModalLabel">Данные клиента</h4>
         </div>
         <div class="modal-body">
 
             <form class="form-horizontal" id="clientForm" name="clientForm">
 
                 <div class="form-group">
-                    <label for="inputMsisdn" class="col-sm-2 control-label">Телефон:</label>
+                    <label for="inputMsisdn" class="col-sm-3 control-label">Телефон:</label>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-9">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <strong class="icon20">+{{ model.country.getPrefix() }}</strong>
@@ -83,15 +83,17 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-block" id="nextButton">Далее</button>
+            <button type="button" class="btn btn-default" id="nextButton">Далее</button>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function () {
-        var control = BackOffice.OrderClient;
-        control.postUrl = "{{ url('bf_app_order_process') }}";
-        control.appId = {{ app.id }};
+        var control         = BackOffice.OrderClient;
+        control.postUrl     = "{{ url('bf_app_order_process') }}";
+        control.appId       = {{ app.id }};
+        control.prefix      = "{{ model.country.getPrefix() }}";
+        control.pattern     = "{{ model.country.getPattern() }}";
         control.undDirectId = parseInt({{ model.getUndefinedClientDirectionId() }});
         control.init();
     });

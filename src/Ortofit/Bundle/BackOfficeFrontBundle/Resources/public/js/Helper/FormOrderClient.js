@@ -18,6 +18,19 @@ BackOffice.FormOrderClient = {
     },
 
     /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getMsisdnEl: function () {
+        return $('#msisdn');
+    },
+/**
+     * @returns {jQuery|HTMLElement}
+     */
+    getNameEl: function () {
+        return $('#name');
+    },
+
+    /**
      * @returns {Number}
      */
     getDirectionId: function () {
@@ -37,5 +50,13 @@ BackOffice.FormOrderClient = {
         }
 
         return data;
+    },
+
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getDataMaskedEl: function () {
+        return $("[data-mask]");
     }
+
 };

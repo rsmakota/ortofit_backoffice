@@ -61,7 +61,7 @@ BackOffice.FormElement = {
         return els;
     },
 
-    getDateMasked: function () {
+    getDataMasked: function () {
         return $("[data-mask]");
     },
 

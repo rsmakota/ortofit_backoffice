@@ -18,7 +18,7 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
 class LoadClientDirectionData extends AbstractFixture implements OrderedFixtureInterface
 {
     private $sources = [
-        'unknown'      => 'Не определен',
+        'unknown'  => 'Не определен',
         'internet' => 'Интернет',
         'bord'     => 'Наружная реклама',
         'friends'  => 'Посоветовали знакомы',
