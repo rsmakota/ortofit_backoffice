@@ -83,7 +83,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" id="nextButton">Далее</button>
+            <button type="button" class="btn btn-success" id="clientButton">Далее</button>
         </div>
     </div>
 </div>
@@ -94,7 +94,7 @@
         control.appId       = {{ app.id }};
         control.prefix      = "{{ model.country.getPrefix() }}";
         control.pattern     = "{{ model.country.getPattern() }}";
-        control.undDirectId = parseInt({{ model.getUndefinedClientDirectionId() }});
+        control.undDirectId = {{ model.getUndefinedClientDirectionId() }};
         control.init();
     });
 </script>

@@ -14,7 +14,7 @@ BackOffice.FormOrderClient = {
      * @returns {jQuery|HTMLElement}
      */
     getDirectionIdEl: function () {
-        return $('#directionId');
+        return $('#clientDirectionId');
     },
 
     /**
