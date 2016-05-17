@@ -100,6 +100,9 @@ class ClientState extends AbstractState
         $app    = $this->getApp();
         $client = $app->getClient();
         if (null == $client) {
+            $client = $this->clientManager->findOneBy(['msisdn'=>$model->msisdn]);
+        }
+        if (null == $client) {
             $client = $this->clientManager->createByModel($model);
         } else {
             $client = $this->clientManager->updateByModel($client, $model);

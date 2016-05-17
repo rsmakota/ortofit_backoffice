@@ -5,6 +5,7 @@
  */
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 
+use Monolog\Logger;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentManager;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,7 +24,11 @@ abstract class AbstractState implements StateInterface
     const PARAM_NAME_PERSON    = 'person';
     const PARAM_NAME_PERSON_ID = 'personId';
     const PARAM_NAME_MODEL     = 'model';
-
+    /**
+     * @var Logger
+     */
+    protected $logger;
+    
     /**
      * @var Appointment
      */
@@ -70,6 +75,14 @@ abstract class AbstractState implements StateInterface
     protected function getRequest()
     {
         return $this->requestStack->getCurrentRequest();
+    }
+
+    /**
+     * @param Logger $logger
+     */
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
     }
 
     /**

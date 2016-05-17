@@ -73,3 +73,15 @@ bf_remind_index:
 bf_ext_order_index:
     path: /admin/ext_order
     defaults: { _controller: OrtofitBackOfficeFrontBundle:ExtOrder:index }
+
+bf_staff_schedule_index:
+    path: /admin/staff_schedule
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:StaffSchedule:index }
+
+bf_staff_schedule_form:
+    path: /admin/staff_schedule/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:StaffSchedule:form }
+
+bf_staff_schedule_view_schedule:
+    path:     /admin/staff_schedule/view
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:StaffSchedule:viewSchedule }

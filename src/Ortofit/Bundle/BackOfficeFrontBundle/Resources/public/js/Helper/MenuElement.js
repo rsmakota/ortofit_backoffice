@@ -6,8 +6,8 @@ BackOffice.MenuElement = {
     /**
      * @returns {jQuery|HTMLElement}
      */
-    getScheduleLi: function() {
-        return $('#schedule');
+    getAppointmentsLi: function() {
+        return $('#appointments');
     },
 
     /**
@@ -15,6 +15,19 @@ BackOffice.MenuElement = {
      */
     getDoctorListUl: function() {
         return $('#doctorList');
+    },
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getDoctorsScheduleListUl: function () {
+        return $('#doctorsScheduleList');
+    },
+
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getScheduleLi: function() {
+        return $('#schedule');
     }
 
 

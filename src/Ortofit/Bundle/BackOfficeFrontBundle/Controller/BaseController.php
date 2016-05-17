@@ -6,6 +6,8 @@
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientManager;
@@ -71,5 +73,24 @@ class BaseController extends Controller
     protected function getDoctorManager()
     {
         return $this->get('fos_user.user_manager');
+    }
+
+    /**
+     * @return null|Country
+     */
+    protected function getCountry()
+    {
+        return $this->getCountryManager()->getDefault();
+    }
+
+
+    /**
+     * @return ArrayCollection
+     */
+    protected function getDoctors()
+    {
+        $group = $this->get('fos_user.group_manager')->findGroupBy(['name' => 'Doctor']);
+
+        return $group->getUsers();
     }
 }

@@ -16,4 +16,9 @@ interface ModelProviderInterface
      * @return object
      */
     public function getModel();
+
+    /**
+     * @return string
+     */
+    public function getName();
 }

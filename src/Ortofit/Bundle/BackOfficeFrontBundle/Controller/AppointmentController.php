@@ -35,29 +35,11 @@ class AppointmentController extends BaseController
     }
 
     /**
-     * @return ArrayCollection
-     */
-    private function getDoctors()
-    {
-        $group = $this->get('fos_user.group_manager')->findGroupBy(['name' => 'Doctor']);
-
-        return $group->getUsers();
-    }
-
-    /**
      * @return \Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentViewModelProvider
      */
     private function getModelProvider()
     {
         return $this->get('bf.app_view_model_provider');
-    }
-
-    /**
-     * @return null|Country
-     */
-    private function getCountry()
-    {
-        return $this->getCountryManager()->getDefault();
     }
 
 

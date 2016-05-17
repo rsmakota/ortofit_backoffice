@@ -22,4 +22,5 @@ class AppointmentModelProvider extends AbstractRequestModelProvider
     {
         return new AppointmentModel();
     }
+    
 }

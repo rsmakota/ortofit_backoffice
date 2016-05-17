@@ -5,6 +5,7 @@
  */
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow;
 
+use Monolog\Logger;
 use Ortofit\Bundle\BackOfficeFrontBundle\Order\State\StateInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,10 @@ class OrderFlow implements FlowInterface
      * @var  SessionInterface
      */
     private $session;
-
+    /**
+     * @var Logger
+     */
+    private $logger;
     /**
      * @var string
      */
@@ -34,6 +38,14 @@ class OrderFlow implements FlowInterface
      * @var boolean
      */
     private $completed = false;
+
+    /**
+     * @param Logger $logger
+     */
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+    }
 
     /**
      * @var EngineInterface

@@ -28,6 +28,7 @@ BackOffice.OrderClient = {
         var me   = BackOffice.OrderClient;
         var hlp  = BackOffice.FormOrderClient;
         var data = hlp.getFormData();
+        data.msisdn = me.getMsisdn();
         if (me._validate()) {
             BackOffice.Modal.load(me.postUrl, data);
         }
@@ -42,8 +43,7 @@ BackOffice.OrderClient = {
         var directEl = hlp.getDirectionIdEl();
         var msisdnEl = hlp.getMsisdnEl();
         var nameEl   = hlp.getNameEl();
-        console.log("undDirectId", me.undDirectId);
-        console.log("directId", directEl.val());
+
         if (directEl.val() == me.undDirectId) {
             isValid = false;
 
@@ -53,19 +53,16 @@ BackOffice.OrderClient = {
         }
         if (!me.isValidMsisdn()) {
             isValid = false;
-            console.log("direct", false);
             dec.error(msisdnEl);
         } else {
             dec.success(msisdnEl);
         }
         if (nameEl.val().length < me.nameLength) {
             isValid = false;
-            console.log("direct", false);
             dec.error(nameEl);
         } else {
             dec.success(msisdnEl);
         }
-        console.log("direct", false);
         return isValid;
     },
 

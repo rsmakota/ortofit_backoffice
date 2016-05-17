@@ -10,7 +10,7 @@ BackOffice.Calendar = {
     formUrl:         null,
     _officeId:       null,
     defaultOfficeId: 1,
-
+    eventDataParam: 'appId',
     _setCookie: function (key, value) {
         var expires = new Date();
         expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
@@ -70,7 +70,7 @@ BackOffice.Calendar = {
             selectable:     true,
 
             eventClick:     function (calEvent) {
-                modal.load(me.eventDataUrl+'?appId='+calEvent.id, {});
+                modal.load(me.eventDataUrl+'?'+me.eventDataParam+'='+calEvent.id, {});
             },
 
             dayClick: function (date) {

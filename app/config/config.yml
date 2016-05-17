@@ -85,13 +85,18 @@ swiftmailer:
     #spool:      { type: memory }
 
 monolog:
-    channels: ["sing_up"]
+    channels: ["sing_up", "app_order"]
     handlers:
         ot_sing_up:
             type:  rotating_file
             path:  "%kernel.logs_dir%/ortofit_sing_up_%%s.log"
             level: debug
             channels: sing_up
+        app_order_log:
+            type:  rotating_file
+            path:  "%kernel.logs_dir%/backoffice_app_order_%%s.log"
+            level: debug
+            channels: app_order
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: back_office

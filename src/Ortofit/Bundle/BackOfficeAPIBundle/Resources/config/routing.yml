@@ -24,6 +24,13 @@ api_app_move:
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:move }
 
 
+api_staff_schedule_get:
+    path:     /staff_schedule/get/{userId}
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:getSchedules}
+api_staff_schedule_get_all:
+    path:     /staff_schedule/get_all
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:getSchedules}
+
 api_client_update:
     path:     /client/update
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:update }

@@ -128,23 +128,40 @@ class Schedule implements ScheduleInterface
     /**
      * @return string
      */
+    private function getTitle()
+    {
+        return $this->getUser()->getName();
+    }
+
+    /**
+     * @return string
+     */
+    private function getColor()
+    {
+        return '#222D32';
+    }
+
+    /**
+     * @return string
+     */
     static public function clazz()
     {
         return get_class();
     }
+    
     /**
      * @return array
      */
     public function getCalendarData()
     {
-
         return [
-            'id'        => 'available_hours',
+            'id'        => $this->id,
+            'title'     => $this->getTitle(),
             'start'     => $this->getStart()->format('c'),
             'end'       => $this->getEnd()->format('c'),
-//            'color'     => '#222D32',
-//            'overlap'   => true,
-            'rendering' => 'background',
+            'color'     => '#222D32',
+            'backgroundColor' => $this->getColor(),
+            'borderColor'     => $this->getColor(),
         ];
     }
 }
