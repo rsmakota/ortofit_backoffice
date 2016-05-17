@@ -74,6 +74,14 @@ services:
         tags:
             - { name: monolog.logger, channel: app_order }
 
+    bf.schedule_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ScheduleModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: staff_schedule }
+
     bf.app_view_model_provider:
         class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentViewModelProvider
         arguments: ["@request_stack"]
@@ -96,6 +104,18 @@ services:
             - [setLogger, ["@logger"]]
         tags:
             - { name: monolog.logger, channel: app_order }
+
+    bf.schedule_view_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ScheduleViewModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setUserManager, ["@fos_user.user_manager"]]
+            - [setScheduleManager, ["@ortofit_back_office.schedule_manage"]]
+            - [setOfficeManager, ["@ortofit_back_office.office_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: staff_schedule }
+
     bf.app_schedule_verifier:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Verifier\ScheduleVerifier
         arguments: ["@ortofit_back_office.schedule_manage"]

@@ -35,7 +35,7 @@
             var calendar = BackOffice.Calendar;
             var doctorId = {{ app.request.query.get("doctorId", "null") }};
             calendar.formUrl      = '{{ url('bf_staff_schedule_form') }}';
-            calendar.eventDataParam = 'scheduleId';
+            calendar.eventDataParam = 'id';
             {% if app.request.query.has('doctorId') %}
                 calendar.eventsUrl = '{{ url('api_staff_schedule_get', {'userId':app.request.query.get("doctorId", null)}) }}';
             {% else %}

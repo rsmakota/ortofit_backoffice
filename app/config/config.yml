@@ -85,7 +85,7 @@ swiftmailer:
     #spool:      { type: memory }
 
 monolog:
-    channels: ["sing_up", "app_order"]
+    channels: ["sing_up", "app_order", "staff_schedule"]
     handlers:
         ot_sing_up:
             type:  rotating_file
@@ -97,6 +97,12 @@ monolog:
             path:  "%kernel.logs_dir%/backoffice_app_order_%%s.log"
             level: debug
             channels: app_order
+        staff_schedule_log:
+            type:  rotating_file
+            path:  "%kernel.logs_dir%/backoffice_staff_schedule_%%s.log"
+            level: debug
+            channels: staff_schedule
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: back_office

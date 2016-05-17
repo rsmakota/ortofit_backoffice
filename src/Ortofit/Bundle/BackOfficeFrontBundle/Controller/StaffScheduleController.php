@@ -17,14 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StaffScheduleController extends BaseController
 {
-
-
     /**
      * @return ModelProviderInterface
      */
     private function getModelProvider()
     {
-    
+        return $this->get('bf.schedule_view_model_provider');
     }
 
     /**
@@ -64,7 +62,7 @@ class StaffScheduleController extends BaseController
     public function viewScheduleAction(Request $request)
     {
         /** @var Schedule $schedule */
-        $schedule  = $this->getAppointmentManager()->get($request->get('scheduleId'));
+        $schedule  = $this->getAppointmentManager()->get($request->get('id'));
         $data = [
             'schedule' => $schedule
         ];

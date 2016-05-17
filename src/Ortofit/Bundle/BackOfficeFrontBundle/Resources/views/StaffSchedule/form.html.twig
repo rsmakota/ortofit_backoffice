@@ -1,0 +1,89 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">График работы</h4>
+        </div>
+        <div class="modal-body">
+                <ul class="list-group" style="text-align: center">
+                    <li class="list-group-item list-group-item-info">
+                        <i class="fa fa-user-md icon20"> </i> {{ model.getDoctorName() }} &nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-building icon20"></i> {{ model.getOfficeName() }} &nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-calendar icon20"></i> {{ model.date }}
+                    </li>
+                </ul>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputDate" class="col-sm-3 control-label">Дата:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar icon20"></i>
+                            </div>
+                            <input id="date" name="date" class="form-control pull-right active" type="text"
+                                   data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
+                                   value="{{ model.date }}"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTime" class="col-sm-3 control-label">Время начала:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-clock-o icon20"></i>
+                            </div>
+                            <input id="startTime" name="startTime" class="form-control pull-right active" type="text"
+                                   data-inputmask="'alias': 'hh/mm'"
+                                   data-mask placeholder="{{ "now"|date("H:i") }}"
+                                   value="{{ model.startTime}}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTime" class="col-sm-3 control-label">Время окончания:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-clock-o icon20"></i>
+                            </div>
+                            <input id="endTime" name="endTime" class="form-control pull-right active" type="text"
+                                   data-inputmask="'alias': 'hh/mm'"
+                                   data-mask placeholder="{{ "now"|date("H:i") }}"
+                                   value="{{ model.endTime }}"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="id"         name="id"         value="{{ model.id }}" />
+                <input type="hidden" id="doctorId"   name="doctorId"   value="{{ model.doctorId }}" />
+                <input type="hidden" id="officeId"   name="officeId"   value="{{ model.officeId }}" />
+
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" id="saveButton">Сохранить</button>
+        </div>
+    </div>
+</div>
+<script>
+    {#$(document).ready(function () {#}
+        {#var form = BackOffice.AppForm;#}
+        {#form.createUrl = "{{ url('api_app_create') }}";#}
+        {#form.updateUrl = "{{ url('api_app_update') }}";#}
+        {#form.clientUrl = "{{ url('api_client_find') }}";#}
+        {#form.pattern = "{{ country.pattern }}";#}
+        {#form.length = {{ country.length }};#}
+        {#form.prefix = "{{ country.prefix }}";#}
+        {#form.init({{ model.appId }});#}
+    {#});#}
+</script>
