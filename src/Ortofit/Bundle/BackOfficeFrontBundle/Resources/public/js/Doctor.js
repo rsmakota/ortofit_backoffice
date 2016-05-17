@@ -51,17 +51,17 @@ BackOffice.Doctor = {
         for (var i=0; i<data.length; i=i+1) {
             href      = me.calendarUrl+"?doctorId="+data[i].id;
             activeApp = me.getCssClass(href, hlp.getAppointmentsLi());
-            appEl.append("<li "+activeApp+"><a href=\""+href+"\"><i class=\"fa fa-circle-o\"></i>"+data[i].name+"</a></li>");
+            appEl.append("<li "+activeApp+"><a href=\""+href+"\"><i class=\"fa fa-user-md\"></i>"+data[i].name+"</a></li>");
 
             href      = me.scheduleUrl+"?doctorId="+data[i].id;
             activeSch = me.getCssClass(href, hlp.getScheduleLi());
-            schEl.append("<li "+activeSch+"><a href=\""+href+"\"><i class=\"fa fa-circle-o\"></i>"+data[i].name+"</a></li>");
+            schEl.append("<li "+activeSch+"><a href=\""+href+"\"><i class=\"fa fa-user-md\"></i>"+data[i].name+"</a></li>");
         }
         activeApp = me.getCssClass(me.calendarUrl, hlp.getAppointmentsLi());
-        appEl.append("<li "+activeApp+"><a href=\""+me.calendarUrl+"\"><i class=\"fa fa-circle-o\"></i>Все</a></li>");
+        appEl.append("<li "+activeApp+"><a href=\""+me.calendarUrl+"\"><i class=\"fa fa-hospital-o\"></i>Все</a></li>");
 
         activeSch = me.getCssClass(me.scheduleUrl, hlp.getScheduleLi());
-        schEl.append("<li "+activeSch+"><a href=\""+me.scheduleUrl+"\"><i class=\"fa fa-circle-o\"></i>Все</a></li>");
+        schEl.append("<li "+activeSch+"><a href=\""+me.scheduleUrl+"\"><i class=\"fa fa-hospital-o\"></i>Все</a></li>");
 
     },
     loadData: function() {
