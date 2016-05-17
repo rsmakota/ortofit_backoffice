@@ -30,6 +30,15 @@ api_staff_schedule_get:
 api_staff_schedule_get_all:
     path:     /staff_schedule/get_all
     defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:getSchedules}
+api_staff_schedule_create:
+    path:     /staff_schedule/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:create}
+api_staff_schedule_update:
+    path:     /staff_schedule/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:update}
+api_staff_schedule_delete:
+    path:     /staff_schedule/delete
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:delete}
 
 api_client_update:
     path:     /client/update

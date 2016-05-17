@@ -41,7 +41,7 @@
             {% else %}
                 calendar.eventsUrl = '{{ url('api_staff_schedule_get_all') }}';
             {% endif %}
-            calendar.eventDataUrl = '{{ url('bf_staff_schedule_view_schedule') }}';
+            calendar.eventDataUrl = '{{ url('bf_staff_schedule_form') }}';
             calendar.init(doctorId);
             var officeId = calendar.getOfficeId();
             $('#officeTab'+officeId).addClass('active');

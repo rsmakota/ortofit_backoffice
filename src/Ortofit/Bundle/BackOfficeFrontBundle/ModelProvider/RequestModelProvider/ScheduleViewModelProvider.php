@@ -73,9 +73,7 @@ class ScheduleViewModelProvider extends AbstractRequestModelProvider
     {
         /** @var ScheduleViewModel $model */
         $model = parent::getModel();
-        $model->doctor    = $this->userManager->findUserBy(['id'=>$model->doctorId]);
-        $model->office    = $this->officeManager->rGet($model->officeId);
-        $model->startTime = $model->time;
+
         if (null != $model->id) {
             /** @var Schedule $schedule */
             $schedule         = $this->scheduleManager->get($model->id);
@@ -85,6 +83,12 @@ class ScheduleViewModelProvider extends AbstractRequestModelProvider
             $model->endTime   = $schedule->getEnd()->format('H:i');
             $model->office    = $schedule->getOffice();
             $model->doctor    = $schedule->getUser();
+            $model->doctorId  = $schedule->getUser()->getId();
+            $model->officeId  = $schedule->getOffice()->getId();
+        } else {
+            $model->doctor    = $this->userManager->findUserBy(['id'=>$model->doctorId]);
+            $model->office    = $this->officeManager->rGet($model->officeId);
+            $model->startTime = $model->time;
         }
         return $model;
     }

@@ -70,20 +70,19 @@
             </form>
         </div>
         <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="delButton">Удалить</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
             <button type="button" class="btn btn-primary" id="saveButton">Сохранить</button>
         </div>
     </div>
 </div>
 <script>
-    {#$(document).ready(function () {#}
-        {#var form = BackOffice.AppForm;#}
-        {#form.createUrl = "{{ url('api_app_create') }}";#}
-        {#form.updateUrl = "{{ url('api_app_update') }}";#}
-        {#form.clientUrl = "{{ url('api_client_find') }}";#}
-        {#form.pattern = "{{ country.pattern }}";#}
-        {#form.length = {{ country.length }};#}
-        {#form.prefix = "{{ country.prefix }}";#}
-        {#form.init({{ model.appId }});#}
-    {#});#}
+    $(document).ready(function () {
+        var form = BackOffice.StaffScheduleForm;
+        form.createUrl = "{{ url('api_staff_schedule_create') }}";
+        form.updateUrl = "{{ url('api_staff_schedule_update') }}";
+        form.deleteUrl = "{{ url('api_staff_schedule_delete') }}";
+
+        form.init();
+    });
 </script>

@@ -80,7 +80,7 @@ class ScheduleManager extends AbstractManager
      *
      * @return Schedule[]
      */
-    public function findByRange (DateRangeInterface $range, Office $office, User $user)
+    public function findByRange (DateRangeInterface $range, Office $office, User $user=null)
     {
 
         return $this->enManager->getRepository($this->getEntityClassName())->findByRange(
@@ -184,4 +184,5 @@ class ScheduleManager extends AbstractManager
 
         return $dates;
     }
+
 }

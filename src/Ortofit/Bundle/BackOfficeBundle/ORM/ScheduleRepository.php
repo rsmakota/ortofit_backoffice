@@ -20,15 +20,19 @@ use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 class ScheduleRepository extends EntityRepository
 {
 
-    public function findByRange(DateRangeInterface $range, Office $office, User $user)
+    public function findByRange(DateRangeInterface $range, Office $office, User $user=null)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 's';
-        $params  = ['start' => $range->getFrom(), 'end' => $range->getTo(), 'office' => $office, 'user'=>$user];
-
+        $params  = ['start' => $range->getFrom(), 'end' => $range->getTo(), 'office' => $office];
+        $where   = "$alias.start > :start AND $alias.end < :end AND $alias.office = :office";
+        if ($user) {
+            $params['user'] = $user;
+            $where .= " AND $alias.user = :user";
+        }
         $qb = $builder->select($alias)
             ->from(Schedule::clazz(), $alias)
-            ->where("$alias.start > :start AND $alias.end < :end AND $alias.user = :user AND $alias.office = :office")
+            ->where($where)
             ->orderBy($alias.'.start')
             ->setParameters($params);
 

@@ -46,6 +46,10 @@ BackOffice.FormStaffScheduler = {
 
     getSaveButton: function() {
         return $('#saveButton');
+    },
+    
+    getDelButton: function() {
+        return $('#delButton');
     }
 
 };
