@@ -119,6 +119,7 @@ class AppController extends BaseController
             'office'      => $this->getOfficeManager()->get($bag->get('officeId')),
             'service'     => $this->getServiceManager()->get($bag->get('serviceId')),
             'user'        => $this->findDoctor($bag->get('doctorId')),
+            'forwarder'   => $bag->get('forwarder'),
         ];
     }
 

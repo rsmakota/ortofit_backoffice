@@ -74,4 +74,6 @@ class AppointmentModel extends BaseModel
      * @var string
      */
     public $prefix;
+    /** @var  string */
+    public $forwarder;
 }

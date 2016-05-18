@@ -44,8 +44,8 @@ BackOffice.AppForm = {
             appId:             hlp.getAppId().val(),
             serviceId:         hlp.getServiceId().val(),
             doctorId:          hlp.getDoctorId().val(),
-            clientId:          hlp.getClientId().val()
-
+            clientId:          hlp.getClientId().val(),
+            forwarder:         hlp.getForwarder().val()
         };
 
     },

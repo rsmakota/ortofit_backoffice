@@ -23,7 +23,6 @@ use Ortofit\Bundle\BackOfficeFrontBundle\Model\Appointment\AppointmentViewModel;
  */
 class AppointmentViewModelProvider extends AbstractRequestModelProvider
 {
-
     const PARAM_APP_ID    = 'appId';
     const PARAM_DOCTOR_ID = 'doctorId';
     const PARAM_OFFICE_ID = 'officeId';
@@ -114,12 +113,13 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
      */
     protected function createModel()
     {
-        $model             = new AppointmentViewModel();
-        $model->prefix     = $this->countryManager->getDefault()->getPrefix();
-        $model->doctors    = $this->getDoctors();
-        $model->offices    = $this->officeManager->all();
-        $model->services   = $this->serviceManager->all();
-        $model->directions = $this->directionManager->all();
+        $model              = new AppointmentViewModel();
+        $model->prefix      = $this->countryManager->getDefault()->getPrefix();
+        $model->doctors     = $this->getDoctors();
+        $model->offices     = $this->officeManager->all();
+        $model->services    = $this->serviceManager->all();
+//        $model->directions = $this->directionManager->all();
+        $model->directionId = $this->directionManager->getUnknown()->getId();
 
         return $model;
     }
@@ -145,7 +145,7 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
         $model->directionId = $app->getClient()->getClientDirection()->getId();
         $model->officeId    = $app->getOffice()->getId();
         $model->duration    = $app->getDuration();
-        $model->description = $app->getDescription();
+//        $model->description = $app->getDescription();
         $model->gender      = $app->getClient()->getGender();
 
         return $model;

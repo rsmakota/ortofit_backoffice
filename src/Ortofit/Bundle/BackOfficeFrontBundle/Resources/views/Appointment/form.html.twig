@@ -203,6 +203,19 @@
                         <input type="hidden" id="doctorId" value="{{ model.doctorId }}">
                     {% endif %}
                     <div class="form-group">
+                        <label for="inputForwarder" class="col-sm-3 control-label">Направил:</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o icon20"></i>
+                                </div>
+                                <input id="forwarder" class="form-control pull-right active" type="text"
+                                       value="{{ model.forwarder }}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="textareaDescription" class="col-sm-3 control-label">Заметка:</label>
 
                         <div class="col-sm-9">
