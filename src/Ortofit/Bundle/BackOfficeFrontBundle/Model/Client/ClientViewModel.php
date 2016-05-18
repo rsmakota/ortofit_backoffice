@@ -48,7 +48,29 @@ class ClientViewModel extends ClientModel
         
         return $this->msisdn;
     }
+    public function getName()
+    {
+        if (null != $this->client) {
+            return $this->client->getName();
+        }
+        return $this->name;
+    }
 
+    public function getGender()
+    {
+        if (null != $this->client) {
+            return $this->client->getGender();
+        }
+        return $this->gender;
+    }
+
+    public function getClientDirectionId()
+    {
+        if (null != $this->client) {
+            return $this->client->getClientDirection()->getId();
+        }
+        return $this->clientDirectionId;
+    }
     /**
      * @return integer
      */

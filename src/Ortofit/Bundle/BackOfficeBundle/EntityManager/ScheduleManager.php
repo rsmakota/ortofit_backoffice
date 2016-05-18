@@ -109,6 +109,20 @@ class ScheduleManager extends AbstractManager
     /**
      * @param \DateTime $date
      * @param Office    $office
+     * 
+     * @return Schedule[]
+     */
+    public function findSchedulesByDate($date, $office)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->findSchedulesByDate(
+            $date,
+            $office
+        );
+    }
+
+    /**
+     * @param \DateTime $date
+     * @param Office    $office
      * @param User      $user
      *
      * @return Schedule[]|null

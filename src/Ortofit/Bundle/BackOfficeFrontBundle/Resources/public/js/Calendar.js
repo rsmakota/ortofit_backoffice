@@ -74,15 +74,16 @@ BackOffice.Calendar = {
             },
 
             dayClick: function (date) {
-                if (null == doctorId) {
-                    return false;
-                }
+                // if (null == doctorId) {
+                //     return false;
+                // }
 
                 var data = {
                     officeId: officeId,
                     doctorId: doctorId,
                     date:     date.format("DD/MM/YYYY"),
-                    time:     date.format("HH:mm")
+                    time:     date.format("HH:mm"),
+                    location: "calendar"
                 };
                 modal.load(me.formUrl, data);
             }

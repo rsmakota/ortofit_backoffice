@@ -36,7 +36,11 @@ class AppointmentViewModel extends AppointmentModel
      * @var Office[]
      */
     public $offices;
-
+    /**
+     * @var User[]
+     */
+    public $availableDoctors;
+    
     /**
      * @return boolean|string
      */
@@ -110,5 +114,17 @@ class AppointmentViewModel extends AppointmentModel
     public function getDateTime()
     {
         return \DateTime::createFromFormat('d/m/Y H:i', $this->date." ". $this->time);
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getDoctors()
+    {
+       if ('calendar' == $this->location) {
+           return $this->availableDoctors;
+       }
+        
+       return $this->doctors;
     }
 }

@@ -177,7 +177,7 @@
                         <input type="hidden" id="time" name="time" value="{{ model.time }}">
                     {% endif %}
 
-                    {% if model.doctorId is null %}
+                    {% if model.doctorId is empty %}
                     <div class="form-group">
                         <label for="selectDoctorId" class="col-sm-3 control-label">Сотрудник:</label>
 
@@ -187,7 +187,7 @@
                                     <i class="fa fa-user-md icon20"></i>
                                 </div>
                                 <select class="form-control" id="doctorId" id="doctorId" title="doctor" >
-                                    {% for doctor in model.doctors %}
+                                    {% for doctor in model.getDoctors() %}
                                         {% if doctor.id == model.doctorId %}
                                             <option selected value="{{ doctor.id }}">{{ doctor.name }}</option>
                                         {% else %}
@@ -208,9 +208,10 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-clock-o icon20"></i>
+                                    <i class="fa fa-hand-o-right icon20"></i>
                                 </div>
                                 <input id="forwarder" class="form-control pull-right active" type="text"
+                                       placeholder="Имя врача направившего клиента"
                                        value="{{ model.forwarder }}" />
                             </div>
                         </div>
@@ -226,9 +227,6 @@
                     <input type="hidden" id="appId"       value="{{ model.appId }}">
                     <input type="hidden" id="clientId"    value="{{ model.clientId }}">
                     <input type="hidden" id="directionId" value="{{ model.directionId }}">
-
-
-
 
                 </form>
             </div>

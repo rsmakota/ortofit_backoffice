@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class ServiceState extends AbstractState
 {
     const PARAM_NAME_SERVICES    = 'services';
-    const PARAM_NAME_FORWARDER   = 'forwarder';
     const PARAM_NAME_REMIND      = 'remind';
     const PARAM_NAME_DESCRIPTION = 'description';
     const DATE_TIME_FORMAT       = 'd/m/Y H:i:s';
@@ -61,15 +60,6 @@ class ServiceState extends AbstractState
             $this->personServiceManager->create(new ParameterBag($data));
         }
     }
-    /**
-     * A man who was forwarder a client to ortofit
-     * @param String $forwarder
-     */
-    private function saveForwarder($forwarder)
-    {
-        $this->app->setForwarder($forwarder);
-        $this->appManager->merge($this->app);
-    }
 
     /**
      * @param string $remindDate
@@ -100,12 +90,9 @@ class ServiceState extends AbstractState
         $remindDate  = $request->get(self::PARAM_NAME_REMIND);
 
         $this->saveServices($services);
-        $this->saveForwarder($request->get(self::PARAM_NAME_FORWARDER));
         $this->saveRemind($remindDate, $description);
         $this->appManager->success($this->app);
-
     }
-
 
     /**
      * @return Service[]

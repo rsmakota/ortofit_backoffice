@@ -14,6 +14,7 @@ use Ortofit\Bundle\BackOfficeBundle\EntityManager\CountryManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\OfficeManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceManager;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Appointment\AppointmentViewModel;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\Schedule\ScheduleModel;
 
 
 /**
@@ -52,13 +53,22 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
      * @var CountryManager
      */
     private $countryManager;
-
+    /**
+     * @var ScheduleModel
+     */
+    private $scheduleManager;
+    
     /**
      * @param GroupManager $groupManager
      */
     public function setGroupManager($groupManager)
     {
         $this->groupManager = $groupManager;
+    }
+
+    public function setScheduleManager($scheduleManager)
+    {
+        $this->scheduleManager = $scheduleManager;
     }
 
     /**

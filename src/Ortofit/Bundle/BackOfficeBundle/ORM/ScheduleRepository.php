@@ -88,4 +88,25 @@ class ScheduleRepository extends EntityRepository
 
         return $result;
     }
+
+    /**
+     * @param \DateTime $date
+     * @param Office    $office
+     *
+     * @return Schedule[]
+     */
+    public function findSchedulesByDate($date, $office)
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+        $params  = ['date' => $date, 'office' => $office];
+
+        $qb = $builder->select('s')
+            ->from(Schedule::clazz(), 's')
+            ->where("s.start <= :date AND s.end > :date AND s.office = :office")
+            ->setParameters($params);
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
 }

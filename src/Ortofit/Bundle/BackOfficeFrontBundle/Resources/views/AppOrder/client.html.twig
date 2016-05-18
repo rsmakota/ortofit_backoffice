@@ -34,7 +34,7 @@
                                 <i class="fa fa-user icon20"> </i>
                             </div>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Имя Клиента" value="{{ model.name }}"/>
+                                   placeholder="Имя Клиента" value="{{ model.getName() }}"/>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                             </div>
                             <select class="form-control" id="gender" name="gender">
                                 <option value="male">Мужской</option>
-                                <option value="female" {% if model.gender == 'famele' %} selected {% endif %} >Женский
+                                <option value="female" {% if model.getGender() == 'famele' %} selected {% endif %} >Женский
                                 </option>
                             </select>
                         </div>
@@ -66,7 +66,7 @@
                             </div>
                             <select class="form-control" id="clientDirectionId" name="clientDirectionId" title="direction">
                                 {% for direction in model.clientDirections %}
-                                    {% if direction.id == model.clientDirectionId %}
+                                    {% if direction.id == model.getClientDirectionId() %}
                                         <option selected value="{{ direction.id }}">{{ direction.name }}</option>
                                     {% else %}
                                         <option value="{{ direction.id }}">{{ direction.name }}</option>

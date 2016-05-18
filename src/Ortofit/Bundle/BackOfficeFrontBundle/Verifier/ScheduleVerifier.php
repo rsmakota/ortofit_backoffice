@@ -38,7 +38,11 @@ class ScheduleVerifier implements VerifierInterface
      */
     public function isValid($model)
     {
-        $schedule = $this->scheduleManager->findOneByDate($model->getDateTime(), $model->getOffice(), $model->getDoctor());
+        $schedule = $this->scheduleManager->findOneByDate(
+            $model->getDateTime(),
+            $model->getOffice(),
+            $model->getDoctor()
+        );
         if ($schedule) {
             return true;
         }
