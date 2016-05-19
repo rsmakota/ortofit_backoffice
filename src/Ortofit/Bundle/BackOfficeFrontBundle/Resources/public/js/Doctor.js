@@ -60,8 +60,8 @@ BackOffice.Doctor = {
         activeApp = me.getCssClass(me.calendarUrl, hlp.getAppointmentsLi());
         appEl.append("<li "+activeApp+"><a href=\""+me.calendarUrl+"\"><i class=\"fa fa-hospital-o\"></i>Все</a></li>");
 
-        activeSch = me.getCssClass(me.scheduleUrl, hlp.getScheduleLi());
-        schEl.append("<li "+activeSch+"><a href=\""+me.scheduleUrl+"\"><i class=\"fa fa-hospital-o\"></i>Все</a></li>");
+        // activeSch = me.getCssClass(me.scheduleUrl, hlp.getScheduleLi());
+        // schEl.append("<li "+activeSch+"><a href=\""+me.scheduleUrl+"\"><i class=\"fa fa-hospital-o\"></i>Все</a></li>");
 
     },
     loadData: function() {

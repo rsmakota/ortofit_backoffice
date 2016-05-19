@@ -100,12 +100,12 @@ class AppointmentViewModel extends AppointmentModel
     {
         $defFields = ['officeId', 'doctorId', 'date', 'time'];
         foreach ($defFields as $field) {
-            if (null == $this->$field) {
-                return false;
+            if (null != $this->$field) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -114,17 +114,5 @@ class AppointmentViewModel extends AppointmentModel
     public function getDateTime()
     {
         return \DateTime::createFromFormat('d/m/Y H:i', $this->date." ". $this->time);
-    }
-
-    /**
-     * @return User[]
-     */
-    public function getDoctors()
-    {
-       if ('calendar' == $this->location) {
-           return $this->availableDoctors;
-       }
-        
-       return $this->doctors;
     }
 }

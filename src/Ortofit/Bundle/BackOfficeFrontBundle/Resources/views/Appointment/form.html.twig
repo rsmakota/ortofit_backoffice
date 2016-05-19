@@ -10,13 +10,22 @@
                 {% if model.isDefinite() %}
                 <ul class="list-group" style="text-align: center">
                     <li class="list-group-item list-group-item-info">
+                        {% if model.doctorId is not empty %}
                         <i class="fa fa-user-md icon20"> </i> {{ model.getDoctorName() }} &nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% if model.officeId is not empty %}
                         <i class="fa fa-building icon20"></i> {{ model.getOfficeName() }} &nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% if model.date is not empty %}
                         <i class="fa fa-calendar icon20"></i> {{ model.date }}  &nbsp;&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% if model.time is not empty %}
                         <i class="fa fa-clock-o icon20"> </i> {{ model.time }}
+                        {% endif %}
+
                     </li>
                 </ul>
-                {% endif%}
+                {% endif %}
                 <form class="form-horizontal">
                     <div class="form-group">
                         <label for="inputMsisdn" class="col-sm-3 control-label">Телефон:</label>
@@ -187,16 +196,18 @@
                                     <i class="fa fa-user-md icon20"></i>
                                 </div>
                                 <select class="form-control" id="doctorId" id="doctorId" title="doctor" >
-                                    {% for doctor in model.getDoctors() %}
-                                        {% if doctor.id == model.doctorId %}
-                                            <option selected value="{{ doctor.id }}">{{ doctor.name }}</option>
-                                        {% else %}
-                                            <option value="{{ doctor.id }}">{{ doctor.name }}</option>
-                                        {% endif %}
+                                    {% for doctor in model.doctors %}
+                                        <option
+                                            {% if doctor.id == model.doctorId %}
+                                                 selected
+                                            {% endif %}
+                                             {% if model.availableDoctors[doctor.id] is not defined %}
+                                                 style="color:#D72523"
+                                             {% endif %}
+                                        value="{{ doctor.id }}">{{ doctor.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-
                         </div>
                     </div>
                     {% else %}

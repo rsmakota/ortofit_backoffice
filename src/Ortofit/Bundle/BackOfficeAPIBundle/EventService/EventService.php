@@ -65,7 +65,7 @@ class EventService
      *
      * @return CalendarEventInterface[]
      */
-    private function createOffEvents($range, $office, $user)
+    private function createOffEvents($range, $office, $user=null)
     {
         $schedules = $this->scheduleManager->findByRange($range, $office, $user);
         $grid      = $this->createScheduleGrid($range, $schedules);
@@ -111,9 +111,9 @@ class EventService
      */
     public function createOffHoursEvents($range, $office, $user = null)
     {
-        if (null == $user) {
-            return $this->createDefaultEvents($office);
-        }
+//        if (null == $user) {
+//            return $this->createDefaultEvents($office);
+//        }
 
         return $this->createOffEvents($range, $office, $user);
     }

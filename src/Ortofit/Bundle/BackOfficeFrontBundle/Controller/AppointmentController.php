@@ -66,9 +66,9 @@ class AppointmentController extends BaseController
     public function formAction()
     {
         $model = $this->getModelProvider()->getModel();
-        if ($model->isDefinite() && !$this->getScheduleVerifier()->isValid($model)) {
-            return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
-        }
+//        if ($model->isDefinite() && !$this->getScheduleVerifier()->isValid($model)) {
+//            return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
+//        }
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', ['model'=>$model, 'country'=>$this->getCountry()]);
 

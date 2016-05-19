@@ -12,6 +12,7 @@ use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientDirectionManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\CountryManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\OfficeManager;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceManager;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Appointment\AppointmentViewModel;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Schedule\ScheduleModel;
@@ -24,11 +25,6 @@ use Ortofit\Bundle\BackOfficeFrontBundle\Model\Schedule\ScheduleModel;
  */
 class AppointmentViewModelProvider extends AbstractRequestModelProvider
 {
-    const PARAM_APP_ID    = 'appId';
-    const PARAM_DOCTOR_ID = 'doctorId';
-    const PARAM_OFFICE_ID = 'officeId';
-    const PARAM_DATE      = 'date';
-    const PARAM_TIME      = 'time';
     /**
      * @var GroupManager
      */
@@ -54,7 +50,7 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
      */
     private $countryManager;
     /**
-     * @var ScheduleModel
+     * @var ScheduleManager
      */
     private $scheduleManager;
     
@@ -124,6 +120,7 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
     protected function createModel()
     {
         $model              = new AppointmentViewModel();
+        $this->fillModelFromRequest($model);
         $model->prefix      = $this->countryManager->getDefault()->getPrefix();
         $model->doctors     = $this->getDoctors();
         $model->offices     = $this->officeManager->all();
@@ -136,16 +133,14 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
 
     /**
      * @param AppointmentViewModel $model
-     * @param integer              $appId
      *
      * @return AppointmentViewModel
      */
-    protected function completeFromApp($model, $appId)
+    protected function completeFromApp($model)
     {
         /** @var Appointment $app */
-        $app = $this->appManager->get($appId);
+        $app = $this->appManager->get($model->appId);
 
-        $model->appId       = $appId;
         $model->clientId    = $app->getClient()->getId();
         $model->msisdn      = $app->getClient()->getMsisdn();
         $model->clientName  = $app->getClient()->getName();
@@ -155,7 +150,6 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
         $model->directionId = $app->getClient()->getClientDirection()->getId();
         $model->officeId    = $app->getOffice()->getId();
         $model->duration    = $app->getDuration();
-//        $model->description = $app->getDescription();
         $model->gender      = $app->getClient()->getGender();
 
         return $model;
@@ -168,17 +162,20 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
      */
     protected function completeModel($model)
     {
-        $request         = $this->getRequest();
-        $appId           = $request->get(self::PARAM_APP_ID);
-        $model->doctorId = $request->get(self::PARAM_DOCTOR_ID);
-        $model->officeId = $request->get(self::PARAM_OFFICE_ID);
-        $model->date     = $request->get(self::PARAM_DATE);
-        $model->time     = $request->get(self::PARAM_TIME);
-
-        if ($appId != null) {
-            return $this->completeFromApp($model, $appId);
+        if ($model->appId != null) {
+            return $this->completeFromApp($model);
         }
+        $date = \DateTime::createFromFormat('d/m/Y H:i', $model->date.' '.$model->time);
+        $model->availableDoctors = [];
+        if (!$model->officeId) {
+            return $model;
+        }
+        $schedules = $this->scheduleManager->findSchedulesByDate($date, $this->officeManager->get($model->officeId));
 
+        foreach ($schedules as $schedule) {
+            $doctor = $schedule->getUser();
+            $model->availableDoctors[$doctor->getId()] = $doctor;
+        }
         return $model;
     }
 

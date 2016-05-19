@@ -153,7 +153,7 @@ class AppController extends BaseController
      *
      * @return array
      */
-    private function getOffHoursEvents($range, $office, $user)
+    private function getOffHoursEvents($range, $office, $user=null)
     {
         $data   = [];
         $events = $this->getEventService()->createOffHoursEvents($range, $office, $user);
