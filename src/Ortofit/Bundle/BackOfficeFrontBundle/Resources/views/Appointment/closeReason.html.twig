@@ -1,0 +1,35 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Причины отмены визита</h4>
+        </div>
+
+        <div class="modal-body">
+            <form class="form-horizontal" id="reasonForm">
+                <table class="table table-striped">
+                    {% for reason in reasons %}
+                    <tr>
+                        <td>
+                            <input type="radio" id="reasonId" name="reasonId" value="{{ reason.getId() }}" />
+                        </td>
+                        <td>{{ reason.getName() }}</td>
+                    </tr>
+                   {% endfor %}
+                </table>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="orderButton">Сохранить</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+
+
+    });
+</script>

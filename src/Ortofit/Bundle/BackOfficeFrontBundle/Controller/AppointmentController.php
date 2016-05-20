@@ -114,5 +114,17 @@ class AppointmentController extends BaseController
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/reschedule.html.twig', $data);
     }
+    
+    public function closeReasonAction($appId)
+    {
+        $data = [
+            "reasons" => "",
+            "appId"   => $appId
+        ];
 
+        return $this->render('@OrtofitBackOfficeFront/Appointment/closeReason.html.twig', $data);
+    }
+    
+    
+    
 }
