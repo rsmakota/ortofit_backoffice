@@ -12,7 +12,9 @@
                 <tr>
                     <td><i class="fa fa-phone"></i></td>
                     <td>Телефон:</td>
-                    <td>{{ appointment.client.msisdn|default('') }}</td>
+                    <td> <a href="{{ url("bf_person", {"clientId":appointment.client.id }) }}">
+                        {{ appointment.client.msisdn|default('') }}</a>
+                    </td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-credit-card"></i></td>
@@ -73,6 +75,7 @@
 
         <div class="modal-footer">
             {% if (appointment.state == 1) or (appointment.state == 2) %}
+            <button type="button" class="btn btn-danger" id="reasonButton">Закрыть по причине</button>
             <button type="button" class="btn btn-primary" id="editButton">Перенести</button>
             <button type="button" class="btn btn-success" id="orderButton">Оформить</button>
             {% endif %}
@@ -81,12 +84,15 @@
 </div>
 <script>
     $(function () {
-       $('#editButton').click(function(){
+        $('#editButton').click(function(){
            BackOffice.Modal.load('{{ url('bf_app_reschedule', {'appId':appointment.id}) }}', {});
        });
         $('#orderButton').click(function(){
             BackOffice.Modal.load('{{ url('bf_app_order_process') }}', {appId:{{ appointment.id }}, isNew:true});
-        })
+        });
+        $('#reasonButton').click(function(){
+            BackOffice.Modal.load('{{ url('bf_app_close_reason', {'appId':appointment.id}) }}', {appId:{{ appointment.id }}});
+        });
 
     });
 </script>

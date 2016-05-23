@@ -23,6 +23,9 @@ api_app_move:
     path:     /app/move
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:move }
 
+api_app_reason_create:
+    path:     /app_reason/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReason:create }
 
 api_staff_schedule_get:
     path:     /staff_schedule/get/{userId}

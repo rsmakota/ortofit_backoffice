@@ -16,10 +16,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Appointment implements EntityInterface
 {
-    const STATE_NEW      = 1;
-    const STATE_RECORD   = 2;
-    const STATE_NOT_CAME = 3;
-    const STATE_SUCCESS  = 4;
+    const STATE_NEW          = 1;
+    const STATE_RECORD       = 2;
+    const STATE_CLOSE_REASON = 3;
+    const STATE_SUCCESS      = 4;
 
     const COLOR_SUCCESS  = '#7CB280';
     const COLOR_NOT_CAME = '#B79191';
@@ -304,7 +304,7 @@ class Appointment implements EntityInterface
             case self::STATE_SUCCESS:
                 $borderColor = self::COLOR_SUCCESS;
             break;
-            case self::STATE_NOT_CAME:
+            case self::STATE_CLOSE_REASON:
                 $borderColor = self::COLOR_NOT_CAME;
             break;
         }

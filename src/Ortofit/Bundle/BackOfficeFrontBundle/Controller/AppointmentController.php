@@ -42,7 +42,13 @@ class AppointmentController extends BaseController
         return $this->get('bf.app_view_model_provider');
     }
 
-
+    /**
+     * @return \Ortofit\Bundle\BackOfficeBundle\EntityManager\ReasonManager
+     */
+    private function getReasonsManager()
+    {
+        return $this->get('ortofit_back_office.reason_manage');
+    }
     /**
      * Index page with calendar/schedule
      * @return \Symfony\Component\HttpFoundation\Response
@@ -114,11 +120,16 @@ class AppointmentController extends BaseController
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/reschedule.html.twig', $data);
     }
-    
+
+    /**
+     * @param integer $appId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function closeReasonAction($appId)
     {
         $data = [
-            "reasons" => "",
+            "reasons" => $this->getReasonsManager()->all(),
             "appId"   => $appId
         ];
 

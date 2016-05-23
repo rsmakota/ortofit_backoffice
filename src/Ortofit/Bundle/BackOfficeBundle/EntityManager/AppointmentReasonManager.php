@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright 2015 ortofit_quiz
+ * @copyright 2016 ortofit_quiz
  * @author Rodion Smakota <rsmakota@gmail.com>
  */
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\BackOfficeBundle\Entity\CloseReason;
+use Ortofit\Bundle\BackOfficeBundle\Entity\AppointmentReason;
 
 
 /**
@@ -14,7 +14,7 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\CloseReason;
  *
  * @package Ortofit\Bundle\BackOfficeBundle\ObjectManager
  */
-class CloseReasonManager extends AbstractManager
+class AppointmentReasonManager extends AbstractManager
 {
 
     /**
@@ -22,7 +22,7 @@ class CloseReasonManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return CloseReason::clazz();
+        return AppointmentReason::clazz();
     }
 
     /**
@@ -30,7 +30,7 @@ class CloseReasonManager extends AbstractManager
      */
     public function getName()
     {
-        return 'close_reason_manager';
+        return 'reason_manager';
     }
 
 

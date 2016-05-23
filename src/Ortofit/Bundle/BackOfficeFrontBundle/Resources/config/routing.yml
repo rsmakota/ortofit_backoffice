@@ -61,6 +61,9 @@ bf_app_view_app:
 bf_app_reschedule:
     path:     /admin/app/reschedule/{appId}
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:reschedule }
+bf_app_close_reason:
+    path:     /admin/app/close/{appId}
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:closeReason }
 
 bf_app_order_process:
     path: /admin/app_order/process

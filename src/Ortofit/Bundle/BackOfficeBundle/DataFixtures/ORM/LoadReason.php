@@ -9,14 +9,14 @@ namespace Ortofit\Bundle\BackOfficeBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Ortofit\Bundle\BackOfficeBundle\Entity\CloseReason;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Reason;
 
 /**
  * Class LoadCountyData
  *
  * @package Ortofit\Bundle\SingUpBundle\DataFixtures\ORM
  */
-class LoadCloseReason extends AbstractFixture implements OrderedFixtureInterface
+class LoadReason extends AbstractFixture implements OrderedFixtureInterface
 {
 
     private $data = [
@@ -35,9 +35,11 @@ class LoadCloseReason extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
          foreach ($this->data as $name=>$reason) {
-             $closeReason = new CloseReason();
+             $closeReason = new Reason();
              $closeReason->setName($name);
              $closeReason->setAlias($reason);
+             $closeReason->setType(Reason::TYPE_CLOSE);
+             
              $manager->persist($closeReason);
          }
 

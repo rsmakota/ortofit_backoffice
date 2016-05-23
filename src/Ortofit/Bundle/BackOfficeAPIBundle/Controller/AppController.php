@@ -300,5 +300,4 @@ class AppController extends BaseController
 
         return $this->createSuccessJsonResponse();
     }
-
 }

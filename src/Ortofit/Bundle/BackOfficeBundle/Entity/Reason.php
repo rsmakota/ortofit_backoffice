@@ -12,10 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="close_reasons")
+ * @ORM\Table(name="reasons")
  */
-class CloseReason implements EntityInterface
+class Reason implements EntityInterface
 {
+    const TYPE_OPEN  = "open";
+    const TYPE_CLOSE = "close";
+    
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
@@ -32,6 +35,10 @@ class CloseReason implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $alias;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $type;
 
     /**
      * @return integer
@@ -79,6 +86,16 @@ class CloseReason implements EntityInterface
     public function setAlias($alias)
     {
         $this->alias = $alias;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
     
     /**

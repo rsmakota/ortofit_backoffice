@@ -11,25 +11,32 @@
             <form class="form-horizontal" id="reasonForm">
                 <table class="table table-striped">
                     {% for reason in reasons %}
-                    <tr>
-                        <td>
-                            <input type="radio" id="reasonId" name="reasonId" value="{{ reason.getId() }}" />
-                        </td>
-                        <td>{{ reason.getName() }}</td>
-                    </tr>
-                   {% endfor %}
+                        <tr>
+                            <td class="col-sm-2">&nbsp;</td>
+                            <td>
+                                <label class="radio">
+                                    <input type="radio" id="reasonId" name="reasonId" value="{{ reason.getId() }}"/>
+                                    &nbsp;&nbsp;
+                                    {{ reason.getName() }}
+                                </label>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </table>
+                <input type="hidden" name="appId" id="appId" value="{{ appId }}">
             </form>
         </div>
 
         <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="orderButton">Сохранить</button>
+            <button type="button" class="btn btn-success" id="saveButton">Сохранить</button>
         </div>
     </div>
 </div>
 <script>
     $(function () {
-
+        var control = BackOffice.CloseReason;
+        control.postUrl = "{{ url("api_app_reason_create") }}";
+        control.init();
 
     });
 </script>
