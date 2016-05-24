@@ -29,7 +29,7 @@ class AppointmentReason implements EntityInterface
     private $created;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Appointment")
+     * @ORM\ManyToOne(targetEntity="Appointment", inversedBy="appointmentReasons")
      * @ORM\JoinColumn(name="appointment_id", referencedColumnName="id")
      */
     private $appointment;

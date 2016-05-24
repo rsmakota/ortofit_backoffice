@@ -5,6 +5,7 @@
  */
 
 namespace Ortofit\Bundle\BackOfficeBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Appointment
@@ -87,12 +88,19 @@ class Appointment implements EntityInterface
     private $forwarder;
 
     /**
+     *  
+     * @ORM\OneToMany(targetEntity="AppointmentReason", mappedBy="appointment")
+     */
+    private $appointmentReasons;
+    
+    /**
      * constructor.
      */
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->state   = self::STATE_NEW;
+        $this->appointmentReasons = new ArrayCollection();
     }
 
     /**
@@ -101,6 +109,22 @@ class Appointment implements EntityInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAppointmentReasons()
+    {
+        return $this->appointmentReasons;
+    }
+
+    /**
+     * @param $appointmentReasons
+     */
+    public function setAppointmentReasons($appointmentReasons)
+    {
+        $this->appointmentReasons = $appointmentReasons;
     }
 
     /**

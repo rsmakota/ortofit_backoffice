@@ -8,6 +8,13 @@
         </div>
 
         <div class="modal-body">
+            {% if appointment.state == 3 %}
+                <div class="callout callout-info">
+                {% for appReason in appointment.getAppointmentReasons() %}
+                        <strong>({{ appReason.getCreated()|date('d/m/Y') }} - {{ appReason.getReason().getName() }})</strong> - Запись была закрыта пользователем "{{ app.user.getName() }}" <strong></strong>
+                {% endfor %}
+                </div>
+            {% endif %}
             <table class="table table-striped">
                 <tr>
                     <td><i class="fa fa-phone"></i></td>
