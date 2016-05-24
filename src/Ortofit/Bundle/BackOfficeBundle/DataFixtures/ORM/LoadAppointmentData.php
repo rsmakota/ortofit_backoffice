@@ -34,7 +34,14 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
     ];
     private $doctors = ['doctor:svat',  'doctor:lesya' ,  'doctor:ser',  'doctor:eva', 'doctor:elena'];
     private $offices = ['office:kirova', 'office:center'];
-
+    private function randBold()
+    {
+        $rand = rand(0, 10);
+        if ($rand == 0) {
+            return true;
+        }
+        return false;
+    }
     /**
      * @param string  $officeAlias
      * @param integer $day
@@ -56,7 +63,7 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         $description  = 'Description: '.$serviceAlias;
         /** @var Service $service */
         $service      = $this->getReference('service:'.$serviceAlias);
-
+        $bold         = $this->randBold();
         $date         = new \DateTime($day.' day');
         $date         = new \DateTime($date->format('Y-m-d').' '.$hour.":00:00");
         if (($date->format('w') == 0) && ($hour >= 13)) {
@@ -70,7 +77,8 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         $appointment->setDescription($description);
         $appointment->setService($service);
         $appointment->setUser($this->getReference($this->doctors[rand(0, 4)]));
-
+        $appointment->setBold($bold);
+        
         return $appointment;
     }
 

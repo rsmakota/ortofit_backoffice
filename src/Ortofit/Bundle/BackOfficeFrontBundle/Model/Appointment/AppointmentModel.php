@@ -80,4 +80,6 @@ class AppointmentModel extends BaseModel
      * @var string
      */
     public $location;
+
+    public $bold;
 }
