@@ -120,6 +120,7 @@ class AppController extends BaseController
             'service'     => $this->getServiceManager()->get($bag->get('serviceId')),
             'user'        => $this->findDoctor($bag->get('doctorId')),
             'forwarder'   => $bag->get('forwarder'),
+            'bold'        => $bag->get('bold'),
         ];
     }
 

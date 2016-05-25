@@ -48,7 +48,9 @@ BackOffice.FormElement = {
     getForwarder: function() {
         return $('#forwarder');
     },
-
+    getBold: function () {
+        return $('#bold');    
+    },
     getById: function(id) {
         return $('#'+id);
     },

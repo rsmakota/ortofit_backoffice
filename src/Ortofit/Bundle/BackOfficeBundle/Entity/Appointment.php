@@ -23,14 +23,16 @@ class Appointment implements EntityInterface
     const STATE_SUCCESS      = 4;
 
     const COLOR_SUCCESS      = '#7CB280';
+    const COLOR_TEXT_SUCCESS = '#000000';
     const COLOR_CLOSE_REASON = '#ADFFFC';
     const COLOR_TEXT         = '#FFFFFF';
     const COLOR_CLOSE_REASON_TEXT = '#040B96';
 
     const COLOR_BOLD_BG     = '#FF001D';
-    const COLOR_BOLD_TEXT   = '#000000';
+    const COLOR_BOLD_TEXT   = '#FFFFFF';
     const COLOR_BOLD_BORDER = '#000000';
 
+    const SUCCESS_TITLE     = 'Оформлен';
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
@@ -362,12 +364,14 @@ class Appointment implements EntityInterface
 
     private function getTextColor()
     {
-        if ($this->bold || ($this->state == self::STATE_SUCCESS)) {
-            return self::COLOR_BOLD_TEXT;
-        }
         if ($this->state == self::STATE_CLOSE_REASON) {
             return self::COLOR_CLOSE_REASON_TEXT;
         }
+        if ($this->state == self::STATE_SUCCESS) {
+            return self::COLOR_TEXT_SUCCESS;
+        }
+
+
         return self::COLOR_TEXT;
     }
 
@@ -429,7 +433,7 @@ class Appointment implements EntityInterface
         }
         $title = $this->getService()->getShort();
         if (self::STATE_SUCCESS == $this->state) {
-            $title .= " Обработано";
+            $title .= " ".self::SUCCESS_TITLE;
         }
         if ($this->bold && ($this->state == self::STATE_NEW)) {
             $title .= " - ".$this->description;

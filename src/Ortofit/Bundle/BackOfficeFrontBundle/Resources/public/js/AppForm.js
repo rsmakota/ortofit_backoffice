@@ -29,7 +29,13 @@ BackOffice.AppForm = {
         return false;
 
     },
-
+    getBold: function () {
+        var hlp = BackOffice.FormElement;
+        if (hlp.getBold().is(':checked')) {
+            return true;
+        }
+        return false;
+    },
     getData: function() {
         var hlp = this.elements;
         return {
@@ -45,7 +51,8 @@ BackOffice.AppForm = {
             serviceId:         hlp.getServiceId().val(),
             doctorId:          hlp.getDoctorId().val(),
             clientId:          hlp.getClientId().val(),
-            forwarder:         hlp.getForwarder().val()
+            forwarder:         hlp.getForwarder().val(),
+            bold:              this.getBold()
         };
 
     },
