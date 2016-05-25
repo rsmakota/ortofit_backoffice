@@ -9,6 +9,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\Command\Console;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Group;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Reason;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Schedule;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
@@ -19,7 +20,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ModifyDataCommand extends ContainerAwareCommand
 {
 
-
+    private $data = [
+        "Заболели"            => "sick",
+        "Не берут трубку"     => "not_available",
+        "Передумали"          => "not_available",
+        "Пошли к конкурентам" => "competitors",
+        "Другое"              => "other"
+    ];
     /**
      * @return \Doctrine\ORM\EntityManager
      */
@@ -60,20 +67,15 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $manager = $this->getManager();
-        $unkClntDir = new ClientDirection();
-        $unkClntDir->setName('Неизвестно');
-        $unkClntDir->setOrderNum(1);
-        $unkClntDir->setAlias(ClientDirection::DIRECTION_ALIAS_UNKNOWN);
+        foreach ($this->data as $name=>$reason) {
+            $closeReason = new Reason();
+            $closeReason->setName($name);
+            $closeReason->setAlias($reason);
+            $closeReason->setType(Reason::TYPE_CLOSE);
 
-        $manager->persist($unkClntDir);
+            $this->getManager()->persist($closeReason);
+        }
 
-        $entity = new ClientDirection();
-        $entity->setName('Старая база');
-        $entity->setAlias('old_base');
-        $entity->setOrderNum(5);
-        $manager->persist($entity);
-
-        $manager->flush();
+        $this->getManager()->flush();
     }
 }
