@@ -23,7 +23,8 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "dev-master",
-        "phpunit/phpunit": "dev-master"
+        "phpunit/phpunit": "dev-master",
+        "google/apiclient": "^2.0.0@RC"
 
     },
     "require-dev": {

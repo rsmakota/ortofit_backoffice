@@ -27,3 +27,28 @@ parameters:
                 start:    "15:00"
                 end:      "20:00"
                 dow:      [0]
+
+    calendar_event_styles:
+        success:
+            textColor:       "#000000"
+            borderColor:     "#7CB280"
+            backgroundColor: "#7CB280"
+            title:           " Оформлен"
+
+        closeReason:
+            textColor:       "#040B96"
+            borderColor:     "#adfffc"
+            backgroundColor: "#adfffc"
+            title:           ""
+
+        bold:
+            textColor:       "#ffffff"
+            borderColor:     "#000000"
+            backgroundColor: "#ff001d"
+            title:           ""
+
+        new:
+            textColor:       "#ffffff"
+            borderColor:     "#000000"
+            backgroundColor: "#ff001d"
+            title:           ""

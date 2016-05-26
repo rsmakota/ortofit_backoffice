@@ -1,7 +1,7 @@
 <?php
 /**
- * @author    Rodion Smakota <rsmakota@nebupay.com>
- * @copyright 2015 Nebupay LLC
+ * @author    Rodion Smakota <rsmakota@gmail.com>
+ * @copyright 2016 Ortofit Co
  */
 
 namespace Ortofit\Bundle\BackOfficeBundle\Command\Console;
@@ -67,15 +67,29 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        foreach ($this->data as $name=>$reason) {
-            $closeReason = new Reason();
-            $closeReason->setName($name);
-            $closeReason->setAlias($reason);
-            $closeReason->setType(Reason::TYPE_CLOSE);
+//        $client = new \Google_Client();
+//        $client->setApplicationName("datadbstorage");
+//        $client->setAuthConfigFile("/var/www/ORTOFIT/DataDBStorage-2eb1c3edff52.json");
+//        $client->setAccessType('offline');
+//
+//        // Request authorization from the user.
+//        $authUrl = $client->createAuthUrl();
+//        printf("Open the following link in your browser:\n%s\n", $authUrl);
+//        print 'Enter verification code: ';
+//        $authCode = trim(fgets(STDIN));
+//
+//        // Exchange authorization code for an access token.
+//        $accessToken = $client->authenticate($authCode);
+//        $credentialsPath = __DIR__;
+//        // Store the credentials to disk.
+//        if(!file_exists(dirname($credentialsPath))) {
+//            mkdir(dirname($credentialsPath), 0700, true);
+//        }
+//        file_put_contents($credentialsPath, $accessToken);
+//        printf("Credentials saved to %s\n", $credentialsPath);
+//
+//        $service = new \Google_Service_Drive($client);
 
-            $this->getManager()->persist($closeReason);
-        }
 
-        $this->getManager()->flush();
     }
 }

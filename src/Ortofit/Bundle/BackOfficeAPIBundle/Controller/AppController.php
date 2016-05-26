@@ -6,6 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeAPIBundle\Controller;
 
+use Ortofit\Bundle\BackOfficeAPIBundle\Calendar\Converter\ConverterInterface;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
@@ -37,6 +38,14 @@ class AppController extends BaseController
     private function getScheduleManager()
     {
         return $this->get('ortofit_back_office.schedule_manage');
+    }
+
+    /**
+     * @return ConverterInterface
+     */
+    private function getEventConverter()
+    {
+        return $this->get("backoffice_api.app_to_event_data_converter");
     }
 
     /**
@@ -237,7 +246,7 @@ class AppController extends BaseController
         $offH = $this->getOffHoursEvents($range, $office, $doctor);
 
         foreach ($app as $appointment) {
-            $response[] = $appointment->getCalendarData();
+            $response[] = $this->getEventConverter()->convert($appointment);
         }
         $response   = array_merge($response, $offH);
 
