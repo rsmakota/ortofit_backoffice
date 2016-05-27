@@ -22,17 +22,6 @@ class Appointment implements EntityInterface
     const STATE_CLOSE_REASON = 3;
     const STATE_SUCCESS      = 4;
 
-    const COLOR_SUCCESS      = '#7CB280';
-    const COLOR_TEXT_SUCCESS = '#000000';
-    const COLOR_CLOSE_REASON = '#ADFFFC';
-    const COLOR_TEXT         = '#FFFFFF';
-    const COLOR_CLOSE_REASON_TEXT = '#040B96';
-
-    const COLOR_BOLD_BG     = '#FF001D';
-    const COLOR_BOLD_TEXT   = '#FFFFFF';
-    const COLOR_BOLD_BORDER = '#000000';
-
-    const SUCCESS_TITLE     = 'Оформлен';
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
@@ -47,6 +36,7 @@ class Appointment implements EntityInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
     private $dateTime;
 
@@ -288,6 +278,7 @@ class Appointment implements EntityInterface
      */
     public function getEndDate()
     {
+        /** @var \DateTime $end */
         $end = clone $this->dateTime;
         $end->modify('+'.$this->duration.' min');
 
@@ -346,116 +337,4 @@ class Appointment implements EntityInterface
         ];
     }
 
-    private function getNewStateBgColor()
-    {
-        if ($this->bold) {
-            return self::COLOR_BOLD_BG;
-        }
-        return $this->getService()->getColor();
-    }
-
-    private function getNewStateBorderColor()
-    {
-        if ($this->bold) {
-            return self::COLOR_BOLD_BORDER;
-        }
-        return $this->getService()->getColor();
-    }
-
-    private function getTextColor()
-    {
-        if ($this->state == self::STATE_CLOSE_REASON) {
-            return self::COLOR_CLOSE_REASON_TEXT;
-        }
-        if ($this->state == self::STATE_SUCCESS) {
-            return self::COLOR_TEXT_SUCCESS;
-        }
-
-
-        return self::COLOR_TEXT;
-    }
-
-    private function getBgColor()
-    {
-        //#FF001D
-        $bgColor = '';
-        switch ($this->state) {
-            case self::STATE_NEW:
-                $bgColor = $this->getNewStateBgColor();
-                break;
-            case self::STATE_SUCCESS:
-                $bgColor = self::COLOR_SUCCESS;
-                break;
-            case self::STATE_CLOSE_REASON:
-                $bgColor = self::COLOR_CLOSE_REASON;
-                break;
-        }
-
-        return $bgColor;
-    }
-
-    private function getBorderColor()
-    {
-        $borderColor = '';
-        switch ($this->state) {
-            case self::STATE_NEW:
-                $borderColor = $this->getNewStateBorderColor();
-            break;
-            case self::STATE_SUCCESS:
-                $borderColor = self::COLOR_SUCCESS;
-            break;
-            case self::STATE_CLOSE_REASON:
-                $borderColor = self::COLOR_CLOSE_REASON;
-            break;
-        }
-
-        return $borderColor;
-    }
-
-    /**
-     * @return Reason
-     */
-    public function getLastReason()
-    {
-        $appReason = $this->getAppointmentReasons()->last();
-        if (null != $appReason) {
-            return $appReason->getReason();
-        }
-        return null;
-    }
-    private function getTitle()
-    {
-        if (self::STATE_CLOSE_REASON == $this->state) {
-            $reason = $this->getLastReason();
-            if ($reason != null) {
-                return $reason->getName();
-            }
-        }
-        $title = $this->getService()->getShort();
-        if (self::STATE_SUCCESS == $this->state) {
-            $title .= " ".self::SUCCESS_TITLE;
-        }
-        if ($this->bold && ($this->state == self::STATE_NEW)) {
-            $title .= " - ".$this->description;
-        }
-        return $title;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCalendarData()
-    {
-        $service = $this->getService();
-
-        return [
-            'id'              => $this->id,
-            'title'           => $this->getTitle(),
-            'start'           => $this->dateTime->format('c'),
-            'end'             => $this->getEndDate()->format('c'),
-            'backgroundColor' => $this->getBgColor(),
-            'borderColor'     => $this->getBorderColor(),
-            'textColor'       => $this->getTextColor(),
-        ];
-    }
 }

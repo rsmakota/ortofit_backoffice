@@ -9,8 +9,8 @@ services:
     backoffice_api.event_service:
         class: Ortofit\Bundle\BackOfficeAPIBundle\EventService\EventService
         arguments: ["@ortofit_back_office.schedule_manage", "@backoffice_api.background_event_builder", "@backoffice_api.default_background_event_builder"]
-        calls:
-            - [setDefaultOffHoursData, ["%default_off_hours%"]]
+#        calls:
+#            - [setDefaultOffHoursData, ["%default_off_hours%"]]
     backoffice_api.app_to_event_data_converter:
         class: Ortofit\Bundle\BackOfficeAPIBundle\Calendar\Converter\AppToEventDataConverter
         arguments: ["%calendar_event_styles%"]

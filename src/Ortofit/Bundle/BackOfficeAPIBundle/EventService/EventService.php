@@ -1,6 +1,6 @@
 <?php
 /**
- * @author    Rodion Smakota <rsmakota@commercegate.com>
+ * @author    Rodion Smakota <rsmakota@gmail.com>
  * @copyright 2016 Commercegate LTD
  */
 
@@ -9,8 +9,6 @@ namespace Ortofit\Bundle\BackOfficeAPIBundle\EventService;
 use Ortofit\Bundle\BackOfficeAPIBundle\EventBuilder\DefaultOffHoursEventBuilder;
 use Ortofit\Bundle\BackOfficeAPIBundle\EventBuilder\OffHoursEventBuilder;
 use Ortofit\Bundle\BackOfficeAPIBundle\EventModel\CalendarEventInterface;
-use Ortofit\Bundle\BackOfficeAPIBundle\Grid\DefaultGrid;
-use Ortofit\Bundle\BackOfficeAPIBundle\Grid\GridInterface;
 use Ortofit\Bundle\BackOfficeAPIBundle\Grid\ScheduleGrid;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
@@ -36,10 +34,10 @@ class EventService
      * @var DefaultOffHoursEventBuilder
      */
     private $defaultOffHoursBuilder;
-    /**
-     * @var array
-     */
-    private $defaultOffHoursData;
+//    /**
+//     * @var array
+//     */
+//    private $defaultOffHoursData;
 
 
     private function createScheduleGrid($range, $schedules)
@@ -47,16 +45,16 @@ class EventService
         return new ScheduleGrid($range, $schedules);
     }
 
-    /**
-     * @param integer $officeId
-     *
-     * @return GridInterface
-     */
-    private function getDefaultGrid($officeId)
-    {
-
-        return new DefaultGrid($this->defaultOffHoursData[$officeId]);
-    }
+//    /**
+//     * @param integer $officeId
+//     *
+//     * @return GridInterface
+//     */
+//    private function getDefaultGrid($officeId)
+//    {
+//
+//        return new DefaultGrid($this->defaultOffHoursData[$officeId]);
+//    }
 
     /**
      * @param DateRangeInterface $range
@@ -73,17 +71,17 @@ class EventService
         return $this->offHoursBuilder->create($grid);
     }
 
-    /**
-     * @param Office $office
-     *
-     * @return CalendarEventInterface[]
-     */
-    private function createDefaultEvents($office)
-    {
-        $grid = $this->getDefaultGrid($office->getId());
-
-        return $this->defaultOffHoursBuilder->create($grid);
-    }
+//    /**
+//     * @param Office $office
+//     *
+//     * @return CalendarEventInterface[]
+//     */
+//    private function createDefaultEvents($office)
+//    {
+//        $grid = $this->getDefaultGrid($office->getId());
+//
+//        return $this->defaultOffHoursBuilder->create($grid);
+//    }
 
     /**
      * EventService constructor.
@@ -118,12 +116,12 @@ class EventService
         return $this->createOffEvents($range, $office, $user);
     }
 
-    /**
-     * @param array $defaultOffHoursData
-     */
-    public function setDefaultOffHoursData($defaultOffHoursData)
-    {
-        $this->defaultOffHoursData = $defaultOffHoursData;
-    }
+//    /**
+//     * @param array $defaultOffHoursData
+//     */
+//    public function setDefaultOffHoursData($defaultOffHoursData)
+//    {
+//        $this->defaultOffHoursData = $defaultOffHoursData;
+//    }
 
 }
