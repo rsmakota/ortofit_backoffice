@@ -53,8 +53,8 @@ abstract class AbstractState implements StateInterface
      * @var AppointmentManager
      */
     protected $appManager;
-
-
+    
+    
     /**
      * GeneralState constructor.
      *
@@ -76,6 +76,7 @@ abstract class AbstractState implements StateInterface
     {
         return $this->requestStack->getCurrentRequest();
     }
+
 
     /**
      * @param Logger $logger
@@ -121,7 +122,7 @@ abstract class AbstractState implements StateInterface
     abstract public function getResponseData();
 
     /**
-     * @return void
+     * @return boolean
      */
     abstract public function process();
 

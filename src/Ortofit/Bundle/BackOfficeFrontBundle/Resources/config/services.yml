@@ -45,6 +45,15 @@ services:
             - [setLogger, ["@logger"]]
         tags:
             - { name: monolog.logger, channel: app_order }
+    bf.state_rewind:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\RewindState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:rewind.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setFlow, ["@bf.flow_order"]]
+            - [setToRewindStateId, ["choose_person"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
 
     bf.flow_order:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow
@@ -55,6 +64,7 @@ services:
             - [addState, ["@bf.state_persone"]]
             - [addState, ["@bf.state_diagnosis"]]
             - [addState, ["@bf.state_service"]]
+            - [addState, ["@bf.state_rewind"]]
             - [setLogger, ["@logger"]]
         tags:
             - { name: monolog.logger, channel: app_order }
