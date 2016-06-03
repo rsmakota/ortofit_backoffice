@@ -22,18 +22,22 @@ class OrderFlow implements FlowInterface
      * @var  SessionInterface
      */
     private $session;
+
     /**
      * @var Logger
      */
     private $logger;
+
     /**
      * @var string
      */
     private $currentStateId;
+
     /**
      * @var StateInterface[]
      */
-    private $statuses = [];
+    private $states = [];
+
     /**
      * @var boolean
      */
@@ -60,8 +64,8 @@ class OrderFlow implements FlowInterface
      */
     public function __construct(SessionInterface $session, EngineInterface $templateEngine)
     {
+        $this->session        = $session;
         $this->templateEngine = $templateEngine;
-        $this->session = $session;
     }
 
     /**
@@ -69,7 +73,7 @@ class OrderFlow implements FlowInterface
      */
     private function getCurrentState()
     {
-        return $this->statuses[$this->currentStateId];
+        return $this->states[$this->currentStateId];
     }
 
     /**
@@ -88,7 +92,7 @@ class OrderFlow implements FlowInterface
     private function next()
     {
         $isNext = false;
-        foreach ($this->statuses as $id => $state) {
+        foreach ($this->states as $id => $state) {
             if ($isNext) {
                 $this->currentStateId = $id;
                 $this->session->set('stateId', $id);
@@ -109,6 +113,7 @@ class OrderFlow implements FlowInterface
     public function process()
     {
         $this->init();
+
         $state = $this->getCurrentState();
         $state->process();
         if ($state->isCompleted()) {
@@ -141,7 +146,7 @@ class OrderFlow implements FlowInterface
      */
     public function addState(StateInterface $state)
     {
-        $this->statuses[$state->getId()] = $state;
+        $this->states[$state->getId()] = $state;
         if (null == $this->currentStateId) {
             $this->currentStateId = $state->getId();
         }
@@ -161,10 +166,18 @@ class OrderFlow implements FlowInterface
     public function clear()
     {
         $this->session->remove('stateId');
-        $keys  = array_keys($this->statuses);
-        $state = $this->statuses[$keys[0]];
+        $keys  = array_keys($this->states);
+        $state = $this->states[$keys[0]];
         if ($state instanceof StateInterface) {
             $this->currentStateId = $state->getId();
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->clear();
     }
 }

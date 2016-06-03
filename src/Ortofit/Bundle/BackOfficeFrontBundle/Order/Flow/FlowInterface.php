@@ -30,5 +30,13 @@ interface FlowInterface
      */
     public function clear();
 
+    /**
+     * @return boolean
+     */
     public function isCompleted();
+
+    /**
+     * @return void
+     */
+    public function rewind();
 }
