@@ -19,8 +19,11 @@
                 <tr>
                     <td><i class="fa fa-phone"></i></td>
                     <td>Телефон:</td>
-                    <td> <a href="{{ url("bf_person", {"clientId":appointment.client.id }) }}">
+                    <td>
+                        {% if appointment.client is defined %}
+                        <a href="{{ url("bf_person", {"clientId":appointment.client.id|default('') }) }}">
                         {{ appointment.client.msisdn|default('') }}</a>
+                        {% endif %}
                     </td>
                 </tr>
                 <tr>

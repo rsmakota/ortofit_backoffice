@@ -135,6 +135,9 @@ class AppToEventDataConverter implements ConverterInterface
             case Appointment::STATE_NEW:
                 $data = $this->createNew($object);
                 break;
+            default:
+                $data = $this->createNew($object);
+                break;
         }
 
         return $data;
