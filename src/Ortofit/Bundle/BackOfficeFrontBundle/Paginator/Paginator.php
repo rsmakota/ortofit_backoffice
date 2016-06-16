@@ -13,10 +13,28 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Paginator;
  */
 class Paginator implements PaginatorInterface
 {
+    /**
+     * @var integer Max pages
+     */
     private $limit;
-    private $count;
-    private $current;
 
+    /**
+     * @var integer Number of pages
+     */
+    private $count;
+
+    /**
+     * @var integer  Current page
+     */
+    private $current;
+    /**
+     * @var integer Start page
+     */
+    private $start;
+    /**
+     * @var integer End page
+     */
+    private $end;
     /**
      * Paginator constructor.
      * @param integer $limit
@@ -31,6 +49,15 @@ class Paginator implements PaginatorInterface
             $this->current = $current;
         } else {
             $this->current = $this->count;
+        }
+        $this->start = $this->current - floor($this->limit/2);
+        if ($this->start < 1) {
+            $this->start = 1;
+        }
+
+        $this->end = ($this->start + $this->limit) - 1;
+        if ($this->end > $this->count) {
+            $this->end = $this->count;
         }
     }
 
@@ -80,5 +107,14 @@ class Paginator implements PaginatorInterface
         return null;
     }
 
+    public function start() 
+    {
+        return $this->start;
+    }
 
+    public function end()
+    {
+
+        return $this->end;
+    }
 }

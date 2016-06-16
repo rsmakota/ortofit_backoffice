@@ -1,3 +1,4 @@
+
 <ul class="pagination" style="margin: auto">
     {% if paginator.previous == null %}
         <li id="previous" class="paginate_button previous disabled">
@@ -10,13 +11,25 @@
         </li>
     {% endif %}
 
+    {% if paginator.start > 1 %}
+        <li class="paginate_button">
+            <a href="{{ url('bf_client',{'page':1, 'msisdn':msisdn}) }}">{{ 1 }}</a>
+        </li>
+        <li><a href="#">...</a></li>
+    {% endif %}
 
-    {% for i in 1..paginator.count %}
+    {% for i in paginator.start..paginator.end %}
         <li class="paginate_button {% if i == paginator.current %} active {% endif %}">
             <a href="{{ url('bf_client',{'page':i, 'msisdn':msisdn}) }}">{{ i }}</a>
         </li>
     {% endfor %}
+    {% if paginator.end < paginator.count %}
 
+        <li><a href="#">...</a></li>
+        <li class="paginate_button">
+            <a href="{{ url('bf_client',{'page':paginator.count, 'msisdn':msisdn}) }}">{{ paginator.count }}</a>
+        </li>
+    {% endif %}
     {% if paginator.next == null %}
         <li id="next" class="paginate_button next disabled">
             <span>Next</span>
