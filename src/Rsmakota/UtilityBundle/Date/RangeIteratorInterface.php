@@ -7,11 +7,11 @@
 namespace Rsmakota\UtilityBundle\Date;
 
 /**
- * Interface DayIteratorInterface
+ * Interface RangeIteratorInterface
  *
  * @package Rsmakota\UtilityBundle\Date
  */
-interface DateIteratorInterface
+interface RangeIteratorInterface
 {
     /**
      * @return \DateTime

@@ -28,7 +28,7 @@ class ScheduleGrid implements GridInterface
      */
     public function __construct(DateRangeInterface $range, $schedules = [])
     {
-        $iterator = $range->getDayIterator();
+        $iterator = $range->getIterator(DateRange::PERIOD_DAY);
         while ($date = $iterator->next()) {
             $this->grid[$date->format($this->format)] = [];
         }

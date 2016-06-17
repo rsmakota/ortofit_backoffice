@@ -11,12 +11,20 @@ namespace Rsmakota\UtilityBundle\Date;
  *
  * @package Rsmakota\UtilityBundle\Date
  */
-class DayIterator implements RangeIteratorInterface
+class MonthIterator implements RangeIteratorInterface
 {
+    /**
+     * @var \DateTime
+     */
     private $start;
+    /**
+     * @var \DateTime
+     */
     private $end;
+    /**
+     * @var \DateTime|null
+     */
     private $current;
-    private $step = 86400;
     /**
      * DayIterator constructor.
      *
@@ -25,8 +33,8 @@ class DayIterator implements RangeIteratorInterface
      */
     public function __construct(\DateTime $start, \DateTime $end)
     {
-        $this->start   = $start;
-        $this->end     = $end;
+        $this->start = $start;
+        $this->end   = $end;
     }
 
     /**
@@ -38,11 +46,11 @@ class DayIterator implements RangeIteratorInterface
             return $this->current = clone $this->start;
         }
 
-        if (($this->current->format('U') + $this->step) > $this->end->format('U')) {
-            return false;
+        if ($this->current->format('U') < $this->end->format('U')) {
+            return $this->current->modify('+1 month');
         }
 
-        return $this->current->modify('+1 day');
+        return false;
     }
 
     /**
@@ -50,11 +58,11 @@ class DayIterator implements RangeIteratorInterface
      */
     public function previous()
     {
-        if (($this->current->format('U') - $this->step) > $this->start->format('U')) {
-            return false;
+        if ($this->current->format('U') > $this->start->format('U')) {
+            return $this->current->modify('-1 month');
         }
 
-        return $this->current->modify('-1 day');
+        return false;
     }
 
     /**

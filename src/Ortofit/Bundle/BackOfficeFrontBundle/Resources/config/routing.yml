@@ -88,3 +88,7 @@ bf_staff_schedule_form:
 bf_staff_schedule_view_schedule:
     path:     /admin/staff_schedule/view
     defaults: { _controller: OrtofitBackOfficeFrontBundle:StaffSchedule:viewSchedule }
+
+bf_chart_index:
+    path:     /admin/chart
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Chart:index }

@@ -13,6 +13,10 @@ namespace Rsmakota\UtilityBundle\Date;
  */
 class DateRange implements DateRangeInterface
 {
+    const PERIOD_DAY   = 'day';
+    const PERIOD_YEAR  = 'year';
+    const PERIOD_MONTH = 'month';
+    
     /**
      * @var \DateTime
      */
@@ -21,10 +25,6 @@ class DateRange implements DateRangeInterface
      * @var \DateTime
      */
     protected $to;
-    /**
-     * @var DateIteratorInterface
-     */
-    protected $dayIterator;
 
     /**
      * DateRange constructor.
@@ -68,14 +68,33 @@ class DateRange implements DateRangeInterface
     }
 
     /**
-     * @return DateIteratorInterface
+     * @param string $type
+     *
+     * @return RangeIteratorInterface
+     * @throws \Exception
+     */
+    public function getIterator($type)
+    {
+        $method = 'get'.ucfirst($type).'Iterator';
+        if (!method_exists($this, $method)) {
+            throw new \Exception(sprintf('Method %s does\'t exist', $method));
+        }
+
+        return $this->$method();
+    }
+    /**
+     * @return RangeIteratorInterface
      */
     public function getDayIterator()
     {
-        if (!$this->dayIterator) {
-            $this->dayIterator = new DayIterator($this->from, $this->to);
-        }
+        return new DayIterator($this->from, $this->to);
+    }
 
-        return $this->dayIterator;
+    /**
+     * @return MonthIterator
+     */
+    public function getMonthIterator()
+    {
+        return new MonthIterator($this->from, $this->to);
     }
 }

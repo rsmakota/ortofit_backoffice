@@ -22,6 +22,9 @@ api_app_get_allow_times:
 api_app_move:
     path:     /app/move
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:move }
+api_chart_app_count:
+    path:     /chart/app_count
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Chart:appCount }
 
 api_app_reason_create:
     path:     /app_reason/create

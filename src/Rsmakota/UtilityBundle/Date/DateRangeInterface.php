@@ -24,7 +24,18 @@ interface DateRangeInterface
     public function getTo();
 
     /**
-     * @return DateIteratorInterface
+     * @return RangeIteratorInterface
      */
     public function getDayIterator();
+
+    /**
+     * @param string $type
+     *
+     * @return RangeIteratorInterface
+     */
+    public function getIterator($type);
+    /**
+     * @return MonthIterator
+     */
+    public function getMonthIterator();
 }
