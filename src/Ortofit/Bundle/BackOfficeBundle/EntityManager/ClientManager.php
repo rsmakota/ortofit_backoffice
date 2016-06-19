@@ -13,6 +13,7 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientModel;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\ModelInterface;
+use Rsmakota\UtilityBundle\Date\DateRange;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -62,6 +63,15 @@ class ClientManager extends AbstractManager
         return $this->enManager->getRepository($this->getEntityClassName())->countLike($criteria);
     }
 
+    /**
+     * @param DateRange       $range
+     * @param ClientDirection $clientDirection
+     */
+    public function countNewByDirection(DateRange $range, ClientDirection $clientDirection)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->countNewByDirection($range, $clientDirection);
+    }
+    
     /**
      * @param ModelInterface $model
      *

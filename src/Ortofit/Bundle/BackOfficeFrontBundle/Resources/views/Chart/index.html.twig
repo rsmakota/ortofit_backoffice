@@ -17,6 +17,7 @@
         $(document).ready(function () {
             var control = BackOffice.ChartApp;
             control.countUrl = '{{ url('api_chart_app_count') }}';
+            control.countClientDirectUrl = '{{ url('api_chart_client_count') }}';
             control.init();
         });
     </script>
@@ -38,7 +39,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Line Chart</h3>
+                        <h3 class="box-title">Заявки на прием</h3>
                     </div>
                     <div class="box-body chart-responsive">
                         <div id="app-general-count-line" class="chart" style="height: 200px;">
@@ -47,6 +48,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Новые клиенты</h3>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div id="app-general-count-client-direction" class="chart" style="height: 200px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </section>
