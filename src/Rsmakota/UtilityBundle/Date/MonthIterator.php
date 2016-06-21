@@ -46,7 +46,7 @@ class MonthIterator implements RangeIteratorInterface
             return $this->current = clone $this->start;
         }
 
-        if ($this->current->format('U') < $this->end->format('U')) {
+        if ($this->current->format('Ym') < $this->end->format('Ym')) {
             return $this->current->modify('+1 month');
         }
 
