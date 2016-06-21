@@ -1,0 +1,4 @@
+services:
+#    ortofit_stat.example:
+#        class: Ortofit\Bundle\StatBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

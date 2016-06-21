@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Ortofit\Bundle\BackOfficeFrontBundle\OrtofitBackOfficeFrontBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Rsmakota\UtilityBundle\RsmakotaUtilityBundle(),
+            new Ortofit\Bundle\StatBundle\OrtofitStatBundle(),
         ];
 
 
