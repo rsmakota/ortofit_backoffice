@@ -45,4 +45,21 @@ class DateRangeService
 
         return $this->createRange($from, $end);
     }
+
+    /**
+     * @param \DateTime $from
+     * @param string    $period
+     *
+     * @return DateRange
+     * @throws \Exception
+     */
+    public function createPeriodRange($from, $period)
+    {
+        $method = 'create'.ucfirst($period).'Range';
+        if (method_exists($this, $method)) {
+            return $this->$method($from);
+        }
+        
+        throw new \Exception(sprintf('Method %s doesn\' exist'));
+    }
 }

@@ -57,6 +57,7 @@ class ChartController extends BaseController
         $yName[] = self::PARAMETER_NAME_TOTAL;
 
         $result = ['xKey' => self::PARAMETER_PERIOD, 'yKeys'=>$yKeys, 'yName'=> $yName, 'data' => $data ];
+        
         return $this->createSuccessJsonResponse($result);
     }
 
@@ -92,6 +93,7 @@ class ChartController extends BaseController
         $yKeys[] = self::PARAMETER_ID_TOTAL;
         $yName[] = self::PARAMETER_NAME_TOTAL;
         $result = ['xKey' => self::PARAMETER_PERIOD, 'yKeys'=>$yKeys, 'yName'=> $yName, 'data' => $data ];
+        
         return $this->createSuccessJsonResponse($result);
     }
 }

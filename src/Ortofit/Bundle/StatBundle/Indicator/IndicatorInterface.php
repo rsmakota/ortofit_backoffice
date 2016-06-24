@@ -6,7 +6,7 @@
 
 namespace Ortofit\Bundle\StatBundle\Indicator;
 
-use Rsmakota\UtilityBundle\Date\DateRangeInterface;
+use Ortofit\Bundle\StatBundle\Request\StatRequestInterface;
 
 /**
  * Interface IndicatorInterface
@@ -15,10 +15,9 @@ use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 interface IndicatorInterface
 {
     /**
-     * @param DateRangeInterface $range
-     * @param string             $period
+     * @param StatRequestInterface $request
      *
      * @return array
      */
-    public function calculate(DateRangeInterface $range, $period);
+    public function calculate($request);
 }
