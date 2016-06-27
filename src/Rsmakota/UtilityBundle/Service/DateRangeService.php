@@ -9,7 +9,7 @@ namespace Rsmakota\UtilityBundle\Service;
 
 use Rsmakota\UtilityBundle\Date\DateRange;
 
-class DateRangeService
+class DateRangeService implements DateRangeServiceInterface
 {
     /**
      * @return DateRange
@@ -23,8 +23,8 @@ class DateRangeService
     }
 
     /**
-     * @param \DateTime $from
-     * @param \DateTime $to
+     * @param \DateTime|string $from
+     * @param \DateTime|string $to
      *
      * @return DateRange
      */

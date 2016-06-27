@@ -1,6 +1,6 @@
 <?php
 
-namespace Ortofit\Bundle\BackOfficeFrontBundle\DependencyInjection;
+namespace Ortofit\Bundle\StatBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

@@ -13,17 +13,21 @@ use Ortofit\Bundle\StatBundle\Request\StatRequestInterface;
 use Rsmakota\UtilityBundle\Date\DateRange;
 use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 use Rsmakota\UtilityBundle\Service\DateRangeService;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Class ApplicationIndicator
  *
  * @package Ortofit\Bundle\StatBundle\Indicator
  */
-class ApplicationIndicator implements IndicatorInterface
+class ApplicationIndicator extends AbstractIndicator
 {
     const PARAM_NAME_OFFICES = 'offices';
+    const PARAM_NAME_OFFICE  = 'office';
+    const PARAM_NAME_DATA    = 'data';
+    const PARAM_NAME_DATE    = 'date';
+    const PARAM_NAME_VALUE   = 'value';
 
+    
     /**
      * @var EntityManagerInterface
      */
@@ -77,6 +81,20 @@ class ApplicationIndicator implements IndicatorInterface
         
         return $items;
     }
+
+    /**
+     * @param string  $key
+     * @param integer $value
+     *
+     * @return array
+     */
+    private function createItem($key, $value)
+    {
+        return [
+            self::PARAM_NAME_DATE  => $key,
+            self::PARAM_NAME_VALUE => $value
+        ];
+    }
     
     /**
      * @param DateRangeInterface $range
@@ -90,14 +108,14 @@ class ApplicationIndicator implements IndicatorInterface
         $items    = [];
         $iterator = $range->getIterator($period);
         while ($date = $iterator->next()) {
-            $item          = [];
-            $periodRange   = $this->rangeService->createPeriodRange($date, $period);
-            $item['date']  = $date;
-            $item['value'] = $this->count($periodRange, $office);
-            $items[]       = $item;
+            $pRange  = $this->rangeService->createPeriodRange($date, $period);
+            $items[] = $this->createItem($date, $this->count($pRange, $office));
         }
         
-        return ['data' => $items, 'office' => $office];
+        return [
+            self::PARAM_NAME_DATA   => $items, 
+            self::PARAM_NAME_OFFICE => $office
+        ];
     }
     
     /**
@@ -107,11 +125,18 @@ class ApplicationIndicator implements IndicatorInterface
      */
     public function calculate($request)
     {
-        $range    = $request->getRange();
-        $params   = $request->getParams();
-        $offices  = $params->get(self::PARAM_NAME_OFFICES);
+        $range   = $request->getRange();
+        $params  = $request->getParams();
+        $offices = $params->get(self::PARAM_NAME_OFFICES);
 
         return $this->getAllData($range, $request->getPeriodType(), $offices);
-        
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return 'application_indicator';
     }
 }

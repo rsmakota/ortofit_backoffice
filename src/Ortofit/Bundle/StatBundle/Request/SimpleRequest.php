@@ -22,17 +22,17 @@ class SimpleRequest implements StatRequestInterface
     /** @var  string */
     protected $periodType;
     
-    /** @var  array */
+    /** @var  ParameterBag */
     protected $params;
 
     /**
      * SimpleRequest constructor.
      *
      * @param DateRangeInterface $range
-     * @param string             $periodType
+     * @param ParameterBag       $periodType
      * @param array              $params
      */
-    public function __construct(DateRangeInterface $range, $periodType, array $params)
+    public function __construct(DateRangeInterface $range, $periodType, $params)
     {
         $this->range      = $range;
         $this->params     = $params;

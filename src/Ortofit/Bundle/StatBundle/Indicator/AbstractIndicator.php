@@ -9,20 +9,20 @@ namespace Ortofit\Bundle\StatBundle\Indicator;
 use Ortofit\Bundle\StatBundle\Request\StatRequestInterface;
 
 /**
- * Interface IndicatorInterface
- * @package Ortofit\Bundle\StatBundle
+ * Class AbstractIndicator
+ *
+ * @package Ortofit\Bundle\StatBundle\Indicator
  */
-interface IndicatorInterface
+abstract class AbstractIndicator implements IndicatorInterface
 {
+    /**
+     * @return string
+     */
+    abstract public function getId();
     /**
      * @param StatRequestInterface $request
      *
      * @return array
      */
-    public function calculate($request);
-
-    /**
-     * @return string
-     */
-    public function getId();
+    abstract public function calculate($request);
 }

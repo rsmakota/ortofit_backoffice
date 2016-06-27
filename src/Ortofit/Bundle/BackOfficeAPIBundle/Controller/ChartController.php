@@ -8,9 +8,11 @@ namespace Ortofit\Bundle\BackOfficeAPIBundle\Controller;
 
 
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
+use Ortofit\Bundle\StatBundle\Request\SimpleRequest;
 use Rsmakota\UtilityBundle\Date\DateRange;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+
 
 class ChartController extends BaseController
 {
@@ -18,11 +20,46 @@ class ChartController extends BaseController
     const PARAMETER_PERIOD     = 'period';
     const PARAMETER_ID_TOTAL   = 'total';
     const PARAMETER_NAME_TOTAL = 'Всего';
+    
     private function getRangeService()
     {
         return $this->get('rsmakota_utility.date_range_service');
     }
 
+    private function getIndicatorService()
+    {
+        return $this->get('ortofit_stat.indicator_service');
+    }
+
+    /**
+     * @return \Ortofit\Bundle\StatBundle\Service\StatRequestManager
+     */
+    private function getStatRequestManager()
+    {
+        return $this->get('ortofit_stat.request_manager');
+    }
+
+    /**
+     * @return \Ortofit\Bundle\StatBundle\Request\StatRequestInterface
+     */
+    private function getStatRequest()
+    {
+        return $this->getStatRequestManager()->create();
+    }
+    /**
+     * @param string  $name    indicator name
+     * @param string  $format  response format
+     *
+     * @return JsonResponse
+     */
+    public function indicatorAction($name, $format)
+    {
+        $indicator = $this->getIndicatorService()->get($name);
+        $iRequest  = $this->getStatRequest();
+
+        return $this->createSuccessJsonResponse($indicator->calculate($iRequest));
+    }
+    
     /**
      * @return JsonResponse
      * @throws \Exception

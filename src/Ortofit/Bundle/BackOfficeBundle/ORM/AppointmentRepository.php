@@ -28,6 +28,9 @@ class AppointmentRepository extends EntityRepository
      */
     private function getWhereAndCondition(array $params, $alias)
     {
+        if (empty($params)) {
+            return '';
+        }
         $keys = array_keys($params);
         $data = [];
         foreach ($keys as $key) {
@@ -48,7 +51,7 @@ class AppointmentRepository extends EntityRepository
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 'a';
         $params  = ['dayFrom' => $range->getFrom(), 'dayTo' => $range->getTo()];
-        $extra   = ['office' => $office];
+        $extra   = [];
         if ($user) {
             $extra['user'] = $user;
         }
@@ -68,7 +71,7 @@ class AppointmentRepository extends EntityRepository
      * @param User               $user
      * @return integer
      */
-    public function countByRange(DateRangeInterface $range, Office $office, User $user = null)
+    public function countByRange(DateRangeInterface $range, Office $office=null, User $user = null)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 'a';
@@ -76,6 +79,9 @@ class AppointmentRepository extends EntityRepository
         $extra   = ['office' => $office];
         if ($user) {
             $extra['user'] = $user;
+        }
+        if ($office) {
+            $extra['office'] = $office;
         }
         $qb = $builder->select('COUNT('.$alias.')')
             ->from(Appointment::clazz(), $alias)

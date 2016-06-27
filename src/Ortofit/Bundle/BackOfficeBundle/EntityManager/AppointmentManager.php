@@ -79,7 +79,7 @@ class AppointmentManager extends AbstractManager
      *
      * @return integer
      */
-    public function countByRange(DateRangeInterface $range, Office $office, User $user = null)
+    public function countByRange(DateRangeInterface $range, Office $office=null, User $user = null)
     {
         return $this->enManager->getRepository($this->getEntityClassName())->countByRange(
             $range,

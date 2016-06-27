@@ -28,6 +28,10 @@ api_chart_app_count:
 api_chart_client_count:
     path:     /chart/client_count
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Chart:direction}
+api_chart_indicator:
+    path:     /chart/indicator/{name}/{format}
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Chart:indicator }
+
 
 api_app_reason_create:
     path:     /app_reason/create
