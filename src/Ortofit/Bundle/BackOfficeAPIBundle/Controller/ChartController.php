@@ -46,6 +46,15 @@ class ChartController extends BaseController
     {
         return $this->getStatRequestManager()->create();
     }
+
+    /**
+     * @return \Ortofit\Bundle\BackOfficeAPIBundle\ResponseDecorator\ChartResponseDecoratorService
+     */
+    private function getResponseDecorator()
+    {
+        return $this->get('backoffice_api.chart_response_decorator');
+    }
+
     /**
      * @param string  $name    indicator name
      * @param string  $format  response format
@@ -55,49 +64,16 @@ class ChartController extends BaseController
     public function indicatorAction($name, $format)
     {
         $indicator = $this->getIndicatorService()->get($name);
+        $decorator = $this->getResponseDecorator()->get($format);
         $iRequest  = $this->getStatRequest();
+        $data      = $indicator->calculate($iRequest);
+        if ($decorator) {
+            $data = $decorator->decorate($data);
+        }
 
-        return $this->createSuccessJsonResponse($indicator->calculate($iRequest));
+        return $this->createSuccessJsonResponse($data);
     }
     
-    /**
-     * @return JsonResponse
-     * @throws \Exception
-     */
-    public function appCountAction()
-    {
-        $range    = $this->getRangeService()->getYearRange();
-        $iterator = $range->getIterator(DateRange::PERIOD_MONTH);
-        $offices  = $this->getOfficeManager()->all();
-        $data     = [];
-        /** @var \DateTime $day */
-        while ($day = $iterator->next()) {
-            $item   = [self::PARAMETER_PERIOD => $day->format('Y-m')];
-            $mRange = $this->getRangeService()->createMonthRange($day);
-            /** @var Office $office */
-            $sum = 0;
-            foreach ($offices as $office) {
-                $count = $this->getAppointmentManager()->countByRange($mRange, $office, null);
-                $item[$office->getId()] = $count;
-                $sum += $count;
-            }
-            $item[self::PARAMETER_ID_TOTAL] = $sum;
-            $data[] = $item;
-        }
-        $yKeys = [];
-        $yName = [];
-        foreach ($offices as $office) {
-            $yKeys[] = $office->getId();
-            $yName[] = $office->getName();
-        }
-        $yKeys[] = self::PARAMETER_ID_TOTAL;
-        $yName[] = self::PARAMETER_NAME_TOTAL;
-
-        $result = ['xKey' => self::PARAMETER_PERIOD, 'yKeys'=>$yKeys, 'yName'=> $yName, 'data' => $data ];
-        
-        return $this->createSuccessJsonResponse($result);
-    }
-
     /**
      * @return JsonResponse
      * @throws \Exception

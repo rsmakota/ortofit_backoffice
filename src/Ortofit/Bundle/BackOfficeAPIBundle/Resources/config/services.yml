@@ -14,3 +14,11 @@ services:
     backoffice_api.app_to_event_data_converter:
         class: Ortofit\Bundle\BackOfficeAPIBundle\Calendar\Converter\AppToEventDataConverter
         arguments: ["%calendar_event_styles%"]
+
+    backoffice_api.response_decorator.morris:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\ResponseDecorator\MorrisDecorator
+
+    backoffice_api.chart_response_decorator:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\ResponseDecorator\ChartResponseDecoratorService
+        calls:
+            - [add, ["@backoffice_api.response_decorator.morris"]]

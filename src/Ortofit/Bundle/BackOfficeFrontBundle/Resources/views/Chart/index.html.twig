@@ -16,8 +16,8 @@
     <script>
         $(document).ready(function () {
             var control = BackOffice.ChartApp;
-            control.countUrl = '{{ url('api_chart_app_count') }}';
-            control.countClientDirectUrl = '{{ url('api_chart_client_count') }}';
+            control.countUrl = '{{ url('api_chart_indicator', {name:'application_indicator', format:'morris', from:from, to:to, periodType:periodType})|raw }}';
+            control.countClientDirectUrl = '{{ url('api_chart_indicator', {name:'client_direction_indicator', format:'morris', from:from, to:to, periodType:periodType})|raw }}';
             control.init();
         });
     </script>

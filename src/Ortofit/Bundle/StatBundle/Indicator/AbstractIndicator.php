@@ -15,6 +15,10 @@ use Ortofit\Bundle\StatBundle\Request\StatRequestInterface;
  */
 abstract class AbstractIndicator implements IndicatorInterface
 {
+    const PARAM_NAME_DATA    = 'data';
+    const PARAM_NAME_DATE    = 'date';
+    const PARAM_NAME_VALUE   = 'value';
+    const PARAM_LINE_NAME    = 'line_name';
     /**
      * @return string
      */

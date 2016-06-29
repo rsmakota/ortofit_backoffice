@@ -6,10 +6,10 @@
 
 namespace Ortofit\Bundle\StatBundle\Indicator;
 
-use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
-use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentManager;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientDirectionManager;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\EntityManagerInterface;
-use Ortofit\Bundle\BackOfficeBundle\EntityManager\OfficeManager;
 use Ortofit\Bundle\StatBundle\Request\StatRequestInterface;
 use Rsmakota\UtilityBundle\Date\DateRange;
 use Rsmakota\UtilityBundle\Date\DateRangeInterface;
@@ -20,18 +20,16 @@ use Rsmakota\UtilityBundle\Service\DateRangeService;
  *
  * @package Ortofit\Bundle\StatBundle\Indicator
  */
-class ApplicationIndicator extends AbstractIndicator
+class ClientDirectionIndicator extends AbstractIndicator
 {
-    const PARAM_NAME_OFFICE  = 'office';
-    
     /**
      * @var EntityManagerInterface
      */
-    private $appManager;
+    private $directionManager;
     /**
      * @var EntityManagerInterface
      */
-    private $officeManager;
+    private $clientManager;
 
     /**
      * @var  DateRange
@@ -41,44 +39,40 @@ class ApplicationIndicator extends AbstractIndicator
     /**
      * ApplicationIndicator constructor.
      *
-     * @param AppointmentManager $appManager
-     * @param OfficeManager      $officeManager
-     * @param DateRangeService   $rangeService
+     * @param ClientDirectionManager $clientDirectionManager
+     * @param ClientManager          $clientManager
+     * @param DateRangeService       $rangeService
      */
-    public function __construct($appManager, $officeManager, $rangeService)
+    public function __construct($clientDirectionManager, $clientManager, $rangeService)
     {
-        $this->appManager    = $appManager;
-        $this->officeManager = $officeManager;
-        $this->rangeService  = $rangeService;
+        $this->directionManager = $clientDirectionManager;
+        $this->clientManager    = $clientManager;
+        $this->rangeService     = $rangeService;
     }
 
     /**
      * @param DateRangeInterface $range
-     * @param Office|null        $office
+     * @param ClientDirection    $direction
      * 
      * @return integer
      */
-    private function count($range, $office = null)
+    private function count($range, $direction)
     {
-        return $this->appManager->countByRange($range, $office, null);
+        return $this->clientManager->countNewByDirection($range, $direction);
     }
 
     /**
      * @param DateRangeInterface $range
      * @param string             $period
-     * @param Office[]|null      $offices
+     * @param ClientDirection    $directions
      * 
      * @return array
      */
-    private function getAllData($range, $period, $offices = null)
+    private function getAllData($range, $period, $directions)
     {
-        if (null == $offices) {
-            return [$this->getData($range, $period)];
-        }
-        
         $items = [];
-        foreach ($offices as $office) {
-            $items[] = $this->getData($range, $period, $office);
+        foreach ($directions as $direction) {
+            $items[] = $this->getData($range, $period, $direction);
         }
         
         return $items;
@@ -101,22 +95,22 @@ class ApplicationIndicator extends AbstractIndicator
     /**
      * @param DateRangeInterface $range
      * @param string             $period
-     * @param Office|null        $office
+     * @param ClientDirection    $direction
      * 
      * @return array
      */
-    private function getData($range, $period, $office = null)
+    private function getData($range, $period, $direction = null)
     {
         $items    = [];
         $iterator = $range->getIterator($period);
         while ($date = $iterator->next()) {
             $pRange  = $this->rangeService->createPeriodRange($date, $period);
-            $items[] = $this->createItem($date, $this->count($pRange, $office));
+            $items[] = $this->createItem($date, $this->count($pRange, $direction));
         }
 
         return [
             self::PARAM_NAME_DATA => $items, 
-            self::PARAM_LINE_NAME => $office->getName()
+            self::PARAM_LINE_NAME => $direction->getName()
         ];
     }
     
@@ -127,16 +121,10 @@ class ApplicationIndicator extends AbstractIndicator
      */
     public function calculate($request)
     {
-        $range   = $request->getRange();
-        $params  = $request->getParams();
-        $office = $params->get(self::PARAM_NAME_OFFICE);
-        if ($office == null) {
-            $offices = $this->officeManager->all();
+        $range      = $request->getRange();
+        $directions = $this->directionManager->all();
 
-            return $this->getAllData($range, $request->getPeriodType(), $offices);
-        }
-
-        return $this->getData($range, $request->getPeriodType());
+        return $this->getAllData($range, $request->getPeriodType(), $directions);
     }
 
     /**
@@ -144,6 +132,6 @@ class ApplicationIndicator extends AbstractIndicator
      */
     public function getId()
     {
-        return 'application_indicator';
+        return 'client_direction_indicator';
     }
 }

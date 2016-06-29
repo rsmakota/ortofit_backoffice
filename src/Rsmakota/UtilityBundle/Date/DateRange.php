@@ -45,7 +45,7 @@ class DateRange implements DateRangeInterface
     private function toDateTime($date)
     {
         if ($date instanceof \DateTime) {
-            return $date;
+            return clone $date;
         }
 
         return new \DateTime($date);

@@ -5,9 +5,13 @@ services:
 
     ortofit_stat.app_indicator:
         class: Ortofit\Bundle\StatBundle\Indicator\ApplicationIndicator
-        arguments: ["@ortofit_back_office.appointment_manage", "@rsmakota_utility.date_range_service"]
+        arguments: ["@ortofit_back_office.appointment_manage", "@ortofit_back_office.office_manage", "@rsmakota_utility.date_range_service"]
+    ortofit_stat.client_direction_indicator:
+        class: Ortofit\Bundle\StatBundle\Indicator\ClientDirectionIndicator
+        arguments: ["@ortofit_back_office.client_direction_manage", "@ortofit_back_office.client_manage", "@rsmakota_utility.date_range_service"]
 
     ortofit_stat.indicator_service:
         class: Ortofit\Bundle\StatBundle\Service\IndicatorService
         calls:
             - [add, ["@ortofit_stat.app_indicator"]]
+            - [add, ["@ortofit_stat.client_direction_indicator"]]

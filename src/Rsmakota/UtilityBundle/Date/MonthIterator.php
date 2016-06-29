@@ -33,8 +33,8 @@ class MonthIterator implements RangeIteratorInterface
      */
     public function __construct(\DateTime $start, \DateTime $end)
     {
-        $this->start = $start;
-        $this->end   = $end;
+        $this->start = clone $start;
+        $this->end   = clone $end;
     }
 
     /**
@@ -43,11 +43,13 @@ class MonthIterator implements RangeIteratorInterface
     public function next()
     {
         if (null == $this->current) {
-            return $this->current = clone $this->start;
+            $this->current = clone $this->start;
+
+            return clone $this->current;
         }
 
         if ($this->current->format('Ym') < $this->end->format('Ym')) {
-            return $this->current->modify('+1 month');
+            return clone $this->current->modify('+1 month');
         }
 
         return false;
@@ -59,7 +61,7 @@ class MonthIterator implements RangeIteratorInterface
     public function previous()
     {
         if ($this->current->format('U') > $this->start->format('U')) {
-            return $this->current->modify('-1 month');
+            return clone $this->current->modify('-1 month');
         }
 
         return false;
@@ -70,7 +72,7 @@ class MonthIterator implements RangeIteratorInterface
      */
     public function current()
     {
-        return $this->current();
+        return clone $this->current();
     }
 
     /**
