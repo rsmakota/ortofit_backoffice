@@ -7,6 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeBundle\ORM;
 
 use Doctrine\ORM\EntityRepository;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 use Rsmakota\UtilityBundle\Date\DateRange;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
@@ -46,7 +47,7 @@ class AppointmentRepository extends EntityRepository
      *
      * @return array
      */
-    public function findByRange(DateRangeInterface $range, Office $office, User $user = null)
+    public function findByRange(DateRangeInterface $range, Office $office=null, User $user = null)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 'a';
@@ -55,7 +56,9 @@ class AppointmentRepository extends EntityRepository
         if ($user) {
             $extra['user'] = $user;
         }
-
+        if ($office) {
+            $extra['office'] = $office;
+        }
         $qb = $builder->select($alias)
             ->from(Appointment::clazz(), $alias)
             ->where("$alias.dateTime > :dayFrom AND $alias.dateTime < :dayTo")
@@ -88,6 +91,23 @@ class AppointmentRepository extends EntityRepository
             ->where("$alias.dateTime > :dayFrom AND $alias.dateTime < :dayTo")
             ->andWhere($this->getWhereAndCondition($extra, $alias))
             ->setParameters(array_merge($params, $extra));
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param Client $client
+     *
+     * @return integer
+     */
+    public function countByClient(Client $client)
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+        $alias   = 'a';
+        $qb = $builder->select('COUNT('.$alias.')')
+            ->from(Appointment::clazz(), $alias)
+            ->where("a.client=:client")
+            ->setParameter('client', $client);
 
         return $qb->getQuery()->getSingleScalarResult();
     }

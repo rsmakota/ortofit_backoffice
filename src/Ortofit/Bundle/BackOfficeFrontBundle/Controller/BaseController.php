@@ -82,8 +82,7 @@ class BaseController extends Controller
     {
         return $this->getCountryManager()->getDefault();
     }
-
-
+    
     /**
      * @return ArrayCollection
      */

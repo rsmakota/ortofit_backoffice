@@ -85,4 +85,28 @@ class ClientController extends BaseController
         return $this->render('@OrtofitBackOfficeFront/Client/createForm.html.twig', $data);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailAction(Request $request)
+    {
+        $data   = [];
+        $client = null;
+        
+        if (null !=$request->get('id')) {
+            $client = $this->getClientManager()->get($request->get('id'));
+        } elseif (null != $request->get('msisdn')) {
+            $client = $this->getClientManager()->findOneBy(['msisdn' => $request->get('msisdn')]);
+        } else {
+            $data['error'] = "Can't get a client without params";
+        }
+         $data['client'] = $client;
+
+        $data['apps'] = $this->getAppointmentManager()->findBy(['client'=>$client], ['dateTime' => "DESC"], 5);
+        $data['numApps'] = $this->getAppointmentManager()->countByClient($client);
+        return $this->render('@OrtofitBackOfficeFront/Client/detail.html.twig', $data);
+    }
+    
 }

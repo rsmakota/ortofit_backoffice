@@ -6,15 +6,25 @@ BackOffice.Remind = {
     dataPath:    null,
     processPath: null,
     tipTemplate: '',
+    clientDetailUrl: null,
+
     init: function () {
-        var hlp = BackOffice.RemindElement;
-        BackOffice.Transport.get(this.dataPath, [], this.addTips);
+        var me   = BackOffice.Remind;
+        BackOffice.Transport.get(me.dataPath, [], me.addTips);
+    },
+    
+    processClientDetails: function () {
+        var me     = BackOffice.Remind;
+        var modal  = BackOffice.Modal;
+        var msisdn = $(this).attr('msisdn');
+        modal.load(me.clientDetailUrl, {msisdn: msisdn});
     },
     
     processResponseHandler: function (mes) {
         var data = mes.data;
         var me   = BackOffice.Remind;
-        $('#tip-'+data.id).hide('show');
+        var hlp  = BackOffice.RemindElement;
+        hlp.getTipEl(data.id).hide('show')
         me.init();
     },
     
@@ -25,11 +35,11 @@ BackOffice.Remind = {
     },
 
     isTipAdded: function (id) {
-        if ($("#tip-"+id).length) {
+        var hlp = BackOffice.RemindElement;
+        if (hlp.getTipEl(id).length) {
             return true;
         }
         return false;
-
     },
 
     addTips: function (message) {
@@ -48,6 +58,7 @@ BackOffice.Remind = {
             }
         }
         hlp.getProcessBtn().click(me.buttonProcess);
+        hlp.getClientDelailEl().click(me.processClientDetails);
     },
 
     createTip: function (data, params, template) {

@@ -79,7 +79,7 @@ BackOffice.Calendar = {
                 // }
 
                 var data = {
-                    officeId: officeId,
+                    officeId: me.getOfficeId(),
                     doctorId: doctorId,
                     date:     date.format("DD/MM/YYYY"),
                     time:     date.format("HH:mm"),
@@ -105,15 +105,17 @@ BackOffice.Calendar = {
     {
         var me = BackOffice.Calendar;
         if (me._officeId != null) {
+            console.log("Start officeId",me._officeId);
             return me._officeId;
         }
         var officeId = me._getCookie('officeId');
         if (officeId != null) {
             me._officeId = officeId;
+            console.log("Center officeId",me._officeId);
             return me._officeId;
         }
         me.setOfficeId(me.defaultOfficeId);
-
+    console.log("End officeId",me._officeId);
         return me._officeId;
     },
 

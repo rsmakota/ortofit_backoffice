@@ -89,6 +89,15 @@ class AppointmentManager extends AbstractManager
     }
 
     /**
+     * @param Client $client
+     *
+     * @return integer
+     */
+    public function countByClient(Client $client)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->countByClient($client);
+    }
+    /**
      * @param Appointment $app
      * @param Office      $office
      * @param \DateTime   $date

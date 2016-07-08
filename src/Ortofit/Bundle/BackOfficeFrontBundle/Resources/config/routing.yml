@@ -36,6 +36,9 @@ bf_client_form:
     path:     /admin/client/form
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:form }
 
+bf_client_detail:
+    path:     /admin/client/detail
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:detail }
 
 bf_person:
     path:     /admin/person
