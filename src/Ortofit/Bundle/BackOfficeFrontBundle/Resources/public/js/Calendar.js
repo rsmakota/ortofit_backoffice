@@ -68,7 +68,7 @@ BackOffice.Calendar = {
             editable:       false,
             droppable:      false,
             selectable:     true,
-
+            textEscape:     false,
             eventClick:     function (calEvent) {
                 modal.load(me.eventDataUrl+'?'+me.eventDataParam+'='+calEvent.id, {});
             },

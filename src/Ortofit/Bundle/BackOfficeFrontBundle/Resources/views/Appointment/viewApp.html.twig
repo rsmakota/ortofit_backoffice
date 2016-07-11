@@ -15,7 +15,9 @@
                 {% endfor %}
                 </div>
             {% endif %}
+
             <table class="table table-striped">
+
                 <tr>
                     <td><i class="fa fa-phone"></i></td>
                     <td>Телефон:</td>
@@ -25,57 +27,85 @@
                         {{ appointment.client.msisdn|default('') }}</a>
                         {% endif %}
                     </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-credit-card"></i></td>
                     <td>Имя:</td>
                     <td>{{ appointment.client.name|default('') }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-star"></i></td>
                     <td>Услуга:</td>
                     <td>{{ appointment.service.name }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-arrow-right"></i></td>
                     <td>Источник:</td>
                     <td>{{ appointment.client.clientDirection.name|default('') }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-building"></i></td>
                     <td>Офис:</td>
                     <td>{{ appointment.office.name }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-calendar"></i></td>
                     <td>Дата:</td>
                     <td>{{ appointment.dateTime|date('d/m/Y') }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-clock-o"></i></td>
                     <td>Время:</td>
                     <td>{{ appointment.dateTime|date('H:i') }}</td>
+                    <td></td>
                 </tr>
+                {% for remind in appointment.reminds %}
+                    <tr class="info">
+                        <td><i class="fa fa-bell-o"></i></td>
+                        <td>Напоминание:</td>
+                        <td>
+                            {{ remind.dateTime.format('d/m/Y') }}
+
+                        </td>
+                        <td>
+                            {% if remind.processed %}
+                                <i class="fa fa-check" aria-hidden="true" style="color: green"></i>
+                            {% else %}
+                                <i class="fa fa-circle-thin" aria-hidden="true" style="color: grey"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
                 <tr>
                     <td><i class="fa fa-hourglass-1"></i></td>
                     <td>Прием:</td>
                     <td>{{ appointment.duration }} мин.</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-user-md"></i></td>
                     <td>Сотрудник:</td>
                     <td>{{ appointment.user.name }}</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-hand-o-right"></i></td>
                     <td>Направил:</td>
                     <td>{{ appointment.forwarder }}</td>
+                    <td></td>
                 </tr>
 
                 <tr>
                     <td><i class="fa fa-file-text-o"></i></td>
                     <td>Заметка:</td>
                     <td>{{ appointment.description }}</td>
+                    <td></td>
                 </tr>
 
             </table>

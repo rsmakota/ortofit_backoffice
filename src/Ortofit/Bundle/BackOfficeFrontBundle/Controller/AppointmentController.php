@@ -25,15 +25,7 @@ class AppointmentController extends BaseController
     {
         return $this->get('ortofit_back_office.schedule_manage');
     }
-
-    /**
-     * @return \Ortofit\Bundle\BackOfficeFrontBundle\Verifier\ScheduleVerifier
-     */
-    private function getScheduleVerifier()
-    {
-        return $this->get("bf.app_schedule_verifier");
-    }
-
+    
     /**
      * @return \Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentViewModelProvider
      */
@@ -72,12 +64,8 @@ class AppointmentController extends BaseController
     public function formAction()
     {
         $model = $this->getModelProvider()->getModel();
-//        if ($model->isDefinite() && !$this->getScheduleVerifier()->isValid($model)) {
-//            return $this->render('@OrtofitBackOfficeFront/Appointment/err.html.twig');
-//        }
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/form.html.twig', ['model'=>$model, 'country'=>$this->getCountry()]);
-
     }
 
     /**

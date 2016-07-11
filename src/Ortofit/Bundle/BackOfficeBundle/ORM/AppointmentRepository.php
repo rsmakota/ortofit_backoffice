@@ -111,4 +111,5 @@ class AppointmentRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
 }

@@ -26,7 +26,8 @@ class AppToEventDataConverter implements ConverterInterface
      */
     private function createSuccess($app)
     {
-        $style = $this->stylesConfig['success'];
+        $style  = $this->stylesConfig['success'];
+
         return [
             'id'              => $app->getId(),
             'title'           => $app->getService()->getShort() . $style['title'],

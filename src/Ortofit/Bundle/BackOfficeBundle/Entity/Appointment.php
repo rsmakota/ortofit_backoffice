@@ -96,12 +96,19 @@ class Appointment implements EntityInterface
     private $bold = false;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppReminder", mappedBy="appointment")
+     * @ORM\OrderBy({"dateTime" = "DESC"})
+     */
+    private $reminds;
+
+    /**
      * constructor.
      */
     public function __construct()
     {
-        $this->created = new \DateTime();
-        $this->state   = self::STATE_NEW;
+        $this->state              = self::STATE_NEW;
+        $this->created            = new \DateTime();
+        $this->reminds            = new ArrayCollection();
         $this->appointmentReasons = new ArrayCollection();
     }
 
@@ -308,14 +315,36 @@ class Appointment implements EntityInterface
         $this->user = $user;
     }
 
+    /**
+     * @return string
+     */
     public function getForwarder()
     {
         return $this->forwarder;
     }
 
+    /**
+     * @param string $forwarder
+     */
     public function setForwarder($forwarder)
     {
         $this->forwarder = $forwarder;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReminds()
+    {
+        return $this->reminds;
+    }
+
+    /**
+     * @param ArrayCollection $reminds
+     */
+    public function setReminds($reminds)
+    {
+        $this->reminds = $reminds;
     }
 
     /**
