@@ -1,0 +1,112 @@
+{% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
+
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Активные Напоминания (ждут своей очереди напомнить)
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url('bf_client') }}"><i class="fa fa-bell-o"></i>Список напоминаний</a></li>
+        </ol>
+    </section>
+    <!-- content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <form action="">
+                            {#<h3 class="box-title">Список клиентов</h3>#}
+                            <div class="box-tools">
+                                <div class="input-group" style="width: 200px;">
+                                    <input class="form-control input-sm pull-right" type="text" placeholder="телефон"
+                                           name="msisdn" value="{{ msisdn }}">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-striped dataTable" role="grid"
+                                           aria-describedby="example1_info" id="clientTable">
+                                        <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Клиент</th>
+                                            <th>Телефон</th>
+                                            <th>Оказанные Услуги</th>
+                                            <th>Визит №</th>
+                                            <th>Дата визита</th>
+                                            <th>Дата напоминания</th>
+                                            <th>Редактировать</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for remind in reminds %}
+                                            <tr>
+                                                <td>{{ remind.id }}</td>
+
+                                                <td>{{ remind.appointment.client.name|default('') }}</td>
+                                                <td><a href="#" class="client-link" clientId="{{ remind.appointment.client.id|default('') }}">{{ remind.appointment.client.msisdn|default('') }}</a></td>
+                                                <td>
+                                                    {% for service in remind.appointment.personServices %}
+                                                        {{ service.service.name }}
+                                                        {% if not loop.last %},{% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                                <td><a href="#" class="app-link" appId="{{ remind.appointment.id }}"> {{ remind.appointment.id }}</a></td>
+                                                <td>
+                                                    {#<a href="{{ url('bf_person', {'clientId':client.id}) }}"> #}
+                                                        {{ remind.appointment.dateTime.format("d/m/Y") }}
+                                                    {#</a>#}
+                                                </td>
+                                                <td>
+                                                    {{ remind.dateTime.format("d/m/Y") }}
+                                                </td>
+                                                <td><i class="fa fa-pencil edit" style="cursor: pointer;"
+                                                       remindId="{{ remind.id }}"></i></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <div class="row">
+
+                            <div class="col-sm-12" style="text-align: center">
+                                {% include "@OrtofitBackOfficeFront/Utills/Paginator/paginator.html.twig" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            var ctrl = BackOffice.AppRemindList;
+            ctrl.appAttr    = 'appId';
+            ctrl.clientAttr = 'clientId';
+            ctrl.editAttr   = 'remindId';
+            ctrl.appUrl     = '{{ url('bf_app_view_app') }}';
+            ctrl.clientUrl  = '{{ url('bf_client_detail') }}';
+            ctrl.editUrl    = '{{ url('bf_remind_edit') }}';
+
+            ctrl.init();
+
+        });
+    </script>
+{% endblock %}

@@ -50,6 +50,9 @@ class ClientManager extends AbstractManager
      */
     public function findLike($params, array $orderBy = null, $limit = null, $offset = null)
     {
+        if ($limit < 0 || $offset < 0) {
+            return [];
+        }
         return $this->enManager->getRepository($this->getEntityClassName())->findLike($params, $orderBy, $limit, $offset);
     }
 

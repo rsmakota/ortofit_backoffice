@@ -16,7 +16,7 @@ class ClientController extends BaseController
 
     private function getLimit()
     {
-        return 20;
+        return $this->getParameter('front_table_rows_limit');
     }
 
     /**

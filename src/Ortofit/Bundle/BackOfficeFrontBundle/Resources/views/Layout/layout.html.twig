@@ -81,12 +81,14 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/StaffScheduleForm.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/CloseReason.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderRewind.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/AppRemindList.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/LayoutElement.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormDecorator.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormElement.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/MenuElement.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormAppMove.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/Calendar.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/AppRemindForm.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderChoosePerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderNewPerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderDiagnosisPerson.js'
@@ -97,6 +99,8 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormStaffScheduler.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormCloseReason.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderRewind.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/AppRemindListHelper.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormAppRemindHelper.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -208,10 +212,9 @@
                 </li>
                 <li class="treeview">
                     <a href="{{ url('bf_client') }}">
-                        <i class="fa fa-users"></i> <span>Клиенты</span>
+                        <i class="fa fa-credit-card"></i> <span>Клиенты</span>
                     </a>
                 </li>
-
 
                 <li class="treeview" id="schedule">
                     <a href="#">
@@ -225,6 +228,11 @@
                 <li class="treeview">
                     <a href="{{ url('bf_chart_index') }}">
                         <i class="fa fa-bar-chart"></i> <span>Показатели</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="{{ url('bf_remind_list') }}">
+                        <i class="fa fa-bell-o"></i> <span>Активные напоминания</span>
                     </a>
                 </li>
                 {#<li class="treeview">#}

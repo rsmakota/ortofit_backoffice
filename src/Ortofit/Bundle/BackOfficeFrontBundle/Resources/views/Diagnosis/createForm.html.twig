@@ -13,13 +13,13 @@
                     <div class="col-sm-3 text-center">
                     <img class="profile-user-img img-responsive img-circle" alt="user image"
                             {% if person.familyStatus.alias == 'self' %}
-                                {% if client.getGender() == 'male' %}
-                                    src="{{ '../bundles/ortofitbackoffice/dist/img/avatar5.png' }}"
+                                {% if person.client.getGender() == 'male' %}
+                                    src="{{ '../bundles/ortofitbackofficefront/dist/img/avatar5.png' }}"
                                 {% else %}
-                                    src="{{ '../bundles/ortofitbackoffice/dist/img/avatar3.png' }}"
+                                    src="{{ '.../bundles/ortofitbackofficefront/dist/img/avatar3.png' }}"
                                 {% endif %}
                             {% else %}
-                                src="{{ '../bundles/ortofitbackoffice/dist/img/avatar-' ~ person.familyStatus.alias ~ '.png' }}"
+                                src="{{ '../bundles/ortofitbackofficefront/dist/img/avatar-' ~ person.familyStatus.alias ~ '.png' }}"
                             {% endif %}
                     >
                     <span class="username"> <a href="#">{{ person.name }} </a></span>

@@ -90,10 +90,18 @@ class Appointment implements EntityInterface
      * @ORM\OneToMany(targetEntity="AppointmentReason", mappedBy="appointment")
      */
     private $appointmentReasons;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PersonService", mappedBy="appointment")
+     */
+    private $personServices;
+
     /**
      * @ORM\Column(type="boolean")
      */
     private $bold = false;
+
+
 
     /**
      * @ORM\OneToMany(targetEntity="AppReminder", mappedBy="appointment")
@@ -109,6 +117,7 @@ class Appointment implements EntityInterface
         $this->state              = self::STATE_NEW;
         $this->created            = new \DateTime();
         $this->reminds            = new ArrayCollection();
+        $this->personServices     = new ArrayCollection();
         $this->appointmentReasons = new ArrayCollection();
     }
 
@@ -151,7 +160,21 @@ class Appointment implements EntityInterface
     {
         $this->appointmentReasons = $appointmentReasons;
     }
+    /**
+     * @return ArrayCollection
+     */
+    public function getPersonServices()
+    {
+        return $this->personServices;
+    }
 
+    /**
+     * @param ArrayCollection $personServices
+     */
+    public function setPersonServices($personServices)
+    {
+        $this->personServices = $personServices;
+    }
     /**
      * @return integer
      */

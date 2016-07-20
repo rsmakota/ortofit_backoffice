@@ -40,7 +40,7 @@ class PersonService implements EntityInterface
     private $person;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Appointment")
+     * @ORM\ManyToOne(targetEntity="Appointment", inversedBy="personServices")
      * @ORM\JoinColumn(name="appointment_id", referencedColumnName="id")
      */
     private $appointment;

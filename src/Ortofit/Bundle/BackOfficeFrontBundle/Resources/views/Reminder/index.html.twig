@@ -17,6 +17,10 @@
     <script>
         $(document).ready(function () {
             var ctrl = BackOffice.Remind;
+            ctrl.appAttr     = 'appId';
+            ctrl.editAttr    = 'remindId';
+            ctrl.editUrl     = '{{ url('bf_remind_edit') }}';
+            ctrl.appUrl      = '{{ url('bf_app_view_app') }}';
             ctrl.dataPath    = '{{ url('api_app_reminder_get') }}';
             ctrl.processPath = '{{ url('api_app_reminder_process') }}';
             ctrl.clientDetailUrl= '{{ url('bf_client_detail') }}';

@@ -109,15 +109,24 @@ abstract class AbstractManager implements EntityManagerInterface
 
 
     /**
+     * @param array|null $params
+     *
      * @return integer
      */
-    public function count()
+    public function count($params = null)
     {
         $builder = $this->enManager->createQueryBuilder();
-        return $builder->select('COUNT(a)')
-            ->from($this->getEntityClassName(), 'a')
-            ->getQuery()
-            ->getSingleScalarResult();
+
+        $builder->select('COUNT(a)')
+            ->from($this->getEntityClassName(), 'a');
+        if (null != $params) {
+            foreach ($params as $key=>$val) {
+                $builder->andWhere("a.$key = :$key");
+            }
+            $builder->setParameters($params);
+        }
+
+        return  $builder->getQuery()->getSingleScalarResult();
     }
 
 

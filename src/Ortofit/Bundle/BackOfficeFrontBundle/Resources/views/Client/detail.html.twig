@@ -12,6 +12,7 @@
                 <div class="box box-widget widget-user-2">
                     <div class="widget-user-header bg-yellow">
                         <div class="widget-user-image">
+                            <div class="close"><a href="{{ url('bf_person', {clientId:client.id}) }}"> <i class="fa fa-pencil edit" remindid="56" style="cursor: pointer;"></i></a></div>
                             <img class="img-circle" alt="User Avatar"
                                     {% if client.getGender() == 'male' %}
                                         src="{{ '../bundles/ortofitbackofficefront/dist/img/avatar5.png' }}"
@@ -55,6 +56,7 @@
                 <tr >
                     <th style="text-align: center">Дата</th>
                     <th style="text-align: center">Оффис</th>
+                    <th style="text-align: center">Врач</th>
                     <th style="text-align: center">Услуги</th>
                     <th style="text-align: center">Оформлен</th>
                 </tr>
@@ -64,6 +66,7 @@
                 <tr>
                     <td>{{ app.dateTime.format('d/m/Y') }}</td>
                     <td>{{ app.office.name }}</td>
+                    <td>{{ app.user.name }}</td>
                     <td>
                         {{ app.service.name }}
                     </td>

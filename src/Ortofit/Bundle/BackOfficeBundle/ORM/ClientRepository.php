@@ -36,7 +36,7 @@ class ClientRepository extends EntityRepository
 
     /**
      * @param array      $criteria
-     * @param array|null $orderBy
+     * @param array|null $orderBy  ["fieldName" => "DESC/ASC"]
      * @param null       $limit
      * @param null       $offset
      *
@@ -53,6 +53,11 @@ class ClientRepository extends EntityRepository
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->setParameters($criteria);
+
+        if (null != $orderBy) {
+            $field = key($orderBy);
+            $builder->orderBy('c.'.$field, $orderBy[$field]);
+        }
 
         return $qb->getQuery()->getResult();
     }

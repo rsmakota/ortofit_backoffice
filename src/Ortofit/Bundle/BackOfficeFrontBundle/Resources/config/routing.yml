@@ -76,6 +76,13 @@ bf_remind_index:
     path: /admin/remind
     defaults: { _controller: OrtofitBackOfficeFrontBundle:AppReminder:index }
 
+bf_remind_list:
+    path: /admin/remind_list
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:AppReminder:list }
+bf_remind_edit:
+    path: /admin/remind_edit
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:AppReminder:edit }
+
 bf_ext_order_index:
     path: /admin/ext_order
     defaults: { _controller: OrtofitBackOfficeFrontBundle:ExtOrder:index }

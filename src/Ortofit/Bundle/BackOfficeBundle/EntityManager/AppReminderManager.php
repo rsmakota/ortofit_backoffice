@@ -63,4 +63,39 @@ class AppReminderManager extends AbstractManager
         );
     }
 
+    /**
+     * @param string     $msisdn
+     * @param array      $criteria
+     * @param array|null $orderBy  ["fieldName" => "DESC/ASC"]
+     * @param null       $limit
+     * @param null       $offset
+     *
+     * @return AppReminder[]
+     */
+    public function findLikeMsisdn($msisdn, array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        if ($limit < 0 || $offset < 0) {
+            return [];
+        }
+        return $this->enManager->getRepository($this->getEntityClassName())->findLikeMsisdn(
+            $msisdn,
+            $criteria,
+            $orderBy,
+            $limit,
+            $offset
+        );
+    }
+    /**
+     * @param string $msisdn
+     * @param array  $params
+     *
+     * @return integer
+     */
+    public function countLikeMsisdn($msisdn, array $params=[])
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->countLikeMsisdn(
+            $msisdn,
+            $params
+        );
+    }
 }

@@ -26,5 +26,12 @@ BackOffice.RemindElement = {
      */
     getClientDelailEl: function () {
         return $('.client-details');
+    },
+
+    getAppLinkEl: function() {
+        return $('.app-link');
+    },
+    getEditLinkEl: function () {
+        return $('.edit')
     }
 };

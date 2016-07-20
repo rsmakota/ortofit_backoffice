@@ -45,7 +45,8 @@
 
                         </ul>
                         <div class="text-center">
-                            <button id="newPerson" class="btn btn-primary" type="button"><i class="fa fa-user-plus"></i> <span>Член семьи</span></button>
+                            <button id="newPerson"  class="btn btn-primary" type="button"><i class="fa fa-user-plus"></i> <span>Член семьи</span></button>
+                            <button id="editClient" client-id="{{ client.id }}" class="btn btn-primary" type="button"><i class="fa fa-pencil"></i> <span>Редактировать</span></button>
 
                         </div>
                     </div>
@@ -120,7 +121,10 @@
                 var personId = $(this).attr('person-id');
                 modal.load('{{ url('bf_diagnosis_form') }}', {id: diagnosisId, personId: personId });
             });
-
+            $('#editClient').click(function () {
+                var clientId = $(this).attr('client-id');
+                BackOffice.Modal.load('{{ url('bf_client_form') }}', {id: clientId});
+            });
         });
     </script>
 {% endblock %}

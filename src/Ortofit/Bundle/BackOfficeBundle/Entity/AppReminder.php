@@ -30,7 +30,7 @@ class AppReminder implements EntityInterface
      */
     private $dateTime;
     /**
-     * @ORM\ManyToOne(targetEntity="Appointment")
+     * @ORM\ManyToOne(targetEntity="Appointment", inversedBy="reminds" )
      * @ORM\JoinColumn(name="appointment_id", referencedColumnName="id")
      */
     private $appointment;

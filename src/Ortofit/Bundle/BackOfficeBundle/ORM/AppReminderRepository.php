@@ -43,6 +43,7 @@ class AppReminderRepository extends EntityRepository
             ->from(AppReminder::clazz(), 'a')
             ->where("a.dateTime <= :date AND a.processed = :processed")
             ->setMaxResults($limit)
+            ->orderBy('a.dateTime', 'ASC')
             ->setParameters($params);
 
         $result = $qb->getQuery()->getResult();
@@ -67,4 +68,59 @@ class AppReminderRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    /**
+     * @param string     $msisdn
+     * @param array      $criteria
+     * @param array|null $orderBy  ["fieldName" => "DESC/ASC"]
+     * @param null       $limit
+     * @param null       $offset
+     *
+     * @return AppReminder[]
+     */
+    public function findLikeMsisdn($msisdn, array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+        $criteria['msisdn'] = '%'.$msisdn.'%';
+        $qb = $builder->select('c')
+            ->from(AppReminder::clazz(), 'c')
+            ->join('c.person', 'p')
+            ->join('p.client', 'client')
+            ->where('client.msisdn LIKE :msisdn')
+            ->andWhere("c.processed = :processed")
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->setParameters($criteria);
+
+        if (null != $orderBy) {
+            $field = key($orderBy);
+            $builder->orderBy('c.'.$field, $orderBy[$field]);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $msisdn
+     * @param array  $params
+     *
+     * @return integer
+     */
+    public function countLikeMsisdn($msisdn, array $params)
+    {
+        $builder = $this->getEntityManager()->createQueryBuilder();
+        $params['msisdn'] = '%'.$msisdn.'%';
+        $qb = $builder->select('COUNT(c)')
+            ->from(AppReminder::clazz(), 'c')
+            ->join('c.person', 'p')
+            ->join('p.client', 'client')
+            ->where('client.msisdn LIKE :msisdn')
+            ->andWhere("c.processed = :processed")
+
+            ->setParameters($params);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+
 }

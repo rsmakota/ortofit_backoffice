@@ -7,10 +7,12 @@ BackOffice.Remind = {
     processPath: null,
     tipTemplate: '',
     clientDetailUrl: null,
-
+    appUrl: null,
+    appAttr: null,
     init: function () {
-        var me   = BackOffice.Remind;
+        var me  = BackOffice.Remind;
         BackOffice.Transport.get(me.dataPath, [], me.addTips);
+
     },
     
     processClientDetails: function () {
@@ -59,6 +61,8 @@ BackOffice.Remind = {
         }
         hlp.getProcessBtn().click(me.buttonProcess);
         hlp.getClientDelailEl().click(me.processClientDetails);
+        hlp.getAppLinkEl().click(me._appLinkHandler);
+        hlp.getEditLinkEl().click(me._editLinkHandler);
     },
 
     createTip: function (data, params, template) {
@@ -75,6 +79,24 @@ BackOffice.Remind = {
         var me    = BackOffice.Remind;
         var id    = $(this).attr('id');
         me.processTip(id);
-    }
+    },
 
+    _appLinkHandler: function () {
+        var me    = BackOffice.Remind;
+        var modal = BackOffice.Modal;
+        var data = {};
+        data[me.appAttr] = $(this).attr(me.appAttr);
+        console.log("data: ", data);
+        modal.load(me.appUrl, data);
+
+        return false;
+    },
+
+    _editLinkHandler: function () {
+        var me    = BackOffice.Remind;
+        var modal = BackOffice.Modal;
+        var data = {};
+        data['id'] = $(this).attr(me.editAttr);
+        modal.load(me.editUrl, data);
+    }
 };

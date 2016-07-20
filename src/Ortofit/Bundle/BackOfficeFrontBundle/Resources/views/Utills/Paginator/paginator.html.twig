@@ -6,29 +6,29 @@
         </li>
     {% else %}
         <li id="previous" class="paginate_button previous">
-            <a href="{{ url('bf_client',{'page':paginator.previous, 'msisdn':msisdn}) }}"
+            <a href="{{ url(page_route_name,{'page':paginator.previous, 'msisdn':msisdn}) }}"
                aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
         </li>
     {% endif %}
 
     {% if paginator.start > 1 %}
         <li class="paginate_button">
-            <a href="{{ url('bf_client',{'page':1, 'msisdn':msisdn}) }}">{{ 1 }}</a>
+            <a href="{{ url(page_route_name,{'page':1, 'msisdn':msisdn}) }}">{{ 1 }}</a>
         </li>
         <li><a href="#">...</a></li>
     {% endif %}
     {% if paginator.count > 0 %}
-    {% for i in paginator.start..paginator.end %}
-        <li class="paginate_button {% if i == paginator.current %} active {% endif %}">
-            <a href="{{ url('bf_client',{'page':i, 'msisdn':msisdn}) }}">{{ i }}</a>
-        </li>
-    {% endfor %}
+        {% for i in paginator.start..paginator.end %}
+            <li class="paginate_button {% if i == paginator.current %} active {% endif %}">
+                <a href="{{ url(page_route_name,{'page':i, 'msisdn':msisdn}) }}">{{ i }}</a>
+            </li>
+        {% endfor %}
     {% endif %}
     {% if paginator.end < paginator.count %}
 
         <li><a href="#">...</a></li>
         <li class="paginate_button">
-            <a href="{{ url('bf_client',{'page':paginator.count, 'msisdn':msisdn}) }}">{{ paginator.count }}</a>
+            <a href="{{ url(page_route_name,{'page':paginator.count, 'msisdn':msisdn}) }}">{{ paginator.count }}</a>
         </li>
     {% endif %}
     {% if paginator.next == null %}
@@ -37,7 +37,7 @@
         </li>
     {% else %}
         <li id="next" class="paginate_button next">
-            <a href="{{ url('bf_client',{'page':paginator.next, 'msisdn':msisdn}) }}">Next</a>
+            <a href="{{ url(page_route_name,{'page':paginator.next, 'msisdn':msisdn}) }}">Next</a>
         </li>
     {% endif %}
 </ul>
