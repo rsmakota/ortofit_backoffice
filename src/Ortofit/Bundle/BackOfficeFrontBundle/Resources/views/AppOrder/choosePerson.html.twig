@@ -49,10 +49,10 @@
 </div>
 <script>
     $(document).ready(function() {
-        var contrl = BackOffice.OrderChoosePerson;
-        contrl.postUrl = "{{ url('bf_app_order_process') }}";
-        contrl.appId   = {{ app.id }};
-        contrl.init();
+        var control = BackOffice.OrderChoosePerson;
+        control.postUrl = "{{ url('bf_app_order_process') }}";
+        control.appId   = {{ app.id }};
+        control.init();
 
 
     });

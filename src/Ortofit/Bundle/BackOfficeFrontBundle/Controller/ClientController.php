@@ -59,7 +59,8 @@ class ClientController extends BaseController
         $data = [
             'clients'   => $clients,
             'paginator' => $paginator,
-            'msisdn'    => $msisdn
+            'msisdn'    => $msisdn,
+            'page_route_name' => 'bf_client'
         ];
 
         return $this->render('@OrtofitBackOfficeFront/Client/index.html.twig', $data);
@@ -94,18 +95,19 @@ class ClientController extends BaseController
     {
         $data   = [];
         $client = null;
-        
-        if (null !=$request->get('id')) {
+
+        if (null != $request->get('id')) {
             $client = $this->getClientManager()->get($request->get('id'));
         } elseif (null != $request->get('msisdn')) {
             $client = $this->getClientManager()->findOneBy(['msisdn' => $request->get('msisdn')]);
         } else {
             $data['error'] = "Can't get a client without params";
         }
-         $data['client'] = $client;
 
-        $data['apps'] = $this->getAppointmentManager()->findBy(['client'=>$client], ['dateTime' => "DESC"], 5);
+        $data['client']  = $client;
+        $data['apps']    = $this->getAppointmentManager()->findBy(['client' => $client], ['dateTime' => "DESC"], 5);
         $data['numApps'] = $this->getAppointmentManager()->countByClient($client);
+
         return $this->render('@OrtofitBackOfficeFront/Client/detail.html.twig', $data);
     }
     
