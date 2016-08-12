@@ -9,7 +9,6 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    monolog.handler.rotating_file.class: Ortofit\Bundle\SingUpBundle\Monolog\Handler\ContextBasedStreamHandler
 
 framework:
     #esi:             ~
@@ -90,17 +89,17 @@ monolog:
     handlers:
         ot_sing_up:
             type:  rotating_file
-            path:  "%kernel.logs_dir%/ortofit_sing_up_%%s.log"
+            path:  "%kernel.logs_dir%/ortofit_sing_up_%kernel.environment%.log"
             level: debug
             channels: sing_up
         app_order_log:
             type:  rotating_file
-            path:  "%kernel.logs_dir%/backoffice_app_order_%%s.log"
+            path:  "%kernel.logs_dir%/backoffice_app_order_%kernel.environment%.log"
             level: debug
             channels: app_order
         staff_schedule_log:
             type:  rotating_file
-            path:  "%kernel.logs_dir%/backoffice_staff_schedule_%%s.log"
+            path:  "%kernel.logs_dir%/backoffice_staff_schedule_%kernel.environment%.log"
             level: debug
             channels: staff_schedule
 

@@ -2,6 +2,7 @@
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeFrontBundle\Paginator\Paginator;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +52,7 @@ class ClientController extends BaseController
         $paginator = $this->getPaginator($request->get('page', 1), $msisdn);
         $offset    = $limit * ($paginator->current() - 1);
 
-        if (null != $msisdn) {
+        if (null !== $msisdn) {
             $clients = $manager->findLike(['msisdn' => '%'.$msisdn.'%'], $orderBy, $limit, $offset);
         } else {
             $clients = $manager->findBy([], $orderBy, $limit, $offset);
@@ -94,18 +95,20 @@ class ClientController extends BaseController
     public function detailAction(Request $request)
     {
         $data   = [];
+        /** @var Client|null $client */
         $client = null;
 
-        if (null != $request->get('id')) {
+        if (null !== $request->get('id')) {
             $client = $this->getClientManager()->get($request->get('id'));
-        } elseif (null != $request->get('msisdn')) {
+        } elseif (null !== $request->get('msisdn')) {
             $client = $this->getClientManager()->findOneBy(['msisdn' => $request->get('msisdn')]);
         } else {
             $data['error'] = "Can't get a client without params";
         }
-
+        /** @var $apps[] Appointment */
+        $apps = $this->getAppointmentManager()->findBy(['client' => $client], ['dateTime' => "DESC"], 5);
+        $data['apps']    = $apps;
         $data['client']  = $client;
-        $data['apps']    = $this->getAppointmentManager()->findBy(['client' => $client], ['dateTime' => "DESC"], 5);
         $data['numApps'] = $this->getAppointmentManager()->countByClient($client);
 
         return $this->render('@OrtofitBackOfficeFront/Client/detail.html.twig', $data);
