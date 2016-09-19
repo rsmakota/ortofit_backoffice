@@ -137,10 +137,10 @@
                                 </div>
                                 <select class="form-control" id="duration" name="duration" title="duration">
                                     {% for i in 1..4 %}
-                                        {% if (i*30) == model.duration %}
-                                            <option selected value="{{ (i*30) }}">{{ (i*30) }} мин.</option>
+                                        {% if (i*15) == model.duration %}
+                                            <option selected value="{{ (i*15) }}">{{ (i*15) }} мин.</option>
                                         {% else %}
-                                            <option value="{{ (i*30) }}">{{ (i*30) }} мин.</option>
+                                            <option value="{{ (i*15) }}">{{ (i*15) }} мин.</option>
                                         {% endif %}
                                     {% endfor %}
                                 </select>
