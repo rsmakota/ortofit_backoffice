@@ -59,7 +59,7 @@ BackOffice.Calendar = {
             axisFormat:     'H:mm',
             firstHour:      9,
             allDaySlot:     false,
-            slotDuration:   '00:30:01',
+            slotDuration:   '00:15:01',
             defaultView:    'agendaWeek',
             firstDay:       1,
             minTime:        "09:00:00",
