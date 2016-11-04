@@ -33,7 +33,7 @@ class RewindState extends AbstractState
     public function getResponseData()
     {
         return [
-            self::PARAM_NAME_APP    => $this->app
+            self::PARAM_NAME_APP => $this->app
         ];
     }
 
@@ -87,6 +87,7 @@ class RewindState extends AbstractState
         $this->init();
         if ($this->hasComplete()) {
             $this->completed = true;
+            $this->appManager->success($this->app);
             return;
         }
         if ($this->hasRewind()) {

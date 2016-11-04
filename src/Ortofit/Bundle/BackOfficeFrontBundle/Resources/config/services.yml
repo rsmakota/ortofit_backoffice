@@ -45,6 +45,18 @@ services:
             - [setLogger, ["@logger"]]
         tags:
             - { name: monolog.logger, channel: app_order }
+    bf.state_insole:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\InsoleState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:insoleState.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setServiceManager, ["@ortofit_back_office.service_manage"]]
+            - [setPersonManager, ["@ortofit_back_office.person_manage"]]
+            - [setInsoleManager, ["@ortofit_back_office.app_insole_manage"]]
+            - [setInsoleTypeManager, ["@ortofit_back_office.app_insole_type_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+
     bf.state_rewind:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\RewindState
         arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:rewind.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
@@ -64,6 +76,7 @@ services:
             - [addState, ["@bf.state_persone"]]
             - [addState, ["@bf.state_diagnosis"]]
             - [addState, ["@bf.state_service"]]
+            - [addState, ["@bf.state_insole"]]
             - [addState, ["@bf.state_rewind"]]
             - [setLogger, ["@logger"]]
         tags:

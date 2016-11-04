@@ -55,7 +55,7 @@ BackOffice.OrderChoosePerson = {
         if (hlp.getPersonId() == null) {
             hlp.disBtnPerson();
         } else {
-            hlp.actBtnPersone();
+            hlp.actBtnPerson();
         }
     }
 

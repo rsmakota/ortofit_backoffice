@@ -25,19 +25,19 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
 {
 
     private $services = [
-        'consult',
-        'correction',
-        'insoles',
-        'massage',
-        'diagnostic',
-        'free_consult',
+        Service::ALIAS_CONSULTATION          ,
+        Service::ALIAS_INSOLES_CORRECTION    ,
+        Service::ALIAS_INSOLES_MANUFACTURING ,
+        Service::ALIAS_MASSAGE               ,
+        Service::ALIAS_PC_DIAGNOSTIC         ,
+        Service::ALIAS_FREE_CONSULTATION     ,
     ];
     private $doctors = ['doctor:svat',  'doctor:lesya' ,  'doctor:ser',  'doctor:eva', 'doctor:elena'];
     private $offices = ['office:kirova', 'office:center'];
     private function randBold()
     {
-        $rand = rand(0, 10);
-        if ($rand == 0) {
+        $rand = mt_rand(0, 10);
+        if ($rand === 0) {
             return true;
         }
         return false;
@@ -59,7 +59,7 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         $client       = $this->getReference('client:00');
         /** @var Office $office */
         $office       = $this->getReference($officeAlias);
-        $serviceAlias = $this->services[rand(0, 5)];
+        $serviceAlias = $this->services[mt_rand(0, 5)];
         $description  = 'Description: '.$serviceAlias;
         /** @var Service $service */
         $service      = $this->getReference('service:'.$serviceAlias);
@@ -76,7 +76,7 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         $appointment->setDuration(30);
         $appointment->setDescription($description);
         $appointment->setService($service);
-        $appointment->setUser($this->getReference($this->doctors[rand(0, 4)]));
+        $appointment->setUser($this->getReference($this->doctors[mt_rand(0, 4)]));
         $appointment->setBold($bold);
         
         return $appointment;
@@ -92,7 +92,7 @@ class LoadAppointmentData extends AbstractFixture implements OrderedFixtureInter
         foreach ($this->offices as $officeAlias) {
             for ($d = -15; $d < 15; $d++) {
                 for ($h = 10; $h < 19; $h++) {
-                    if (rand(0, 3) > 0) {
+                    if (mt_rand(0, 3) > 0) {
                         $appointment = $this->create($officeAlias, $d, $h);
                         if ($appointment) {
                             $manager->persist($appointment);

@@ -24,6 +24,7 @@ abstract class AbstractState implements StateInterface
     const PARAM_NAME_PERSON    = 'person';
     const PARAM_NAME_PERSON_ID = 'personId';
     const PARAM_NAME_MODEL     = 'model';
+    const PARAM_NAME_SERVICES  = 'services';
     /**
      * @var Logger
      */

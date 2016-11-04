@@ -9,6 +9,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\Command\Console;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Group;
+use Ortofit\Bundle\BackOfficeBundle\Entity\InsoleType;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Reason;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Schedule;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
@@ -20,13 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ModifyDataCommand extends ContainerAwareCommand
 {
 
-    private $data = [
-        "Заболели"            => "sick",
-        "Не берут трубку"     => "not_available",
-        "Передумали"          => "not_available",
-        "Пошли к конкурентам" => "competitors",
-        "Другое"              => "other"
-    ];
     /**
      * @return \Doctrine\ORM\EntityManager
      */
@@ -35,16 +29,8 @@ class ModifyDataCommand extends ContainerAwareCommand
         return $this->getContainer()->get('doctrine.orm.entity_manager');
     }
 
-    /**
-     * @return \Ortofit\Bundle\BackOfficeBundle\EntityManager\OfficeManager
-     */
-    private function getOfficeManager()
-    {
-        return $this->getContainer()->get('ortofit_back_office.office_manage');
-    }
 
     /**
-     * @see Console\Command\Command
      */
     protected function configure()
     {
@@ -62,34 +48,44 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @see Console\Command\Command
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//        $client = new \Google_Client();
-//        $client->setApplicationName("datadbstorage");
-//        $client->setAuthConfigFile("/var/www/ORTOFIT/DataDBStorage-2eb1c3edff52.json");
-//        $client->setAccessType('offline');
-//
-//        // Request authorization from the user.
-//        $authUrl = $client->createAuthUrl();
-//        printf("Open the following link in your browser:\n%s\n", $authUrl);
-//        print 'Enter verification code: ';
-//        $authCode = trim(fgets(STDIN));
-//
-//        // Exchange authorization code for an access token.
-//        $accessToken = $client->authenticate($authCode);
-//        $credentialsPath = __DIR__;
-//        // Store the credentials to disk.
-//        if(!file_exists(dirname($credentialsPath))) {
-//            mkdir(dirname($credentialsPath), 0700, true);
-//        }
-//        file_put_contents($credentialsPath, $accessToken);
-//        printf("Credentials saved to %s\n", $credentialsPath);
-//
-//        $service = new \Google_Service_Drive($client);
+        $serviceAliases = [
+            Service::ALIAS_CONSULTATION,            //1	Консультации
+            Service::ALIAS_INSOLES_CORRECTION,        //2	Коррекция стелек
+            Service::ALIAS_INSOLES_MANUFACTURING,        //3	Изготовление стелек
+            Service::ALIAS_MASSAGE,        //4	Массаж
+            Service::ALIAS_PC_DIAGNOSTIC,        //5	Компьютерная диагностика
+            Service::ALIAS_FREE_CONSULTATION                    //6	Бесплатная консультация
+        ];
+        $id = 1;
+        $eManager = $this->getManager();
+        foreach ($serviceAliases as $alias) {
+            $service = $eManager->getRepository(Service::class)->find($id);
+            $service->setAlias($alias);
+            $eManager->merge($service);
+            $id ++;
+        }
 
+        $insoleTypes = [
+            'child'     => 'Детские',
+            'casual'    => 'Повседневные',
+            'sport'     => 'Спортивные',
+            'designer'  => 'Для модельной обуви',
+            'heel_spur' => 'Под пяточную шпору',
+            'diabetic'  => 'Для диабетической стопы'
 
+        ];
+
+        foreach ($insoleTypes as $alias=>$name) {
+            $entity = new InsoleType();
+            $entity->setName($name);
+            $entity->setAlias($alias);
+            $eManager->persist($entity);
+        }
+
+        $eManager->flush();
     }
 }

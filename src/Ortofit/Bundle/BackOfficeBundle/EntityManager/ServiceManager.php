@@ -33,4 +33,14 @@ class ServiceManager extends AbstractManager
         return 'service_manager';
     }
 
+    /**
+     * @param string $alias
+     *
+     * @return Service
+     */
+    public function findByAlias($alias)
+    {
+        return $this->findOneBy(['alias'=>$alias]);
+    }
+
 }

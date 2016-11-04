@@ -35,8 +35,6 @@ class PersonState extends AbstractState
     const ACTION_PERSON_CHOOSE = 'personChoose';
     const ACTION_PERSON_NEW    = 'personNew';
 
-
-
     /**
      * @var Person
      */
@@ -71,7 +69,7 @@ class PersonState extends AbstractState
             }
         }
         $availableActions = [self::ACTION_PERSON_CHOOSE, self::ACTION_PERSON_CLIENT, self::ACTION_PERSON_NEW];
-        if (!in_array($bag->has(self::PARAM_NAME_ACTION), $availableActions)) {
+        if (!in_array($bag->get(self::PARAM_NAME_ACTION), $availableActions)) {
             throw new \Exception(printf('Parameter << %s >> has invalid value <<%s>>', self::PARAM_NAME_ACTION, $bag->has(self::PARAM_NAME_ACTION)));
         }
         if (($bag->get(self::PARAM_NAME_ACTION) == self::ACTION_PERSON_CHOOSE) &&
@@ -83,6 +81,7 @@ class PersonState extends AbstractState
 
     /**
      * @param ParameterBag $bag
+     * @throws \Exception
      */
     private function processData(ParameterBag $bag)
     {
@@ -111,7 +110,6 @@ class PersonState extends AbstractState
         $bag->set(self::PARAM_NAME_CLIENT, $this->app->getClient());
         $validator = new NewPersonValidator($bag);
         if (!$validator->isValid()) {
-
             return;
         }
         $bag->set(
@@ -128,7 +126,6 @@ class PersonState extends AbstractState
     private function processPersonChoose(ParameterBag $bag)
     {
         $this->person = $this->personManager->get($bag->get(self::PARAM_NAME_PERSON_ID));
-
         $this->completed = true;
     }
 

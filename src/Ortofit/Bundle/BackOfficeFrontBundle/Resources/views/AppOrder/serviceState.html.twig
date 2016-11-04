@@ -45,6 +45,9 @@
                                    data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
                                    value="" /></td>
                     </tr>
+                    <tr id="remindNotice"  class="hidden">
+                        <td colspan="3" style="color: red; text-align: center;">Введите корректно дату</td>
+                    </tr>
                     <tr>
                         <td colspan="3">
                             <textarea rows="6" id="description" name="description" class="form-control" placeholder="Комментарий к напоминанию" ></textarea>

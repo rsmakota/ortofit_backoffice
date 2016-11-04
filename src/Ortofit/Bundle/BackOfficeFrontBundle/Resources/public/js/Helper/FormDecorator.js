@@ -52,7 +52,6 @@ BackOffice.FormDecorator = {
     },
     /**
      * @param {jQuery|HTMLElement} element
-     * @param element
      */
     error: function (element) {
         this.clean(element);

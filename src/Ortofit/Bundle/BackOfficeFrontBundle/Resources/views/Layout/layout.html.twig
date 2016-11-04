@@ -78,6 +78,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderNewPerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderDiagnosisPerson.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderServicePerson.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderInsole.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/StaffScheduleForm.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/CloseReason.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/OrderRewind.js'
@@ -101,6 +102,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderRewind.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/AppRemindListHelper.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormAppRemindHelper.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/FormOrderInsole.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -110,7 +112,7 @@
             $('#appButton').click(function (e) {
                 BackOffice.Modal.load('{{ url('bf_app_get_form') }}', {});
             });
-            BackOffice.Doctor.loadUrl = "{{ url("api_doctor_all") }}";
+            BackOffice.Doctor.loadUrl     = "{{ url("api_doctor_all") }}";
             BackOffice.Doctor.calendarUrl = "{{ url("admin_panel") }}";
             BackOffice.Doctor.scheduleUrl = "{{ url("bf_staff_schedule_index") }}";
             BackOffice.Doctor.loadData();

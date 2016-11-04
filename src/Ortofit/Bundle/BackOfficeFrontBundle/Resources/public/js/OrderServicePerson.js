@@ -11,6 +11,35 @@ BackOffice.OrderServicePerson = {
                 hlp.removeErrStFromServices();
             }
         });
+        hlp.getRemindEl().click(hlp.removeErrStToRemind);
+    },
+
+    isValidRemind: function () {
+        var hlp  = BackOffice.FormOrderServicePerson;
+        var remindStr = hlp.getRemindEl().val();
+        if (remindStr == '') {
+            return true;
+        }
+        // console.log(remindStr.length);
+        // if (remindStr.length < 9) {
+        //     hlp.addErrStToRemind();
+        //     return false;
+        // }
+        var date = hlp.getRemindDate();
+        console.log(date.getTime());
+        var now  = new Date();
+        var max  = new Date(
+            (now.getFullYear()+2).toString(),
+            now.getMonth(),
+            now.getDay()
+        );
+
+        if (isNaN(date.getTime()) || (date.getTime() < now.getTime()) || (date.getTime() > max.getTime())) {
+            hlp.addErrStToRemind();
+            return false;
+        }
+
+        return true;
     },
 
     isValidData: function () {
@@ -27,9 +56,11 @@ BackOffice.OrderServicePerson = {
         var hlp  = BackOffice.FormOrderServicePerson;
         var me   = BackOffice.OrderServicePerson;
         var data = hlp.getFormData();
-        if (!me.isValidData()) {
+        
+        if (!me.isValidData() || !me.isValidRemind()) {
             return;
         }
+
         BackOffice.Modal.load(BackOffice.OrderServicePerson.postUrl, data);
     }
 };

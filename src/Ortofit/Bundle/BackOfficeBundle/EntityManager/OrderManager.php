@@ -49,6 +49,7 @@ class OrderManager extends AbstractManager
         $entity      = new Order();
         $entity->setApplication($application);
         $entity->setClient($client);
+        $entity->setProcessed(false);
 
         $this->persist($entity);
     }

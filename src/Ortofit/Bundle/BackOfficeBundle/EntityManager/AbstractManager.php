@@ -109,7 +109,7 @@ abstract class AbstractManager implements EntityManagerInterface
 
 
     /**
-     * @param array|null $params
+     * @param array $params
      *
      * @return integer
      */
@@ -119,7 +119,7 @@ abstract class AbstractManager implements EntityManagerInterface
 
         $builder->select('COUNT(a)')
             ->from($this->getEntityClassName(), 'a');
-        if (null != $params) {
+        if (null !== $params) {
             foreach ($params as $key=>$val) {
                 $builder->andWhere("a.$key = :$key");
             }

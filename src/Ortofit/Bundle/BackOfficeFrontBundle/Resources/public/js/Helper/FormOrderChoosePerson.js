@@ -34,13 +34,9 @@ BackOffice.FormOrderChoosePerson = {
         return $('#newPersonButton');
     },
     isActBtnPerson: function() {
-        if(this.getBtnPerson().hasClass('btn-success')) {
-            return true;
-        }
-
-        return false;
+        return this.getBtnPerson().hasClass('btn-success');
     },
-    actBtnPersone: function() {
+    actBtnPerson: function() {
         var btn = this.getBtnPerson();
         btn.removeClass('btn-block');
         btn.addClass('btn-success');

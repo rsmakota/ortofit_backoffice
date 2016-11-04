@@ -21,12 +21,24 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
 {
 
     private $data = [
-        'Консультации'             => ['alias' => 'consult',      'color' => '#3c8dbc', 'short'=>'(Конс.)'],
-        'Коррекция стелек '        => ['alias' => 'correction',   'color' => '#ff7000', 'short'=>'(КС)'],
-        'Изготовление стелек'      => ['alias' => 'insoles',      'color' => '#cd853f', 'short'=>'(ИОС)'],
-        'Массаж'                   => ['alias' => 'massage',      'color' => '#ff69b4', 'short'=>'(Массаж)'],
-        'Компьютерная диагностика' => ['alias' => 'diagnostic',   'color' => '#008d4c', 'short'=>'(КД)'],
-        'Бесплатная консультация'  => ['alias' => 'free_consult', 'color' => '#4876ff', 'short'=>'(б/п конс)'],
+        'Консультации' => ['alias' => Service::ALIAS_CONSULTATION, 'color' => '#3c8dbc', 'short' => '(Конс.)'],
+        'Коррекция стелек ' => ['alias' => Service::ALIAS_INSOLES_CORRECTION, 'color' => '#ff7000', 'short' => '(КС)'],
+        'Изготовление стелек' => [
+            'alias' => Service::ALIAS_INSOLES_MANUFACTURING,
+            'color' => '#cd853f',
+            'short' => '(ИОС)'
+        ],
+        'Массаж' => ['alias' => Service::ALIAS_MASSAGE, 'color' => '#ff69b4', 'short' => '(Массаж)'],
+        'Компьютерная диагностика' => [
+            'alias' => Service::ALIAS_PC_DIAGNOSTIC,
+            'color' => '#008d4c',
+            'short' => '(КД)'
+        ],
+        'Бесплатная консультация' => [
+            'alias' => Service::ALIAS_FREE_CONSULTATION,
+            'color' => '#4876ff',
+            'short' => '(б/п конс)'
+        ],
     ];
 
     /**
@@ -41,6 +53,7 @@ class LoadServiceData extends AbstractFixture implements OrderedFixtureInterface
             $entity->setName($name);
             $entity->setColor($data['color']);
             $entity->setShort($data['short']);
+            $entity->setAlias($data['alias']);
             $manager->persist($entity);
             $this->setReference('service:'.$data['alias'], $entity);
         }

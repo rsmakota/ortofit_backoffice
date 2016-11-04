@@ -163,7 +163,7 @@ class ScheduleManager extends AbstractManager
      *
      * @return array
      */
-    public function getAllowTimesInFormat($schedules, $apps, $duration='+30 min', $format='H:i')
+    public function getAllowTimesInFormat($schedules, $apps, $duration='+15 min', $format='H:i')
     {
         $hours = [];
         foreach ($schedules as $schedule) {

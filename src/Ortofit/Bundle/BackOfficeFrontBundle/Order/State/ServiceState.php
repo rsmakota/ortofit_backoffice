@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class ServiceState extends AbstractState
 {
-    const PARAM_NAME_SERVICES    = 'services';
+
     const PARAM_NAME_REMIND      = 'remind';
     const PARAM_NAME_DESCRIPTION = 'description';
     const DATE_TIME_FORMAT       = 'd/m/Y H:i:s';
@@ -91,7 +91,7 @@ class ServiceState extends AbstractState
 
         $this->saveServices($services);
         $this->saveRemind($remindDate, $description);
-        $this->appManager->success($this->app);
+//        $this->appManager->success($this->app);
     }
 
     /**
@@ -119,11 +119,10 @@ class ServiceState extends AbstractState
     }
 
     /**
-     * @return void
+     * @throws \Exception
      */
     protected function init()
     {
-
         parent::init();
         $personId     = $this->getRequest()->get(self::PARAM_NAME_PERSON_ID);
         $this->person = $this->personManager->get($personId);
@@ -167,6 +166,7 @@ class ServiceState extends AbstractState
 
     /**
      * @return void
+     * @throws \Exception
      */
     public function process()
     {

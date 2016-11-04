@@ -83,7 +83,7 @@ class ClientState extends AbstractState
         $client = $this->getApp()->getClient();
         /** @var ClientViewModel $model */
         $model = $this->clientViewModelProvider->getModel();
-        if (null != $client) {
+        if (null !== $client) {
             $model->client = $client;
             $model->id = $client->getId();
         }
@@ -99,10 +99,10 @@ class ClientState extends AbstractState
     private function saveClient($model) {
         $app    = $this->getApp();
         $client = $app->getClient();
-        if (null == $client) {
+        if (null === $client) {
             $client = $this->clientManager->findOneBy(['msisdn'=>$model->msisdn]);
         }
-        if (null == $client) {
+        if (null === $client) {
             $client = $this->clientManager->createByModel($model);
         } else {
             $client = $this->clientManager->updateByModel($client, $model);
