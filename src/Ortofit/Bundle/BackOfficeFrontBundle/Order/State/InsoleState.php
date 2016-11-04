@@ -24,7 +24,7 @@ class InsoleState extends AbstractState
 
     const PARAM_NAME_INSOLE_TYPES = 'insoleTypes';
     const PARAM_NAME_INSOLES      = 'insoles';
-
+    const SERVICE_TYPE_INSOLE     = 3;
     /**
      * @var ServiceManager
      */
@@ -82,7 +82,7 @@ class InsoleState extends AbstractState
 
     private function saveData()
     {
-        $insoles     = $this->getRequest()->get(self::PARAM_NAME_INSOLES);
+        $insoles = $this->getRequest()->get(self::PARAM_NAME_INSOLES);
         foreach ($insoles as $insole) {
             $data = [
                 'size'        => $insole['size'],
@@ -93,6 +93,16 @@ class InsoleState extends AbstractState
             $this->insoleManager->create(new ParameterBag($data));
         }
 
+    }
+
+    /**
+     * @return boolean
+     */
+    protected function hasServices()
+    {
+        $services = $this->getRequest()->get(self::PARAM_NAME_SERVICES);
+
+        return (is_array($services) && in_array(self::SERVICE_TYPE_INSOLE, $services)) ;
     }
 
     /**
@@ -113,6 +123,11 @@ class InsoleState extends AbstractState
         $this->init();
         $personId     = $this->getRequest()->get(self::PARAM_NAME_PERSON_ID);
         $this->person = $this->personManager->get($personId);
+        if (!$this->hasServices() && !$this->hasInsoles()) {
+            $this->completed = true;
+
+            return;
+        }
 
         if ($this->hasInsoles()) {
             $this->saveData();

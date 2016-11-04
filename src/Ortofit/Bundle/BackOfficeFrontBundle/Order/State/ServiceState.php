@@ -71,10 +71,10 @@ class ServiceState extends AbstractState
             return;
         }
         $data = [
-            "dateTime"    => \DateTime::createFromFormat(self::DATE_TIME_FORMAT, $remindDate.' 00:00:00'),
-            "appointment" => $this->app,
-            "person"      => $this->person,
-            "description" => $description
+            'dateTime'    => \DateTime::createFromFormat(self::DATE_TIME_FORMAT, $remindDate.' 00:00:00'),
+            'appointment' => $this->app,
+            'person'      => $this->person,
+            'description' => $description
         ];
         $this->appReminderManager->create(new ParameterBag($data));
     }
