@@ -37,8 +37,8 @@ class Version20160921162209 extends AbstractMigration
         $this->addSql('ALTER TABLE orders ALTER processed SET NOT NULL');
         $this->addSql('ALTER TABLE appointments ALTER bold DROP DEFAULT');
         $this->addSql('ALTER TABLE appointments ALTER bold SET NOT NULL');
-        $this->addSql('ALTER TABLE client_directions ALTER order_num DROP DEFAULT');
-        $this->addSql('ALTER TABLE client_directions ALTER order_num SET NOT NULL');
+//        $this->addSql('ALTER TABLE client_directions ALTER order_num DROP DEFAULT');
+//        $this->addSql('ALTER TABLE client_directions ALTER order_num SET NOT NULL');
     }
 
     /**

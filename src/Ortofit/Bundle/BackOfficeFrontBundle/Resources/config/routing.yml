@@ -102,3 +102,7 @@ bf_staff_schedule_view_schedule:
 bf_chart_index:
     path:     /admin/chart
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Chart:index }
+
+bf_report_index:
+    path:     /admin/report
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Report:index }
