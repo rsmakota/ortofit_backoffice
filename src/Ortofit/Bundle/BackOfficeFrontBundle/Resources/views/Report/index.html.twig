@@ -9,27 +9,30 @@
     {% javascripts
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/datepicker/bootstrap-datepicker.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/datepicker/locales/bootstrap-datepicker.ru.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/ReportHelper.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Report.js'
     %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
     <script>
-        $(document).ready(function () {
-            $(function () {
-                var calendar = BackOffice.Calendar;
-                var officeId = calendar.getOfficeId();
-                $('#officeTab'+officeId).addClass('active');
-
-            });
-
-            $('.iDate').datepicker({
-//                isRTL: false,
-                autoclose: true,
-                todayHighlight: true,
-                language: 'ru',
-                format: 'yyyy-mm-dd',
-                setDate: new Date()
-            });
-
+        $(function () {
+            BackOffice.OfficeTab.init();
+            var ctn = BackOffice.Report;
+            ctn.defaultDate = '{{ "now"|date('Y-m-d') }}';
+            ctn.init();
         });
+//            var n = new Date();
+//            $('.iDate').datepicker({
+//                todayHighlight: true,
+//                language: 'ru',
+//                format: 'yyyy-mm-dd',
+//                defaultDate: n.getFullYear() + '-' + n.getMonth()+'-'+n.getDate()
+//            });
+
+//            var dateStr = n.getFullYear() + '-' + n.getMonth()+'-'+n.getDate();
+//            console.log(dateStr);
+//            $('.iDate').val(dateStr);
+
+
     </script>
     {% endjavascripts %}
 {% endblock %}
@@ -49,30 +52,32 @@
             <div class="col-md-12">
 
                 <div class="nav-tabs">
-                <ul id="office_tabs" class="nav nav-tabs" data-tabs="tabs">
-                    {% for office in offices %}
-                        <li id="officeTab{{ office.id }}"><a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">{{ office.name }}</a></li>
-                    {% endfor %}
-                </ul>
+                    <ul id="office_tabs" class="nav nav-tabs" data-tabs="tabs">
+                        {% for office in offices %}
+                            <li id="officeTab{{ office.id }}">
+                                <a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">
+                                    {{ office.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="box box-info">
 
-                        <form class="form-inline">
-                            <div class="box-body">
+                    <form class="form-inline">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputDateFrom">период с:</label>
-                                 <input type="date" class="form-control input-sm iDate"  id="dateFrom" >
+                                <input type="text" class="form-control input-sm iDate" id="dateFrom" value="01/01/1980">
                             </div>
                             <div class="form-group">
                                 <label for="inputDateTo">по:</label>
-                                    <input type="date" class="form-control input-sm iDate" id="dateTo">
+                                <input type="text" class="form-control input-sm iDate" id="dateTo" value="2016-11-09">
                             </div>
                             &nbsp;&nbsp;
-                            <button type="button" class="btn btn-sm btn-primary" id="saveButton">Итог</button>
-                            </div>
-                        </form>
-
-
+                            <button type="button" class="btn btn-sm btn-primary" id="reportBtn">Итоги</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 

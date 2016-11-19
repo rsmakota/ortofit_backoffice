@@ -32,8 +32,9 @@
 
     <script>
         $(function () {
-            var calendar = BackOffice.Calendar;
-            var doctorId = {{ app.request.query.get("doctorId", "null") }};
+            var calendar  = BackOffice.Calendar;
+            var officeTab = BackOffice.OfficeTab;
+            var doctorId  = {{ app.request.query.get("doctorId", "null") }};
             calendar.formUrl      = '{{ url('bf_app_get_form') }}';
             {% if app.request.query.has('doctorId') %}
                 calendar.eventsUrl = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
@@ -42,15 +43,17 @@
             {% endif %}
             calendar.eventDataUrl = '{{ url('bf_app_view_app') }}';
             calendar.init(doctorId);
-            var officeId = calendar.getOfficeId();
-            $('#officeTab'+officeId).addClass('active');
-            $('.office_link').click(function(){
-                var officeId = $(this).attr('office-id');
-                if (calendar.getOfficeId() == officeId ) {
-                    return false;
-                }
-                calendar.reInit(officeId);
-            });
+//            var officeId = calendar.getOfficeId();
+            officeTab.init();
+            officeTab.describe(calendar.reInit);
+//            $('#officeTab'+officeId).addClass('active');
+//            $('.office_link').click(function(){
+//                var officeId = $(this).attr('office-id');
+//                if (calendar.getOfficeId() == officeId ) {
+//                    return false;
+//                }
+//                calendar.reInit(officeId);
+//            });
         });
 
     </script>

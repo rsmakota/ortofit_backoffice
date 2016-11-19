@@ -9,18 +9,7 @@ BackOffice.Calendar = {
     eventDataUrl:    null,
     formUrl:         null,
     _officeId:       null,
-    defaultOfficeId: 1,
     eventDataParam: 'appId',
-    _setCookie: function (key, value) {
-        var expires = new Date();
-        expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000));
-        document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-    },
-
-    _getCookie: function (key) {
-        var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
-        return keyValue ? keyValue[2] : null;
-    },
 
     getCalendar: function()
     {
@@ -35,9 +24,8 @@ BackOffice.Calendar = {
     init: function (doctorId) {
         var me       = BackOffice.Calendar;
         var modal    = BackOffice.Modal;
-        var officeId = me.getOfficeId();
 
-        me._officeId = officeId;
+        me._officeId = BackOffice.OfficeHelper.getOfficeId();
         me.getCalendar().fullCalendar({
             header: {
                 left:   'prev,next today',
@@ -79,7 +67,7 @@ BackOffice.Calendar = {
                 // }
 
                 var data = {
-                    officeId: me.getOfficeId(),
+                    officeId: BackOffice.OfficeHelper.getOfficeId(),
                     doctorId: doctorId,
                     date:     date.format("DD/MM/YYYY"),
                     time:     date.format("HH:mm"),
@@ -94,35 +82,13 @@ BackOffice.Calendar = {
     reInit: function(officeId) {
         var me = BackOffice.Calendar;
         var calendar = me.getCalendar();
+        if (me._officeId == officeId) {
+            return;
+        }
         calendar.fullCalendar('removeEventSource', me.getEventsUrl());
-        me.setOfficeId(officeId);
-        calendar.fullCalendar('addEventSource', me.getEventsUrl());
-    },
-    /**
-     * @returns {integer}
-     */
-    getOfficeId: function()
-    {
-        var me = BackOffice.Calendar;
-        if (me._officeId != null) {
-            console.log("Start officeId",me._officeId);
-            return me._officeId;
-        }
-        var officeId = me._getCookie('officeId');
-        if (officeId != null) {
-            me._officeId = officeId;
-            console.log("Center officeId",me._officeId);
-            return me._officeId;
-        }
-        me.setOfficeId(me.defaultOfficeId);
-    console.log("End officeId",me._officeId);
-        return me._officeId;
-    },
-
-    setOfficeId: function(officeId) {
-        var me = BackOffice.Calendar;
         me._officeId = officeId;
-        me._setCookie('officeId', officeId);
+        // BackOffice.OfficeHelper.setOfficeId(officeId);
+        calendar.fullCalendar('addEventSource', me.getEventsUrl());
     },
 
     update: function(){
