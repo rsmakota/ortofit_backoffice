@@ -6,9 +6,7 @@
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
-use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -117,8 +115,8 @@ class AppointmentController extends BaseController
     public function closeReasonAction($appId)
     {
         $data = [
-            "reasons" => $this->getReasonsManager()->all(),
-            "appId"   => $appId
+            'reasons' => $this->getReasonsManager()->all(),
+            'appId'   => $appId
         ];
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/closeReason.html.twig', $data);

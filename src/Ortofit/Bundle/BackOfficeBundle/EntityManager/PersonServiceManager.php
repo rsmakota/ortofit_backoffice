@@ -6,7 +6,6 @@
 
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
-use Ortofit\Bundle\BackOfficeBundle\Entity\Application;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Person;
 use Ortofit\Bundle\BackOfficeBundle\Entity\PersonService;
@@ -26,7 +25,7 @@ class PersonServiceManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return PersonService::clazz();
+        return PersonService::class;
     }
 
     /**
@@ -40,7 +39,7 @@ class PersonServiceManager extends AbstractManager
     /**
      * @param ParameterBag $params
      *
-     * @return object
+     * @return PersonService
      */
     public function create($params)
     {
@@ -67,6 +66,7 @@ class PersonServiceManager extends AbstractManager
      * @param ParameterBag $params
      *
      * @return boolean
+     * @throws \Exception
      */
     public function update($params)
     {
@@ -76,8 +76,8 @@ class PersonServiceManager extends AbstractManager
          * @var Person        $person
          * @var Service       $service
          */
-        $entity = $this->rGet($params->get('id'));
-        $app     = $params->get('application');
+        $entity  = $this->rGet($params->get('id'));
+        $app     = $params->get('appointment');
         $person  = $params->get('person');
         $service = $params->get('service');
         $entity->setAppointment($app);
@@ -87,4 +87,5 @@ class PersonServiceManager extends AbstractManager
         $entity->setService($service);
         $this->merge($entity);
     }
+
 }

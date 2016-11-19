@@ -62,11 +62,11 @@ class AppointmentViewModel extends AppointmentModel
      */
     public function getOffice()
     {
-        if (null == $this->officeId) {
+        if (null === $this->officeId) {
             return null;
         }
         foreach ($this->offices as $office) {
-            if ($office->getId() == $this->officeId) {
+            if ($office->getId() === $this->officeId) {
                 return $office;
             }
         }
@@ -79,12 +79,12 @@ class AppointmentViewModel extends AppointmentModel
      */
     public function getDoctor()
     {
-        if (null == $this->doctorId) {
+        if (null === $this->doctorId) {
             return null;
         }
 
         foreach ($this->doctors as $doctor) {
-            if ($doctor->getId() == $this->doctorId) {
+            if ($doctor->getId() === $this->doctorId) {
                 return $doctor;
             }
         }
@@ -100,7 +100,7 @@ class AppointmentViewModel extends AppointmentModel
     {
         $defFields = ['officeId', 'doctorId', 'date', 'time'];
         foreach ($defFields as $field) {
-            if (null != $this->$field) {
+            if (null !== $this->$field) {
                 return true;
             }
         }
@@ -113,6 +113,6 @@ class AppointmentViewModel extends AppointmentModel
      */
     public function getDateTime()
     {
-        return \DateTime::createFromFormat('d/m/Y H:i', $this->date." ". $this->time);
+        return \DateTime::createFromFormat('d/m/Y H:i', $this->date.' '. $this->time);
     }
 }

@@ -22,7 +22,7 @@ class ServiceManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Service::clazz();
+        return Service::class;
     }
 
     /**

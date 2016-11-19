@@ -7,6 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 
 use Ortofit\Bundle\BackOfficeBundle\Entity\Person;
+use Ortofit\Bundle\BackOfficeBundle\Entity\PersonService;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppReminderManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\PersonManager;
@@ -22,9 +23,11 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class ServiceState extends AbstractState
 {
 
-    const PARAM_NAME_REMIND      = 'remind';
-    const PARAM_NAME_DESCRIPTION = 'description';
-    const DATE_TIME_FORMAT       = 'd/m/Y H:i:s';
+    const PARAM_NAME_REMIND          = 'remind';
+    const PARAM_NAME_DESCRIPTION     = 'description';
+    const PARAM_NAME_STORED_SERVICES = 'stored_services';
+    const DATE_TIME_FORMAT           = 'd/m/Y H:i:s';
+
     /**
      * @var Person
      */
@@ -48,9 +51,37 @@ class ServiceState extends AbstractState
     /**
      * @param array $services
      */
-    private function saveServices($services)
+    /**
+     * @return \Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface[]
+     */
+    private function getStoredServiceTypeIds()
     {
+        $services = $this->personServiceManager->findBy([
+            'person'      => $this->person,
+            'appointment' => $this->app
+        ]);
+        $ids = [];
+        foreach ($services as $service) {
+            $ids[] = $service->getId();
+        }
+        return $ids;
+    }
+
+    private function saveServices(array $services)
+    {
+        $storedServiceTypes = $this->getStoredServiceTypeIds();
+        $storedAndNeed = [];
+        foreach ($storedServiceTypes as $storedService) {
+            if (in_array($storedService, $services)) {
+                $storedAndNeed[] = $storedService;
+                continue;
+            }
+            $this->personServiceManager->remove($storedService->getId());
+        }
         foreach ($services as $serviceId) {
+            if ((count($storedAndNeed) > 0) && in_array($serviceId, $storedAndNeed)) {
+                continue;
+            }
             $service = $this->serviceManager->get($serviceId);
             $data = [
                 'service'     => $service,
@@ -158,9 +189,10 @@ class ServiceState extends AbstractState
     public function getResponseData()
     {
         return [
-            self::PARAM_NAME_APP      => $this->app,
-            self::PARAM_NAME_PERSON   => $this->person,
-            self::PARAM_NAME_SERVICES => $this->getServices()
+            self::PARAM_NAME_APP             => $this->app,
+            self::PARAM_NAME_PERSON          => $this->person,
+            self::PARAM_NAME_SERVICES        => $this->getServices(),
+            self::PARAM_NAME_STORED_SERVICES => $this->getStoredServiceTypeIds()
         ];
     }
 

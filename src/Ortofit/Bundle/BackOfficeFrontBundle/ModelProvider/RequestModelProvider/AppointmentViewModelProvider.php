@@ -15,8 +15,6 @@ use Ortofit\Bundle\BackOfficeBundle\EntityManager\OfficeManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceManager;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Appointment\AppointmentViewModel;
-use Ortofit\Bundle\BackOfficeFrontBundle\Model\Schedule\ScheduleModel;
-
 
 /**
  * Class AppointmentModelProvider
@@ -162,7 +160,7 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
      */
     protected function completeModel($model)
     {
-        if ($model->appId != null) {
+        if (null !== $model->appId) {
             return $this->completeFromApp($model);
         }
         $date = \DateTime::createFromFormat('d/m/Y H:i', $model->date.' '.$model->time);

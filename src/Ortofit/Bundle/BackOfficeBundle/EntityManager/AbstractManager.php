@@ -78,6 +78,11 @@ abstract class AbstractManager implements EntityManagerInterface
         return $entity;
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\ParameterBag $params
+     * @throws \Exception
+     * @return EntityInterface
+     */
     public function update($params)
     {
         $entity = $this->rGet($params->get('id'));
@@ -88,6 +93,8 @@ abstract class AbstractManager implements EntityManagerInterface
             }
         }
         $this->merge($entity);
+
+        return $entity;
     }
 
     /**

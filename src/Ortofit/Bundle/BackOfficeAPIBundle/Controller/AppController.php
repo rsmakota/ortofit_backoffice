@@ -45,18 +45,18 @@ class AppController extends BaseController
      */
     private function getEventConverter()
     {
-        return $this->get("backoffice_api.app_to_event_data_converter");
+        return $this->get('backoffice_api.app_to_event_data_converter');
     }
 
     /**
      * @param Client $client
      * @param string $name
      *
-     * @return bool
+     * @return Client
      */
     private function updateClientName(Client $client, $name)
     {
-        if (($client->getName() == $name) || empty($name)) {
+        if (($client->getName() === $name) || empty($name)) {
             return $client;
         }
         $data = [
@@ -92,7 +92,7 @@ class AppController extends BaseController
         $clientId = $bag->get('clientId');
         if (!empty($clientId)) {
             $client = $this->getClientManager()->get($clientId);
-            if (null != $client) {
+            if (null !== $client) {
                 return $this->updateClientName($client, $bag->get('clientName'));
             }
         }
@@ -147,7 +147,7 @@ class AppController extends BaseController
     /**
      * @param ParameterBag $bag
      *
-     * @return ParameterBag
+     * @throws \Exception
      */
     private function updateAppointment($bag)
     {
