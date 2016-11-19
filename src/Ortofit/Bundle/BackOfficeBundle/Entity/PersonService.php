@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class PersonService
  *
  * @package Ortofit\Bundle\BackOfficeBundle\Entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ortofit\Bundle\BackOfficeBundle\ORM\PersonServiceRepository")
  * @ORM\Table(name="person_services")
  */
 class PersonService implements EntityInterface

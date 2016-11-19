@@ -6,6 +6,16 @@
 {% endblock %}
 {% block js %}
     {{ parent() }}
+    <script type="text/javascript">
+        $(function () {
+            BackOffice.OfficeTab.init();
+            var reportCtn         = BackOffice.Report;
+            reportCtn.postUrl     = '{{ url('api_report') }}';
+            reportCtn.defaultDate = '{{ "now"|date('Y-m-d') }}';
+            reportCtn.init();
+        });
+    </script>
+
     {% javascripts
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/datepicker/bootstrap-datepicker.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/datepicker/locales/bootstrap-datepicker.ru.js'
@@ -13,27 +23,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Report.js'
     %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
-    <script>
-        $(function () {
-            BackOffice.OfficeTab.init();
-            var ctn = BackOffice.Report;
-            ctn.defaultDate = '{{ "now"|date('Y-m-d') }}';
-            ctn.init();
-        });
-//            var n = new Date();
-//            $('.iDate').datepicker({
-//                todayHighlight: true,
-//                language: 'ru',
-//                format: 'yyyy-mm-dd',
-//                defaultDate: n.getFullYear() + '-' + n.getMonth()+'-'+n.getDate()
-//            });
 
-//            var dateStr = n.getFullYear() + '-' + n.getMonth()+'-'+n.getDate();
-//            console.log(dateStr);
-//            $('.iDate').val(dateStr);
-
-
-    </script>
     {% endjavascripts %}
 {% endblock %}
 {% block body %}
@@ -47,7 +37,7 @@
         </ol>
     </section>
     <!-- content -->
-    <section class="content">
+    <section class="invoice">
         <div class="row">
             <div class="col-md-12">
 
@@ -64,24 +54,48 @@
                 </div>
                 <div class="box box-info">
 
-                    <form class="form-inline">
+                    <form class="form-inline" id="reportForm">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputDateFrom">период с:</label>
-                                <input type="text" class="form-control input-sm iDate" id="dateFrom" value="01/01/1980">
+                                <input type="text" class="form-control input-sm iDate" id="dateFrom" value="">
+
                             </div>
                             <div class="form-group">
                                 <label for="inputDateTo">по:</label>
-                                <input type="text" class="form-control input-sm iDate" id="dateTo" value="2016-11-09">
+                                <input type="text" class="form-control input-sm iDate" id="dateTo" value="">
+
                             </div>
-                            &nbsp;&nbsp;
+                            <div class="form-group">&nbsp;&nbsp;
                             <button type="button" class="btn btn-sm btn-primary" id="reportBtn">Итоги</button>
+
+                            </div>
+                            <div id="formErrorText" class="help-block" style="color: red; display: none"></div>
                         </div>
+
                     </form>
+
                 </div>
             </div>
-
-
         </div>
-    </section>
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                {#<table class="table table-striped">#}
+                {#<thead >#}
+                {#<tr>#}
+                    {#<th rowspan="2" style="vertical-align: middle">Сотрудник</th>#}
+                    {#<th colspan="{{ services|length }}" style="text-align: center">Услуги</th>#}
+                {#</tr>#}
+                {#<tr>#}
+                    {#{% for service in services %}#}
+                    {#<th>{{ service.name }}</th>#}
+                    {#{% endfor %}#}
+                {#</tr>#}
+                {#</thead>#}
+                    {##}
+                {#</table>#}
+
+            </div>
+        </div>
+
 {% endblock %}

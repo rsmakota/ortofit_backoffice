@@ -111,3 +111,7 @@ api_app_order_num_unprocessed:
 api_app_order_process:
     path: /order/process
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:process }
+
+api_report:
+    path: /report/get
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Report:get }

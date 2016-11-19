@@ -66,7 +66,7 @@ class AppointmentViewModel extends AppointmentModel
             return null;
         }
         foreach ($this->offices as $office) {
-            if ($office->getId() === $this->officeId) {
+            if ($office->getId() == $this->officeId) {
                 return $office;
             }
         }

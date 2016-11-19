@@ -27,10 +27,11 @@ class ReportController extends BaseController
         $offices        = $this->getOfficeManager()->all();
         $activeOfficeId = $offices[0]->getId();
         $doctors        = $this->getDoctors();
-
+        $services       = $this->getServiceManager()->all();
         return $this->render(
             '@OrtofitBackOfficeFront/Report/index.html.twig',
-            ['offices' => $offices, 'activeOfficeId' => $activeOfficeId, 'doctors' => $doctors]);
+            ['offices' => $offices, 'activeOfficeId' => $activeOfficeId, 'doctors' => $doctors , 'services' => $services]
+        );
     }
 
 

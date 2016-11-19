@@ -9,7 +9,6 @@ namespace Ortofit\Bundle\BackOfficeBundle\ORM;
 use Doctrine\ORM\EntityRepository;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Rsmakota\UtilityBundle\Date\DateRangeInterface;
-use Rsmakota\UtilityBundle\Date\DateRange;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;

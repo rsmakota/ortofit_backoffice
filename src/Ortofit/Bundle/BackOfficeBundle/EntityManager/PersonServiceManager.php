@@ -7,9 +7,12 @@
 namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Office;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Person;
 use Ortofit\Bundle\BackOfficeBundle\Entity\PersonService;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
+use Ortofit\Bundle\BackOfficeBundle\Entity\User;
+use Rsmakota\UtilityBundle\Date\DateRangeInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -88,4 +91,50 @@ class PersonServiceManager extends AbstractManager
         $this->merge($entity);
     }
 
+    /**
+     * @param DateRangeInterface $range
+     * @param Office             $office
+     * @param User               $user
+     *
+     * @return array
+     */
+    public function getUserServices(DateRangeInterface $range, Office $office, User $user)
+    {
+
+        return $this->enManager->getRepository($this->getEntityClassName())->getUserServices(
+            $range,
+            $office,
+            $user
+        );
+    }
+
+    /**
+     * @param DateRangeInterface $range
+     * @param Office             $office
+     *
+     * @return User[]
+     */
+    public function getUsersInOffice(DateRangeInterface $range, Office $office)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->getUserInOffice(
+            $range,
+            $office
+        );
+    }
+
+    /**
+     * @param DateRangeInterface $range
+     * @param Office             $office
+     * @param User               $user
+     *
+     * @return array
+     */
+    public function getInsoles(DateRangeInterface $range, Office $office, User $user)
+    {
+        return $this->enManager->getRepository($this->getEntityClassName())->getInsoles(
+            $range,
+            $office,
+            $user
+        );
+    }
 }
