@@ -4,7 +4,7 @@ BackOffice.Report = {
     format:        'yyyy-mm-dd',
     regDate:       /^\d{4}-\d{2}-\d{2}$/,
     locale:        'ru',
-    formatErrText: 'Дата не в формате (2016-10-23) или пуст',
+    formatErrText: 'Поле дата не в формате (2016-10-23) или пустое',
     rangeErrText:  'Не верный диапазон дат',
 
     init: function()
@@ -13,7 +13,6 @@ BackOffice.Report = {
         var me = this;
         hlp.getReportBtn().click(me._btnHandler);
         me.datePickerInit();
-        // hlp.getErrTextEl().hide();
     },
 
     datePickerInit: function () {
@@ -28,6 +27,7 @@ BackOffice.Report = {
         dp.val(me.defaultDate);
         dp.click(hlp.cleanErrors);
     },
+
     /**
      * @param {string} dateStr
      * @returns {boolean}
@@ -36,6 +36,7 @@ BackOffice.Report = {
         var me = BackOffice.Report;
         return me.regDate.test(dateStr);
     },
+
     /**
      * @param {string} dateFrom
      * @param {string} dateTo
@@ -45,7 +46,7 @@ BackOffice.Report = {
     isRange: function (dateFrom, dateTo) {
         var range = Date.parse(dateTo) - Date.parse(dateFrom);
 
-        return range >=0;
+        return range >= 0;
     },
 
     validate: function () {
@@ -81,7 +82,7 @@ BackOffice.Report = {
     _btnHandler: function() {
         var me = BackOffice.Report;
         var hlp = BackOffice.ReportHelper;
-        console.log('Click Btn');
+        hlp.getErrorReportDivEl().hide();
         if (!me.validate()) {
             return false;
         }
@@ -89,8 +90,44 @@ BackOffice.Report = {
 
     },
 
-    _renderResponse: function (response) {
+    _renderResponse: function (msg) {
+        var me = BackOffice.Report;
+        var hlp      = BackOffice.ReportHelper;
+        var response = jQuery.parseJSON(msg);
+        var report_div = hlp.getReportPlace();
+        if (response.success != 'ok') {
+            hlp.getErrorReportDivEl().show();
+        }
+        var data     = response.data;
+        var content = '<table class="table"><tbody>';
+        for (var i=0; i < data.length; i++) {
+            console.log(data[i].userName);
+            content += '<tr class=""><td colspan="2"><h4>'+data[i].userName+'</h4></td></tr>';
+            content += '<tr class="active" ><td><strong>Услуга</strong></td><td><strong>Количество</strong></td></tr>';
+            content += me._createUsrContent(data[i].service);
+        }
+        content += '</tbody></table>';
+        report_div.html(content);
+    },
 
-        console.log(response);
+    _createUsrContent: function (services) {
+        var content = '';
+        for(var i=0; i<services.length; i++) {
+            if ('insole' in services[i]) {
+                console.log(services[i].insole);
+                content += '<tr class="warning"><td>'+services[i].serviceName+'</td><td><table><tbody>';
+                var total = 0;
+                for (var j=0; j<services[i].insole.length; j++) {
+                    content += '<tr><td>'+services[i].insole[j].type + ': </td><td>&nbsp;&nbsp;'+ services[i].insole[j].count + '</td> </tr>';
+                    total += services[i].insole[j].count;
+                }
+                content += '<tr><td><strong>Всего:</strong> </td><td>&nbsp;&nbsp;'+ total + '</td> </tr>';
+                content += '</tbody></table></td></tr>'
+            } else {
+                content += '<tr><td>'+services[i].serviceName+'</td><td>'+ services[i].count + '</td></tr>';
+            }
+        }
+
+        return content;
     }
 };

@@ -9,6 +9,7 @@ BackOffice.Transport = {
             type: "POST",
             url : url,
             data: data,
+            /** TODO: Check and use jQuery.parseJSON() for msg **/
             success: function(msg) {
                 callback(msg);
             },

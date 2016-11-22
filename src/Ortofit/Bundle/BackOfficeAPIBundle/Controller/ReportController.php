@@ -25,14 +25,25 @@ class ReportController extends BaseController
 
     private function formatUserData(User $user)
     {
-        return ['userName' => $user->getUsername(), 'userId' => $user->getId()];
+        return ['userName' => $user->getName(), 'userId' => $user->getId()];
     }
 
-    private function formatServiceData($service, $count) {
-        return [
+    private function formatServiceData($service, $count, $range, $office, $user) {
+        $data = [
             'serviceName' => $service->getName(),
+            'serviceId'   => $service->getId(),
             'count'       => $count,
         ];
+        if ($service->getAlias() === Service::ALIAS_INSOLES_MANUFACTURING) {
+            $insoleData = [];
+            $insoles = $this->getPersonServiceManager()->getInsoles($range, $office, $user);
+            foreach ($insoles as $insoleArr) {
+                $insoleData[] = ['type' => $insoleArr['type']->getName(), 'count' => $insoleArr['c']];
+            }
+            $data['insole'] = $insoleData;
+
+        }
+        return $data;
     }
 
     public function getAction(Request $request)
@@ -51,15 +62,15 @@ class ReportController extends BaseController
             foreach ($userServices as $userService) {
                 /** @var Service $service */
                 $service = $userService['service'];
-                $userServiceData[] = $this->formatServiceData($service, $userService['c']);
-                if ($service->getAlias() === Service::ALIAS_INSOLES_MANUFACTURING) {
-                    $insoleData = [];
-                    $insoles = $this->getPersonServiceManager()->getInsoles($range, $office, $user);
-                    foreach ($insoles as $insoleArr) {
-                        $insoleData[] = ['type' => $insoleArr['type']->getName(), 'count' => $insoleArr['c']];
-                    }
-                    $userServiceData['insole'] = $insoleData;
-                }
+                $userServiceData[] = $this->formatServiceData($service, $userService['c'], $range, $office, $user);
+//                if ($service->getAlias() === Service::ALIAS_INSOLES_MANUFACTURING) {
+//                    $insoleData = [];
+//                    $insoles = $this->getPersonServiceManager()->getInsoles($range, $office, $user);
+//                    foreach ($insoles as $insoleArr) {
+//                        $insoleData[] = ['type' => $insoleArr['type']->getName(), 'count' => $insoleArr['c']];
+//                    }
+//                    $userServiceData['insole'] = $insoleData;
+//                }
 
             }
             $userData['service'] = $userServiceData;

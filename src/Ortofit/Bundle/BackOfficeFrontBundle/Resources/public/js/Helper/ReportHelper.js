@@ -21,6 +21,16 @@ BackOffice.ReportHelper = {
     getErrTextEl: function () {
         return $('#formErrorText')
     },
+    /**
+     * @returns {*|jQuery|HTMLElement}
+     */
+    getReportPlace: function () {
+        return $('#reportList');
+    },
+
+    getErrorReportDivEl: function () {
+        return $('#errorDiv');
+    },
 
     setErrToEl: function (el) {
         el.parent().addClass('has-error');
