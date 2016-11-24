@@ -71,12 +71,12 @@ class ServiceState extends AbstractState
     {
         $storedServiceTypes = $this->getStoredServiceTypeIds();
         $storedAndNeed = [];
-        foreach ($storedServiceTypes as $storedService) {
-            if (in_array($storedService, $services)) {
-                $storedAndNeed[] = $storedService;
+        foreach ($storedServiceTypes as $storedServiceId) {
+            if (in_array($storedServiceId, $services)) {
+                $storedAndNeed[] = $storedServiceId;
                 continue;
             }
-            $this->personServiceManager->remove($storedService->getId());
+            $this->personServiceManager->remove($storedServiceId);
         }
         foreach ($services as $serviceId) {
             if ((count($storedAndNeed) > 0) && in_array($serviceId, $storedAndNeed)) {

@@ -93,7 +93,7 @@ BackOffice.Report = {
     _renderResponse: function (msg) {
         var me = BackOffice.Report;
         var hlp      = BackOffice.ReportHelper;
-        var response = jQuery.parseJSON(msg);
+        var response = msg;
         var report_div = hlp.getReportPlace();
         if (response.success != 'ok') {
             hlp.getErrorReportDivEl().show();

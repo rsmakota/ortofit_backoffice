@@ -48,7 +48,6 @@ class ReportController extends BaseController
 
     public function getAction(Request $request)
     {
-        header('Content-Type: text/html; charset=utf-8');
         $office     = $this->getOfficeManager()->rGet($request->get('officeId'));
         $dateFrom   = new \DateTime($request->get('dateFrom'));
         $dateTo     = new \DateTime($request->get('dateTo'));

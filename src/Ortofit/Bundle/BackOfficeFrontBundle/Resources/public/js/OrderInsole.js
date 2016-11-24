@@ -8,15 +8,15 @@ BackOffice.OrderInsole = {
         hlp.getBtnNext().click(this.nextBtnHandler);
         hlp.getBtnAddEl().click(this.addInsole);
         hlp.getInputEls().click(hlp.rmErrToFirstEl);
+        hlp.getBtnRm().click(this.rmInsole);
     },
     /**
      * @param {object} data
      * @returns {boolean}
      */
     isValidData: function (data) {
-        var hlp  = BackOffice.FormOrderInsole;
+        var hlp    = BackOffice.FormOrderInsole;
         var length = Object.keys(data.insoles).length;
-        console.log('length:'+length)
         if (0 == length) {
             hlp.addErrToFirstEl();
             return false;
@@ -27,7 +27,16 @@ BackOffice.OrderInsole = {
 
     addInsole: function () {
         var hlp  = BackOffice.FormOrderInsole;
-        $('#insoleTr').clone(true).insertAfter('tr.endTr');
+        var trEl = hlp.getInsoleTrEl().clone();
+        trEl.addClass('tmpTr');
+        trEl.find('input').val('');
+        trEl.insertBefore(hlp.getTrEndEl());
+    },
+
+    rmInsole: function () {
+        var hlp = BackOffice.FormOrderInsole;
+        $('.tmpTr').last().remove();
+        // console.log();
     },
 
     nextBtnHandler: function() {

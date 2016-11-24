@@ -1,4 +1,3 @@
-
 {% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
 {% block style %}
     {{ parent() }}
@@ -9,8 +8,8 @@
     <script type="text/javascript">
         $(function () {
             BackOffice.OfficeTab.init();
-            var reportCtn         = BackOffice.Report;
-            reportCtn.postUrl     = '{{ url('api_report') }}';
+            var reportCtn = BackOffice.Report;
+            reportCtn.postUrl = '{{ url('api_report') }}';
             reportCtn.defaultDate = '{{ "now"|date('Y-m-d') }}';
             reportCtn.init();
         });
@@ -20,8 +19,7 @@
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/datepicker/bootstrap-datepicker.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/datepicker/locales/bootstrap-datepicker.ru.js'
     '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/ReportHelper.js'
-    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Report.js'
-    %}
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Report.js' %}
     <script src="{{ asset_url }}" type="text/javascript"></script>
 
     {% endjavascripts %}
@@ -38,73 +36,58 @@
     </section>
     <!-- content -->
     <section class="invoice">
-        <div class="row">
-            <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
 
-                <div class="nav-tabs">
-                    <ul id="office_tabs" class="nav nav-tabs" data-tabs="tabs">
-                        {% for office in offices %}
-                            <li id="officeTab{{ office.id }}">
-                                <a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">
-                                    {{ office.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="box box-info">
+            <div class="nav-tabs">
+                <ul id="office_tabs" class="nav nav-tabs" data-tabs="tabs">
+                    {% for office in offices %}
+                        <li id="officeTab{{ office.id }}">
+                            <a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">
+                                {{ office.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="box box-info">
 
-                    <form class="form-inline" id="reportForm">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="inputDateFrom">период с:</label>
-                                <input type="text" class="form-control input-sm iDate" id="dateFrom" value="">
+                <form class="form-inline" id="reportForm">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="inputDateFrom">период с:</label>
+                            <input type="text" class="form-control input-sm iDate" id="dateFrom" value="">
 
-                            </div>
-                            <div class="form-group">
-                                <label for="inputDateTo">по:</label>
-                                <input type="text" class="form-control input-sm iDate" id="dateTo" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDateTo">по:</label>
+                            <input type="text" class="form-control input-sm iDate" id="dateTo" value="">
 
-                            </div>
-                            <div class="form-group">&nbsp;&nbsp;
+                        </div>
+                        <div class="form-group">&nbsp;&nbsp;
                             <button type="button" class="btn btn-sm btn-primary" id="reportBtn">Итоги</button>
 
-                            </div>
-                            <div id="formErrorText" class="help-block" style="color: red; display: none"></div>
                         </div>
-
-                    </form>
-
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 table-responsive" id="reportList">
-                <div class="error-page" style="display: none" id="errorDiv">
-                    <div class="error-content">
-                        <h3>
-                            <i class="fa fa-warning text-red"></i>
-                            Техническая ошибка!
-                        </h3>
+                        <div id="formErrorText" class="help-block" style="color: red; display: none"></div>
                     </div>
-                </div>
 
-                {#<table class="table table-striped">#}
-                {#<thead >#}
-                {#<tr>#}
-                    {#<th rowspan="2" style="vertical-align: middle">Сотрудник</th>#}
-                    {#<th colspan="{{ services|length }}" style="text-align: center">Услуги</th>#}
-                {#</tr>#}
-                {#<tr>#}
-                    {#{% for service in services %}#}
-                    {#<th>{{ service.name }}</th>#}
-                    {#{% endfor %}#}
-                {#</tr>#}
-                {#</thead>#}
-                    {##}
-                {#</table>#}
+                </form>
 
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 table-responsive" style="display:table; height: 100%" id="reportList">
+            <div class="error-page" style="display: none" id="errorDiv">
+                <div class="error-content">
+                    <h3>
+                        <i class="fa fa-warning text-red"></i>
+                        Техническая ошибка!
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 {% endblock %}

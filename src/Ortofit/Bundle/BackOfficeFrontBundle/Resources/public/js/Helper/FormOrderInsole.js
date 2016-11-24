@@ -35,6 +35,24 @@ BackOffice.FormOrderInsole = {
         return $('#personId');
     },
 
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getInsoleTrEl: function() {
+        return $('#insoleTr');
+    },
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getTrEndEl: function() {
+        return $('tr.endTr');
+    },
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getBtnRm: function() {
+        return $('#btnRm');
+    },
 
     addErrToFirstEl: function () {
         var hlp  = BackOffice.FormOrderInsole;
