@@ -22,9 +22,11 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class InsoleState extends AbstractState
 {
 
-    const PARAM_NAME_INSOLE_TYPES = 'insoleTypes';
-    const PARAM_NAME_INSOLES      = 'insoles';
-    const SERVICE_TYPE_INSOLE     = 3;
+    const PARAM_NAME_INSOLE_TYPES   = 'insoleTypes';
+    const PARAM_NAME_INSOLES        = 'insoles';
+    const PARAM_NAME_INSOLES_STORED = 'storedInsoles';
+    const SERVICE_TYPE_INSOLE       = 3;
+
     /**
      * @var ServiceManager
      */
@@ -73,15 +75,35 @@ class InsoleState extends AbstractState
     public function getResponseData()
     {
         return [
-            self::PARAM_NAME_APP          => $this->app,
-            self::PARAM_NAME_INSOLE_TYPES => $this->insoleTypeManager->all(),
-            self::PARAM_NAME_PERSON       => $this->person
+            self::PARAM_NAME_APP            => $this->app,
+            self::PARAM_NAME_INSOLE_TYPES   => $this->insoleTypeManager->all(),
+            self::PARAM_NAME_PERSON         => $this->person,
+            self::PARAM_NAME_INSOLES_STORED => $this->getStoredInsoles()
         ];
     }
 
+    /**
+     * @return \Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface[]
+     */
+    private function getStoredInsoles()
+    {
+        return $this->insoleManager->findBy([
+            'person'      => $this->person,
+            'appointment' => $this->app,
+        ]);
+    }
+
+    private function removeAllStoredInsoled()
+    {
+        $insoles = $this->getStoredInsoles();
+        foreach ($insoles as $insole) {
+            $this->insoleManager->remove($insole->getId());
+        }
+    }
 
     private function saveData()
     {
+        $this->removeAllStoredInsoled();
         $insoles = $this->getRequest()->get(self::PARAM_NAME_INSOLES);
         foreach ($insoles as $insole) {
             $data = [

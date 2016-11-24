@@ -24,7 +24,9 @@
                         <td>
                             <input type="checkbox" id="service_{{ service.id }}" name="service_{{ service.id }}"
                                    value="{{ service.id }}" title="{{ service.name }}" class="chb-service"
-                            
+                                    {% if service.id in storedServices %}
+                                       checked
+                                   {% endif %}
                             />
                         </td>
                         <td>{{ service.name }}</td>
@@ -52,7 +54,8 @@
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <textarea rows="6" id="description" name="description" class="form-control" placeholder="Комментарий к напоминанию" ></textarea>
+                            <textarea rows="6" id="description" name="description" class="form-control" placeholder="Комментарий к напоминанию" >
+                            </textarea>
                         </td>
                     </tr>
 

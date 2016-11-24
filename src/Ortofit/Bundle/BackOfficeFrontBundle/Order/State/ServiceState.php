@@ -25,7 +25,7 @@ class ServiceState extends AbstractState
 
     const PARAM_NAME_REMIND          = 'remind';
     const PARAM_NAME_DESCRIPTION     = 'description';
-    const PARAM_NAME_STORED_SERVICES = 'stored_services';
+    const PARAM_NAME_STORED_SERVICES = 'storedServices';
     const DATE_TIME_FORMAT           = 'd/m/Y H:i:s';
 
     /**
@@ -48,23 +48,36 @@ class ServiceState extends AbstractState
      * @var AppReminderManager
      */
     private $appReminderManager;
+
     /**
-     * @param array $services
-     */
-    /**
-     * @return \Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface[]
+     * @return integer[]
      */
     private function getStoredServiceTypeIds()
     {
         $services = $this->personServiceManager->findBy([
             'person'      => $this->person,
-            'appointment' => $this->app
+            'appointment' => $this->app,
         ]);
         $ids = [];
+        /** @var PersonService $service */
         foreach ($services as $service) {
-            $ids[] = $service->getId();
+            $ids[] = $service->getService()->getId();
         }
         return $ids;
+    }
+
+    /**
+     * @param $serviceType
+     *
+     * @return \Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface
+     */
+    private function getStoredPersonalService($serviceType)
+    {
+        return $this->personServiceManager->findOneBy([
+            'person'      => $this->person,
+            'appointment' => $this->app,
+            'service'     => $serviceType
+        ]);
     }
 
     private function saveServices(array $services)
@@ -76,7 +89,7 @@ class ServiceState extends AbstractState
                 $storedAndNeed[] = $storedServiceId;
                 continue;
             }
-            $this->personServiceManager->remove($storedServiceId);
+            $this->personServiceManager->remove($this->getStoredPersonalService($storedServiceId)->getId());
         }
         foreach ($services as $serviceId) {
             if ((count($storedAndNeed) > 0) && in_array($serviceId, $storedAndNeed)) {
@@ -105,7 +118,7 @@ class ServiceState extends AbstractState
             'dateTime'    => \DateTime::createFromFormat(self::DATE_TIME_FORMAT, $remindDate.' 00:00:00'),
             'appointment' => $this->app,
             'person'      => $this->person,
-            'description' => $description
+            'description' => $description,
         ];
         $this->appReminderManager->create(new ParameterBag($data));
     }
@@ -192,7 +205,7 @@ class ServiceState extends AbstractState
             self::PARAM_NAME_APP             => $this->app,
             self::PARAM_NAME_PERSON          => $this->person,
             self::PARAM_NAME_SERVICES        => $this->getServices(),
-            self::PARAM_NAME_STORED_SERVICES => $this->getStoredServiceTypeIds()
+            self::PARAM_NAME_STORED_SERVICES => $this->getStoredServiceTypeIds(),
         ];
     }
 
