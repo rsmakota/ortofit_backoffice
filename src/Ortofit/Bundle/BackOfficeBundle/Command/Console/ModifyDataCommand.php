@@ -52,40 +52,15 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $serviceAliases = [
-            Service::ALIAS_CONSULTATION,            //1	Консультации
-            Service::ALIAS_INSOLES_CORRECTION,        //2	Коррекция стелек
-            Service::ALIAS_INSOLES_MANUFACTURING,        //3	Изготовление стелек
-            Service::ALIAS_MASSAGE,        //4	Массаж
-            Service::ALIAS_PC_DIAGNOSTIC,        //5	Компьютерная диагностика
-            Service::ALIAS_FREE_CONSULTATION                    //6	Бесплатная консультация
-        ];
-        $id = 1;
         $eManager = $this->getManager();
-        foreach ($serviceAliases as $alias) {
-            $service = $eManager->getRepository(Service::class)->find($id);
-            $service->setAlias($alias);
-            $eManager->merge($service);
-            $id ++;
-        }
 
-        $insoleTypes = [
-            'child'     => 'Детские',
-            'casual'    => 'Повседневные',
-            'sport'     => 'Спортивные',
-            'designer'  => 'Для модельной обуви',
-            'heel_spur' => 'Под пяточную шпору',
-            'diabetic'  => 'Для диабетической стопы'
+        $service = new Service();
+        $service->setName('Кинезиотейпирование');
+        $service->setColor('#ff69b4');
+        $service->setShort('КТ');
+        $service->setAlias('kinesio_taping');
 
-        ];
-
-        foreach ($insoleTypes as $alias=>$name) {
-            $entity = new InsoleType();
-            $entity->setName($name);
-            $entity->setAlias($alias);
-            $eManager->persist($entity);
-        }
-
+        $eManager->persist($service);
         $eManager->flush();
     }
 }
