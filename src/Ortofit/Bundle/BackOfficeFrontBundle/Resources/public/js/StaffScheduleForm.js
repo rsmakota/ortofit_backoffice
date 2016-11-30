@@ -75,7 +75,6 @@ BackOffice.StaffScheduleForm = {
             var me  = BackOffice.StaffScheduleForm;
             var hlp = BackOffice.FormStaffScheduler;
             var id  = hlp.getIdEL().val();
-            console.log('id', id);
             if (id.length > 0) {
                 me.delete();
             }

@@ -36,14 +36,13 @@ BackOffice.OrderInsole = {
     rmInsole: function () {
         var hlp = BackOffice.FormOrderInsole;
         $('.tmpTr').last().remove();
-        // console.log();
     },
 
     nextBtnHandler: function() {
         var hlp  = BackOffice.FormOrderInsole;
         var me   = BackOffice.OrderInsole;
         var data = hlp.getFormData();
-        console.log(data);
+
         if (!me.isValidData(data)) {
             return;
         }

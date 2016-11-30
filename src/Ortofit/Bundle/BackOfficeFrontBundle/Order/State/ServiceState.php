@@ -24,6 +24,7 @@ class ServiceState extends AbstractState
 {
 
     const PARAM_NAME_REMIND          = 'remind';
+    const PARAM_NAME_FORWARDER       = 'forwarder';
     const PARAM_NAME_DESCRIPTION     = 'description';
     const PARAM_NAME_STORED_SERVICES = 'storedServices';
     const DATE_TIME_FORMAT           = 'd/m/Y H:i:s';
@@ -132,7 +133,9 @@ class ServiceState extends AbstractState
         $services    = $request->get(self::PARAM_NAME_SERVICES);
         $description = $request->get(self::PARAM_NAME_DESCRIPTION);
         $remindDate  = $request->get(self::PARAM_NAME_REMIND);
-
+        $forwarder   = $request->get(self::PARAM_NAME_FORWARDER);
+        $this->app->setForwarder($forwarder);
+        $this->appManager->merge($this->app);
         $this->saveServices($services);
         $this->saveRemind($remindDate, $description);
 //        $this->appManager->success($this->app);

@@ -101,7 +101,6 @@ BackOffice.Report = {
         var data     = response.data;
         var content = '<table class="table"><tbody>';
         for (var i=0; i < data.length; i++) {
-            console.log(data[i].userName);
             content += '<tr class=""><td colspan="2"><h4>'+data[i].userName+'</h4></td></tr>';
             content += '<tr class="active" ><td><strong>Услуга</strong></td><td><strong>Количество</strong></td></tr>';
             content += me._createUsrContent(data[i].service);
@@ -114,7 +113,6 @@ BackOffice.Report = {
         var content = '';
         for(var i=0; i<services.length; i++) {
             if ('insole' in services[i]) {
-                console.log(services[i].insole);
                 content += '<tr class="warning"><td>'+services[i].serviceName+'</td><td><table><tbody>';
                 var total = 0;
                 for (var j=0; j<services[i].insole.length; j++) {

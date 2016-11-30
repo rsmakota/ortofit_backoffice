@@ -86,7 +86,6 @@ BackOffice.Remind = {
         var modal = BackOffice.Modal;
         var data = {};
         data[me.appAttr] = $(this).attr(me.appAttr);
-        console.log("data: ", data);
         modal.load(me.appUrl, data);
 
         return false;
