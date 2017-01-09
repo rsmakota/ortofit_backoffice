@@ -62,7 +62,7 @@ class AppointmentViewModel extends AppointmentModel
      */
     public function getOffice()
     {
-        if (null === $this->officeId) {
+        if (null == $this->officeId) {
             return null;
         }
         foreach ($this->offices as $office) {
@@ -79,12 +79,12 @@ class AppointmentViewModel extends AppointmentModel
      */
     public function getDoctor()
     {
-        if (null === $this->doctorId) {
+        if (null == $this->doctorId) {
             return null;
         }
 
         foreach ($this->doctors as $doctor) {
-            if ($doctor->getId() === $this->doctorId) {
+            if ($doctor->getId() == $this->doctorId) {
                 return $doctor;
             }
         }
@@ -100,7 +100,7 @@ class AppointmentViewModel extends AppointmentModel
     {
         $defFields = ['officeId', 'doctorId', 'date', 'time'];
         foreach ($defFields as $field) {
-            if (null !== $this->$field) {
+            if (null != $this->$field) {
                 return true;
             }
         }
