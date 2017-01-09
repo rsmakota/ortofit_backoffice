@@ -43,11 +43,11 @@
             {% endif %}
             calendar.eventDataUrl = '{{ url('bf_staff_schedule_form') }}';
             calendar.init(doctorId);
-            var officeId = calendar.getOfficeId();
+            var officeId = BackOffice.OfficeHelper.getOfficeId();
             $('#officeTab'+officeId).addClass('active');
             $('.office_link').click(function(){
                 var officeId = $(this).attr('office-id');
-                if (calendar.getOfficeId() == officeId ) {
+                if (BackOffice.OfficeHelper.getOfficeId() == officeId ) {
                     return false;
                 }
                 calendar.reInit(officeId);
