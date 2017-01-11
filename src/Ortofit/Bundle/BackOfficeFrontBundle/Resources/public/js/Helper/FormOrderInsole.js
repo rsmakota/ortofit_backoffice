@@ -31,6 +31,13 @@ BackOffice.FormOrderInsole = {
     /**
      * @returns {jQuery|HTMLElement}
      */
+    getStateId: function() {
+        return $('#stateId');
+    },
+
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
     getPersonEl: function() {
         return $('#personId');
     },
@@ -86,6 +93,7 @@ BackOffice.FormOrderInsole = {
 
         return {
             appId: hlp.getAppEl().val(),
+            stateId: hlp.getStateId().val(),
             insoles: data,
             personId: hlp.getPersonEl().val()
         };

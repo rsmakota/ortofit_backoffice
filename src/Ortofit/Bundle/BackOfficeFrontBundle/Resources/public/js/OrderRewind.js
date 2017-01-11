@@ -1,8 +1,7 @@
 BackOffice.OrderRewind = {
     postUrl: null,
     appId:   null,
-    /**
-     */
+
     init: function() {
         var hlp = BackOffice.FormOrderRewind;
         hlp.getBtnNextEl().click(this._nextBtnHandler);
@@ -12,7 +11,8 @@ BackOffice.OrderRewind = {
 
     _nextBtnHandler: function() {
         var me   = BackOffice.OrderRewind;
-        var data = {appId: me.appId, complete: true};
+        var hlp  = BackOffice.FormOrderRewind;
+        var data = {appId: me.appId, complete: true, stateId: hlp.getStateEl().val()};
         BackOffice.Modal.load(BackOffice.OrderRewind.postUrl, data);
     },
 
@@ -21,6 +21,4 @@ BackOffice.OrderRewind = {
         var data = {appId: me.appId, rewind: true};
         BackOffice.Modal.load(BackOffice.OrderRewind.postUrl, data);
     }
-
-
 };

@@ -9,7 +9,6 @@ use Monolog\Logger;
 use Ortofit\Bundle\BackOfficeFrontBundle\Order\State\StateInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class OrderFlow
@@ -18,10 +17,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class OrderFlow implements FlowInterface
 {
-    /**
-     * @var  SessionInterface
-     */
-    private $session;
 
     /**
      * @var Logger
@@ -59,12 +54,10 @@ class OrderFlow implements FlowInterface
     /**
      * OrderFlow constructor.
      *
-     * @param SessionInterface $session
      * @param EngineInterface  $templateEngine
      */
-    public function __construct(SessionInterface $session, EngineInterface $templateEngine)
+    public function __construct(EngineInterface $templateEngine)
     {
-        $this->session        = $session;
         $this->templateEngine = $templateEngine;
     }
 
@@ -73,17 +66,13 @@ class OrderFlow implements FlowInterface
      */
     private function getCurrentState()
     {
-        return $this->states[$this->currentStateId];
-    }
-
-    /**
-     * @return void
-     */
-    private function init()
-    {
-        if ($this->session->has('stateId')) {
-            $this->currentStateId = $this->session->get('stateId');
+        if (null === $this->currentStateId) {
+            $keys  = array_keys($this->states);
+            $state = $this->states[$keys[0]];
+            $this->currentStateId = $state->getId();
         }
+
+        return $this->states[$this->currentStateId];
     }
 
     /**
@@ -92,14 +81,13 @@ class OrderFlow implements FlowInterface
     private function next()
     {
         $isNext = false;
-        foreach ($this->states as $id => $state) {
+        foreach ($this->states as $stateId => $state) {
             if ($isNext) {
-                $this->currentStateId = $id;
-                $this->session->set('stateId', $id);
+                $this->currentStateId = $stateId;
 
                 return $this->getCurrentState();
             }
-            if ($this->currentStateId == $id) {
+            if ($this->currentStateId == $stateId) {
                 $isNext = true;
             }
         }
@@ -112,28 +100,32 @@ class OrderFlow implements FlowInterface
      */
     public function process()
     {
-        $this->init();
-
-        $state = $this->getCurrentState();
-        $state->process();
-        if ($state->isCompleted()) {
-            if (!$this->next()) {
-                $this->completed = true;
-                $this->clear();
+        while (true) {
+            $state = $this->getCurrentState();
+            $state->process();
+            if (!$state->isCompleted()) {
                 return;
             }
-            $this->process();
+            if (!$this->next()) {
+                $this->completed = true;
+                $this->rewind();
+                return;
+            }
         }
     }
 
     /**
      * @return Response
+     *
+     * @throws \Exception
      */
     public function getResponse()
     {
         if (!$this->isCompleted()) {
-            $state    = $this->getCurrentState();
-            $response = $this->templateEngine->render($state->getTemplate(), $state->getResponseData());
+            $state           = $this->getCurrentState();
+            $data            = $state->getResponseData();
+            $data['stateId'] = $state->getId();
+            $response = $this->templateEngine->render($state->getTemplate(), $data);
         } else {
             $response = 'Complete';
         }
@@ -147,9 +139,6 @@ class OrderFlow implements FlowInterface
     public function addState(StateInterface $state)
     {
         $this->states[$state->getId()] = $state;
-        if (null == $this->currentStateId) {
-            $this->currentStateId = $state->getId();
-        }
     }
 
     /**
@@ -161,16 +150,10 @@ class OrderFlow implements FlowInterface
     }
 
     /**
-     * @return void
+     * @param string $stateId
      */
-    public function clear()
-    {
-        $this->session->remove('stateId');
-        $keys  = array_keys($this->states);
-        $state = $this->states[$keys[0]];
-        if ($state instanceof StateInterface) {
-            $this->currentStateId = $state->getId();
-        }
+    public function seek($stateId) {
+        $this->currentStateId = $stateId;
     }
 
     /**
@@ -178,6 +161,6 @@ class OrderFlow implements FlowInterface
      */
     public function rewind()
     {
-        $this->clear();
+        $this->currentStateId = null;
     }
 }

@@ -5,6 +5,7 @@
  */
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 
+use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientManager;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientViewModel;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\ModelInterface;
@@ -63,15 +64,13 @@ class ClientState extends AbstractState
 
     /**
      * @return boolean
+     * @throws \Exception
      */
     private function isCompleteClient()
     {
         $client = $this->getApp()->getClient();
-        if ((null == $client) || !$client->isComplete()) {
-            return false;
-        }
 
-        return true;
+        return !(!($client instanceof Client) || !$client->isComplete());
     }
 
     /**
@@ -131,6 +130,7 @@ class ClientState extends AbstractState
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function getResponseData()
     {
@@ -142,6 +142,7 @@ class ClientState extends AbstractState
 
     /**
      * @return void
+     * @throws \Exception
      */
     public function process()
     {

@@ -5,6 +5,7 @@
  */
 namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 
+use Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\FlowInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AppOrderController extends Controller
 {
     /**
-     * @return \Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow
+     * @return FlowInterface
      */
     private function getOrderFlow()
     {
@@ -28,15 +29,16 @@ class AppOrderController extends Controller
      * @param Request $request
      *
      * @return Response
+     * @throws \Exception
      */
     public function processAction(Request $request)
     {
         $flow = $this->getOrderFlow();
-        if ($request->get('isNew')) {
-            $flow->clear();
+        if (null !== $request->get('stateId')) {
+            $flow->seek($request->get('stateId'));
         }
         $flow->process();
-
+        //TODO: needs Exception processing
         return $flow->getResponse();
     }
 }

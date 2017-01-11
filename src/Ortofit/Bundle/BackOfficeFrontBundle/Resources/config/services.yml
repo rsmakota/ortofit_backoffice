@@ -69,7 +69,7 @@ services:
 
     bf.flow_order:
         class: Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow
-        arguments: ["@session", "@templating.engine.twig"]
+        arguments: ["@templating.engine.twig"]
         calls:
             - [addState, ["@bf.state_client"]]
             - [addState, ["@bf.state_choose_persone"]]

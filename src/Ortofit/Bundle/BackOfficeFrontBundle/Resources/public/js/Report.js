@@ -13,6 +13,7 @@ BackOffice.Report = {
         var me = this;
         hlp.getReportBtn().click(me._btnHandler);
         me.datePickerInit();
+        BackOffice.OfficeHelper.getTabEl().click(BackOffice.Report._eraseUsrContent);
     },
 
     datePickerInit: function () {
@@ -127,5 +128,11 @@ BackOffice.Report = {
         }
 
         return content;
+    },
+
+    _eraseUsrContent: function () {
+        var hlp = BackOffice.ReportHelper;
+        hlp.getReportPlace().empty()
     }
+
 };

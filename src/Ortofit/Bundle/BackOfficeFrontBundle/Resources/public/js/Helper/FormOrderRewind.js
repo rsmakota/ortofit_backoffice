@@ -14,6 +14,13 @@ BackOffice.FormOrderRewind = {
         return $('#rewindForm');
     },
 
+    /**
+     * @returns {void|jQuery|HTMLElement}
+     */
+    getStateEl: function () {
+        return $('#stateId');
+    },
+
     getFormData: function()
     {
         var hlp = BackOffice.FormOrderRewind;

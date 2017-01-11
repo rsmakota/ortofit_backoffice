@@ -24,6 +24,7 @@ class ChoosePerson extends AbstractState
 
     /**
      * @return void
+     * @throws \Exception
      */
     public function process()
     {

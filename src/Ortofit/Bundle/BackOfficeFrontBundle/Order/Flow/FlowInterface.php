@@ -16,6 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 interface FlowInterface
 {
     /**
+     * @param string $stateId
+     */
+    public function seek($stateId);
+    /**
      * @return void
      */
     public function process();

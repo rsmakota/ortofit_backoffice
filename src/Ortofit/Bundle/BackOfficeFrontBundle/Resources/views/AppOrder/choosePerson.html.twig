@@ -28,6 +28,7 @@
                                 <option value="{{ person.id }}">{{ person.name }}</option>
                             {% endfor %}
                         </select>
+                        <input type="hidden" id="stateId"   name="stateId"   value="{{ stateId }}">
                     </td>
                     <td><button type="button" class="btn btn-block" id="personButton"> <i class="fa  fa-arrow-right"></i></button></td>
                 </tr>

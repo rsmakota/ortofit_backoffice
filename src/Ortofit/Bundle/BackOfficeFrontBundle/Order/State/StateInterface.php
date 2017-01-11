@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface StateInterface
 {
     /**
-     * @return void
+     * @return boolean
      */
     public function process();
 
