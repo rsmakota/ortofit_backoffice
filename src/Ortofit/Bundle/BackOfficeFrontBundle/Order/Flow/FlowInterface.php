@@ -30,11 +30,6 @@ interface FlowInterface
     public function getResponse();
 
     /**
-     * @return void
-     */
-    public function clear();
-
-    /**
      * @return boolean
      */
     public function isCompleted();

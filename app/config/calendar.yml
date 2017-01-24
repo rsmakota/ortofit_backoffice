@@ -31,14 +31,14 @@ parameters:
     calendar_event_styles:
         success:
             textColor:       "#000000"
-            borderColor:     "#7CB280"
-            backgroundColor: "#7CB280"
+            borderColor:     "#35682D"
+            backgroundColor: "#35682D"
             title:           " Оформлен"
 
         closeReason:
-            textColor:       "#040B96"
-            borderColor:     "#adfffc"
-            backgroundColor: "#adfffc"
+            textColor:       "#000000"
+            borderColor:     "#757777"
+            backgroundColor: "#757777"
             title:           ""
 
         bold:
