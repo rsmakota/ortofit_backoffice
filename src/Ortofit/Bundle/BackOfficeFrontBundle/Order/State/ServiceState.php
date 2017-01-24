@@ -146,7 +146,7 @@ class ServiceState extends AbstractState
      */
     private function getServices()
     {
-        return $this->serviceManager->all();
+        return $this->serviceManager->findBy([], ['id'=>'ASC']);
     }
 
     /**

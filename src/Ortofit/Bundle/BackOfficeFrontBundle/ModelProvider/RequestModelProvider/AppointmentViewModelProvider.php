@@ -122,7 +122,7 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
         $model->prefix      = $this->countryManager->getDefault()->getPrefix();
         $model->doctors     = $this->getDoctors();
         $model->offices     = $this->officeManager->all();
-        $model->services    = $this->serviceManager->all();
+        $model->services    = $this->serviceManager->findBy([], ['id'=>'ASC']);
 //        $model->directions = $this->directionManager->all();
         $model->directionId = $this->directionManager->getUnknown()->getId();
 

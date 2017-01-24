@@ -53,12 +53,17 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $eManager = $this->getManager();
+        $doctor = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'doctor']);
+        if (null === $doctor) {
+            $service = new ClientDirection();
+            $service->setName('Направление врача');
+            $service->setAlias('doctor');
+            $service->setOrderNum(1);
+            $eManager->persist($service);
+        } else {
+            $doctor->setOrderNum(1);
+        }
 
-        $service = new ClientDirection();
-        $service->setName('Направление врача');
-        $service->setAlias('doctor');
-        $service->setOrderNum(1);
-        $eManager->persist($service);
 
         $friends = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'friends']);
         $friends->setOrderNum(2);
@@ -68,18 +73,21 @@ EOT
         $internet->setOrderNum(3);
         $eManager->merge($internet);
 
-        $oldBase = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'old_base']);
+        $oldBase = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'other']);
         $oldBase->setOrderNum(4);
         $eManager->merge($oldBase);
 
+        $oldBase = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'old_base']);
+        $oldBase->setOrderNum(5);
+        $eManager->merge($oldBase);
+
         $bord = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'bord']);
-        $bord->setOrderNum(5);
+        $bord->setOrderNum(6);
         $eManager->merge($bord);
 
-//        $unknown = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'unknown']);
-//        if (null != $unknown) {
-//            $eManager->remove($unknown);
-//        }
+        $unknown = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'unknown']);
+        $unknown->setOrderNum(7);
+        $eManager->merge($unknown);
 
         $serviceKs = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'consultation']);
         $serviceKs->setColor('#ff7514');

@@ -53,7 +53,7 @@ class ClientViewModelProvider extends AbstractRequestModelProvider
         /** @var ClientViewModel $model */
         $model = parent::getModel();
         $model->country = $this->countryManager->getDefault();
-        $model->clientDirections = $this->directionManager->all();
+        $model->clientDirections = $this->directionManager->findBy([], ['orderNum'=>'ASC']);
         $model->undefinedClientDirection = $this->directionManager->getUnknown();
         return $model;
     }
