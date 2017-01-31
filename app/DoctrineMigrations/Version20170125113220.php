@@ -22,6 +22,7 @@ class Version20170125113220 extends AbstractMigration
         $this->addSql('ALTER TABLE insoles ALTER appointment_id DROP NOT NULL');
         $this->addSql('ALTER TABLE services ALTER alias SET NOT NULL');
         $this->addSql('ALTER TABLE person_services ADD number INT DEFAULT 1');
+        $this->addSql('ALTER TABLE appointments ADD flyer BOOLEAN DEFAULT FALSE');
     }
 
     /**
@@ -37,5 +38,6 @@ class Version20170125113220 extends AbstractMigration
         $this->addSql('ALTER TABLE insoles ALTER person_id SET NOT NULL');
         $this->addSql('ALTER TABLE insoles ALTER appointment_id SET NOT NULL');
         $this->addSql('ALTER TABLE person_services DROP number');
+        $this->addSql('ALTER TABLE appointments DROP flyer');
     }
 }

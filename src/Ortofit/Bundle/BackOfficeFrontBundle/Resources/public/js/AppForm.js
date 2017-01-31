@@ -36,6 +36,15 @@ BackOffice.AppForm = {
         }
         return false;
     },
+    getFlyer: function () {
+        var hlp = BackOffice.FormElement;
+        if (hlp.getFlyer().is(':checked')) {
+            return true;
+        }
+        return false;
+    },
+
+
     getData: function() {
         var hlp = this.elements;
         return {
@@ -52,9 +61,9 @@ BackOffice.AppForm = {
             doctorId:          hlp.getDoctorId().val(),
             clientId:          hlp.getClientId().val(),
             forwarder:         hlp.getForwarder().val(),
-            bold:              this.getBold()
+            bold:              this.getBold(),
+            flyer:             this.getFlyer()
         };
-
     },
 
     processResponse: function(response) {

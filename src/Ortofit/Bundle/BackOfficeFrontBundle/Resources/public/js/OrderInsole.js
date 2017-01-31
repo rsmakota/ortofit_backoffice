@@ -46,7 +46,7 @@ BackOffice.OrderInsole = {
         if (!me.isValidData()) {
             return;
         }
-        
+
         BackOffice.Modal.load(BackOffice.OrderInsole.postUrl, hlp.getFormData());
     }
 };

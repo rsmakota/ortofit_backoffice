@@ -130,6 +130,7 @@ class AppController extends BaseController
             'user'        => $this->findDoctor($bag->get('doctorId')),
             'forwarder'   => $bag->get('forwarder'),
             'bold'        => $bag->get('bold'),
+            'flyer'       => $bag->get('flyer'),
         ];
     }
 

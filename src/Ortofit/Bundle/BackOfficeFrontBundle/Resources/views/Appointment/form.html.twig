@@ -215,28 +215,32 @@
                     {% endif %}
                     <div class="form-group">
                         <label for="inputForwarder" class="col-sm-3 control-label">Направил:</label>
-
-                        <div class="col-sm-9">
+                        <div class="col-sm-6">
                             <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-hand-o-right icon20"></i>
-                                </div>
+                                <div class="input-group-addon"><i class="fa fa-hand-o-right icon20"></i></div>
                                 <input id="forwarder" class="form-control pull-right active" type="text"
-                                       placeholder="Имя врача направившего клиента"
+                                       placeholder="Врач направивший клиента"
                                        value="{{ model.forwarder }}" />
                             </div>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="flyer" id="flyer" value="1">
+                                    Направление
+                                </label>
+                            </div>
+
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputBold" class="col-sm-3 control-label">Выделить:</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-
-                                {#<div class="input-group-addon">#}
-                                    <input id="bold" class="" type="checkbox"
+                                <input id="bold" class="" type="checkbox"
                                             {% if model.bold  %} checked {% endif %}
                                            value="1" />
-                            {#</div>#}
                             </div>
                         </div>
 

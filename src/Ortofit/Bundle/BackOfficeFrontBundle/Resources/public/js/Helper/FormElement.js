@@ -51,6 +51,10 @@ BackOffice.FormElement = {
     getBold: function () {
         return $('#bold');    
     },
+    getFlyer: function () {
+        return $('#flyer');
+    },
+
     getById: function(id) {
         return $('#'+id);
     },

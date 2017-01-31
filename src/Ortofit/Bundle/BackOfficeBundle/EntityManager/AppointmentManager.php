@@ -34,7 +34,7 @@ class AppointmentManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Appointment::clazz();
+        return Appointment::class;
     }
 
     protected function getClient($id)

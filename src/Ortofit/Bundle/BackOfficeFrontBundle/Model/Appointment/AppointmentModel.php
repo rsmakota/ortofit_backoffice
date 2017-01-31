@@ -80,6 +80,12 @@ class AppointmentModel extends BaseModel
      * @var string
      */
     public $location;
-
+    /**
+     * @var boolean
+     */
     public $bold;
+    /**
+     * @var boolean
+     */
+    public $flyer;
 }

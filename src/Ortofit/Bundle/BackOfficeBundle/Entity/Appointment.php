@@ -101,13 +101,18 @@ class Appointment implements EntityInterface
      */
     private $bold = false;
 
-
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $flyer = false;
 
     /**
      * @ORM\OneToMany(targetEntity="AppReminder", mappedBy="appointment")
      * @ORM\OrderBy({"dateTime" = "DESC"})
      */
     private $reminds;
+
+
 
     /**
      * constructor.
@@ -368,6 +373,22 @@ class Appointment implements EntityInterface
     public function setReminds($reminds)
     {
         $this->reminds = $reminds;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getFlyer()
+    {
+        return $this->flyer;
+    }
+
+    /**
+     * @param boolean $flyer
+     */
+    public function setFlyer($flyer)
+    {
+        $this->flyer = $flyer;
     }
 
     /**
