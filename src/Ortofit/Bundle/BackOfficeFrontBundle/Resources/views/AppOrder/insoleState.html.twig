@@ -6,6 +6,7 @@
                         aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Размеры и типы стелек</h4>
         </div>
+
         <div class="modal-body">
             {% include "@OrtofitBackOfficeFront/AppOrder/panel.html.twig" %}
             <form class="form-horizontal" id="insoleForm" >
@@ -17,51 +18,33 @@
                     </tr>
                     </thead>
                     <tbody>
-                        {% if storedInsoles | length > 0 %}
-
-                            {% for insole in storedInsoles %}
-                                <tr id="insoleTr" class="form-group {% if loop.index != 1 %} tmpTr {% endif %}">
-                                    <td>
-                                        <input type="text" class="form-control insole-size" value="{{ insole.size }}" title="Размер" size="5" >
-                                    </td>
-                                    <td>
-                                        <select class="form-control insole-type" title="Тип">
-                                            {% for insoleType in insoleTypes %}
-                                                {# @var insoleType \Ortofit\Bundle\BackOfficeBundle\Entity\InsoleType #}
-                                                <option value="{{ insoleType.id }}"
-                                                {% if insoleType.id == insole.type.id %} selected {% endif %}
-                                                >
-                                                    {{ insoleType.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        {% else %}
-                        <tr id="insoleTr" class="form-group">
+                    {% for i in 1..insolesNum %}
+                        <tr id="insoleTr{{ i }}" class="form-group" >
                             <td>
-                                <input type="text" class="form-control insole-size" value="" title="Размер" size="5" >
+                                <input type="text" id="insoleSize{{ i }}" class="form-control insole-size" value="" title="Размер" size="5" >
                             </td>
                             <td>
-                                <select class="form-control insole-type" title="Тип">
-                                {% for insoleType in insoleTypes %}
-                                {# @var insoleType \Ortofit\Bundle\BackOfficeBundle\Entity\InsoleType #}
-                                <option value="{{ insoleType.id }}">{{ insoleType.name }}</option>
-                                {% endfor %}
+                                <select id="insoleType{{ i }}" class="form-control insole-type" title="Тип">
+                                    {% for insoleType in insoleTypes %}
+                                         {#@var insoleType \Ortofit\Bundle\BackOfficeBundle\Entity\InsoleType#}
+                                        <option value="{{ insoleType.id }}">{{ insoleType.name }}</option>
+                                    {% endfor %}
                                 </select>
                             </td>
                         </tr>
-                        {% endif %}
+
+                    {% endfor %}
+
                     <tr class="endTr"></tr>
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <td><button class="btn btn-primary btn-xs" type="button" id="btnAdd"><i class="fa fa-plus icon20"></i></button>
-                            <button class="btn btn-danger btn-xs"  type="button" id="btnRm"><i class="fa fa-minus icon20"></i></button>
-                        </td>
-                        <td></td>
-                    </tr>
-                    </tfoot>
+                    {#<tfoot>#}
+                    {#<tr>#}
+                        {#<td><button class="btn btn-primary btn-xs" type="button" id="btnAdd"><i class="fa fa-plus icon20"></i></button>#}
+                            {#<button class="btn btn-danger btn-xs"  type="button" id="btnRm"><i class="fa fa-minus icon20"></i></button>#}
+                        {#</td>#}
+                        {#<td></td>#}
+                    {#</tr>#}
+                    {#</tfoot>#}
                 </table>
 
                 <input type="hidden" id="appId"    name="appId"    value="{{ app.id }}"   >

@@ -29,7 +29,7 @@ BackOffice.FormOrderServicePerson = {
 
     getFormData: function()
     {
-        var formData = $('#serviceForm').serializeArray();
+        var formData = $('.nes').serializeArray();
 
         var data = {};
         var services = [];
@@ -37,8 +37,13 @@ BackOffice.FormOrderServicePerson = {
             var record = formData[i];
             data[record.name] = record.value;
         }
-        $('#serviceForm :checked').each(function() {
-            services.push($(this).val());
+        $('input[type=checkbox]:checked').each(function() {
+            if ($(this).hasClass('chb-service')) {
+                var serviceId = $(this).val();
+                var serviceNum = $('#serviceNum'+serviceId).val();
+                services.push({serviceId: serviceId, serviceNum: serviceNum});
+            }
+
         });
         data.services = services;
         return data;

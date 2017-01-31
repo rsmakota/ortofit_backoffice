@@ -51,7 +51,7 @@ BackOffice.OrderServicePerson = {
         var hlp  = BackOffice.FormOrderServicePerson;
         var me   = BackOffice.OrderServicePerson;
         var data = hlp.getFormData();
-
+        console.log(data);
         if (!me.isValidData() || !me.isValidRemind()) {
             return;
         }

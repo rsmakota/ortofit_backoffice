@@ -61,16 +61,25 @@ BackOffice.FormOrderInsole = {
         return $('#btnRm');
     },
 
-    addErrToFirstEl: function () {
-        var hlp  = BackOffice.FormOrderInsole;
-        var form = hlp.getFormEl();
-        form.find('tr.form-group').eq(0).addClass('has-error');
+    addErrToEl: function (num) {
+        $('#insoleTr'+num).addClass('has-error');
     },
 
-    rmErrToFirstEl: function () {
+    rmErrToAllEls: function () {
         var hlp  = BackOffice.FormOrderInsole;
         var form = hlp.getFormEl();
-        form.find('tr.form-group').eq(0).removeClass('has-error');
+        form.find('tr.form-group').removeClass('has-error');
+    },
+
+    getNumInsoleSizeEls: function() {
+        var hlp  = BackOffice.FormOrderInsole;
+        return hlp.getFormEl().find('input.insole-size').length;
+    },
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getInsoleSizeValByNum: function(num) {
+       return $('#insoleSize'+num).val();
     },
 
      /**

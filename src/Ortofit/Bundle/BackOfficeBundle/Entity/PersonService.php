@@ -52,6 +52,11 @@ class PersonService implements EntityInterface
     private $service;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $number;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -145,6 +150,22 @@ class PersonService implements EntityInterface
     public function setService($service)
     {
         $this->service = $service;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @param integer $number
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
     }
 
     /**

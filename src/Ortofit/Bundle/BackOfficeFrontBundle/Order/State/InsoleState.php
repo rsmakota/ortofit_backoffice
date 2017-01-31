@@ -25,6 +25,7 @@ class InsoleState extends AbstractState
     const PARAM_NAME_INSOLE_TYPES   = 'insoleTypes';
     const PARAM_NAME_INSOLES        = 'insoles';
     const PARAM_NAME_INSOLES_STORED = 'storedInsoles';
+    const PARAM_NAME_INSOLES_NUM    = 'insolesNum';
     const SERVICE_TYPE_INSOLE       = 3;
 
     /**
@@ -78,8 +79,24 @@ class InsoleState extends AbstractState
             self::PARAM_NAME_APP            => $this->app,
             self::PARAM_NAME_INSOLE_TYPES   => $this->insoleTypeManager->all(),
             self::PARAM_NAME_PERSON         => $this->person,
-            self::PARAM_NAME_INSOLES_STORED => $this->getStoredInsoles()
+            self::PARAM_NAME_INSOLES_STORED => $this->getStoredInsoles(),
+            self::PARAM_NAME_INSOLES_NUM    => $this->getInsolesNum()
         ];
+    }
+
+    private function getInsolesNum()
+    {
+        $services = $this->getRequest()->get(self::PARAM_NAME_SERVICES);
+        if (!is_array($services)) {
+            return 1;
+        }
+        foreach ($services as $serviceData) {
+            if ($serviceData['serviceId'] == self::SERVICE_TYPE_INSOLE) {
+                return $serviceData['serviceNum'];
+            }
+        }
+
+        return 1;
     }
 
     /**
@@ -123,8 +140,15 @@ class InsoleState extends AbstractState
     protected function hasServices()
     {
         $services = $this->getRequest()->get(self::PARAM_NAME_SERVICES);
-
-        return (is_array($services) && in_array(self::SERVICE_TYPE_INSOLE, $services)) ;
+        if (!is_array($services)) {
+            return false;
+        }
+        foreach ($services as $serviceData) {
+            if ($serviceData['serviceId'] == self::SERVICE_TYPE_INSOLE) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -133,7 +157,7 @@ class InsoleState extends AbstractState
     private function hasInsoles()
     {
         $insoles = $this->getRequest()->get(self::PARAM_NAME_INSOLES);
-//        file_put_contents('/tmp/insole.log', print_r($insoles, true)."\n".time()."\n", FILE_APPEND);
+
         return !empty($insoles);
     }
     /**

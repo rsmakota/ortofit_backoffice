@@ -10,17 +10,17 @@
             {% include "@OrtofitBackOfficeFront/AppOrder/panel.html.twig" %}
             <div class="row">
             <form class="form-horizontal" id="serviceForm">
-                <div class="col-sm-6">
+                <div class="col-sm-7">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th colspan="3">Оказанные услуги:</th>
+                            <th colspan="2">Оказанные услуги:</th>
+                            <th>Кол.</th>
                         </tr>
                     </thead>
                 {% for service in services %}
                     <tr class="tr-service">
-                        <td>
-                            <i class="fa fa-star-o icon20"> </i></td>
+                        {#<td><i class="fa fa-star-o icon20"> </i></td>#}
                         <td>
                             <input type="checkbox" id="service_{{ service.id }}" name="service_{{ service.id }}"
                                    value="{{ service.id }}" title="{{ service.name }}" class="chb-service"
@@ -30,12 +30,23 @@
                             />
                         </td>
                         <td>{{ service.name }}</td>
+                        <td>
+                            <select id="serviceNum{{ service.id }}" name="serviceNum{{ service.id }}" size="1">
+                                {% for i in 1..4  %}
+                                    <option value="{{ i }}"
+                                    {% if (attribute(storedServicesNum, service.id) is defined) and (storedServicesNum[service.id] == i) %}
+                                    selected
+                                    {% endif %}
+                                    >{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
                     </tr>
 
             {% endfor %}
                 </table>
                 </div>
-                <div class="col-sm-6" style="padding-left: 0;">
+                <div class="col-sm-5" style="padding-left: 0;">
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -46,13 +57,13 @@
                     <tr>
                         <td><i class="fa fa-hand-o-right icon20"></i></td>
                         <td>Направил</td>
-                        <td><input id="forwarder" name="forwarder" class="form-control pull-right active" type="text"
+                        <td><input id="forwarder" name="forwarder" class="form-control pull-right active nes" type="text"
                                    value="{{ app.forwarder }}" /></td>
                     </tr>
                         <tr>
                             <td><i class="fa fa-bell-o icon20"></i></td>
                             <td>Повтор</td>
-                            <td><input id="remind" name="remind" class="form-control pull-right active" type="text"
+                            <td><input id="remind" name="remind" class="form-control pull-right active nes" type="text"
                                        data-inputmask="'alias': 'dd/mm/yyyy'" data-mask placeholder="{{ "now"|date("d/m/Y") }}"
                                        value="" /></td>
                         </tr>
@@ -62,17 +73,17 @@
                         <tr>
                             <td colspan="3">
                                 Комментарий к напоминанию
-                                <textarea rows="6" id="description" name="description" class="form-control" placeholder="Комментарий к напоминанию" >
-                                </textarea>
+                                <textarea rows="6" id="description" name="description" class="form-control nes"
+                                          placeholder="Комментарий к напоминанию" ></textarea>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 </div>
 
-                <input type="hidden" id="appId"    name="appId"    value="{{ app.id }}">
-                <input type="hidden" id="personId" name="personId" value="{{ person.id }}">
-                <input type="hidden" id="stateId"  name="stateId"  value="{{ stateId }}">
+                <input type="hidden" id="appId"    name="appId"    value="{{ app.id }}"  class="nes">
+                <input type="hidden" id="personId" name="personId" value="{{ person.id }}" class="nes">
+                <input type="hidden" id="stateId"  name="stateId"  value="{{ stateId }}" class="nes">
             </form>
                 </div>
         </div>

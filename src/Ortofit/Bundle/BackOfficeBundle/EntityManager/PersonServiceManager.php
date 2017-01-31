@@ -60,6 +60,7 @@ class PersonServiceManager extends AbstractManager
         $entity->setDate($app->getDateTime());
         $entity->setPerson($person);
         $entity->setService($service);
+        $entity->setNumber($params->get('number'));
         $this->persist($entity);
 
         return $entity;
