@@ -104,17 +104,18 @@ BackOffice.Report = {
         for (var i=0; i < data.length; i++) {
             content += '<tr class=""><td colspan="2"><h4>'+data[i].userName+'</h4></td></tr>';
             content += '<tr class="active" ><td><strong>Услуга</strong></td><td><strong>Количество</strong></td></tr>';
-            content += me._createUsrContent(data[i].service);
+            content += me._createServiceContent(data[i].service);
+            content += me._createFlyerContent(data[i].flyers);
         }
         content += '</tbody></table>';
         report_div.html(content);
     },
 
-    _createUsrContent: function (services) {
+    _createServiceContent: function (services) {
         var content = '';
         for(var i=0; i<services.length; i++) {
             if ('insole' in services[i]) {
-                content += '<tr class="warning"><td>'+services[i].serviceName+'</td><td><table><tbody>';
+                content += '<tr class="sucsess"><td>'+services[i].serviceName+'</td><td><table><tbody>';
                 var total = 0;
                 for (var j=0; j<services[i].insole.length; j++) {
                     content += '<tr><td>'+services[i].insole[j].type + ': </td><td>&nbsp;&nbsp;'+ services[i].insole[j].count + '</td> </tr>';
@@ -127,6 +128,22 @@ BackOffice.Report = {
             }
         }
 
+        return content;
+    },
+
+    _createFlyerContent: function (data) {
+        if (data.length == 0) {
+            return '';
+        }
+        var content = '';
+        content += '<tr class="warning" ><td><strong>Направление</strong></td><td><table><tbody>';
+        var total = 0;
+        for(var k in data) {
+            content += '<tr><td>'+k+':</td><td>&nbsp;&nbsp;'+ data[k] + '</td> </tr></tr>';
+            total += data[k];
+        }
+        content += '<tr><td><strong>Всего:</strong></td><td>&nbsp;&nbsp;'+ total + '</td> </tr></tr>';
+        content += '</tbody></table></td></tr>';
         return content;
     },
 

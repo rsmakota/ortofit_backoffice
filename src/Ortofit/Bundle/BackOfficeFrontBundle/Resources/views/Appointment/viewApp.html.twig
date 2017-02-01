@@ -39,7 +39,11 @@
                     <td><i class="fa fa-star"></i></td>
                     <td>Услуга:</td>
                     <td>{{ appointment.service.name }}</td>
-                    <td></td>
+                    <td>
+                        {% for personService in appointment.personServices %}
+                           <span style="color: {{ personService.service.color }}"> <strong>{{ personService.service.short }}</strong></span>-{{ personService.number }} &nbsp;&nbsp;&nbsp;
+                        {% endfor %}
+                    </td>
                 </tr>
                 <tr>
                     <td><i class="fa fa-arrow-right"></i></td>
@@ -97,7 +101,12 @@
                 <tr>
                     <td><i class="fa fa-hand-o-right"></i></td>
                     <td>Направил:</td>
-                    <td>{{ appointment.forwarder }}</td>
+                    <td>
+                        {% if appointment.flyer %}
+                            <i class="fa fa-check-square-o" style="color: #00a157"></i>
+                        {% endif %}
+                        {{ appointment.forwarder }}
+                    </td>
                     <td></td>
                 </tr>
 

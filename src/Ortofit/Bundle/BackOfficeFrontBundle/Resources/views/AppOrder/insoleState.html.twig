@@ -21,7 +21,7 @@
                     {% for i in 1..insolesNum %}
                         <tr id="insoleTr{{ i }}" class="form-group" >
                             <td>
-                                <input type="text" id="insoleSize{{ i }}" class="form-control insole-size" value="" title="Размер" size="5" >
+                                <input type="text" id="insoleSize{{ i }}" class="form-control insole-size" onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="" title="Размер" size="5" >
                             </td>
                             <td>
                                 <select id="insoleType{{ i }}" class="form-control insole-type" title="Тип">

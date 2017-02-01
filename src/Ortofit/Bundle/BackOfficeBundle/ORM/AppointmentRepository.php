@@ -46,7 +46,7 @@ class AppointmentRepository extends EntityRepository
      *
      * @return array
      */
-    public function findByRange(DateRangeInterface $range, Office $office=null, User $user = null)
+    public function findByRange(DateRangeInterface $range, Office $office = null, User $user = null)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 'a';
@@ -71,9 +71,11 @@ class AppointmentRepository extends EntityRepository
      * @param DateRangeInterface $range
      * @param Office             $office
      * @param User               $user
+     *
      * @return integer
+     * @throws \Exception
      */
-    public function countByRange(DateRangeInterface $range, Office $office=null, User $user = null)
+    public function countByRange(DateRangeInterface $range, Office $office = null, User $user = null)
     {
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 'a';
@@ -98,6 +100,7 @@ class AppointmentRepository extends EntityRepository
      * @param Client $client
      *
      * @return integer
+     * @throws \Exception
      */
     public function countByClient(Client $client)
     {
@@ -105,7 +108,7 @@ class AppointmentRepository extends EntityRepository
         $alias   = 'a';
         $qb = $builder->select('COUNT('.$alias.')')
             ->from(Appointment::clazz(), $alias)
-            ->where("a.client=:client")
+            ->where('a.client=:client')
             ->setParameter('client', $client);
 
         return $qb->getQuery()->getSingleScalarResult();

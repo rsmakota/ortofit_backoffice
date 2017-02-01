@@ -48,31 +48,31 @@ class ReportController extends BaseController
 
     public function getAction(Request $request)
     {
-        $office     = $this->getOfficeManager()->rGet($request->get('officeId'));
-        $dateFrom   = new \DateTime($request->get('dateFrom'));
-        $dateTo     = new \DateTime($request->get('dateTo'));
-        $range      = new DateRange($dateFrom, $dateTo);
-        $users      = $this->getPersonServiceManager()->getUsersInOffice($range, $office);
-        $data       = [];
+        $office   = $this->getOfficeManager()->rGet($request->get('officeId'));
+        $dateFrom = new \DateTime($request->get('dateFrom'));
+        $dateTo   = new \DateTime($request->get('dateTo'));
+        $range    = new DateRange($dateFrom, $dateTo);
+        $users    = $this->getPersonServiceManager()->getUsersInOffice($range, $office);
+        $data     = [];
         foreach ($users as $user) {
-            $userData        = $this->formatUserData($user);
-            $userServices    = $this->getPersonServiceManager()->getUserServices($range, $office, $user);
+            $userData     = $this->formatUserData($user);
+            $userServices = $this->getPersonServiceManager()->getUserServices($range, $office, $user);
+            $apps         = $this->getAppointmentManager()->findByRange($range, $office, $user);
+            $flyers       = [];
+            foreach ($apps as $app) {
+                if ($app->getFlyer()) {
+                    $flyers[$app->getForwarder()] = !array_key_exists($app->getForwarder(), $flyers) ? 1 : ($flyers[$app->getForwarder()] + 1);
+                }
+            }
             $userServiceData = [];
             foreach ($userServices as $userService) {
                 /** @var Service $service */
                 $service = $userService['service'];
                 $userServiceData[] = $this->formatServiceData($service, $userService['c'], $range, $office, $user);
-//                if ($service->getAlias() === Service::ALIAS_INSOLES_MANUFACTURING) {
-//                    $insoleData = [];
-//                    $insoles = $this->getPersonServiceManager()->getInsoles($range, $office, $user);
-//                    foreach ($insoles as $insoleArr) {
-//                        $insoleData[] = ['type' => $insoleArr['type']->getName(), 'count' => $insoleArr['c']];
-//                    }
-//                    $userServiceData['insole'] = $insoleData;
-//                }
 
             }
             $userData['service'] = $userServiceData;
+            $userData['flyers']  = $flyers;
             $data[] = $userData;
         }
 

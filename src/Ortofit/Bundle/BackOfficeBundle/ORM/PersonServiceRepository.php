@@ -34,7 +34,7 @@ class PersonServiceRepository extends EntityRepository
     {
         $params  = ['dayFrom' => $range->getFrom(), 'dayTo' => $range->getTo(), 'office' => $office, 'user'=>$user];
         $builder = $this->getEntityManager()->createQueryBuilder();
-        $builder->select('COUNT(ps) as c')
+        $builder->select('SUM(ps.number) as c')
             ->addSelect('s as service')
             ->from(PersonService::class, 'ps')
             ->join(Appointment::class, 'a', Join::WITH, 'ps.appointment = a')
