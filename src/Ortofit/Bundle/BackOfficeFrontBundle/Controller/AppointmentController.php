@@ -121,7 +121,6 @@ class AppointmentController extends BaseController
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/closeReason.html.twig', $data);
     }
-    
-    
+
     
 }

@@ -74,7 +74,19 @@ BackOffice.Calendar = {
                     location: "calendar"
                 };
                 modal.load(me.formUrl, data);
-            }
+            },
+
+            eventRender: function(event, element,  view) {
+
+                console.log(element);
+                if (event.phone) {
+                    element.find('.fc-title').append(' <i class="fa fa-phone icon20" style="position: absolute; right:5px; top:2px;"></i>');
+                }
+                element.addClass(event.class);
+                // if ((event instanceof Object) && event.hasOwnProperty('phone') && (event.phone == 1)) {
+                //     event.title = '<strong>B</strong> ' + event.title;
+                // }
+        }
 
         });
     },

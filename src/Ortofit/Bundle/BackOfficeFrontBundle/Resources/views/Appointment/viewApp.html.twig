@@ -124,24 +124,25 @@
 
         <div class="modal-footer">
             {% if (appointment.state == 1) or (appointment.state == 2) %}
-            <button type="button" class="btn btn-danger" id="reasonButton">Закрыть по причине</button>
-            <button type="button" class="btn btn-primary" id="editButton">Перенести</button>
-            <button type="button" class="btn btn-success" id="orderButton">Оформить</button>
+                <button type="button" class="btn {{ appointment.phoneConfirm ? 'btn-default' : 'btn-warning' }}" id="phoneButton"><i class="fa fa-phone icon20"></i> {{ appointment.phoneConfirm ? 'Отменить Звонок' : 'Звонок' }}</button>
+                <button type="button" class="btn btn-danger"  id="reasonButton">Закрыть по причине</button>
+                <button type="button" class="btn btn-primary" id="editButton">Перенести</button>
+                <button type="button" class="btn btn-success" id="orderButton">Оформить</button>
             {% endif %}
         </div>
     </div>
 </div>
 <script>
     $(function () {
-        $('#editButton').click(function(){
-           BackOffice.Modal.load('{{ url('bf_app_reschedule', {'appId':appointment.id}) }}', {});
-       });
-        $('#orderButton').click(function(){
-            BackOffice.Modal.load('{{ url('bf_app_order_process') }}', {appId:{{ appointment.id }}, isNew:true});
-        });
-        $('#reasonButton').click(function(){
-            BackOffice.Modal.load('{{ url('bf_app_close_reason', {'appId':appointment.id}) }}', {appId:{{ appointment.id }}});
-        });
+
+        var controller = BackOffice.AppView;
+        controller.editUrl      = '{{ url('bf_app_reschedule', {'appId':appointment.id}) }}';
+        controller.orderUrl     = '{{ url('bf_app_order_process') }}';
+        controller.reasonUrl    = '{{ url('bf_app_close_reason', {'appId':appointment.id}) }}';
+        controller.phoneUrl     = '{{ url('api_app_phone_confirm') }}';
+        controller.appId        = {{ appointment.id }};
+        controller.phoneConfirm = {{ appointment.phoneConfirm ? 'true' : 'false' }};
+        controller.init();
 
     });
 </script>

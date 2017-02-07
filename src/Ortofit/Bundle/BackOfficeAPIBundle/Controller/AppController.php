@@ -311,4 +311,24 @@ class AppController extends BaseController
 
         return $this->createSuccessJsonResponse();
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function phoneConfirmAction(Request $request)
+    {
+        try {
+            /** @var Appointment $app */
+            $app = $this->getAppointmentManager()->get($request->get('appId'));
+            $app->setPhoneConfirm($request->get('phoneConfirm'));
+            $this->getAppointmentManager()->merge($app);
+
+            return $this->createSuccessJsonResponse();
+        } catch (\Exception $e) {
+            return $this->createFailJsonResponse($e, $request->request->all());
+        }
+
+    }
 }

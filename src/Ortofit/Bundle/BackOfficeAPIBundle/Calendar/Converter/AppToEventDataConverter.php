@@ -97,7 +97,7 @@ class AppToEventDataConverter implements ConverterInterface
         $service = $app->getService();
         $style   = $this->stylesConfig['new'];
 
-        return [
+        $data = [
             'id'              => $app->getId(),
             'title'           => $app->getService()->getShort(),
             'start'           => $app->getDateTime()->format('c'),
@@ -106,6 +106,12 @@ class AppToEventDataConverter implements ConverterInterface
             'borderColor'     => $service->getColor(),
             'textColor'       => $style['textColor'],
         ];
+
+        if ($app->getPhoneConfirm()) {
+            $data['phone'] = 1;
+        }
+
+        return $data;
     }
     
     /**

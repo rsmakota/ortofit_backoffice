@@ -112,7 +112,10 @@ class Appointment implements EntityInterface
      */
     private $reminds;
 
-
+    /**
+     * @ORM\Column(type="boolean", name="phone_confirm")
+     */
+    private $phoneConfirm = false;
 
     /**
      * constructor.
@@ -389,6 +392,16 @@ class Appointment implements EntityInterface
     public function setFlyer($flyer)
     {
         $this->flyer = $flyer;
+    }
+
+    public function getPhoneConfirm()
+    {
+        return $this->phoneConfirm;
+    }
+
+    public function setPhoneConfirm($phoneConfirm)
+    {
+        $this->phoneConfirm = $phoneConfirm;
     }
 
     /**
