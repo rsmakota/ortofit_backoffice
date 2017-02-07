@@ -105,7 +105,7 @@ BackOffice.Report = {
             content += '<tr class=""><td colspan="2"><h4>'+data[i].userName+'</h4></td></tr>';
             content += '<tr class="active" ><td><strong>Услуга</strong></td><td><strong>Количество</strong></td></tr>';
             content += me._createServiceContent(data[i].service);
-            content += me._createFlyerContent(data[i].flyers);
+            content += me._createForwarderContent(data[i].forwarders, data[i].flyers);
         }
         content += '</tbody></table>';
         report_div.html(content);
@@ -131,18 +131,27 @@ BackOffice.Report = {
         return content;
     },
 
-    _createFlyerContent: function (data) {
-        if (data.length == 0) {
+    _createForwarderContent: function (forwardData, flyerData) {
+        if (forwardData.length == 0) {
             return '';
         }
+        console.log(forwardData);
         var content = '';
         content += '<tr class="warning" ><td><strong>Направление</strong></td><td><table><tbody>';
         var total = 0;
-        for(var k in data) {
-            content += '<tr><td>'+k+':</td><td>&nbsp;&nbsp;'+ data[k] + '</td> </tr></tr>';
-            total += data[k];
+        var totalF = 0;
+        var flyer = 0;
+        for(var k in forwardData) {
+            if (flyerData[k]) {
+                flyer = flyerData[k]
+            } else {
+                flyer = 0;
+            }
+            content += '<tr><td>'+k+':</td><td>&nbsp;&nbsp;'+ forwardData[k] + '/'+ flyer +'</td> </tr></tr>';
+            total += forwardData[k];
+            totalF += flyer;
         }
-        content += '<tr><td><strong>Всего:</strong></td><td>&nbsp;&nbsp;'+ total + '</td> </tr></tr>';
+        content += '<tr><td><strong>Всего:</strong></td><td>&nbsp;&nbsp;'+ total +'/'+totalF+ '</td> </tr></tr>';
         content += '</tbody></table></td></tr>';
         return content;
     },

@@ -152,6 +152,7 @@ class ServiceState extends AbstractState
         $remindDate  = $request->get(self::PARAM_NAME_REMIND);
         $forwarder   = $request->get(self::PARAM_NAME_FORWARDER);
         $this->app->setForwarder($forwarder);
+        $this->app->setFlyer($request->has('flyer'));
         $this->appManager->merge($this->app);
         $this->saveServices($services);
         $this->saveRemind($remindDate, $description);

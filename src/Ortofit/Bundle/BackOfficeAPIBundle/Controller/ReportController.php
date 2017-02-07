@@ -59,10 +59,16 @@ class ReportController extends BaseController
             $userServices = $this->getPersonServiceManager()->getUserServices($range, $office, $user);
             $apps         = $this->getAppointmentManager()->findByRange($range, $office, $user);
             $flyers       = [];
+            $forwarders    = [];
             foreach ($apps as $app) {
-                if ($app->getFlyer()) {
-                    $flyers[$app->getForwarder()] = !array_key_exists($app->getForwarder(), $flyers) ? 1 : ($flyers[$app->getForwarder()] + 1);
+                $forwarder = $app->getForwarder();
+                if (empty($forwarder)) {
+                    continue;
                 }
+                if ($app->getFlyer()) {
+                    $flyers[$forwarder] = !array_key_exists($forwarder, $flyers) ? 1 : ($flyers[$forwarder] + 1);
+                }
+                $forwarders[$forwarder] = !array_key_exists($forwarder, $forwarders) ? 1 : ($forwarders[$forwarder] + 1);
             }
             $userServiceData = [];
             foreach ($userServices as $userService) {
@@ -71,8 +77,9 @@ class ReportController extends BaseController
                 $userServiceData[] = $this->formatServiceData($service, $userService['c'], $range, $office, $user);
 
             }
-            $userData['service'] = $userServiceData;
-            $userData['flyers']  = $flyers;
+            $userData['service']    = $userServiceData;
+            $userData['flyers']     = $flyers;
+            $userData['forwarders'] = $forwarders;
             $data[] = $userData;
         }
 
