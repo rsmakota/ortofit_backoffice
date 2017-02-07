@@ -27,7 +27,7 @@ class ScheduleManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Schedule::clazz();
+        return Schedule::class;
     }
 
     /**

@@ -24,7 +24,7 @@ class OrderManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Order::clazz();
+        return Order::class;
     }
 
     /**
@@ -94,7 +94,7 @@ class OrderManager extends AbstractManager
         $builder = $this->enManager->createQueryBuilder();
         $params  = [ 'processed' => false];
         $qb      = $builder->select('COUNT(o)')
-            ->from(Order::clazz(), 'o')
+            ->from(Order::class, 'o')
             ->where("o.processed = :processed")
             ->setParameters($params);
 

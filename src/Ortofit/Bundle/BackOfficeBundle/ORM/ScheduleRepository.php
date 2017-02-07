@@ -31,7 +31,7 @@ class ScheduleRepository extends EntityRepository
             $where .= " AND $alias.user = :user";
         }
         $qb = $builder->select($alias)
-            ->from(Schedule::clazz(), $alias)
+            ->from(Schedule::class, $alias)
             ->where($where)
             ->orderBy($alias.'.start')
             ->setParameters($params);
@@ -54,7 +54,7 @@ class ScheduleRepository extends EntityRepository
         $params  = ['date' => $date, 'office' => $office, 'user'=>$user];
 
         $qb = $builder->select('s')
-            ->from(Schedule::clazz(), 's')
+            ->from(Schedule::class, 's')
             ->where("s.start <= :date AND s.end > :date AND s.user = :user AND s.office = :office")
             ->setMaxResults(1)
             ->setParameters($params);
@@ -79,7 +79,7 @@ class ScheduleRepository extends EntityRepository
         $params  = ['date' => $date, 'office' => $office, 'user'=>$user];
 
         $qb = $builder->select('s')
-            ->from(Schedule::clazz(), 's')
+            ->from(Schedule::class, 's')
             ->where("s.start <= :date AND s.end > :date AND s.user = :user AND s.office = :office")
             ->setMaxResults(1)
             ->setParameters($params);
@@ -101,7 +101,7 @@ class ScheduleRepository extends EntityRepository
         $params  = ['date' => $date, 'office' => $office];
 
         $qb = $builder->select('s')
-            ->from(Schedule::clazz(), 's')
+            ->from(Schedule::class, 's')
             ->where("s.start <= :date AND s.end > :date AND s.office = :office")
             ->setParameters($params);
 

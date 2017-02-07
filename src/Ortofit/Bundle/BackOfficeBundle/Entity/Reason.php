@@ -97,14 +97,6 @@ class Reason implements EntityInterface
     {
         $this->type = $type;
     }
-    
-    /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
-    }
 
     /**
      * @return array

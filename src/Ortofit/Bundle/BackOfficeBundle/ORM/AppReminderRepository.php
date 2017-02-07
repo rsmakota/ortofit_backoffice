@@ -40,7 +40,7 @@ class AppReminderRepository extends EntityRepository
         $params  = ['date' => $date, 'processed' => $processed];
 
         $qb = $builder->select('a')
-            ->from(AppReminder::clazz(), 'a')
+            ->from(AppReminder::class, 'a')
             ->where("a.dateTime <= :date AND a.processed = :processed")
             ->setMaxResults($limit)
             ->orderBy('a.dateTime', 'ASC')
@@ -62,7 +62,7 @@ class AppReminderRepository extends EntityRepository
         $builder = $this->getBuilder();
         $params  = ['date' => $date, 'processed' => $processed];
         $qb = $builder->select('COUNT(a)')
-            ->from(AppReminder::clazz(), 'a')
+            ->from(AppReminder::class, 'a')
             ->where("a.dateTime <= :date AND a.processed = :processed")
             ->setParameters($params);
 
@@ -83,7 +83,7 @@ class AppReminderRepository extends EntityRepository
         $builder = $this->getEntityManager()->createQueryBuilder();
         $criteria['msisdn'] = '%'.$msisdn.'%';
         $qb = $builder->select('c')
-            ->from(AppReminder::clazz(), 'c')
+            ->from(AppReminder::class, 'c')
             ->join('c.person', 'p')
             ->join('p.client', 'client')
             ->where('client.msisdn LIKE :msisdn')
@@ -111,7 +111,7 @@ class AppReminderRepository extends EntityRepository
         $builder = $this->getEntityManager()->createQueryBuilder();
         $params['msisdn'] = '%'.$msisdn.'%';
         $qb = $builder->select('COUNT(c)')
-            ->from(AppReminder::clazz(), 'c')
+            ->from(AppReminder::class, 'c')
             ->join('c.person', 'p')
             ->join('p.client', 'client')
             ->where('client.msisdn LIKE :msisdn')

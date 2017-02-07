@@ -39,7 +39,7 @@ class AppointmentManager extends AbstractManager
 
     protected function getClient($id)
     {
-        $client = $this->enManager->getRepository(Client::clazz())->find($id);
+        $client = $this->enManager->getRepository(Client::class)->find($id);
         if ($client) {
             return $client;
         }

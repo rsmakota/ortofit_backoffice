@@ -6,7 +6,6 @@
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider;
 
-use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientModel;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Schedule\ScheduleModel;
 
 /**
@@ -17,7 +16,7 @@ use Ortofit\Bundle\BackOfficeFrontBundle\Model\Schedule\ScheduleModel;
 class ScheduleModelProvider extends AbstractRequestModelProvider
 {
     /**
-     * @return ClientModel
+     * @return ScheduleModel
      */
     protected function createModel()
     {

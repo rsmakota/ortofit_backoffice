@@ -48,7 +48,7 @@ class ClientRepository extends EntityRepository
         $fields  = array_keys($criteria);
 
         $qb = $builder->select('c')
-            ->from(Client::clazz(), 'c')
+            ->from(Client::class, 'c')
             ->where($this->getLikeWhere($fields))
             ->setMaxResults($limit)
             ->setFirstResult($offset)
@@ -73,7 +73,7 @@ class ClientRepository extends EntityRepository
         $fields  = array_keys($criteria);
 
         $qb = $builder->select('COUNT(c)')
-            ->from(Client::clazz(), 'c')
+            ->from(Client::class, 'c')
             ->where($this->getLikeWhere($fields))
             ->setParameters($criteria);
 
@@ -96,7 +96,7 @@ class ClientRepository extends EntityRepository
         ];
 
         $qb = $builder->select('COUNT('.$alias.')')
-            ->from(Client::clazz(), $alias)
+            ->from(Client::class, $alias)
             ->where("
                 $alias.created > :dayFrom AND 
                 $alias.created < :dayTo AND

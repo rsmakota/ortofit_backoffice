@@ -142,14 +142,6 @@ class Schedule implements ScheduleInterface
     }
 
     /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
-    }
-    
-    /**
      * @return array
      */
     public function getCalendarData()

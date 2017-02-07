@@ -22,7 +22,7 @@ class AppReminderManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return AppReminder::clazz();
+        return AppReminder::class;
     }
 
     /**

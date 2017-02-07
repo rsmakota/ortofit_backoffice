@@ -22,7 +22,7 @@ class FamilyStatusManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return FamilyStatus::clazz();
+        return FamilyStatus::class;
     }
 
     /**

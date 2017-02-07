@@ -192,7 +192,7 @@ class PersonState extends AbstractState
         $data = [
             self::PARAM_NAME_APP             => $this->app,
             self::PARAM_NAME_ACTION          => $this->action,
-            self::PARAM_NAME_FAMILY_STATUSES => $this->familyStatusManager->all(),
+            self::PARAM_NAME_FAMILY_STATUSES => $this->familyStatusManager->findBy([], ['position'=>'ASC']),
             self::PARAM_NAME_IS_CLIENT       => false,
 
             self::PARAM_NAME_FAMILY_STATUS   => 0,

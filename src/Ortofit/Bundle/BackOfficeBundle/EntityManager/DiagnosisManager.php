@@ -22,7 +22,7 @@ class DiagnosisManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Diagnosis::clazz();
+        return Diagnosis::class;
     }
 
     /**

@@ -29,7 +29,7 @@ class ClientManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Client::clazz();
+        return Client::class;
     }
 
     /**
@@ -87,8 +87,8 @@ class ClientManager extends AbstractManager
         $client->setMsisdn($model->msisdn);
         $client->setName($model->name);
         $client->setGender($model->gender);
-        $client->setClientDirection($this->enManager->getReference(ClientDirection::clazz(), $model->clientDirectionId));
-        $client->setCountry($this->enManager->getReference(Country::clazz(), $model->countryId));
+        $client->setClientDirection($this->enManager->getReference(ClientDirection::class, $model->clientDirectionId));
+        $client->setCountry($this->enManager->getReference(Country::class, $model->countryId));
 
         $this->persist($client);
 
@@ -106,8 +106,8 @@ class ClientManager extends AbstractManager
         $client->setMsisdn($model->msisdn);
         $client->setName($model->name);
         $client->setGender($model->gender);
-        $client->setClientDirection($this->enManager->getReference(ClientDirection::clazz(), $model->clientDirectionId));
-        $client->setCountry($this->enManager->getReference(Country::clazz(), $model->countryId));
+        $client->setClientDirection($this->enManager->getReference(ClientDirection::class, $model->clientDirectionId));
+        $client->setCountry($this->enManager->getReference(Country::class, $model->countryId));
 
         $this->merge($client);
 

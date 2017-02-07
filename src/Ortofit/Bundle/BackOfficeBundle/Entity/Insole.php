@@ -159,11 +159,4 @@ class Insole implements EntityInterface
         return [];
     }
 
-    /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
-    }
 }

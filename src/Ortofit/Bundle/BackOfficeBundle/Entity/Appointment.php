@@ -322,13 +322,6 @@ class Appointment implements EntityInterface
 
         return $end;
     }
-    /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
-    }
 
     /**
      * @return User

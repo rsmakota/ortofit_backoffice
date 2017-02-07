@@ -59,7 +59,7 @@ class AppointmentRepository extends EntityRepository
             $extra['office'] = $office;
         }
         $qb = $builder->select($alias)
-            ->from(Appointment::clazz(), $alias)
+            ->from(Appointment::class, $alias)
             ->where("$alias.dateTime > :dayFrom AND $alias.dateTime < :dayTo")
             ->andWhere($this->getWhereAndCondition($extra, $alias))
             ->setParameters(array_merge($params, $extra));
@@ -88,7 +88,7 @@ class AppointmentRepository extends EntityRepository
             $extra['office'] = $office;
         }
         $qb = $builder->select('COUNT('.$alias.')')
-            ->from(Appointment::clazz(), $alias)
+            ->from(Appointment::class, $alias)
             ->where("$alias.dateTime > :dayFrom AND $alias.dateTime < :dayTo")
             ->andWhere($this->getWhereAndCondition($extra, $alias))
             ->setParameters(array_merge($params, $extra));
@@ -107,7 +107,7 @@ class AppointmentRepository extends EntityRepository
         $builder = $this->getEntityManager()->createQueryBuilder();
         $alias   = 'a';
         $qb = $builder->select('COUNT('.$alias.')')
-            ->from(Appointment::clazz(), $alias)
+            ->from(Appointment::class, $alias)
             ->where('a.client=:client')
             ->setParameter('client', $client);
 

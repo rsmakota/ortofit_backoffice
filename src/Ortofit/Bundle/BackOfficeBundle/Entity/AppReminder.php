@@ -124,11 +124,4 @@ class AppReminder implements EntityInterface
         // TODO: Implement getData() method.
     }
 
-    /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
-    }
 }

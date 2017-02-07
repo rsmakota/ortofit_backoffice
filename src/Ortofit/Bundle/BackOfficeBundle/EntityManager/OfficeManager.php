@@ -24,7 +24,7 @@ class OfficeManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Office::clazz();
+        return Office::class;
     }
 
     /**

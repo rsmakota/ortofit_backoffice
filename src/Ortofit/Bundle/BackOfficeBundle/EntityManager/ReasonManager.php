@@ -22,7 +22,7 @@ class ReasonManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Reason::clazz();
+        return Reason::class;
     }
 
     /**

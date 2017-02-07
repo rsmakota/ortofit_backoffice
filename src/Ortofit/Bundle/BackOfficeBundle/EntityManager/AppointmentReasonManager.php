@@ -22,7 +22,7 @@ class AppointmentReasonManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return AppointmentReason::clazz();
+        return AppointmentReason::class;
     }
 
     /**

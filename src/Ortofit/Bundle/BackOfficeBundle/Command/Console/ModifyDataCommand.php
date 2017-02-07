@@ -8,6 +8,7 @@ namespace Ortofit\Bundle\BackOfficeBundle\Command\Console;
 
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
+use Ortofit\Bundle\BackOfficeBundle\Entity\FamilyStatus;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Group;
 use Ortofit\Bundle\BackOfficeBundle\Entity\InsoleType;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Reason;
@@ -17,17 +18,20 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 
 class ModifyDataCommand extends ContainerAwareCommand
 {
 
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @return object|\Ortofit\Bundle\BackOfficeBundle\EntityManager\FamilyStatusManager
      */
     private function getManager()
     {
-        return $this->getContainer()->get('doctrine.orm.entity_manager');
+        return $this->getContainer()->get('ortofit_back_office.client_family_status_manage');
     }
+
 
 
     /**
@@ -52,79 +56,29 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $eManager = $this->getManager();
-        $doctor = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'doctor']);
-        if (null === $doctor) {
-            $service = new ClientDirection();
-            $service->setName('Направление врача');
-            $service->setAlias('doctor');
-            $service->setOrderNum(1);
-            $eManager->persist($service);
-        } else {
-            $doctor->setOrderNum(1);
+        $manager = $this->getManager();
+        $aliases = [
+            'son' => 1,
+            'daughter' => 2,
+            'husband' => 3,
+            'wife' => 4,
+            'self' => 5,
+            'mother' => 6,
+            'father' => 7,
+            'nephew' => 10,
+            'niece' => 11,
+        ];
+        foreach ($aliases as $alias=>$position) {
+            /** @var FamilyStatus $entity */
+            $entity = $manager->findOneBy(['alias'=>$alias]);
+            $entity->setPosition($position);
+            $manager->merge($entity);
         }
+        $params = ['name'=>'внук', 'alias'=>'grandson', 'general'=>true, 'position'=>8];
+        $granddaughter = $manager->create(new ParameterBag($params));
 
+        $params = ['name'=>'внучка', 'alias'=>'granddaughter', 'general'=>true, 'position'=>9];
+        $granddaughter = $manager->create(new ParameterBag($params));
 
-        $friends = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'friends']);
-        $friends->setOrderNum(2);
-        $eManager->merge($friends);
-
-        $internet = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'internet']);
-        $internet->setOrderNum(3);
-        $eManager->merge($internet);
-
-        $oldBase = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'other']);
-        $oldBase->setOrderNum(4);
-        $eManager->merge($oldBase);
-
-        $oldBase = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'old_base']);
-        $oldBase->setOrderNum(5);
-        $eManager->merge($oldBase);
-
-        $bord = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'bord']);
-        $bord->setOrderNum(6);
-        $eManager->merge($bord);
-
-        $unknown = $eManager->getRepository(ClientDirection::class)->findOneBy(['alias'=>'unknown']);
-        $unknown->setOrderNum(7);
-        $eManager->merge($unknown);
-
-        $serviceKs = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'consultation']);
-        $serviceKs->setColor('#ff7514');
-        $eManager->merge($serviceKs);
-
-//        $serviceI = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'insoles_correction']);
-//        $serviceI->setColor('#ffa500');
-//        $eManager->merge($serviceI);
-
-        $serviceI = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'insoles_correction']);
-        $serviceI->setColor('#a6625b');
-        $eManager->merge($serviceI);
-
-        $serviceIm = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'insoles_manufacturing']);
-        $serviceIm->setColor('#bf7C26');
-        $eManager->merge($serviceIm);
-
-        $servicePc = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'pc_diagnostic']);
-        $servicePc->setColor('#d2722d');
-        $eManager->merge($servicePc);
-
-        $serviceF = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'free_consultation']);
-        $serviceF->setColor('#ecc384');
-        $eManager->merge($serviceF);
-
-        $serviceM = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'massage']);
-        $serviceM->setColor('#c93c20');
-        $eManager->merge($serviceM);
-
-
-
-        $serviceK = $eManager->getRepository(Service::class)->findOneBy(['alias'=>'kinesio_taping']);
-        $serviceK->setShort('(КТ)');
-        $serviceK->setColor('#8E402A');
-        $eManager->merge($serviceK);
-
-
-        $eManager->flush();
     }
 }

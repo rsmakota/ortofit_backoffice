@@ -22,7 +22,7 @@ class PersonManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Person::clazz();
+        return Person::class;
     }
 
     /**

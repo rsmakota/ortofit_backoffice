@@ -22,7 +22,7 @@ class CountryManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Country::clazz();
+        return Country::class;
     }
 
     /**
