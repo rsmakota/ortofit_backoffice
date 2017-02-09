@@ -7,6 +7,7 @@
 namespace Ortofit\Bundle\BackOfficeAPIBundle\Controller;
 
 
+use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 use Rsmakota\UtilityBundle\Date\DateRange;
@@ -59,10 +60,10 @@ class ReportController extends BaseController
             $userServices = $this->getPersonServiceManager()->getUserServices($range, $office, $user);
             $apps         = $this->getAppointmentManager()->findByRange($range, $office, $user);
             $flyers       = [];
-            $forwarders    = [];
+            $forwarders   = [];
             foreach ($apps as $app) {
                 $forwarder = $app->getForwarder();
-                if (empty($forwarder)) {
+                if (empty($forwarder) || (Appointment::STATE_SUCCESS != $app->getState()) ) {
                     continue;
                 }
                 if ($app->getFlyer()) {
