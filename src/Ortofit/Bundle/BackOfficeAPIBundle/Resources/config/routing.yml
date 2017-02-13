@@ -26,6 +26,10 @@ api_app_phone_confirm:
     path:     /app/phone_confirm
     defaults: { _controller: OrtofitBackOfficeAPIBundle:App:phoneConfirm }
 
+api_app_open:
+    path:     /app/open
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:open }
+
 api_chart_app_count:
     path:     /chart/app_count
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Chart:appCount }

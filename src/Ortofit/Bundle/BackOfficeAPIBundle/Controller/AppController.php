@@ -329,6 +329,25 @@ class AppController extends BaseController
         } catch (\Exception $e) {
             return $this->createFailJsonResponse($e, $request->request->all());
         }
-
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function openAction(Request $request)
+    {
+        try {
+            /** @var Appointment $app */
+            $app = $this->getAppointmentManager()->get($request->get('appId'));
+            $app->setState(Appointment::STATE_NEW);
+            $this->getAppointmentManager()->merge($app);
+
+            return $this->createSuccessJsonResponse();
+        } catch (\Exception $e) {
+            return $this->createFailJsonResponse($e, $request->request->all());
+        }
+    }
+
 }

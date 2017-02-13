@@ -14,6 +14,9 @@ BackOffice.AppViewHelper = {
 
     getOrderButEl: function () {
         return $('#orderButton');
+    },
+    getOpenButEl: function () {
+        return $('#openButton');
     }
 
 };

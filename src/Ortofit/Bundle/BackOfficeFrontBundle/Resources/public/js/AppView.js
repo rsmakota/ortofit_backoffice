@@ -8,6 +8,7 @@ BackOffice.AppView = {
     orderUrl: null,
     reasonUrl: null,
     phoneUrl: null,
+    openUrl: null,
     appId: null,
     phoneConfirm: null,
 
@@ -17,6 +18,7 @@ BackOffice.AppView = {
         helper.getOrderButEl().click(this._orderHandler);
         helper.getReasonButEl().click(this._reasonHandler);
         helper.getPhoneConfirmButEl().click(this._phoneHandler);
+        helper.getOpenButEl().click(this._openHandler);
     },
 
     _editHandler: function () {
@@ -38,6 +40,14 @@ BackOffice.AppView = {
         var me   = BackOffice.AppView;
         var data = {appId: me.appId, phoneConfirm:!me.phoneConfirm};
         BackOffice.Transport.send(me.phoneUrl, data, function () {
+            BackOffice.Modal.getWindow().modal('hide');
+            BackOffice.Calendar.update();
+        });
+    },
+
+    _openHandler: function () {
+        var me   = BackOffice.AppView;
+        BackOffice.Transport.send(me.openUrl, {appId: me.appId} , function () {
             BackOffice.Modal.getWindow().modal('hide');
             BackOffice.Calendar.update();
         });

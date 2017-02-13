@@ -128,6 +128,8 @@
                 <button type="button" class="btn btn-danger"  id="reasonButton">Закрыть по причине</button>
                 <button type="button" class="btn btn-primary" id="editButton">Перенести</button>
                 <button type="button" class="btn btn-success" id="orderButton">Оформить</button>
+            {% elseif appointment.state == 3 %}
+                <button type="button" class="btn btn-success" id="openButton">Открыть</button>
             {% endif %}
         </div>
     </div>
@@ -140,6 +142,7 @@
         controller.orderUrl     = '{{ url('bf_app_order_process') }}';
         controller.reasonUrl    = '{{ url('bf_app_close_reason', {'appId':appointment.id}) }}';
         controller.phoneUrl     = '{{ url('api_app_phone_confirm') }}';
+        controller.openUrl      = '{{ url('api_app_open') }}';
         controller.appId        = {{ appointment.id }};
         controller.phoneConfirm = {{ appointment.phoneConfirm ? 'true' : 'false' }};
         controller.init();
