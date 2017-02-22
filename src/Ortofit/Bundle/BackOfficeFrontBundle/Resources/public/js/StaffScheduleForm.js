@@ -20,7 +20,7 @@ BackOffice.StaffScheduleForm = {
 
     getData: function() {
         var hlp = BackOffice.FormStaffScheduler;
-        var me = this;
+        var me = BackOffice.StaffScheduleForm;
         return {
             id:        hlp.getIdEL().val(),
             officeId:  hlp.getOfficeIdEl().val(),
@@ -32,26 +32,29 @@ BackOffice.StaffScheduleForm = {
     },
 
     create: function() {
-        BackOffice.Transport.send(this.createUrl, this.getData(), function(){
+        var me = BackOffice.StaffScheduleForm;
+        BackOffice.Transport.send(me.createUrl, me.getData(), function(){
             BackOffice.Modal.getWindow().modal('hide');
             BackOffice.Calendar.update();
         });
     },
 
     update: function() {
-        BackOffice.Transport.send(this.updateUrl, this.getData(), function(){
+        var me = BackOffice.StaffScheduleForm;
+        BackOffice.Transport.send(me.updateUrl, me.getData(), function(){
             BackOffice.Modal.getWindow().modal('hide');
             BackOffice.Calendar.update();
         });
     },
     delete:function () {
-        BackOffice.Transport.send(this.deleteUrl, this.getData(), function(){
+        var me = BackOffice.StaffScheduleForm;
+        BackOffice.Transport.send(me.deleteUrl, me.getData(), function(){
             BackOffice.Modal.getWindow().modal('hide');
             BackOffice.Calendar.update();
         });    
     },
     init: function() {
-        var me  = this;
+        var me  = BackOffice.StaffScheduleForm;
         var hlp = BackOffice.FormStaffScheduler;
         var id  = hlp.getIdEL().val();
         hlp.getDateEL().inputmask("dd/mm/yyyy", {"placeholder": "ДД/ММ/ГГГГ"});
@@ -75,6 +78,7 @@ BackOffice.StaffScheduleForm = {
             var me  = BackOffice.StaffScheduleForm;
             var hlp = BackOffice.FormStaffScheduler;
             var id  = hlp.getIdEL().val();
+            console.log(id);
             if (id.length > 0) {
                 me.delete();
             }
