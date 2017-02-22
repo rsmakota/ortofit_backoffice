@@ -104,5 +104,9 @@ bf_chart_index:
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Chart:index }
 
 bf_report_index:
-    path:     /admin/report
+    path:     /admin/report_app
     defaults: { _controller: OrtofitBackOfficeFrontBundle:Report:index }
+
+bf_report_forwarder_index:
+    path:     /admin/report_forwarder
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Report:forwarder }

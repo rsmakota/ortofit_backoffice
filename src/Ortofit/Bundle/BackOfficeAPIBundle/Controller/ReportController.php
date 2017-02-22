@@ -86,4 +86,29 @@ class ReportController extends BaseController
 
         return $this->createSuccessJsonResponse($data);
     }
+
+    public function forwarderAction(Request $request)
+    {
+        $forwarders = [];
+        if ($request->get('dateFrom') && $request->get('dateTo')) {
+            $dateFrom = new \DateTime($request->get('dateFrom'));
+            $dateTo   = new \DateTime($request->get('dateTo'));
+            $range    = new DateRange($dateFrom, $dateTo);
+            $apps     = $this->getAppointmentManager()->findByRange($range, null, null);
+            $forwarders = [];
+            foreach ($apps as $app) {
+                $forwarder = $app->getForwarder();
+                if (($app->getState() != $app::STATE_SUCCESS) ||(empty($forwarder))) {
+                    continue;
+                }
+                if (array_key_exists($forwarder, $forwarders)) {
+                    $forwarders[$forwarder] = $forwarders[$forwarder] + 1;
+                } else {
+                    $forwarders[$forwarder] = 1;
+                }
+            }
+        }
+
+        return $this->createSuccessJsonResponse($forwarders);
+    }
 }

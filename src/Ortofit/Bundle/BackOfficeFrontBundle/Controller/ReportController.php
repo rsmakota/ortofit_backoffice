@@ -8,6 +8,7 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Controller;
 
 use Ortofit\Bundle\BackOfficeBundle\Entity\Schedule;
 use Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\ModelProviderInterface;
+use Rsmakota\UtilityBundle\Date\DateRange;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -34,5 +35,10 @@ class ReportController extends BaseController
         );
     }
 
+
+    public function forwarderAction(Request $request)
+    {
+        return $this->render('@OrtofitBackOfficeFront/Report/forwarder.html.twig', []);
+    }
 
 }

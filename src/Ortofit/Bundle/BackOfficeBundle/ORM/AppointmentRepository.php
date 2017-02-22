@@ -29,7 +29,7 @@ class AppointmentRepository extends EntityRepository
     private function getWhereAndCondition(array $params, $alias)
     {
         if (empty($params)) {
-            return '';
+            return '1=1';
         }
         $keys = array_keys($params);
         $data = [];

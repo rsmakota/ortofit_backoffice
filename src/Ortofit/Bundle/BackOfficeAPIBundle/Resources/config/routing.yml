@@ -123,3 +123,6 @@ api_app_order_process:
 api_report:
     path: /report/get
     defaults: { _controller: OrtofitBackOfficeAPIBundle:Report:get }
+api_report_forwarder:
+    path: /report/forwarder
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Report:forwarder}
