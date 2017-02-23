@@ -33,6 +33,7 @@
     <script>
         $(function () {
             var calendar = BackOffice.Calendar;
+            var officeTab = BackOffice.OfficeTab;
             var doctorId = {{ app.request.query.get("doctorId", "null") }};
             calendar.formUrl      = '{{ url('bf_staff_schedule_form') }}';
             calendar.eventDataParam = 'id';
@@ -43,15 +44,8 @@
             {% endif %}
             calendar.eventDataUrl = '{{ url('bf_staff_schedule_form') }}';
             calendar.init(doctorId);
-            var officeId = BackOffice.OfficeHelper.getOfficeId();
-            $('#officeTab'+officeId).addClass('active');
-            $('.office_link').click(function(){
-                var officeId = $(this).attr('office-id');
-                if (BackOffice.OfficeHelper.getOfficeId() == officeId ) {
-                    return false;
-                }
-                calendar.reInit(officeId);
-            });
+            officeTab.init();
+            officeTab.describe(calendar.reInit);
         });
 
     </script>
