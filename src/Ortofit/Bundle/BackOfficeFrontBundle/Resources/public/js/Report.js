@@ -118,7 +118,10 @@ BackOffice.Report = {
                 content += '<tr class="sucsess"><td>'+services[i].serviceName+'</td><td><table><tbody>';
                 var total = 0;
                 for (var j=0; j<services[i].insole.length; j++) {
-                    content += '<tr><td>'+services[i].insole[j].type + ': </td><td>&nbsp;&nbsp;'+ services[i].insole[j].count + '</td> </tr>';
+                    content += '<tr><td>'
+                        + services[i].insole[j].type + ': </td><td>&nbsp;&nbsp;'
+                        + services[i].insole[j].count + ' ( ' + services[i].insole[j].sizes +' )'+
+                        '</td> </tr>';
                     total += services[i].insole[j].count;
                 }
                 content += '<tr><td><strong>Всего:</strong> </td><td>&nbsp;&nbsp;'+ total + '</td> </tr>';

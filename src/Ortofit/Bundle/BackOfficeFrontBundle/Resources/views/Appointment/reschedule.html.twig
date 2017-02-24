@@ -8,7 +8,7 @@
             <h4 class="modal-title" id="myModalLabel">Перенос приема</h4>
         </div>
         <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="rescheduleForm">
                 <div class="form-group">
                     <label for="selectOfficeId" class="col-sm-3 control-label">Офис:</label>
 
@@ -38,15 +38,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar icon20"></i>
                             </div>
-                            <select class="form-control" id="date">
-                                {% for key, date in dates %}
-                                    {% if date == currentDate|default(0) %}
-                                        <option selected value="{{ key }}">{{ date }}</option>
-                                    {% else %}
-                                        <option value="{{ key }}">{{ date }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
+                            <input type="text" class="form-control input-sm iDate" id="date" value="">
                         </div>
 
                     </div>
@@ -59,19 +51,52 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-clock-o icon20"></i>
                             </div>
-                            <select class="form-control" id="time">
-                                {% for time in times %}
-                                    {% if time == currentTime|default(0) %}
-                                        <option selected value="{{ time }}">{{ time }}</option>
+                            <input id="time" class="form-control pull-right active" type="text" data-inputmask="'alias': 'hh/mm'"
+                                   data-mask
+                                   value="{{ currentTime|default("now"|date("H:i")) }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDate" class="col-sm-3 control-label">Прием:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-hourglass-1 icon20"></i>
+                            </div>
+                            <select class="form-control" id="duration" name="duration" title="duration">
+                                {% for i in 1..4 %}
+                                    {% if (i*15) == duration %}
+                                        <option selected value="{{ (i*15) }}">{{ (i*15) }} мин.</option>
                                     {% else %}
-                                        <option value="{{ time }}">{{ time }}</option>
+                                        <option value="{{ (i*15) }}">{{ (i*15) }} мин.</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="selectDoctorId" class="col-sm-3 control-label">Сотрудник:</label>
 
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user-md icon20"></i>
+                            </div>
+                            <select class="form-control" id="doctorId" id="doctorId" title="doctor" >
+                                {% for doctor in doctors %}
+                                    <option
+                                            {% if doctor.id == app.user.id %}
+                                                selected
+                                            {% endif %}
+                                            value="{{ doctor.id }}">{{ doctor.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <input type="hidden" id="app" value="{{ appId }}">
 
             </form>
@@ -84,16 +109,13 @@
 </div>
 <script>
     $(document).ready(function() {
-        BackOffice.AppMove.saveUrl = '{{ url('api_app_move') }}';
-        BackOffice.AppMove.dateUrl = '{{ url('api_app_get_allow_dates') }}';
-        BackOffice.AppMove.timeUrl = '{{ url('api_app_get_allow_times') }}';
-        BackOffice.AppMove.init();
-        {#var form = BackOffice.AppForm;#}
-        {#form.createUrl = "{{ url('api_app_create')   }}";#}
-        {#form.updateUrl = "{{ url('api_app_update')   }}";#}
-        {#form.clientUrl = "{{ url('api_client_find')   }}";#}
-        {#form.length    = {{ country.length }};#}
-        {#form.prefix    = "{{ country.prefix }}";#}
-        {#form.init({{ appId|default('false') }});#}
+        var controller = BackOffice.AppMove;
+        controller.saveUrl = '{{ url('api_app_move') }}';
+        controller.dateUrl = '{{ url('api_app_get_allow_dates') }}';
+        controller.timeUrl = '{{ url('api_app_get_allow_times') }}';
+        controller.defaultDate = '{{ currentDate|date('Y-m-d') }}';
+
+        controller.init();
+
     });
 </script>

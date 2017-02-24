@@ -39,7 +39,7 @@ class ReportController extends BaseController
             $insoleData = [];
             $insoles = $this->getPersonServiceManager()->getInsoles($range, $office, $user);
             foreach ($insoles as $insoleArr) {
-                $insoleData[] = ['type' => $insoleArr['type']->getName(), 'count' => $insoleArr['c']];
+                $insoleData[] = ['type' => $insoleArr['type']->getName(), 'count' => $insoleArr['c'], 'sizes' => $insoleArr['sizes']];
             }
             $data['insole'] = $insoleData;
 

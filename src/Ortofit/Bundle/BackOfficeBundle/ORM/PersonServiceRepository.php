@@ -69,6 +69,7 @@ class PersonServiceRepository extends EntityRepository
         $builder = $this->getEntityManager()->createQueryBuilder();
         $builder->select('COUNT(1) as c')
             ->addSelect('it as type')
+            ->addSelect('string_agg(i.size, \', \') as sizes')
             ->from(Insole::class, 'i')
             ->join(InsoleType::class, 'it', Join::WITH, 'i.type = it')
             ->join(Appointment::class, 'a', Join::WITH, 'i.appointment = a')

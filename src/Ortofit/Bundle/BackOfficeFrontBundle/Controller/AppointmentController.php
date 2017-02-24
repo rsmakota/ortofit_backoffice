@@ -39,6 +39,15 @@ class AppointmentController extends BaseController
     {
         return $this->get('ortofit_back_office.reason_manage');
     }
+
+    /**
+     * @return \FOS\UserBundle\Doctrine\GroupManager|object
+     */
+    private function getGroupManaget()
+    {
+        return $this->get('fos_user.group_manager');
+    }
+
     /**
      * Index page with calendar/schedule
      * @return \Symfony\Component\HttpFoundation\Response
@@ -99,9 +108,12 @@ class AppointmentController extends BaseController
             'dates'           => $allowDates,
             'times'           => [],
             'appId'           => $appId,
+            'app'             => $app,
             'currentOfficeId' => $app->getOffice()->getId(),
-            'currentDate'     => $app->getDateTime()->format('d/m/Y'),
+            'currentDate'     => $app->getDateTime(),
             'currentTime'     => $app->getDateTime()->format('H:i'),
+            'doctors'         => $this->getGroupManaget()->findGroupBy(['name' => 'Doctor'])->getUsers(),
+            'duration'        => $app->getDuration()
         ];
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/reschedule.html.twig', $data);

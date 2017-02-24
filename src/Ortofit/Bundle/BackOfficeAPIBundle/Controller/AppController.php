@@ -301,10 +301,17 @@ class AppController extends BaseController
     public function moveAction(Request $request)
     {
         try {
-            $office = $this->getOfficeManager()->get($request->get('officeId'));
+            /** @var Appointment $app */
             $app    = $this->getAppointmentManager()->get($request->get('appId'));
+            $office = $this->getOfficeManager()->get($request->get('officeId'));
             $date   = new \DateTime($request->get('dateTime'));
-            $this->getAppointmentManager()->move($app, $office, $date);
+            $doctor = $this->getDoctorManager()->findUserBy(['id'=> $request->get('doctorId')]);
+            $app->setUser($doctor);
+            $app->setDateTime($date);
+            $app->setDuration($request->get('duration'));
+            $app->setOffice($office);
+            $this->getAppointmentManager()->merge($app);
+
         } catch (\Exception $e) {
             return $this->createFailJsonResponse($e, $request->request->all());
         }

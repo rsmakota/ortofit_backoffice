@@ -5,25 +5,24 @@ BackOffice.FormAppMoveHelper = {
     getOfficeEl: function() {
         return $('#office');
     },
-    /**
-     *
-     * @returns {integer}
-     */
-    getOfficeId: function() {
-        return this.getOfficeEl().val();
-    },
 
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getFormEl: function () {
+        return $('#rescheduleForm');
+    },
+    /**
+     * @returns {jQuery|HTMLElement}
+     */
+    getFormControlsEls: function() {
+        return $('.form-control');
+    },
     /**
      * @returns {jQuery|HTMLElement}
      */
     getDateEl: function () {
         return $('#date');
-    },
-    /**
-     * @returns {string}
-     */
-    getDate: function () {
-        return this.getDateEl().val();
     },
 
     /**
@@ -32,23 +31,12 @@ BackOffice.FormAppMoveHelper = {
     getTimeEl: function () {
         return $('#time');
     },
-    /**
-     * @returns {string}
-     */
-    getTime: function () {
-        return this.getTimeEl().val();
-    },
+
     /**
      * @returns {jQuery|HTMLElement}
      */
     getAppEl: function () {
         return $('#app');
-    },
-    /**
-     * @returns {integer}
-     */
-    getAppId: function () {
-        return this.getAppEl().val();
     },
 
     /**
@@ -57,47 +45,38 @@ BackOffice.FormAppMoveHelper = {
     getSaveButtonEl: function () {
         return $('#saveButton');
     },
-    /**
-     * @returns {string}
-     */
-    getDateTime: function() {
-        return this.getDate()+' '+this.getTime();
+
+    getDoctorIdEl: function () {
+        return $('#doctorId');
     },
+
+    getDurationEl: function () {
+        return $('#duration');
+    },
+
+    getCheckedEls: function () {
+        var me = BackOffice.FormAppMoveHelper;
+        return [
+            me.getDateEl(),
+            me.getTimeEl()
+        ];
+    },
+
     /**
      * @returns {{appId: (*|integer), officeId: (*|integer), dateTime: (*|string)}}
      */
     getFormData: function() {
         return {
-            appId:    this.getAppId(),
-            officeId: this.getOfficeId(),
-            dateTime: this.getDateTime(),
-            date:     this.getDate()
+            appId:    this.getAppEl().val(),
+            officeId: this.getOfficeEl().val(),
+            dateTime: this.getDateEl().val() +' '+ this.getTimeEl().val() + ':00',
+            doctorId: this.getDoctorIdEl().val(),
+            duration: this.getDurationEl().val()
         }
     },
 
-    setDateEl: function (dates) {
-        var me = this;
-        var el = me.getDateEl();
-        el.empty();
-        $.each(dates, function(key, value) {
-            el.append($("<option/>", {
-                value: key,
-                text: value
-            }));
-
-        });
-    },
-
-    setTimeEl: function (times) {
-        var me = this;
-        var el = me.getTimeEl();
-        el.empty();
-        $.each(times, function(key, value) {
-            el.append($("<option/>", {
-                value: value,
-                text: value
-            }));
-        });
+    getDataMasked: function () {
+        return $("[data-mask]");
     }
 
 
