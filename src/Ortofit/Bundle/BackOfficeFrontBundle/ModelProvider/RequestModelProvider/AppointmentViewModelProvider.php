@@ -6,13 +6,16 @@
 
 namespace Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Doctrine\GroupManager;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ServiceGroup;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientDirectionManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\CountryManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\OfficeManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceGroupManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceManager;
 use Ortofit\Bundle\BackOfficeFrontBundle\Model\Appointment\AppointmentViewModel;
 
@@ -28,9 +31,9 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
      */
     private $groupManager;
     /**
-     * @var ServiceManager
+     * @var ServiceGroupManager
      */
-    private $serviceManager;
+    private $serviceGroupManager;
     /**
      * @var ClientDirectionManager
      */
@@ -66,11 +69,11 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
     }
 
     /**
-     * @param ServiceManager $serviceManager
+     * @param ServiceManager $serviceGroupManager
      */
-    public function setServiceManager($serviceManager)
+    public function setServiceGroupManager($serviceGroupManager)
     {
-        $this->serviceManager = $serviceManager;
+        $this->serviceGroupManager = $serviceGroupManager;
     }
 
     /**
@@ -117,14 +120,18 @@ class AppointmentViewModelProvider extends AbstractRequestModelProvider
      */
     protected function createModel()
     {
-        $model              = new AppointmentViewModel();
+        $model                   = new AppointmentViewModel();
+        /** @var ServiceGroup $serviceGroupBase */
+        $serviceGroupBase        = $this->serviceGroupManager->findOneBy(['alias' => ServiceGroup::SERVICE_GROUP_ALIAS_BASE], ['id' =>'ASC']);
+        $serviceGroupBaseMassage = $this->serviceGroupManager->findOneBy(['alias' => ServiceGroup::SERVICE_GROUP_ALIAS_BASE_MASSAGE]);
+        /** @var ArrayCollection $servises */
         $this->fillModelFromRequest($model);
-        $model->prefix      = $this->countryManager->getDefault()->getPrefix();
-        $model->doctors     = $this->getDoctors();
-        $model->offices     = $this->officeManager->all();
-        $model->services    = $this->serviceManager->findBy([], ['id'=>'ASC']);
+        $model->prefix           = $this->countryManager->getDefault()->getPrefix();
+        $model->doctors          = $this->getDoctors();
+        $model->offices          = $this->officeManager->all();
+        $model->services         = array_merge($serviceGroupBase->getServices()->toArray(), $serviceGroupBaseMassage->getServices()->toArray());
 //        $model->directions = $this->directionManager->all();
-        $model->directionId = $this->directionManager->getUnknown()->getId();
+        $model->directionId      = $this->directionManager->getUnknown()->getId();
 
         return $model;
     }

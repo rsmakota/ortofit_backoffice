@@ -53,7 +53,9 @@ BackOffice.FormAppMoveHelper = {
     getDurationEl: function () {
         return $('#duration');
     },
-
+    getDescription: function () {
+        return $('#description');
+    },
     getCheckedEls: function () {
         var me = BackOffice.FormAppMoveHelper;
         return [
@@ -71,7 +73,8 @@ BackOffice.FormAppMoveHelper = {
             officeId: this.getOfficeEl().val(),
             dateTime: this.getDateEl().val() +' '+ this.getTimeEl().val() + ':00',
             doctorId: this.getDoctorIdEl().val(),
-            duration: this.getDurationEl().val()
+            duration: this.getDurationEl().val(),
+            description: this.getDescription().val()
         }
     },
 

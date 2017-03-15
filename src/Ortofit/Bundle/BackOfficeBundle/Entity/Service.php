@@ -16,12 +16,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Service implements EntityInterface
 {
-    const ALIAS_CONSULTATION          = 'consultation';
-    const ALIAS_INSOLES_CORRECTION    = 'insoles_correction';
-    const ALIAS_INSOLES_MANUFACTURING = 'insoles_manufacturing';
-    const ALIAS_MASSAGE               = 'massage';
-    const ALIAS_PC_DIAGNOSTIC         = 'pc_diagnostic';
-    const ALIAS_FREE_CONSULTATION     = 'free_consultation';
+    const ALIAS_CONSULTATION              = 'consultation';
+    const ALIAS_INSOLES_CORRECTION        = 'insoles_correction';
+    const ALIAS_INSOLES_MANUFACTURING     = 'insoles_manufacturing';
+    const ALIAS_MASSAGE                   = 'massage';
+    const ALIAS_BACK_MASSAGE              = 'back_massage';
+    const ALIAS_FOOT_MASSAGE              = 'foot_massage';
+    const ALIAS_MASSAGE_ANTI_CELLULITE    = 'massage_anti_cellulite';
+    const ALIAS_MASSAGE_CHILD_HEALTHY_GYM = 'child_healthy_gym';
+    const ALIAS_KINESIOTERAPY             = 'kinesioterapy';
+    const ALIAS_KINESIO_MASSAGE_CHILD     = 'kinesio_massage_child';
+    const ALIAS_PC_DIAGNOSTIC             = 'pc_diagnostic';
+    const ALIAS_FREE_CONSULTATION         = 'free_consultation';
+    const ALIAS_KINESIO_TAPING            = 'kinesio_taping';
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
@@ -46,6 +53,11 @@ class Service implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $alias;
+    /**
+     * @ORM\ManyToOne(targetEntity="Ortofit\Bundle\BackOfficeBundle\Entity\ServiceGroup", inversedBy="services")
+     * @ORM\JoinColumn(name="service_group_id", referencedColumnName="id")
+     */
+    private $serviceGroup;
 
     /**
      * @return integer
@@ -133,6 +145,22 @@ class Service implements EntityInterface
     public function setAlias($alias)
     {
         $this->alias = $alias;
+    }
+
+    /**
+     * @return ServiceGroup
+     */
+    public function getServiceGroup()
+    {
+        return $this->serviceGroup;
+    }
+
+    /**
+     * @param ServiceGroup $serviceGroup
+     */
+    public function setServiceGroup($serviceGroup)
+    {
+        $this->serviceGroup = $serviceGroup;
     }
 
 

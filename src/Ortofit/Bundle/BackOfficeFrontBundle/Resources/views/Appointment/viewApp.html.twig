@@ -124,9 +124,9 @@
 
         <div class="modal-footer">
             {% if (appointment.state == 1) or (appointment.state == 2) %}
-                <button type="button" class="btn {{ appointment.phoneConfirm ? 'btn-default' : 'btn-warning' }}" id="phoneButton"><i class="fa fa-phone icon20"></i> {{ appointment.phoneConfirm ? 'Отменить Звонок' : 'Звонок' }}</button>
+                <button type="button" class="btn {{ appointment.phoneConfirm ? 'btn-default' : 'btn-warning' }}" id="phoneButton"><i class="fa fa-phone icon20"></i> {{ appointment.phoneConfirm ? 'Отменить' : 'Звонок' }}</button>
                 <button type="button" class="btn btn-danger"  id="reasonButton">Закрыть по причине</button>
-                <button type="button" class="btn btn-primary" id="editButton">Перенести</button>
+                <button type="button" class="btn btn-primary" id="editButton">Редактировать</button>
                 <button type="button" class="btn btn-success" id="orderButton">Оформить</button>
             {% elseif appointment.state == 3 %}
                 <button type="button" class="btn btn-success" id="openButton">Открыть</button>

@@ -9,9 +9,11 @@ namespace Ortofit\Bundle\BackOfficeFrontBundle\Order\State;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Person;
 use Ortofit\Bundle\BackOfficeBundle\Entity\PersonService;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ServiceGroup;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\AppReminderManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\PersonManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\PersonServiceManager;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceGroupManager;
 use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceManager;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -50,6 +52,10 @@ class ServiceState extends AbstractState
      * @var AppReminderManager
      */
     private $appReminderManager;
+    /**
+     * @var ServiceGroupManager
+     */
+    private $serviceGroupManager;
 
     /**
      * @return integer[]
@@ -160,11 +166,18 @@ class ServiceState extends AbstractState
     }
 
     /**
-     * @return Service[]
+     * @return array|\Doctrine\Common\Collections\ArrayCollection
      */
     private function getServices()
     {
-        return $this->serviceManager->findBy([], ['id'=>'ASC']);
+//        return $this->serviceManager->findBy([], ['id'=>'ASC']);
+        if ($this->app->getService()->getAlias() == ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE) {
+            /** @var ServiceGroup $group */
+            $group = $this->serviceGroupManager->findOneBy(['alias'=>ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE]);
+        } else {
+            $group = $this->serviceGroupManager->findOneBy(['alias'=>ServiceGroup::SERVICE_GROUP_ALIAS_BASE], ['id' =>'ASC']);
+        }
+        return (null === $group) ? [] : $group->getServices();
     }
 
     /**
@@ -214,6 +227,14 @@ class ServiceState extends AbstractState
     public function setServiceManager(ServiceManager $serviceManager)
     {
         $this->serviceManager = $serviceManager;
+    }
+
+    /**
+     * @param ServiceGroupManager $serviceGroupManager
+     */
+    public function setServiceGroupManager($serviceGroupManager)
+    {
+        $this->serviceGroupManager = $serviceGroupManager;
     }
 
 

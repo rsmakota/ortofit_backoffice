@@ -43,6 +43,7 @@ BackOffice.Calendar = {
             monthNamesShort:['Янв.','Фев.','Мрт.','Апр.','Май','Июн','Июл','Авг.','Сен.','Окт.','Нбр.','Дек.'],
             dayNames:       ['Воскресенье','Понедельник','Вторник','Среда','Чеверг','Пятница','Суббота'],
             dayNamesShort:  ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+            columnFormat:   'ddd D/M',
             timeFormat:     'H:mm',
             axisFormat:     'H:mm',
             firstHour:      9,

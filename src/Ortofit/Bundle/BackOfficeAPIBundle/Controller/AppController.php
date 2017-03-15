@@ -310,6 +310,7 @@ class AppController extends BaseController
             $app->setDateTime($date);
             $app->setDuration($request->get('duration'));
             $app->setOffice($office);
+            $app->setDescription($request->get('description'));
             $this->getAppointmentManager()->merge($app);
 
         } catch (\Exception $e) {

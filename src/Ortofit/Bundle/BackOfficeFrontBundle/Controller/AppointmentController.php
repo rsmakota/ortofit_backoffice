@@ -113,7 +113,8 @@ class AppointmentController extends BaseController
             'currentDate'     => $app->getDateTime(),
             'currentTime'     => $app->getDateTime()->format('H:i'),
             'doctors'         => $this->getGroupManaget()->findGroupBy(['name' => 'Doctor'])->getUsers(),
-            'duration'        => $app->getDuration()
+            'duration'        => $app->getDuration(),
+            'description'     => $app->getDescription()
         ];
 
         return $this->render('@OrtofitBackOfficeFront/Appointment/reschedule.html.twig', $data);

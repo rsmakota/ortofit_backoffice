@@ -39,13 +39,16 @@ class LoadFamilyStatusData extends AbstractFixture implements OrderedFixtureInte
      */
     public function load(ObjectManager $manager)
     {
+        $i = 0;
         foreach ($this->generalStatuses as $alias => $name) {
             $entity = new FamilyStatus();
             $entity->setName($name);
             $entity->setAlias($alias);
             $entity->setGeneral(true);
+            $entity->setPosition($i);
             $manager->persist($entity);
             $this->addReference('status:' . $alias, $entity);
+            $i++;
         }
 
         foreach ($this->extendedStatuses as $alias => $name) {
@@ -53,7 +56,9 @@ class LoadFamilyStatusData extends AbstractFixture implements OrderedFixtureInte
             $entity->setName($name);
             $entity->setAlias($alias);
             $entity->setGeneral(false);
+            $entity->setPosition($i);
             $manager->persist($entity);
+            $i++;
         }
         $manager->flush();
     }

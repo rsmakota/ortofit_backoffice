@@ -25,7 +25,7 @@ BackOffice.FormOrderChoosePerson = {
      * @returns {jQuery|HTMLElement}
      */
     getBtnPerson: function() {
-        return $('#personButton');
+        return $('.personButton');
     },
     /**
      * @returns {jQuery|HTMLElement}

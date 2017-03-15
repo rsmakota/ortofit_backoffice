@@ -42,6 +42,7 @@ services:
             - [setServiceManager, ["@ortofit_back_office.service_manage"]]
             - [setPersonManager, ["@ortofit_back_office.person_manage"]]
             - [setAppReminderManager, ["@ortofit_back_office.app_reminder_manage"]]
+            - [setServiceGroupManager, ["@ortofit_back_office.app_service_group_manage"]]
             - [setLogger, ["@logger"]]
         tags:
             - { name: monolog.logger, channel: app_order }
@@ -111,7 +112,7 @@ services:
         calls:
             - [setGroupManager, ["@fos_user.group_manager"]]
             - [setAppManager, ["@ortofit_back_office.appointment_manage"]]
-            - [setServiceManager, ["@ortofit_back_office.service_manage"]]
+            - [setServiceGroupManager, ["@ortofit_back_office.app_service_group_manage"]]
             - [setDirectionManager, ["@ortofit_back_office.client_direction_manage"]]
             - [setOfficeManager, ["@ortofit_back_office.office_manage"]]
             - [setCountryManager, ["@ortofit_back_office.client_country_manage"]]

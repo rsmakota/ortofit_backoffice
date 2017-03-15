@@ -9,7 +9,7 @@ BackOffice.OrderChoosePerson = {
         helper.getBtnClient().click(this._clientBtnHandler);
         helper.getBtnPerson().click(this._personBtnHandler);
         helper.getBtnNewPerson().click(this._newPersonBtnHandler);
-        helper.getSelectPerson().change(this._personSelectHandler);
+        // helper.getSelectPerson().change(this._personSelectHandler);
     },
     /**
      * @private
@@ -26,14 +26,11 @@ BackOffice.OrderChoosePerson = {
      * @private
      */
     _personBtnHandler: function() {
-        var hlp = BackOffice.FormOrderChoosePerson;
-        if(!hlp.isActBtnPerson()) {
-            return false;
-        }
+        // var hlp = BackOffice.FormOrderChoosePerson;
         var data = {
             appId:  BackOffice.OrderChoosePerson.appId,
             action: "personChoose",
-            personId: hlp.getPersonId()
+            personId: $(this).attr('personId')
         };
         BackOffice.Modal.load(BackOffice.OrderChoosePerson.postUrl, data);
     },
