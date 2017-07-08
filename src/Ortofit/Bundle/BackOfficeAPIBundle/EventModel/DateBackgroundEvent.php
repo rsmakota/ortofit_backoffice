@@ -43,13 +43,13 @@ class DateBackgroundEvent implements CalendarEventInterface
             'start'     => $this->start,
             'end'       => $this->end,
             'color'     => $this->color,
-            'overlap'   => $this->overlap,
+//            'overlap'   => $this->overlap,
             'rendering' => $this->rendering,
         ];
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getStart()
     {
@@ -57,7 +57,7 @@ class DateBackgroundEvent implements CalendarEventInterface
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getEnd()
     {

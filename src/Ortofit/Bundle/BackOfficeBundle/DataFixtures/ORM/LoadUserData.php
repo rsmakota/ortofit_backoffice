@@ -22,7 +22,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 
     static public $doctorNames = ['svat' =>'Св.Л',  'lesya' => 'Леся',  'ser' => 'Сер.Н',  'eva'=>'Ев.А',  'elena'=>'Елена'];
 
-    static public function getDoctorRefNames()
+    public static function getDoctorRefNames()
     {
         $doctors = [];
         $doctorKeys = array_keys(self::$doctorNames);
@@ -50,6 +50,10 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $admin->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
         $admin->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
         $admin->addGroup($this->getReference('group:admin'));
+        $admin->setLocked(false);
+        $admin->setExpired(false);
+        $admin->setCredentialsExpired(false);
+
         $manager->persist($admin);
         foreach (self::$doctorNames as $key => $name) {
             $doctor = new User();
@@ -62,6 +66,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             $doctor->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
             $doctor->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
             $doctor->addGroup($this->getReference('group:doctor'));
+            $doctor->setLocked(false);
+            $doctor->setExpired(false);
+            $doctor->setCredentialsExpired(false);
             $this->addReference('doctor:'.$key, $doctor);
             $manager->persist($doctor);
         }
@@ -77,6 +84,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $operator->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
         $operator->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
         $operator->addGroup($this->getReference('group:operator'));
+        $operator->setLocked(false);
+        $operator->setExpired(false);
+        $operator->setCredentialsExpired(false);
         $manager->persist($operator);
 
         $manager->flush();
