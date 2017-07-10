@@ -110,5 +110,8 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: back_office
     user_class: Ortofit\Bundle\BackOfficeBundle\Entity\User
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
     group:
         group_class: Ortofit\Bundle\BackOfficeBundle\Entity\Group

@@ -25,6 +25,19 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    /**
+     * @ORM\Column(type="boolean", name="locked")
+     */
+    protected $locked;
+
+    /**
+     * @ORM\Column(type="boolean", name="expired")
+     */
+    protected $expired;
+    /**
+     * @ORM\Column(type="boolean", name="credentials_expired")
+     */
+    protected $credentialsExpired;
 
     public function setSalt($salt)
     {
@@ -65,5 +78,54 @@ class User extends BaseUser
             'name' => $this->getName()
         ];
     }
+
+    /**
+     * @return boolean
+     */
+    public function getLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * @param boolean $locked
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getExpired()
+    {
+        return $this->expired;
+    }
+
+    /**
+     * @param boolean $expired
+     */
+    public function setExpired($expired)
+    {
+        $this->expired = $expired;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getCredentialsExpired()
+    {
+        return $this->credentialsExpired;
+    }
+
+    /**
+     * @param boolean $credentialsExpired
+     */
+    public function setCredentialsExpired($credentialsExpired)
+    {
+        $this->credentialsExpired = $credentialsExpired;
+    }
+
 
 }
