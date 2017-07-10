@@ -66,69 +66,44 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $manager = $this->getManager();
-        $baseGroup = new ServiceGroup();
-        $baseGroup->setAlias(ServiceGroup::SERVICE_GROUP_ALIAS_BASE);
-        $baseGroup->setName(ServiceGroup::SERVICE_GROUP_ALIAS_BASE);
-        $manager->persist($baseGroup);
 
-        $baseMassageGroup = new ServiceGroup();
-        $baseMassageGroup->setAlias(ServiceGroup::SERVICE_GROUP_ALIAS_BASE_MASSAGE);
-        $baseMassageGroup->setName(ServiceGroup::SERVICE_GROUP_ALIAS_BASE_MASSAGE);
-        $manager->persist($baseMassageGroup);
-
-        $massageGroup = new ServiceGroup();
-        $massageGroup->setName(ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE);
-        $massageGroup->setAlias(ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE);
-        $manager->persist($massageGroup);
-
-        $manager->flush();
-        /** @var Service[] $services */
-        $services = $this->getServiceManager()->all();
-        foreach ($services as $service) {
-            if ($service->getAlias() === Service::ALIAS_MASSAGE) {
-                $service->setServiceGroup($baseMassageGroup);
-            } else {
-                $service->setServiceGroup($baseGroup);
-            }
-            $manager->merge($service);
-        }
-        $manager->flush();
+        $massageGroup = $manager->getRepository(ServiceGroup::class)->findOneBy(['alias' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE]);
 
         $massageServicesData = [
-            'Массаж детский + лечебная гимнастика' => [
+            'ЛФК - одно занятие' => [
                 'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
                 'color' => '#c93c20',
-                'short' => '(Д+ЛГ)',
+                'short' => '(ЛФК)',
                 'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
             ],
-            'Кинезиотерапия' => [
-                'alias' => Service::ALIAS_KINESIOTERAPY,
+            'Массаж спины детский (до 11 лет)' => [
+                'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
                 'color' => '#c93c20',
-                'short' => '(КТ-я)',
+                'short' => '(МС<11)',
                 'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
             ],
-            'Кинезиомассаж детский' => [
-                'alias' => Service::ALIAS_KINESIO_MASSAGE_CHILD,
+            'Массаж спины (с 12 лет)' => [
+                'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
                 'color' => '#c93c20',
-                'short' => '(КМ)',
+                'short' => '(МС>12)',
                 'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
             ],
-            'Массаж антицеллюлитный' => [
-                'alias' => Service::ALIAS_MASSAGE_ANTI_CELLULITE,
+            'Массаж детский общий (с 10 лет до 16 лет)' => [
+                'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
                 'color' => '#c93c20',
-                'short' => '(АЦ)',
+                'short' => '(МДО<16)',
                 'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
             ],
-            'Массаж стоп' => [
-                'alias' => Service::ALIAS_FOOT_MASSAGE,
-                'color' => '#c93c20',
-                'short' => '(Cтоп)',
-                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
-            ],
-            'Лечебный массаж спины' => [
+            'Общий массаж + мануальная терапия' => [
                 'alias' => Service::ALIAS_BACK_MASSAGE,
                 'color' => '#c93c20',
-                'short' => '(ЛМС)',
+                'short' => '(ОМ+МТ)',
+                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
+            ],
+            'Массаж плечевого пояса + верхних конечностей' => [
+                'alias' => Service::ALIAS_BACK_MASSAGE,
+                'color' => '#c93c20',
+                'short' => '(МПВК)',
                 'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
             ]
         ];
