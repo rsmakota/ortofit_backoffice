@@ -63,7 +63,7 @@ class EventService
      *
      * @return CalendarEventInterface[]
      */
-    private function createOffEvents($range, $office, $user=null)
+    private function createOffEvents($range, $office, $user = null)
     {
         $schedules = $this->scheduleManager->findByRange($range, $office, $user);
         $sortedSchedules = [];
@@ -71,8 +71,8 @@ class EventService
         for($i = 0; $i < $count; $i++) {
             $schedule = $schedules[$i];
             $j = $i+1;
-            while (($j < $count) && ($schedule->getEnd()->getTimestamp() > $schedules[$j]->getStart()->getTimestamp())) {
-                if ($schedule->getEnd()->getTimestamp() < $schedules[$j]->getEnd()->getTimestamp()) {
+            while (($j < $count) && ($schedule->getEnd()->getTimestamp() >= $schedules[$j]->getStart()->getTimestamp())) {
+                if ($schedule->getEnd()->getTimestamp() <= $schedules[$j]->getEnd()->getTimestamp()) {
                     $schedule->setEnd($schedules[$j]->getEnd());
                 }
                 $j++;
@@ -80,9 +80,11 @@ class EventService
             $i = $j - 1;
             $sortedSchedules[] = $schedule;
         }
-        $grid      = $this->createScheduleGrid($range, $sortedSchedules);
+
+        $grid = $this->createScheduleGrid($range, $sortedSchedules);
 
         return $this->offHoursBuilder->create($grid);
+
     }
 
 //    /**
