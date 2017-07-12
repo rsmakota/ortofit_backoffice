@@ -15,11 +15,10 @@ BackOffice.OrderNewPerson = {
 
         var data = hlp.getFormData();
 
-        if ((data.name.length < 3) || (data.born.length < 10)) {
+        if ((data.name.length < 1) || (data.born.length < 10)) {
             return false;
         }
         BackOffice.Modal.load(BackOffice.OrderNewPerson.postUrl, data);
     }
-
 
 };
