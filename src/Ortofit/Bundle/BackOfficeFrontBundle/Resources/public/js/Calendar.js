@@ -78,8 +78,6 @@ BackOffice.Calendar = {
             },
 
             eventRender: function(event, element,  view) {
-
-                console.log(element);
                 if (event.phone) {
                     element.find('.fc-title').append(' <i class="fa fa-phone icon20" style="position: absolute; right:5px; top:2px;"></i>');
                 }

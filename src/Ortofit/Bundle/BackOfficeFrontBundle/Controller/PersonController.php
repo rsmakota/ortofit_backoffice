@@ -42,9 +42,11 @@ class PersonController extends BaseController
         $manager = $this->getClientManager();
         $client  = $manager->get($request->get('clientId'));
         $lastApp = $this->getAppointmentManager()->findOneBy(['client'=>$client], ['id'=>'DESC']);
+        $allApp  = $this->getAppointmentManager()->findBy(['client'=>$client], ['id'=>'DESC']);
         $data = [
             'client' => $client,
-            'lastApp'=> $lastApp
+            'lastApp'=> $lastApp,
+            'allApp' => $allApp
         ];
 
         return $this->render('@OrtofitBackOfficeFront/Person/index.html.twig', $data);

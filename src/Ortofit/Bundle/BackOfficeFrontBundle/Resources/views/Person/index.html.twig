@@ -100,6 +100,69 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                <table class="table table-striped" style="text-align: center">
+                    <thead>
+                    <tr >
+                        <th style="text-align: center">Дата</th>
+                        <th style="text-align: center">Оффис</th>
+                        <th style="text-align: center">Врач</th>
+                        <th style="text-align: center">Заявка</th>
+                        <th style="text-align: center">Оказана</th>
+                        <th style="text-align: center">Оформлен</th>
+                        <th style="text-align: center">Причина</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# @var app \Ortofit\Bundle\BackOfficeBundle\Entity\Appointment #}
+                    {% for app in allApp %}
+                        <tr>
+                            <td>{{ app.getDateTime().format('d/m/Y') }}</td>
+                            <td>
+                                {% if app.office != null %}
+                                    {{ app.office.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if app.user != null %}
+                                {{ app.user.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if app.service != null %}
+                                {{ app.service.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {# @var service \Ortofit\Bundle\BackOfficeBundle\Entity\PersonService#}
+                                {% for service in app.personServices  %}
+                                    ({{ service.person.familyStatus.name}}) <strong>{{ service.person.name }}</strong>: {{ service.service.name }}<br>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% if app.state == 4 %}
+                                    <i class="fa fa-check" aria-hidden="true" style="color: green"></i>
+                                {% elseif  app.state == 3 %}
+                                    <i class="fa fa-close" aria-hidden="true" style="color: red"></i>
+                                {% else %}
+                                    <i class="fa fa-circle-thin" aria-hidden="true" style="color: grey"></i>
+                                {% endif  %}
+
+                            </td>
+                            <td>
+                                {% for reason in app.appointmentReasons %}
+                                {{ reason.reason.name }} <br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
     </section>
     <script>
         $(document).ready(function () {
