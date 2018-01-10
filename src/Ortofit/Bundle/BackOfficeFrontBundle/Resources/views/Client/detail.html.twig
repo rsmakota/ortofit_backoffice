@@ -55,6 +55,7 @@
                 <thead>
                 <tr >
                     <th style="text-align: center">Дата</th>
+                    <th style="text-align: center">Время</th>
                     <th style="text-align: center">Оффис</th>
                     <th style="text-align: center">Врач</th>
                     <th style="text-align: center">Заявка</th>
@@ -67,6 +68,7 @@
                 {% for app in apps %}
                 <tr>
                     <td>{{ app.dateTime.format('d/m/Y') }}</td>
+                    <td>{{ app.dateTime.format('H:i') }}</td>
                     <td>{{ app.office.name }}</td>
                     <td>{{ app.user.name }}</td>
                     <td>

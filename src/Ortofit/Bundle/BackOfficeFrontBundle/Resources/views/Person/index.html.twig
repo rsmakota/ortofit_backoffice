@@ -107,6 +107,7 @@
                     <thead>
                     <tr >
                         <th style="text-align: center">Дата</th>
+                        <th style="text-align: center">Время</th>
                         <th style="text-align: center">Оффис</th>
                         <th style="text-align: center">Врач</th>
                         <th style="text-align: center">Заявка</th>
@@ -120,6 +121,7 @@
                     {% for app in allApp %}
                         <tr>
                             <td>{{ app.getDateTime().format('d/m/Y') }}</td>
+                            <td>{{ app.getDateTime().format('H:i') }}</td>
                             <td>
                                 {% if app.office != null %}
                                     {{ app.office.name }}
