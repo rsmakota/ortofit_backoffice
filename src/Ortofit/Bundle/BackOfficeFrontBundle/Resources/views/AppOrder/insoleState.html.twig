@@ -1,0 +1,68 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Размеры и типы стелек</h4>
+        </div>
+
+        <div class="modal-body">
+            {% include "@OrtofitBackOfficeFront/AppOrder/panel.html.twig" %}
+            <form class="form-horizontal" id="insoleForm" >
+                <table class="table table-striped" align="center" style="width:80%">
+                    <thead>
+                    <tr>
+                        <th>Размер</th>
+                        <th>Тип</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in 1..insolesNum %}
+                        <tr id="insoleTr{{ i }}" class="form-group" >
+                            <td>
+                                <input type="text" id="insoleSize{{ i }}" class="form-control insole-size" onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="" title="Размер" size="5" >
+                            </td>
+                            <td>
+                                <select id="insoleType{{ i }}" class="form-control insole-type" title="Тип">
+                                    {% for insoleType in insoleTypes %}
+                                         {#@var insoleType \Ortofit\Bundle\BackOfficeBundle\Entity\InsoleType#}
+                                        <option value="{{ insoleType.id }}">{{ insoleType.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    <tr class="endTr"></tr>
+                    </tbody>
+                    {#<tfoot>#}
+                    {#<tr>#}
+                        {#<td><button class="btn btn-primary btn-xs" type="button" id="btnAdd"><i class="fa fa-plus icon20"></i></button>#}
+                            {#<button class="btn btn-danger btn-xs"  type="button" id="btnRm"><i class="fa fa-minus icon20"></i></button>#}
+                        {#</td>#}
+                        {#<td></td>#}
+                    {#</tr>#}
+                    {#</tfoot>#}
+                </table>
+
+                <input type="hidden" id="appId"    name="appId"    value="{{ app.id }}"   >
+                <input type="hidden" id="personId" name="personId" value="{{ person.id }}">
+                <input type="hidden" id="stateId"  name="stateId"  value="{{ stateId }}">
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="nextButton">Далее</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var control = BackOffice.OrderInsole;
+        control.postUrl = "{{ url('bf_app_order_process') }}";
+        control.appId   = {{ app.id }};
+        control.init();
+    });
+</script>

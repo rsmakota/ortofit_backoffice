@@ -1,0 +1,118 @@
+{% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
+
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Клиенты
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url('bf_client') }}"><i class="fa fa-credit-card"></i>Список клиентов</a></li>
+        </ol>
+    </section>
+    <!-- content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <form action="">
+                        {#<h3 class="box-title">Список клиентов</h3>#}
+                        <div class="box-tools">
+                            <div class="input-group" style="width: 200px;">
+                                <input class="form-control input-sm pull-right" type="text" placeholder="телефон"
+                                       name="msisdn" value="{{ msisdn }}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="box-body no-padding">
+                        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-striped dataTable" role="grid"
+                                           aria-describedby="example1_info" id="clientTable">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Пол</th>
+                                            <th>Имя</th>
+                                            <th>Телефон</th>
+                                            <th>Источник</th>
+                                            <th>Стал клиентом</th>
+                                            <th>Человек</th>
+                                            <th> -</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for client in clients %}
+                                            <tr>
+                                                <td>{{ client.id }}</td>
+                                                <td>
+                                                    {% if client.gender == 'male' %}
+                                                        <i class="fa fa-mars"></i>
+                                                    {% elseif client.gender == 'female' %}
+                                                        <i class="fa fa-venus"></i>
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ url('bf_person', {'clientId':client.id}) }}"> {{ client.name|default('------') }} </a>
+                                                </td>
+                                                <td>{{ client.msisdn }}</td>
+                                                <td>{{ client.getClientDirection().getName()|default('------') }}</td>
+                                                <td>{{ client.getCreated()|date('d/m/Y') }}</td>
+                                                <td>{{ client.getPersons().count() }}</td>
+                                                <td><i class="fa fa-pencil edit" style="cursor: pointer;"
+                                                       client-id="{{ client.id }}"></i></td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-primary" id="newClient">Новый клиент</button>
+                            </div>
+                            <div class="col-sm-10">
+                                {% include "@OrtofitBackOfficeFront/Utills/Paginator/paginator.html.twig" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    {% javascripts
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/ClientList.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/ClientListHelper.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            var control = BackOffice.ClientList;
+            control.url = '{{ url('bf_client_form') }}';
+            control.clientIdAtr = 'client-id';
+            control.init();
+        });
+    </script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,6 +1,14 @@
-ortofit_back_office:
-    resource: "@OrtofitBackOfficeBundle/Resources/config/routing.yml"
+rsmakota_utility:
+    resource: "@RsmakotaUtilityBundle/Resources/config/routing.yml"
     prefix:   /
+
+ortofit_back_office_front:
+    resource: "@OrtofitBackOfficeFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ortofit_back_office_api:
+    resource: "@OrtofitBackOfficeAPIBundle/Resources/config/routing.yml"
+    prefix:   /api
 
 ortofit_sing_up:
     resource: "@OrtofitSingUpBundle/Resources/config/routing.yml"

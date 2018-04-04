@@ -1,0 +1,106 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Напоминание №{{ remind.id }} </h4>
+        </div>
+        <div class="modal-body">
+            <ul class="list-group" style="text-align: center">
+                <li class="list-group-item list-group-item-info">
+                    <strong> Прошлый визит №{{ remind.appointment.id }}: </strong>&nbsp;
+                    <i class="fa fa-user-md icon20"> </i> {{ remind.appointment.user.name|default('') }} &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-building icon20"></i> {{ remind.appointment.office.name|default('') }} &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-calendar icon20"></i> {{ remind.appointment.dateTime.format('d/m/Y') }} &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-clock-o icon20"> </i> {{ remind.appointment.dateTime.format('H:i') }}
+
+                </li>
+            </ul>
+            <h4>Напоминание:</h4>
+            <form class="form-horizontal" id="appRemindForm" name="appRemindForm">
+
+                <div class="form-group">
+                    <label for="inputDate" class="col-sm-3 control-label">Клиент:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon" >
+                                <i class="fa fa-credit-card icon20"></i>
+                            </div>
+
+                        <div class="form-control pull-right" disabled>
+                            {{ remind.appointment.client.name|default('') }}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDate" class="col-sm-3 control-label">Услуги:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-star icon20"></i>
+                            </div>
+                            <div class="form-control pull-right" disabled>
+
+                                {% for service in remind.appointment.personServices %}
+                                    {{ service.service.name }}
+                                    {% if not loop.last %},{% endif %}
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDate" class="col-sm-3 control-label">Дата:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar icon20"></i>
+                            </div>
+                            <input id="date" name="date" class="form-control pull-right active" type="text"
+                                   data-inputmask="'alias': 'dd/mm/yyyy'" data-mask
+                                   placeholder="{{ "now"|date("d/m/Y") }}"
+                                   value="{{ remind.dateTime.format('d/m/Y') }}"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="textareaDescription" class="col-sm-3 control-label">Текст:</label>
+
+                    <div class="col-sm-9">
+                            <textarea class="form-control" rows="3"
+                                      id="description" name="description"
+                                      title="description">{{ remind.description }}</textarea>
+                    </div>
+                </div>
+
+                <input type="hidden" id="id" name="id" value="{{ remind.id }}"/>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="removeButton">Удалить</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" id="updateButton">Обновить</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var form = BackOffice.AppRemindForm;
+        form.updateUrl = "{{ url('api_app_reminder_update') }}";
+        form.removeUrl = "{{ url('api_app_reminder_remove') }}";
+        form.appUrl    = '{{ url('bf_app_view_app') }}';
+        form.init();
+    });
+</script>

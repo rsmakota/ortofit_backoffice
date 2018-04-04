@@ -1,0 +1,128 @@
+api_app_create:
+    path:     /app/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:create }
+api_app_update:
+    path:     /app/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:update }
+api_app_delete:
+    path:     /app/delete
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:delete }
+api_app_get:
+    path:     /app/get/{userId}
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:getApp }
+api_app_get_all:
+    path:     /app/get_all
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:getApp }
+api_app_get_allow_dates:
+    path:     /app/allow_dates
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:allowDates }
+api_app_get_allow_times:
+    path:     /app/allow_times
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:allowTimes }
+api_app_move:
+    path:     /app/move
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:move }
+api_app_phone_confirm:
+    path:     /app/phone_confirm
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:phoneConfirm }
+
+api_app_open:
+    path:     /app/open
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:App:open }
+
+api_chart_app_count:
+    path:     /chart/app_count
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Chart:appCount }
+api_chart_client_count:
+    path:     /chart/client_count
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Chart:direction}
+api_chart_indicator:
+    path:     /chart/indicator/{name}/{format}
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Chart:indicator }
+
+
+api_app_reason_create:
+    path:     /app_reason/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReason:create }
+
+api_staff_schedule_get:
+    path:     /staff_schedule/get/{userId}
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:getSchedules}
+api_staff_schedule_get_all:
+    path:     /staff_schedule/get_all
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:getSchedules}
+api_staff_schedule_create:
+    path:     /staff_schedule/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:create}
+api_staff_schedule_update:
+    path:     /staff_schedule/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:update}
+api_staff_schedule_delete:
+    path:     /staff_schedule/delete
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:StaffSchedule:delete}
+
+api_client_update:
+    path:     /client/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:update }
+api_client_create:
+    path:     /client/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:create }
+api_client_find:
+    path:     /client/find
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:find }
+
+api_client_get:
+    path:     /client/get
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Client:get }
+
+api_doctor_all:
+    path:     /doctor/all
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Doctor:all }
+
+api_diagnosis_create:
+    path:     /diagnosis/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Diagnosis:create }
+api_diagnosis_update:
+    path:     /diagnosis/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Diagnosis:update }
+
+api_person_create:
+    path:     /admin/person/create
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Person:create }
+api_person_update:
+    path:     /admin/person/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Person:update }
+
+api_app_reminder_get:
+    path: /remind/get
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:get }
+
+api_app_reminder_process:
+    path: /remind/process
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:process }
+api_app_reminder_num:
+    path: /remind/num
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:getNum }
+api_app_reminder_update:
+    path: /remind/update
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:update }
+api_app_reminder_remove:
+    path: /remind/remove
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:AppReminder:remove }
+
+api_app_order_unprocessed:
+    path: /order/unprocessed_data
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:getUnprocessed }
+api_app_order_num_unprocessed:
+    path: /order/unprocessed_count
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:getUnprocessedCount }
+api_app_order_process:
+    path: /order/process
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Order:process }
+
+api_report:
+    path: /report/get
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Report:get }
+api_report_forwarder:
+    path: /report/forwarder
+    defaults: { _controller: OrtofitBackOfficeAPIBundle:Report:forwarder}

@@ -24,7 +24,7 @@ class OfficeManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Office::clazz();
+        return Office::class;
     }
 
     /**
@@ -35,33 +35,4 @@ class OfficeManager extends AbstractManager
         return 'office_manager';
     }
 
-    /**
-     * @param ParameterBag $params
-     *
-     * @return object
-     */
-    public function create($params)
-    {
-
-        $entity = new Office();
-        $entity->setCity($params->get('city'));
-        $entity->setName($params->get('name'));
-        $this->persist($entity);
-
-        return $entity;
-    }
-
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        /** @var Office $entity */
-        $entity = $this->rGet($params->get('id'));
-        $entity->setCity($params->get('city'));
-        $entity->setName($params->get('name'));
-        $this->merge($entity);
-    }
 }

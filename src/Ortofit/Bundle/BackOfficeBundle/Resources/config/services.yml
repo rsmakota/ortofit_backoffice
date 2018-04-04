@@ -6,14 +6,31 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: ortofit_back_office.entity_manager_olm }
+    ortofit_back_office.appointment_reason_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\AppointmentReasonManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+
     ortofit_back_office.client_manage:
         class: Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+    ortofit_back_office.reason_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\ReasonManager
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: ortofit_back_office.entity_manager_olm }
 
     ortofit_back_office.client_direction_manage:
         class: Ortofit\Bundle\BackOfficeBundle\EntityManager\ClientDirectionManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+
+    ortofit_back_office.schedule_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\ScheduleManager
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: ortofit_back_office.entity_manager_olm }
@@ -55,6 +72,33 @@ services:
             - { name: ortofit_back_office.entity_manager_olm }
     ortofit_back_office.office_manage:
         class: Ortofit\Bundle\BackOfficeBundle\EntityManager\OfficeManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+    ortofit_back_office.person_service_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\PersonServiceManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+    ortofit_back_office.app_reminder_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\AppReminderManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+    ortofit_back_office.app_insole_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\InsoleManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+
+    ortofit_back_office.app_insole_type_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\InsoleTypeManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: ortofit_back_office.entity_manager_olm }
+
+    ortofit_back_office.app_service_group_manage:
+        class: Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceGroupManager
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: ortofit_back_office.entity_manager_olm }

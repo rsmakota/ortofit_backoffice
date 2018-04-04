@@ -23,7 +23,7 @@ class ClientManager extends AbstractManager
      */
     public function findByMsisdn($msisdn)
     {
-        return $this->enManager->getRepository(Client::clazz())->findOneBy([self::PARAM_MSISDN => $msisdn]);
+        return $this->enManager->getRepository(Client::class)->findOneBy([self::PARAM_MSISDN => $msisdn]);
     }
 
     /**

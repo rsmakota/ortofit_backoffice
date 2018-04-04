@@ -1,0 +1,32 @@
+{% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
+
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Уведомления
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url('bf_remind_index') }}"><i class="fa fa-bell-o"></i>Уведомления</a></li>
+        </ol>
+    </section>
+    <!-- content -->
+    <section class="content">
+
+    </section>
+    <script>
+        $(document).ready(function () {
+            var ctrl = BackOffice.Remind;
+            ctrl.appAttr     = 'appId';
+            ctrl.editAttr    = 'remindId';
+            ctrl.editUrl     = '{{ url('bf_remind_edit') }}';
+            ctrl.appUrl      = '{{ url('bf_app_view_app') }}';
+            ctrl.dataPath    = '{{ url('api_app_reminder_get') }}';
+            ctrl.processPath = '{{ url('api_app_reminder_process') }}';
+            ctrl.clientDetailUrl= '{{ url('bf_client_detail') }}';
+            ctrl.tipTemplate = '{% filter replace({"\n":"", "    ":" "})| raw  %} {% include('@OrtofitBackOfficeFront/Reminder/template/remindTip.html.twig')  %}{% endfilter %}';
+            ctrl.init();
+        });
+    </script>
+{% endblock %}
+

@@ -26,7 +26,7 @@ class ApplicationManager extends AbstractManager
      */
     public function getApp($appId)
     {
-        $app = $this->enManager->getRepository(Application::clazz())->find($appId);
+        $app = $this->enManager->getRepository(Application::class)->find($appId);
         if (null == $app) {
             throw new \Exception('Can\'t find Application by id <<'.$appId.'>>');
         }

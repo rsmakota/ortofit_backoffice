@@ -22,7 +22,7 @@ class ServiceManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Service::clazz();
+        return Service::class;
     }
 
     /**
@@ -34,26 +34,13 @@ class ServiceManager extends AbstractManager
     }
 
     /**
-     * @param ParameterBag $params
+     * @param string $alias
      *
-     * @return object
+     * @return Service
      */
-    public function create($params)
+    public function findByAlias($alias)
     {
-        $entity = new Service();
-        $entity->setName($params->get('name'));
-        $this->persist($entity);
+        return $this->findOneBy(['alias'=>$alias]);
     }
 
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        $entity = $this->rGet($params->get('id'));
-        $entity->setName($params->get('name'));
-        $this->merge($entity);
-    }
 }

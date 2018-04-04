@@ -52,10 +52,49 @@ abstract class AbstractManager implements EntityManagerInterface
     /**
      * @param EntityInterface $entity
      */
-    protected function merge($entity)
+    public function merge($entity)
     {
         $this->enManager->merge($entity);
         $this->enManager->flush();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\ParameterBag $params
+     *
+     * @return mixed
+     */
+    public function create($params)
+    {
+        $class = $this->getEntityClassName();
+        $entity = new $class();
+        foreach ($params as $name => $value) {
+            $method = 'set'.ucfirst($name);
+            if (method_exists($entity, $method)) {
+                $entity->$method($value);
+            }
+        }
+        $this->persist($entity);
+
+        return $entity;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\ParameterBag $params
+     * @throws \Exception
+     * @return EntityInterface
+     */
+    public function update($params)
+    {
+        $entity = $this->rGet($params->get('id'));
+        foreach ($params as $name => $value) {
+            $method = 'set'.ucfirst($name);
+            if (method_exists($entity, $method)) {
+                $entity->$method($value);
+            }
+        }
+        $this->merge($entity);
+
+        return $entity;
     }
 
     /**
@@ -77,16 +116,28 @@ abstract class AbstractManager implements EntityManagerInterface
 
 
     /**
+     * @param array $params
+     *
      * @return integer
      */
-    public function count()
+    public function count($params = null)
     {
         $builder = $this->enManager->createQueryBuilder();
-        return $builder->select('COUNT(a)')
-            ->from($this->getEntityClassName(), 'a')
-            ->getQuery()
-            ->getSingleScalarResult();
+
+        $builder->select('COUNT(a)')
+            ->from($this->getEntityClassName(), 'a');
+        if (null !== $params) {
+            foreach ($params as $key=>$val) {
+                $builder->andWhere("a.$key = :$key");
+            }
+            $builder->setParameters($params);
+        }
+
+        return  $builder->getQuery()->getSingleScalarResult();
     }
+
+
+
 
     /**
      * @param integer $id

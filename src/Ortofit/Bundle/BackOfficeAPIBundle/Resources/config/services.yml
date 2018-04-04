@@ -1,0 +1,24 @@
+services:
+    backoffice_api.background_event_builder:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\EventBuilder\OffHoursEventBuilder
+        arguments: ["%calendar_off_hours_color%"]
+    backoffice_api.default_background_event_builder:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\EventBuilder\DefaultOffHoursEventBuilder
+        arguments: ["%calendar_off_hours_color%"]
+
+    backoffice_api.event_service:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\EventService\EventService
+        arguments: ["@ortofit_back_office.schedule_manage", "@backoffice_api.background_event_builder", "@backoffice_api.default_background_event_builder"]
+#        calls:
+#            - [setDefaultOffHoursData, ["%default_off_hours%"]]
+    backoffice_api.app_to_event_data_converter:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\Calendar\Converter\AppToEventDataConverter
+        arguments: ["%calendar_event_styles%"]
+
+    backoffice_api.response_decorator.morris:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\ResponseDecorator\MorrisDecorator
+
+    backoffice_api.chart_response_decorator:
+        class: Ortofit\Bundle\BackOfficeAPIBundle\ResponseDecorator\ChartResponseDecoratorService
+        calls:
+            - [add, ["@backoffice_api.response_decorator.morris"]]

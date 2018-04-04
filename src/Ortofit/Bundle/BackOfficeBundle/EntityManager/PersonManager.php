@@ -22,7 +22,7 @@ class PersonManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Person::clazz();
+        return Person::class;
     }
 
     /**
@@ -33,34 +33,4 @@ class PersonManager extends AbstractManager
         return 'person_manager';
     }
 
-    /**
-     * @param ParameterBag $params
-     *
-     * @return object
-     */
-    public function create($params)
-    {
-        $entity = new Person();
-        $entity->setName($params->get('name'));
-        $entity->setClient($params->get('client'));
-        $entity->setBorn($params->get('born'));
-        $entity->setFamilyStatus($params->get('familyStatus'));
-        $this->persist($entity);
-    }
-
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        /** @var Person $entity */
-        $entity = $this->rGet($params->get('id'));
-        $entity->setName($params->get('name'));
-        $entity->setClient($params->get('client'));
-        $entity->setBorn($params->get('born'));
-        $entity->setFamilyStatus($params->get('familyStatus'));
-        $this->merge($entity);
-    }
 }

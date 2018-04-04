@@ -23,8 +23,4 @@ interface EntityInterface
      */
     public function getData();
 
-    /**
-     * @return string
-     */
-    static public function clazz();
 }

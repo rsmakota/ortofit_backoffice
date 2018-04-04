@@ -1,0 +1,101 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Данные клиента</h4>
+        </div>
+        <div class="modal-body">
+
+            <form class="form-horizontal" id="clientForm" name="clientForm">
+
+                <div class="form-group">
+                    <label for="inputMsisdn" class="col-sm-3 control-label">Телефон:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <strong class="icon20">+{{ model.country.getPrefix() }}</strong>
+                            </div>
+                            <input type="text" class="form-control" id="msisdn" name="msisdn" data-mask=""
+                                   data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
+                                   value="{{ model.getLocalMsisdn() }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-3 control-label">Имя:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user icon20"> </i>
+                            </div>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Имя Клиента" value="{{ model.getName() }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectGender" class="col-sm-3 control-label">Пол:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-venus-mars icon20"></i>
+                            </div>
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="male">Мужской</option>
+                                <option value="female" {% if model.getGender() == 'famele' %} selected {% endif %} >Женский
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectDirectionId" class="col-sm-3 control-label">Источник:</label>
+
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-arrow-right icon20"></i>
+                            </div>
+                            <select class="form-control" id="clientDirectionId" name="clientDirectionId" title="direction">
+                                {% for direction in model.clientDirections %}
+                                    {% if direction.id == model.getClientDirectionId() %}
+                                        <option selected value="{{ direction.id }}">{{ direction.name }}</option>
+                                    {% else %}
+                                        <option value="{{ direction.id }}">{{ direction.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <input type="hidden" id="id"        name="id"        value="{{ model.id }}">
+                <input type="hidden" id="countryId" name="countryId" value="{{ model.country.getId() }}">
+                <input type="hidden" id="appId"     name="appId"     value="{{ app.id }}">
+                <input type="hidden" id="stateId"   name="stateId"   value="{{ stateId }}">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="clientButton">Далее</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var control         = BackOffice.OrderClient;
+        control.postUrl     = "{{ url('bf_app_order_process') }}";
+        control.appId       = {{ app.id }};
+        control.prefix      = "{{ model.country.getPrefix() }}";
+        control.pattern     = "{{ model.country.getPattern() }}";
+        control.undDirectId = {{ model.getUndefinedClientDirectionId() }};
+        control.init();
+    });
+</script>

@@ -20,7 +20,18 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\User;
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
 
-    private $doctorNames = ['svat' =>'Св.Л',  'lesya' => 'Леся',  'ser' => 'Сер.Н',  'eva'=>'Ев.А',  'elena'=>'Елена'];
+    static public $doctorNames = ['svat' =>'Св.Л',  'lesya' => 'Леся',  'ser' => 'Сер.Н',  'eva'=>'Ев.А',  'elena'=>'Елена'];
+
+    public static function getDoctorRefNames()
+    {
+        $doctors = [];
+        $doctorKeys = array_keys(self::$doctorNames);
+        foreach ($doctorKeys as $key) {
+            $doctors[] = 'doctor:'.$key;
+        }
+
+        return $doctors;
+    }
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -39,8 +50,12 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $admin->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
         $admin->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
         $admin->addGroup($this->getReference('group:admin'));
+        $admin->setLocked(false);
+        $admin->setExpired(false);
+        $admin->setCredentialsExpired(false);
+
         $manager->persist($admin);
-        foreach ($this->doctorNames as $key => $name) {
+        foreach (self::$doctorNames as $key => $name) {
             $doctor = new User();
             $doctor->setName($name);
             $doctor->setUsername('doctor' . $name);
@@ -51,6 +66,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             $doctor->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
             $doctor->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
             $doctor->addGroup($this->getReference('group:doctor'));
+            $doctor->setLocked(false);
+            $doctor->setExpired(false);
+            $doctor->setCredentialsExpired(false);
             $this->addReference('doctor:'.$key, $doctor);
             $manager->persist($doctor);
         }
@@ -66,10 +84,15 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $operator->setSalt('nstzpcv8dmsk8oocso8c48s0c0wkkgs');
         $operator->setPassword('$2y$13$nstzpcv8dmsk8oocso8c4u09IhighblmsbePPBLb5NZKASdkqjYiK');
         $operator->addGroup($this->getReference('group:operator'));
+        $operator->setLocked(false);
+        $operator->setExpired(false);
+        $operator->setCredentialsExpired(false);
         $manager->persist($operator);
 
         $manager->flush();
     }
+
+
 
     /**
      * Get the order of this fixture

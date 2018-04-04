@@ -51,11 +51,30 @@ class Person implements EntityInterface
      * @ORM\OrderBy({"id" = "ASC"})
      */
     private $diagnoses;
+
     /**
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="persons")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
     private $client;
+
+    /**
+     * @ORM\Column(type="boolean", name="is_client", options={"default": false})
+     */
+    private $isClient = false;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $gender;
+
+    /**
+     * @param $isClient
+     */
+    public function setIsClient($isClient)
+    {
+        $this->isClient = $isClient;
+    }
 
     /**
      * Construct
@@ -66,7 +85,7 @@ class Person implements EntityInterface
         $this->created   = new \DateTime();
     }
     /**
-     * @return mixed
+     * @return integer
      */
     public function getId()
     {
@@ -74,7 +93,7 @@ class Person implements EntityInterface
     }
 
     /**
-     * @param mixed $id
+     * @param integer $id
      */
     public function setId($id)
     {
@@ -82,7 +101,23 @@ class Person implements EntityInterface
     }
 
     /**
-     * @return mixed
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return string
      */
     public function getName()
     {
@@ -90,7 +125,7 @@ class Person implements EntityInterface
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
     public function setName($name)
     {
@@ -173,11 +208,23 @@ class Person implements EntityInterface
     }
 
     /**
-     * @return string
+     * @return boolean
      */
-    static public function clazz()
+    public function isClient()
     {
-        return get_class();
+        return $this->isClient;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isMan()
+    {
+        if ($this->gender == 'male') {
+            return true;
+        }
+
+        return false;
     }
 
     /**

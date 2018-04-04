@@ -1,0 +1,67 @@
+{% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
+{% block style %}
+    {{ parent() }}
+    <link href="{{ '../bundles/ortofitbackofficefront/plugins/morris/morris.css' }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    {% javascripts
+    '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/morris/morris.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/morris/prettify.min.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/plugins/morris/raphael-min.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/ChartApp.js'
+    '@OrtofitBackOfficeFrontBundle/Resources/public/js/Helper/ChartElement.js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            var control = BackOffice.ChartApp;
+            control.countUrl = '{{ url('api_chart_indicator', {name:'application_indicator', format:'morris', from:from, to:to, periodType:periodType})|raw }}';
+            control.countClientDirectUrl = '{{ url('api_chart_indicator', {name:'client_direction_indicator', format:'morris', from:from, to:to, periodType:periodType})|raw }}';
+            control.init();
+        });
+    </script>
+    {% endjavascripts %}
+{% endblock %}
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Показатели
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{{ url('bf_client') }}"><i class="fa fa-bar-chart"></i>Показатели</a></li>
+        </ol>
+    </section>
+    <!-- content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Заявки на прием</h3>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div id="app-general-count-line" class="chart" style="height: 200px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Новые клиенты</h3>
+                    </div>
+                    <div class="box-body chart-responsive">
+                        <div id="app-general-count-client-direction" class="chart" style="height: 200px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+{% endblock %}

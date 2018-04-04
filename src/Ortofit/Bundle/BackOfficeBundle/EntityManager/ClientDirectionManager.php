@@ -17,13 +17,13 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class ClientDirectionManager extends AbstractManager
 {
-
+    
     /**
      * @return string
      */
     protected function getEntityClassName()
     {
-        return ClientDirection::clazz();
+        return ClientDirection::class;
     }
 
     /**
@@ -35,27 +35,10 @@ class ClientDirectionManager extends AbstractManager
     }
 
     /**
-     * @param ParameterBag $params
-     *
-     * @return object
+     * @return null|ClientDirection
      */
-    public function create($params)
+    public function getUnknown()
     {
-        $entity = new ClientDirection();
-        $entity->setName($params->get('name'));
-        $this->persist($entity);
-    }
-
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        /** @var ClientDirection $entity */
-        $entity = $this->rGet($params->get('id'));
-        $entity->setName($params->get('name'));
-        $this->merge($entity);
+        return $this->enManager->getRepository($this->getEntityClassName())->findOneBy(['alias'=>ClientDirection::DIRECTION_ALIAS_UNKNOWN]);
     }
 }

@@ -5,6 +5,7 @@
  */
 
 namespace Ortofit\Bundle\BackOfficeBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Appointment
@@ -16,10 +17,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Appointment implements EntityInterface
 {
-    const STATE_NEW      = 1;
-    const STATE_RECORD   = 2;
-    const STATE_NOT_CAME = 3;
-    const STATE_SUCCESS  = 4;
+    const STATE_NEW          = 1;
+    const STATE_RECORD       = 2;
+    const STATE_CLOSE_REASON = 3;
+    const STATE_SUCCESS      = 4;
 
     /**
      * @ORM\Id
@@ -35,6 +36,7 @@ class Appointment implements EntityInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
     private $dateTime;
 
@@ -79,12 +81,68 @@ class Appointment implements EntityInterface
     private $user;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $forwarder;
+
+    /**
+     *  
+     * @ORM\OneToMany(targetEntity="AppointmentReason", mappedBy="appointment")
+     */
+    private $appointmentReasons;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PersonService", mappedBy="appointment")
+     */
+    private $personServices;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $bold = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $flyer = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppReminder", mappedBy="appointment")
+     * @ORM\OrderBy({"dateTime" = "DESC"})
+     */
+    private $reminds;
+
+    /**
+     * @ORM\Column(type="boolean", name="phone_confirm")
+     */
+    private $phoneConfirm = false;
+
+    /**
      * constructor.
      */
     public function __construct()
     {
-        $this->created = new \DateTime();
-        $this->state   = self::STATE_NEW;
+        $this->state              = self::STATE_NEW;
+        $this->created            = new \DateTime();
+        $this->reminds            = new ArrayCollection();
+        $this->personServices     = new ArrayCollection();
+        $this->appointmentReasons = new ArrayCollection();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getBold()
+    {
+        return $this->bold;
+    }
+
+    /**
+     * @param boolean $bold
+     */
+    public function setBold($bold)
+    {
+        $this->bold = $bold;
     }
 
     /**
@@ -95,6 +153,36 @@ class Appointment implements EntityInterface
         return $this->description;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getAppointmentReasons()
+    {
+        return $this->appointmentReasons;
+    }
+
+    /**
+     * @param $appointmentReasons
+     */
+    public function setAppointmentReasons($appointmentReasons)
+    {
+        $this->appointmentReasons = $appointmentReasons;
+    }
+    /**
+     * @return ArrayCollection
+     */
+    public function getPersonServices()
+    {
+        return $this->personServices;
+    }
+
+    /**
+     * @param ArrayCollection $personServices
+     */
+    public function setPersonServices($personServices)
+    {
+        $this->personServices = $personServices;
+    }
     /**
      * @return integer
      */
@@ -228,17 +316,11 @@ class Appointment implements EntityInterface
      */
     public function getEndDate()
     {
+        /** @var \DateTime $end */
         $end = clone $this->dateTime;
         $end->modify('+'.$this->duration.' min');
 
         return $end;
-    }
-    /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
     }
 
     /**
@@ -255,6 +337,64 @@ class Appointment implements EntityInterface
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getForwarder()
+    {
+        return $this->forwarder;
+    }
+
+    /**
+     * @param string $forwarder
+     */
+    public function setForwarder($forwarder)
+    {
+        $this->forwarder = $forwarder;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReminds()
+    {
+        return $this->reminds;
+    }
+
+    /**
+     * @param ArrayCollection $reminds
+     */
+    public function setReminds($reminds)
+    {
+        $this->reminds = $reminds;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getFlyer()
+    {
+        return $this->flyer;
+    }
+
+    /**
+     * @param boolean $flyer
+     */
+    public function setFlyer($flyer)
+    {
+        $this->flyer = $flyer;
+    }
+
+    public function getPhoneConfirm()
+    {
+        return $this->phoneConfirm;
+    }
+
+    public function setPhoneConfirm($phoneConfirm)
+    {
+        $this->phoneConfirm = $phoneConfirm;
     }
 
     /**
@@ -276,19 +416,4 @@ class Appointment implements EntityInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getCalendarData()
-    {
-        $service = $this->getService();
-        return [
-            'id'              => $this->id,
-            'title'           => $service->getShort(),
-            'start'           => $this->dateTime->format('c'),
-            'end'             => $this->getEndDate()->format('c'),
-            'backgroundColor' => $service->getColor(),
-            'borderColor'     => $service->getColor(),
-        ];
-    }
 }

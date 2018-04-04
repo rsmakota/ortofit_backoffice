@@ -18,10 +18,12 @@ use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
 class LoadClientDirectionData extends AbstractFixture implements OrderedFixtureInterface
 {
     private $sources = [
+        'unknown'  => 'Не определен',
         'internet' => 'Интернет',
         'bord'     => 'Наружная реклама',
         'friends'  => 'Посоветовали знакомы',
-        'return'   => 'Повторно'
+        'return'   => 'Повторно',
+
     ];
     /**
      * Load data fixtures with the passed EntityManager
@@ -30,12 +32,15 @@ class LoadClientDirectionData extends AbstractFixture implements OrderedFixtureI
      */
     public function load(ObjectManager $manager)
     {
+        $i = 1;
         foreach($this->sources as $key => $name) {
             $source = new ClientDirection();
             $source->setName($name);
             $source->setAlias($key);
+            $source->setOrderNum($i);
             $manager->persist($source);
             $this->addReference('clientDirection:'.$key, $source);
+            $i++;
         }
         $manager->flush();
 

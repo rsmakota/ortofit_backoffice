@@ -1,25 +1,34 @@
 <?php
 /**
- * @author    Rodion Smakota <rsmakota@nebupay.com>
- * @copyright 2015 Nebupay LLC
+ * @author    Rodion Smakota <rsmakota@gmail.com>
+ * @copyright 2016 Ortofit Co
  */
 
 namespace Ortofit\Bundle\BackOfficeBundle\Command\Console;
 
+use Doctrine\ORM\EntityManager;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
+use Ortofit\Bundle\BackOfficeBundle\Entity\FamilyStatus;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Group;
+use Ortofit\Bundle\BackOfficeBundle\Entity\InsoleType;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Reason;
+use Ortofit\Bundle\BackOfficeBundle\Entity\Schedule;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Service;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ServiceGroup;
 use Ortofit\Bundle\BackOfficeBundle\Entity\User;
+use Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceGroupManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 
 class ModifyDataCommand extends ContainerAwareCommand
 {
 
-    private $doctorNames = ['svyat' =>'Св.Л',  'lesya' => 'Леся',  'sern' => 'Сер.Н',  'eva'=>'Ев.А',  'elena'=>'Елена'];
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @return EntityManager
      */
     private function getManager()
     {
@@ -27,7 +36,14 @@ class ModifyDataCommand extends ContainerAwareCommand
     }
 
     /**
-     * @see Console\Command\Command
+     * @return object|\Ortofit\Bundle\BackOfficeBundle\EntityManager\ServiceManager
+     */
+    private function getServiceManager()
+    {
+        return $this->getContainer()->get('ortofit_back_office.service_manage');
+    }
+
+    /**
      */
     protected function configure()
     {
@@ -45,90 +61,62 @@ EOT
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @see Console\Command\Command
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $manager = $this->getManager();
-        $operator = new Group('Operator', ['ROLE_USER']);
-        $doctor   = new Group('Doctor', ['ROLE_USER']);
-        $admin    = new Group('Admin', ['ROLE_USER', 'ROLE_ADMIN']);
 
-        $manager->persist($operator);
-        $manager->persist($doctor);
-        $manager->persist($admin);
+        $massageGroup = $manager->getRepository(ServiceGroup::class)->findOneBy(['alias' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE]);
 
-        foreach ($this->doctorNames as $key => $name) {
-            $dctr = new User();
-            $dctr->setName($name);
-            $dctr->setUsername($key);
-            $dctr->setUsernameCanonical($key);
-            $dctr->setEmail($key.'@ortofit.com.ua');
-            $dctr->setUsernameCanonical( $key.'@ortofit.com.ua');
-            $dctr->setEnabled(true);
-            $dctr->setSalt('skur7u3vt3400swsowowk88w80888k0');
-            $dctr->setPassword('$2y$13$skur7u3vt3400swsowowkuFuZFwo2Igjz5jKzE8b0jPDu/NjeJi4O');
-            $dctr->addGroup($doctor);
+        $massageServicesData = [
+            'ЛФК - одно занятие' => [
+                'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
+                'color' => '#c93c20',
+                'short' => '(ЛФК)',
+                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
+            ],
+            'Массаж спины детский (до 11 лет)' => [
+                'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
+                'color' => '#c93c20',
+                'short' => '(МС<11)',
+                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
+            ],
+            'Массаж спины (с 12 лет)' => [
+                'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
+                'color' => '#c93c20',
+                'short' => '(МС>12)',
+                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
+            ],
+            'Массаж детский общий (с 10 лет до 16 лет)' => [
+                'alias' => Service::ALIAS_MASSAGE_CHILD_HEALTHY_GYM,
+                'color' => '#c93c20',
+                'short' => '(МДО<16)',
+                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
+            ],
+            'Общий массаж + мануальная терапия' => [
+                'alias' => Service::ALIAS_BACK_MASSAGE,
+                'color' => '#c93c20',
+                'short' => '(ОМ+МТ)',
+                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
+            ],
+            'Массаж плечевого пояса + верхних конечностей' => [
+                'alias' => Service::ALIAS_BACK_MASSAGE,
+                'color' => '#c93c20',
+                'short' => '(МПВК)',
+                'group' => ServiceGroup::SERVICE_GROUP_ALIAS_MASSAGE,
+            ]
+        ];
 
-            $manager->persist($dctr);
+        foreach ($massageServicesData as $name => $massageData) {
+            $massage = new Service();
+            $massage->setServiceGroup($massageGroup);
+            $massage->setAlias($massageData['alias']);
+            $massage->setColor($massageData['color']);
+            $massage->setShort($massageData['short']);
+            $massage->setName($name);
+            $manager->persist($massage);
         }
-        $opr = new User();
-        $opr->setUsername('operator');
-        $opr->setName('operator');
-        $opr->setUsernameCanonical('operator');
-        $opr->setEmail('operator@ortofit.com.ua');
-        $opr->setUsernameCanonical('operator@ortofit.com.ua');
-        $opr->setEnabled(true);
-        $opr->setSalt('skur7u3vt3400swsowowk88w80888k0');
-        $opr->setPassword('$2y$13$skur7u3vt3400swsowowkuFuZFwo2Igjz5jKzE8b0jPDu/NjeJi4O');
-        $opr->addGroup($operator);
-        $manager->persist($opr);
-        /** @var Appointment[] $apps */
-        $apps = $manager->getRepository(Appointment::clazz())->findAll();
-        foreach ($apps as $app) {
-            $app->setUser($dctr);
-            $manager->merge($app);
-        }
-        /** @var Service $services */
-        $services = $manager->getRepository(Service::clazz())->find(1);
-        $services->setName('Консультации');
-        $services->setColor('#cdaa40');
-        $services->setShort('(Конс.)');
-        $manager->merge($services);
-
-        $services = $manager->getRepository(Service::clazz())->find(2);
-        $services->setName("Коррекция стелек");
-        $services->setColor('#2e8b57');
-        $services->setShort('(КС)');
-        $manager->merge($services);
-
-        $services = $manager->getRepository(Service::clazz())->find(3);
-        $services->setName("Изготовление стелек ");
-        $services->setColor('#818100');
-        $services->setShort('(ИОС)');
-        $manager->merge($services);
-
-        //Массаж
-        $services = $manager->getRepository(Service::clazz())->find(4);
-        $services->setColor('#ff69b4');
-        $services->setShort('(М)');
-        $manager->merge($services);
-
-        $services = new Service();
-        $services->setName('Компьютерная диагностика');
-        $services->setColor('#ffa500');
-        $services->setShort('(КД)');
-        $manager->persist($services);
-
-        $services = new Service();
-        $services->setName('Бесплатная консультация');
-        $services->setColor('#4876ff');
-        $services->setShort('(б/п конс)');
-        $manager->persist($services);
-
         $manager->flush();
-
-
     }
 }

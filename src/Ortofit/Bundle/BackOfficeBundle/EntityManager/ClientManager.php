@@ -8,7 +8,12 @@ namespace Ortofit\Bundle\BackOfficeBundle\EntityManager;
 
 use Ortofit\Bundle\BackOfficeBundle\Entity\Appointment;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Client;
+use Ortofit\Bundle\BackOfficeBundle\Entity\ClientDirection;
 use Ortofit\Bundle\BackOfficeBundle\Entity\Country;
+use Ortofit\Bundle\BackOfficeBundle\Entity\EntityInterface;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\Client\ClientModel;
+use Ortofit\Bundle\BackOfficeFrontBundle\Model\ModelInterface;
+use Rsmakota\UtilityBundle\Date\DateRange;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -24,7 +29,7 @@ class ClientManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return Client::clazz();
+        return Client::class;
     }
 
     /**
@@ -36,54 +41,76 @@ class ClientManager extends AbstractManager
     }
 
     /**
-     * @param integer $id
+     * @param array        $params
+     * @param array|null   $orderBy
+     * @param integer|null $limit
+     * @param integer|null $offset
      *
-     * @return Country
-     * @throws \Exception
+     * @return EntityInterface[]
      */
-    private function getCountry($id)
+    public function findLike($params, array $orderBy = null, $limit = null, $offset = null)
     {
-        $country = $this->enManager->getRepository($this->getEntityClassName())->find($id);
-        if ($country) {
-            return $country;
+        if ($limit < 0 || $offset < 0) {
+            return [];
         }
-        throw new \Exception('Can\'t find Country by id');
+        return $this->enManager->getRepository($this->getEntityClassName())->findLike($params, $orderBy, $limit, $offset);
     }
 
     /**
-     * @param ParameterBag $params
+     * @param array $criteria
      *
-     * @return object
+     * @return integer
      */
-    public function create($params)
+    public function countLike(array $criteria)
     {
-        $entity = new Client();
-        $entity->setCountry($params->get('country'));
-        $entity->setClientDirection($params->get('clientDirection'));
-        $entity->setMsisdn($params->get('msisdn'));
-        $entity->setName($params->get('name'));
-        $entity->setGender($params->get('gender'));
-        $this->persist($entity);
-
-        return $entity;
+        return $this->enManager->getRepository($this->getEntityClassName())->countLike($criteria);
     }
 
     /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
+     * @param DateRange       $range
+     * @param ClientDirection $clientDirection
      */
-    public function update($params)
+    public function countNewByDirection(DateRange $range, ClientDirection $clientDirection)
     {
-        /** @var Client $entity */
-        $entity = $this->rGet($params->get('id'));
-        $entity->setCountry($params->get('country'));
-        $entity->setName($params->get('name'));
-        $entity->setClientDirection($params->get('clientDirection'));
-        $entity->setMsisdn($params->get('msisdn'));
-        $entity->setGender($params->get('gender'));
-        $this->merge($entity);
+        return $this->enManager->getRepository($this->getEntityClassName())->countNewByDirection($range, $clientDirection);
+    }
+    
+    /**
+     * @param ModelInterface $model
+     *
+     * @return Client
+     */
+    public function createByModel($model)
+    {
+        /** @var ClientModel $model */
+        $client = new Client();
+        $client->setMsisdn($model->msisdn);
+        $client->setName($model->name);
+        $client->setGender($model->gender);
+        $client->setClientDirection($this->enManager->getReference(ClientDirection::class, $model->clientDirectionId));
+        $client->setCountry($this->enManager->getReference(Country::class, $model->countryId));
 
-        return $entity;
+        $this->persist($client);
+
+        return $client;
+    }
+    /**
+     * @param Client         $client
+     * @param ModelInterface $model
+     *
+     * @return Client
+     */
+    public function updateByModel($client, $model)
+    {
+        /** @var ClientModel $model */
+        $client->setMsisdn($model->msisdn);
+        $client->setName($model->name);
+        $client->setGender($model->gender);
+        $client->setClientDirection($this->enManager->getReference(ClientDirection::class, $model->clientDirectionId));
+        $client->setCountry($this->enManager->getReference(Country::class, $model->countryId));
+
+        $this->merge($client);
+
+        return $client;
     }
 }

@@ -1,0 +1,151 @@
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Запись на прием № {{ appointment.id }}</h4>
+        </div>
+
+        <div class="modal-body">
+            {% if appointment.state == 3 %}
+                <div class="callout callout-info">
+                {% for appReason in appointment.getAppointmentReasons() %}
+                        <strong>({{ appReason.getCreated()|date('d/m/Y') }} - {{ appReason.getReason().getName() }})</strong> - Запись была закрыта пользователем "{{ app.user.getName() }}" <strong></strong>
+                {% endfor %}
+                </div>
+            {% endif %}
+
+            <table class="table table-striped">
+
+                <tr>
+                    <td><i class="fa fa-phone"></i></td>
+                    <td>Телефон:</td>
+                    <td>
+                        {% if appointment.client is defined %}
+                        <a href="{{ url("bf_person", {"clientId":appointment.client.id|default('') }) }}">
+                        {{ appointment.client.msisdn|default('') }}</a>
+                        {% endif %}
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-credit-card"></i></td>
+                    <td>Имя:</td>
+                    <td>{{ appointment.client.name|default('') }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-star"></i></td>
+                    <td>Услуга:</td>
+                    <td>{{ appointment.service.name }}</td>
+                    <td>
+                        {% for personService in appointment.personServices %}
+                           <span style="color: {{ personService.service.color }}"> <strong>{{ personService.service.short }}</strong></span>-{{ personService.number }} &nbsp;&nbsp;&nbsp;
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-arrow-right"></i></td>
+                    <td>Источник:</td>
+                    <td>{{ appointment.client.clientDirection.name|default('') }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-building"></i></td>
+                    <td>Офис:</td>
+                    <td>{{ appointment.office.name }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-calendar"></i></td>
+                    <td>Дата:</td>
+                    <td>{{ appointment.dateTime|date('d/m/Y') }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-clock-o"></i></td>
+                    <td>Время:</td>
+                    <td>{{ appointment.dateTime|date('H:i') }}</td>
+                    <td></td>
+                </tr>
+                {% for remind in appointment.reminds %}
+                    <tr class="info">
+                        <td><i class="fa fa-bell-o"></i></td>
+                        <td>Напоминание:</td>
+                        <td>
+                            {{ remind.dateTime.format('d/m/Y') }}
+
+                        </td>
+                        <td>
+                            {% if remind.processed %}
+                                <i class="fa fa-check" aria-hidden="true" style="color: green"></i>
+                            {% else %}
+                                <i class="fa fa-circle-thin" aria-hidden="true" style="color: grey"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td><i class="fa fa-hourglass-1"></i></td>
+                    <td>Прием:</td>
+                    <td>{{ appointment.duration }} мин.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-user-md"></i></td>
+                    <td>Сотрудник:</td>
+                    <td>{{ appointment.user.name }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-hand-o-right"></i></td>
+                    <td>Направил:</td>
+                    <td>
+                        {% if appointment.flyer %}
+                            <i class="fa fa-check-square-o" style="color: #00a157"></i>
+                        {% endif %}
+                        {{ appointment.forwarder }}
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><i class="fa fa-file-text-o"></i></td>
+                    <td>Заметка:</td>
+                    <td>{{ appointment.description }}</td>
+                    <td></td>
+                </tr>
+
+            </table>
+
+
+        </div>
+
+        <div class="modal-footer">
+            {% if (appointment.state == 1) or (appointment.state == 2) %}
+                <button type="button" class="btn {{ appointment.phoneConfirm ? 'btn-default' : 'btn-warning' }}" id="phoneButton"><i class="fa fa-phone icon20"></i> {{ appointment.phoneConfirm ? 'Отменить' : 'Звонок' }}</button>
+                <button type="button" class="btn btn-danger"  id="reasonButton">Закрыть по причине</button>
+                <button type="button" class="btn btn-primary" id="editButton">Редактировать</button>
+                <button type="button" class="btn btn-success" id="orderButton">Оформить</button>
+            {% elseif appointment.state == 3 %}
+                <button type="button" class="btn btn-success" id="openButton">Открыть</button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+
+        var controller = BackOffice.AppView;
+        controller.editUrl      = '{{ url('bf_app_reschedule', {'appId':appointment.id}) }}';
+        controller.orderUrl     = '{{ url('bf_app_order_process') }}';
+        controller.reasonUrl    = '{{ url('bf_app_close_reason', {'appId':appointment.id}) }}';
+        controller.phoneUrl     = '{{ url('api_app_phone_confirm') }}';
+        controller.openUrl      = '{{ url('api_app_open') }}';
+        controller.appId        = {{ appointment.id }};
+        controller.phoneConfirm = {{ appointment.phoneConfirm ? 'true' : 'false' }};
+        controller.init();
+
+    });
+</script>

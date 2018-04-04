@@ -1,0 +1,4 @@
+services:
+    rsmakota_utility.date_range_service:
+        class: Rsmakota\UtilityBundle\Service\DateRangeService
+

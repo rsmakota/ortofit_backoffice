@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package Ortofit\Bundle\BackOfficeBundle\Entity
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Ortofit\Bundle\BackOfficeBundle\ORM\ClientRepository")
  * @ORM\Table(name="clients")
  */
 class Client implements EntityInterface
@@ -203,11 +203,33 @@ class Client implements EntityInterface
     }
 
     /**
-     * @return string
+     * @return null|Person
      */
-    static public function clazz()
+    public function getPerson()
     {
-        return get_class();
+        /** @var Person $person */
+        foreach ($this->persons as $person) {
+            if ($person->isClient()) {
+                return $person;
+            }
+        }
+
+        return null;
+    }
+    
+    public function isComplete() {
+        $fields = ['name', 'msisdn', 'gender', 'clientDirection'];
+        foreach ($fields as $field) {
+            if (null == $this->$field) {
+                return false;
+            }
+        }
+        
+        if ($this->getClientDirection()->isUnknown()) {
+            return false;
+        }
+        
+        return true;
     }
 
     /**

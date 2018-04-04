@@ -1,0 +1,61 @@
+{% extends 'OrtofitBackOfficeFrontBundle:Layout:layout.html.twig' %}
+{% block body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Главная
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-calendar"></i>График приема</a></li>
+        </ol>
+    </section>
+
+
+    <!-- content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="office_tabs" class="nav nav-tabs" data-tabs="tabs">
+                    {% for office in offices %}
+                        <li id="officeTab{{ office.id }}"><a href="#" data-toggle="tab" class="office_link" office-id="{{ office.id }}">{{ office.name }}</a></li>
+                    {% endfor %}
+                </ul>
+                <div class="box box-primary">
+                    <div class="box-body no-padding">
+                        <!-- THE CALENDAR -->
+                        <div id="calendar"></div>
+                    </div><!-- /.box-body -->
+                </div><!-- /. box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section><!-- /.content -->
+
+    <script>
+        $(function () {
+            var calendar  = BackOffice.Calendar;
+            var officeTab = BackOffice.OfficeTab;
+            var doctorId  = {{ app.request.query.get("doctorId", "null") }};
+            calendar.formUrl      = '{{ url('bf_app_get_form') }}';
+            {% if app.request.query.has('doctorId') %}
+                calendar.eventsUrl = '{{ url('api_app_get', {'userId':app.request.query.get("doctorId", null)}) }}';
+            {% else %}
+                calendar.eventsUrl = '{{ url('api_app_get_all') }}';
+            {% endif %}
+            calendar.eventDataUrl = '{{ url('bf_app_view_app') }}';
+            calendar.init(doctorId);
+//            var officeId = calendar.getOfficeId();
+            officeTab.init();
+            officeTab.describe(calendar.reInit);
+//            $('#officeTab'+officeId).addClass('active');
+//            $('.office_link').click(function(){
+//                var officeId = $(this).attr('office-id');
+//                if (calendar.getOfficeId() == officeId ) {
+//                    return false;
+//                }
+//                calendar.reInit(officeId);
+//            });
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+<div id="tip-#id#" class="panel panel-info">
+    <div class="panel-heading">
+        <i class="fa fa-bell-o"></i> Уведомление о повторном визите №<strong>#remindId#</strong>
+    </div>
+    <div class="panel-body">
+        Клиет <strong><a href="#" class="client-details" msisdn="#msisdn#"> #name#</a></strong>
+        тел. <strong><a href="#" class="client-details" msisdn="#msisdn#"> #msisdn#</a></strong>
+        был на <a href="#" class="app-link" appId="#appId#"> приеме #date#</a>. Ему оказали услуги "<strong>#services#</strong>". <br/>
+        Дата <strong>#remind_date#</strong> была указана как напоминание о повторном визите.
+        <br>
+        &nbsp;&nbsp;&nbsp;<strong>Комментарий к напоминанию:</strong>
+        <i>"#description#"</i>
+    </div>
+    <div class="panel-footer">
+        <button id="#id#" class="btn btn-success btn-sm btn-remind" tip="tip-#id#" type="button">Обработать</button>
+        <button class="btn btn-info btn-sm client-details" type="button" msisdn="#msisdn#">Инфо.</button>
+        <button class="btn btn-primary btn-sm edit"        type="button" remindId="#remindId#">Редактировать</button>
+    </div>
+</div>

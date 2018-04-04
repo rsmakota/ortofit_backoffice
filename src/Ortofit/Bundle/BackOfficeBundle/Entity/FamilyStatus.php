@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FamilyStatus implements EntityInterface
 {
+    const STATUS_CLIENT_ID = 5;
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
@@ -39,6 +40,10 @@ class FamilyStatus implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $alias;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $position;
 
     /**
      * @return integer
@@ -103,12 +108,15 @@ class FamilyStatus implements EntityInterface
     {
         $this->alias = $alias;
     }
-    /**
-     * @return string
-     */
-    static public function clazz()
+
+    public function getPosition()
     {
-        return get_class();
+        return $this->position;
+    }
+
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 
     /**

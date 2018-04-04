@@ -1,0 +1,112 @@
+admin_panel:
+    path:     /admin
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:index }
+login_route:
+    path:     /login
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Login:login }
+logout:
+    path:     /admin/logout
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Login::logout }
+login_check:
+    path:     /admin/login_check
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Login:securityCheck }
+#backend_manage_get:
+#    path:     /admin/get/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:get }
+#backend_manage_create:
+#    path:     /admin/create/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:create }
+#backend_manage_update:
+#    path:     /admin/update/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:update }
+#backend_manage_remove:
+#    path:     /admin/remove/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:remove }
+#backend_manage_find:
+#    path:     /admin/find/{entityName}
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Manage:find }
+#backend_manage_entity_index:
+#    path:     /admin/entity
+#    defaults: { _controller: OrtofitBackOfficeFrontBundle:Entity:index }
+
+bf_client:
+    path:     /admin/client
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:index }
+bf_client_form:
+    path:     /admin/client/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:form }
+
+bf_client_detail:
+    path:     /admin/client/detail
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Client:detail }
+
+bf_person:
+    path:     /admin/person
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Person:index }
+
+bf_person_form:
+    path:     /admin/person/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Person:form }
+
+
+bf_diagnosis_form:
+    path:     /admin/diagnosis/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Diagnosis:form }
+
+
+bf_app_get_form:
+    path:     /admin/app/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:form }
+bf_app_view_app:
+    path:     /admin/app/view
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:viewApp }
+
+bf_app_reschedule:
+    path:     /admin/app/reschedule/{appId}
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:reschedule }
+bf_app_close_reason:
+    path:     /admin/app/close/{appId}
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Appointment:closeReason }
+
+bf_app_order_process:
+    path: /admin/app_order/process
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:AppOrder:process }
+
+bf_remind_index:
+    path: /admin/remind
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:AppReminder:index }
+
+bf_remind_list:
+    path: /admin/remind_list
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:AppReminder:list }
+bf_remind_edit:
+    path: /admin/remind_edit
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:AppReminder:edit }
+
+bf_ext_order_index:
+    path: /admin/ext_order
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:ExtOrder:index }
+
+bf_staff_schedule_index:
+    path: /admin/staff_schedule
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:StaffSchedule:index }
+
+bf_staff_schedule_form:
+    path: /admin/staff_schedule/form
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:StaffSchedule:form }
+
+bf_staff_schedule_view_schedule:
+    path:     /admin/staff_schedule/view
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:StaffSchedule:viewSchedule }
+
+bf_chart_index:
+    path:     /admin/chart
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Chart:index }
+
+bf_report_index:
+    path:     /admin/report_app
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Report:index }
+
+bf_report_forwarder_index:
+    path:     /admin/report_forwarder
+    defaults: { _controller: OrtofitBackOfficeFrontBundle:Report:forwarder }

@@ -1,0 +1,100 @@
+<!-- Modal -->
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Клиент</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputMsisdn" class="col-sm-2 control-label">Телефон:</label>
+
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <strong class="icon20">+{{ code|default('38') }}</strong>
+                            </div>
+                            <input type="text" class="form-control" id="msisdn" data-mask=""
+                                   data-inputmask="'mask': '999-999-99-99'" placeholder="067-359-42-88"
+                                   value="{{ client.getLocalMsisdn()|default('') }}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Имя:</label>
+
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-credit-card icon20"></i>
+                            </div>
+                            <input type="text" class="form-control" id="name"
+                                   placeholder="Имя Клиента" value="{{ client.name|default('') }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectGender" class="col-sm-2 control-label">Пол:</label>
+
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-venus-mars icon20"></i>
+                            </div>
+                            <select class="form-control" id="gender">
+                                {% if "female" == client.gender|default(0) %}
+                                    <option selected value="female">Женский</option>
+                                    <option value="male">Мужской</option>
+                                {% else %}
+                                    <option value="female">Женский</option>
+                                    <option selected value="male">Мужской</option>
+                                {% endif %}
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectDirectionId" class="col-sm-2 control-label">Источник:</label>
+
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-arrow-right icon20"></i>
+                            </div>
+                            <select class="form-control" id="clientDirectionId">
+                                {% for direction in directions %}
+                                    {% if direction.id == client.clientDirection.id|default(0) %}
+                                        <option selected value="{{ direction.id }}">{{ direction.name }}</option>
+                                    {% else %}
+                                        <option value="{{ direction.id }}">{{ direction.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <input type="hidden" id="id" value="{{ client.id|default('') }}">
+                <input type="hidden" id="code" value="{{ code|default('38') }}">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" id="saveButton">Сохранить</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var client = BackOffice.Client;
+        client.createUrl = '{{ url('api_client_create') }}';
+        client.updateUrl = '{{ url('api_client_update') }}';
+        client.init({{ client.id|default('false') }});
+    });
+</script>

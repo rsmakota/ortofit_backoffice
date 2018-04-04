@@ -217,14 +217,6 @@ class Application implements EntityInterface
     }
 
     /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
-    }
-
-    /**
      * @return array
      */
     public function getData()

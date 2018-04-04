@@ -3,12 +3,13 @@ imports:
     - { resource: schedule.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: calendar.yml }
+    - { resource: frontend.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    monolog.handler.rotating_file.class: Ortofit\Bundle\SingUpBundle\Monolog\Handler\ContextBasedStreamHandler
 
 framework:
     #esi:             ~
@@ -30,6 +31,7 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
+        cookie_lifetime:  86400
         handler_id:  ~
     fragments:       ~
     http_method_override: true
@@ -43,7 +45,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [OrtofitSingUpBundle, OrtofitBackOfficeBundle]
+    bundles:        [OrtofitSingUpBundle, OrtofitBackOfficeFrontBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -73,6 +75,9 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            string_functions:
+                string_agg: Ortofit\Bundle\BackOfficeBundle\DQL\StringAggFunction
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -84,17 +89,31 @@ swiftmailer:
     #spool:      { type: memory }
 
 monolog:
-    channels: ["sing_up"]
+    channels: ["sing_up", "app_order", "staff_schedule"]
     handlers:
         ot_sing_up:
             type:  rotating_file
-            path:  "%kernel.logs_dir%/ortofit_sing_up_%%s.log"
+            path:  "%kernel.logs_dir%/ortofit_sing_up_%kernel.environment%.log"
             level: debug
             channels: sing_up
+        app_order_log:
+            type:  rotating_file
+            path:  "%kernel.logs_dir%/backoffice_app_order_%kernel.environment%.log"
+            level: debug
+            channels: app_order
+        staff_schedule_log:
+            type:  rotating_file
+            path:  "%kernel.logs_dir%/backoffice_staff_schedule_%kernel.environment%.log"
+            level: debug
+            channels: staff_schedule
+
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: back_office
     user_class: Ortofit\Bundle\BackOfficeBundle\Entity\User
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
     group:
         group_class: Ortofit\Bundle\BackOfficeBundle\Entity\Group
 

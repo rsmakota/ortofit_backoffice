@@ -1,0 +1,99 @@
+<!-- Modal -->
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Клиент</h4>
+        </div>
+        <div class="modal-body">
+            <div class="box">
+                <div class="box box-widget widget-user-2">
+                    <div class="widget-user-header bg-yellow">
+                        <div class="widget-user-image">
+                            <div class="close"><a href="{{ url('bf_person', {clientId:client.id}) }}"> <i class="fa fa-pencil edit" remindid="56" style="cursor: pointer;"></i></a></div>
+                            <img class="img-circle" alt="User Avatar"
+                                    {% if client.getGender() == 'male' %}
+                                        src="{{ '../bundles/ortofitbackofficefront/dist/img/avatar5.png' }}"
+                                    {% elseif client.getGender() == 'female' %}
+                                        src="{{ '../bundles/ortofitbackofficefront/dist/img/avatar3.png' }}"
+                                    {% else %}
+                                        src="{{ '../bundles/ortofitbackofficefront/dist/img/unknown.png' }}"
+                                    {% endif %} />
+                        </div>
+                        <h3 class="widget-user-username">{{ client.getName() }}</h3>
+                        <h5 class="widget-user-desc">{{ client.getMsisdn() }}</h5>
+                    </div>
+                    <div class="box-footer">
+                        <div class="row">
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">Клиент с:</h5>
+                                    <span class="description-text">{{ client.created.format('d/m/Y') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">Членов семьи:</h5>
+                                    <span class="description-text">{{ client.persons.count() }}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 border-right">
+                                <div class="description-block">
+                                    <h5 class="description-header">Всего визитов:</h5>
+                                    <span class="description-text">{{ numApps|default('0') }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped" style="text-align: center">
+                <thead>
+                <tr >
+                    <th style="text-align: center">Дата</th>
+                    <th style="text-align: center">Время</th>
+                    <th style="text-align: center">Оффис</th>
+                    <th style="text-align: center">Врач</th>
+                    <th style="text-align: center">Заявка</th>
+                    <th style="text-align: center">Оказана</th>
+                    <th style="text-align: center">Оформлен</th>
+                </tr>
+                </thead>
+                <tbody>
+                {# @var app \Ortofit\Bundle\BackOfficeBundle\Entity\Appointment#}
+                {% for app in apps %}
+                <tr>
+                    <td>{{ app.dateTime.format('d/m/Y') }}</td>
+                    <td>{{ app.dateTime.format('H:i') }}</td>
+                    <td>{{ app.office.name }}</td>
+                    <td>{{ app.user.name }}</td>
+                    <td>
+                        {{ app.service.name }}
+                    </td>
+                    <td>
+                        {# @var service \Ortofit\Bundle\BackOfficeBundle\Entity\PersonService#}
+                        {% for service in app.personServices  %}
+                        ({{ service.person.familyStatus.name}}) <strong>{{ service.person.name }}</strong>: {{ service.service.name }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if app.state == 4 %}
+                            <i class="fa fa-check" aria-hidden="true" style="color: green"></i>
+                        {% elseif  app.state == 3 %}
+                            <i class="fa fa-close" aria-hidden="true" style="color: red"></i>
+                        {% else %}
+                            <i class="fa fa-circle-thin" aria-hidden="true" style="color: grey"></i>
+                        {% endif  %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

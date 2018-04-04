@@ -1,0 +1,146 @@
+services:
+    bf.state_choose_persone:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ChoosePerson
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:choosePerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+    bf.state_client:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ClientState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:client.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setClientManager, ["@ortofit_back_office.client_manage"]]
+            - [setClientModelProvider, ["@bf.client_model_provider"]]
+            - [setClientViewModelProvider, ["@bf.client_view_model_provider"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+    bf.state_persone:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\PersonState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:newPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setPersonManager, ["@ortofit_back_office.person_manage"]]
+            - [setFamilyStatusManager, ["@ortofit_back_office.client_family_status_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+    bf.state_diagnosis:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\DiagnosisState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:diagnosisPerson.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setPersonManager, ["@ortofit_back_office.person_manage"]]
+            - [setDiagnosisManager, ["@ortofit_back_office.client_diagnosis_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+    bf.state_service:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\ServiceState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:serviceState.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setPersonServiceManager, ["@ortofit_back_office.person_service_manage"]]
+            - [setServiceManager, ["@ortofit_back_office.service_manage"]]
+            - [setPersonManager, ["@ortofit_back_office.person_manage"]]
+            - [setAppReminderManager, ["@ortofit_back_office.app_reminder_manage"]]
+            - [setServiceGroupManager, ["@ortofit_back_office.app_service_group_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+    bf.state_insole:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\InsoleState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:insoleState.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setServiceManager, ["@ortofit_back_office.service_manage"]]
+            - [setPersonManager, ["@ortofit_back_office.person_manage"]]
+            - [setInsoleManager, ["@ortofit_back_office.app_insole_manage"]]
+            - [setInsoleTypeManager, ["@ortofit_back_office.app_insole_type_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+
+    bf.state_rewind:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\State\RewindState
+        arguments: ["OrtofitBackOfficeFrontBundle:AppOrder:rewind.html.twig", "@request_stack", "@ortofit_back_office.appointment_manage"]
+        calls:
+            - [setFlow, ["@bf.flow_order"]]
+            - [setToRewindStateId, ["choose_person"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+
+    bf.flow_order:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Order\Flow\OrderFlow
+        arguments: ["@templating.engine.twig"]
+        calls:
+            - [addState, ["@bf.state_client"]]
+            - [addState, ["@bf.state_choose_persone"]]
+            - [addState, ["@bf.state_persone"]]
+            - [addState, ["@bf.state_diagnosis"]]
+            - [addState, ["@bf.state_service"]]
+            - [addState, ["@bf.state_insole"]]
+            - [addState, ["@bf.state_rewind"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+
+    bf.app_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+    bf.client_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+
+    bf.schedule_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ScheduleModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: staff_schedule }
+
+    bf.app_view_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\AppointmentViewModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setGroupManager, ["@fos_user.group_manager"]]
+            - [setAppManager, ["@ortofit_back_office.appointment_manage"]]
+            - [setServiceGroupManager, ["@ortofit_back_office.app_service_group_manage"]]
+            - [setDirectionManager, ["@ortofit_back_office.client_direction_manage"]]
+            - [setOfficeManager, ["@ortofit_back_office.office_manage"]]
+            - [setCountryManager, ["@ortofit_back_office.client_country_manage"]]
+            - [setScheduleManager, ["@ortofit_back_office.schedule_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+    bf.client_view_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ClientViewModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setDirectionManager, ["@ortofit_back_office.client_direction_manage"]]
+            - [setCountryManager, ["@ortofit_back_office.client_country_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: app_order }
+
+    bf.schedule_view_model_provider:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\ModelProvider\RequestModelProvider\ScheduleViewModelProvider
+        arguments: ["@request_stack"]
+        calls:
+            - [setUserManager, ["@fos_user.user_manager"]]
+            - [setScheduleManager, ["@ortofit_back_office.schedule_manage"]]
+            - [setOfficeManager, ["@ortofit_back_office.office_manage"]]
+            - [setLogger, ["@logger"]]
+        tags:
+            - { name: monolog.logger, channel: staff_schedule }
+
+    bf.app_schedule_verifier:
+        class: Ortofit\Bundle\BackOfficeFrontBundle\Verifier\ScheduleVerifier
+        arguments: ["@ortofit_back_office.schedule_manage"]

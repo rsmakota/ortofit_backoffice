@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ClientDirection implements EntityInterface
 {
+    const DIRECTION_ALIAS_UNKNOWN = 'unknown';
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
@@ -30,6 +31,10 @@ class ClientDirection implements EntityInterface
      * @ORM\Column(type="string")
      */
     private $alias;
+    /**
+     * @ORM\Column(type="integer", name="order_num")
+     */
+    private $orderNum;
 
     public function getAlias()
     {
@@ -39,6 +44,16 @@ class ClientDirection implements EntityInterface
     public function setAlias($alias)
     {
         $this->alias = $alias;
+    }
+
+    public function getOrderNum()
+    {
+        return $this->orderNum;
+    }
+
+    public function setOrderNum($orderNum)
+    {
+        $this->orderNum = $orderNum;
     }
 
     /**
@@ -74,11 +89,15 @@ class ClientDirection implements EntityInterface
     }
 
     /**
-     * @return string
+     * @return boolean
      */
-    static public function clazz()
+    public function isUnknown()
     {
-        return get_class();
+        if ($this->alias == self::DIRECTION_ALIAS_UNKNOWN) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

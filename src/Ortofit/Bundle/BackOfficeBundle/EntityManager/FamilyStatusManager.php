@@ -22,7 +22,7 @@ class FamilyStatusManager extends AbstractManager
      */
     protected function getEntityClassName()
     {
-        return FamilyStatus::clazz();
+        return FamilyStatus::class;
     }
 
     /**
@@ -33,29 +33,4 @@ class FamilyStatusManager extends AbstractManager
         return 'familyStatus_manager';
     }
 
-    /**
-     * @param ParameterBag $params
-     *
-     * @return object
-     */
-    public function create($params)
-    {
-        $entity = new FamilyStatus();
-        $entity->setName($params->get('name'));
-        $entity->setGeneral($params->get('general'));
-        $this->persist($entity);
-    }
-
-    /**
-     * @param ParameterBag $params
-     *
-     * @return boolean
-     */
-    public function update($params)
-    {
-        $entity = $this->rGet($params->get('id'));
-        $entity->setName($params->get('name'));
-        $entity->setGeneral($params->get('general'));
-        $this->merge($entity);
-    }
 }

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="cities")
  */
-class City
+class City implements EntityInterface
 {
     /**
      * @ORM\Id
@@ -82,13 +82,6 @@ class City
         $this->country = $country;
     }
 
-    /**
-     * @return string
-     */
-    static public function clazz()
-    {
-        return get_class();
-    }
     /**
      * @return array
      */
