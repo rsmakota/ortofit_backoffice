@@ -66,11 +66,11 @@
                                 <i class="fa fa-hourglass-1 icon20"></i>
                             </div>
                             <select class="form-control" id="duration" name="duration" title="duration">
-                                {% for i in 1..4 %}
-                                    {% if (i*15) == duration %}
-                                        <option selected value="{{ (i*15) }}">{{ (i*15) }} мин.</option>
+                                {% for i in [15,20,30,45,60] %}
+                                    {% if i == duration %}
+                                        <option selected value="{{ i }}">{{ i }} мин.</option>
                                     {% else %}
-                                        <option value="{{ (i*15) }}">{{ (i*15) }} мин.</option>
+                                        <option value="{{ i }}">{{ i }} мин.</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
