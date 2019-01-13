@@ -140,7 +140,11 @@
                                         {% if i == model.duration %}
                                             <option selected value="{{ i }}">{{ i }} мин.</option>
                                         {% else %}
-                                            <option {% if i == 20 %} selected {% endif %} value="{{ i }}">{{ i }} мин. </option>
+                                            <option 
+					    {% if i == 20 %}
+						selected
+					    {% endif %}
+					    value="{{ i }}">{{ i }} мин.</option>
                                         {% endif %}
                                     {% endfor %}
                                 </select>
